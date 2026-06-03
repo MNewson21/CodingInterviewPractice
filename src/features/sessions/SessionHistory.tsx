@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { listSessions } from './sessions.api';
-import { getProblem } from '../problems/problems.data';
+import { problems } from '../problems/problems.data';
+import { useProblemsStore } from '../../stores/useProblemsStore';
 import type { SessionRecord } from '../../types/session';
 
 const statusColor: Record<string, string> = {
@@ -13,12 +14,21 @@ const statusColor: Record<string, string> = {
 export function SessionHistory() {
   const [sessions, setSessions] = useState<SessionRecord[] | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const custom = useProblemsStore((s) => s.custom);
 
   useEffect(() => {
     listSessions()
       .then(setSessions)
       .catch((err) => setError(err instanceof Error ? err.message : String(err)));
   }, []);
+
+  function titleFor(problemId: string): string {
+    return (
+      problems.find((p) => p.id === problemId)?.title ??
+      custom.find((p) => p.id === problemId)?.title ??
+      problemId
+    );
+  }
 
   if (error) {
     return <p className="text-xs text-red-400">Could not load sessions: {error}</p>;
@@ -33,13 +43,12 @@ export function SessionHistory() {
   return (
     <ul className="divide-y divide-zinc-800 rounded-lg border border-zinc-800">
       {sessions.map((s) => {
-        const title = getProblem(s.problemId)?.title ?? s.problemId;
         const when = new Date(s.createdAt).toLocaleString();
         const replayable = s.keystrokes.length > 0;
         return (
           <li key={s.id} className="flex items-center justify-between px-4 py-2 text-sm">
             <div>
-              <span className="font-medium">{title}</span>
+              <span className="font-medium">{titleFor(s.problemId)}</span>
               <span className="ml-2 text-xs text-zinc-500">{when}</span>
             </div>
             <div className="flex items-center gap-3">
@@ -47,10 +56,7 @@ export function SessionHistory() {
                 {s.status.replace('_', ' ')}
               </span>
               {replayable && (
-                <Link
-                  to={`/replay/${s.id}`}
-                  className="text-xs text-blue-400 hover:underline"
-                >
+                <Link to={`/replay/${s.id}`} className="text-xs text-blue-400 hover:underline">
                   Replay
                 </Link>
               )}

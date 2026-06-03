@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { getSession } from '../features/sessions/sessions.api';
-import { getProblem } from '../features/problems/problems.data';
+import { problems } from '../features/problems/problems.data';
 import { ReplayPlayer } from '../features/keystrokes/ReplayPlayer';
+import { useProblemsStore } from '../stores/useProblemsStore';
 import type { SessionRecord } from '../types/session';
 
 export function ReplayPage() {
@@ -10,6 +11,13 @@ export function ReplayPage() {
   const [session, setSession] = useState<SessionRecord | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+
+  const custom = useProblemsStore((s) => s.custom);
+  const customLoaded = useProblemsStore((s) => s.loaded);
+  const loadCustom = useProblemsStore((s) => s.load);
+  useEffect(() => {
+    loadCustom();
+  }, [loadCustom]);
 
   useEffect(() => {
     if (!sessionId) return;
@@ -19,10 +27,12 @@ export function ReplayPage() {
       .finally(() => setLoading(false));
   }, [sessionId]);
 
-  const problem = session ? getProblem(session.problemId) : undefined;
+  const problem = session
+    ? problems.find((p) => p.id === session.problemId) ??
+      custom.find((p) => p.id === session.problemId)
+    : undefined;
   const title = session ? problem?.title ?? session.problemId : '';
-  // The buffer that existed when recording began: the starter code for this language.
-  const initialCode = problem?.starterCode[session?.language as never] ?? '';
+  const ready = !loading && customLoaded;
 
   return (
     <div className="flex h-full flex-col bg-zinc-950 text-zinc-100">
@@ -30,23 +40,19 @@ export function ReplayPage() {
         <Link to="/" className="text-sm text-zinc-400 hover:text-zinc-100">
           &larr; Home
         </Link>
-        <h1 className="text-sm font-semibold">
-          {title ? `Replay — ${title}` : 'Replay'}
-        </h1>
+        <h1 className="text-sm font-semibold">{title ? `Replay — ${title}` : 'Replay'}</h1>
         <span className="w-12" />
       </header>
 
       <div className="min-h-0 flex-1">
-        {loading && <p className="p-4 text-sm text-zinc-500">Loading…</p>}
-        {error && <p className="p-4 text-sm text-red-400">{error}</p>}
-        {!loading && !error && !session && (
-          <p className="p-4 text-sm text-zinc-500">Session not found.</p>
-        )}
-        {session && (
+        {!ready && <p className="p-4 text-sm text-zinc-500">Loading…</p>}
+        {ready && error && <p className="p-4 text-sm text-red-400">{error}</p>}
+        {ready && !error && !session && <p className="p-4 text-sm text-zinc-500">Session not found.</p>}
+        {ready && session && (
           <ReplayPlayer
             events={session.keystrokes}
             language={session.language}
-            initialCode={initialCode}
+            initialCode={problem?.starterCode[session.language] ?? ''}
           />
         )}
       </div>

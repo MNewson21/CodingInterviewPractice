@@ -1,7 +1,11 @@
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { problems } from '../features/problems/problems.data';
 import { useAuth, signOut } from '../lib/auth';
 import { SessionHistory } from '../features/sessions/SessionHistory';
+import { ImportDropzone } from '../features/problems/ImportDropzone';
+import { MyProblems } from '../features/problems/MyProblems';
+import { useProblemsStore } from '../stores/useProblemsStore';
 
 const difficultyColor: Record<string, string> = {
   easy: 'text-green-400',
@@ -11,6 +15,11 @@ const difficultyColor: Record<string, string> = {
 
 export function HomePage() {
   const { user, loading } = useAuth();
+  const loadCustom = useProblemsStore((s) => s.load);
+
+  useEffect(() => {
+    if (user) loadCustom();
+  }, [user, loadCustom]);
 
   return (
     <div className="min-h-full bg-zinc-950 text-zinc-100">
@@ -18,19 +27,13 @@ export function HomePage() {
         <div className="flex items-start justify-between">
           <div>
             <h1 className="text-2xl font-bold">Mock Interview IDE</h1>
-            <p className="mt-1 text-sm text-zinc-400">
-              Pick a problem to start a practice session.
-            </p>
+            <p className="mt-1 text-sm text-zinc-400">Pick a problem to start a practice session.</p>
           </div>
           <div className="text-right text-sm">
             {loading ? null : user ? (
               <div className="flex flex-col items-end gap-1">
                 <span className="text-xs text-zinc-400">{user.email}</span>
-                <button
-                  type="button"
-                  onClick={() => signOut()}
-                  className="text-xs text-zinc-400 hover:text-zinc-100"
-                >
+                <button type="button" onClick={() => signOut()} className="text-xs text-zinc-400 hover:text-zinc-100">
                   Sign out
                 </button>
               </div>
@@ -50,19 +53,27 @@ export function HomePage() {
                 className="flex items-center justify-between px-4 py-3 hover:bg-zinc-900"
               >
                 <span className="font-medium">{p.title}</span>
-                <span className={`text-xs uppercase ${difficultyColor[p.difficulty]}`}>
-                  {p.difficulty}
-                </span>
+                <span className={`text-xs uppercase ${difficultyColor[p.difficulty]}`}>{p.difficulty}</span>
               </Link>
             </li>
           ))}
         </ul>
 
         {user && (
-          <section className="mt-10">
-            <h2 className="mb-3 text-sm font-semibold text-zinc-300">Your recent sessions</h2>
-            <SessionHistory />
-          </section>
+          <>
+            <section className="mt-10">
+              <h2 className="mb-3 text-sm font-semibold text-zinc-300">Your problems</h2>
+              <ImportDropzone />
+              <div className="mt-3">
+                <MyProblems />
+              </div>
+            </section>
+
+            <section className="mt-10">
+              <h2 className="mb-3 text-sm font-semibold text-zinc-300">Your recent sessions</h2>
+              <SessionHistory />
+            </section>
+          </>
         )}
       </div>
     </div>

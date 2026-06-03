@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { getProblem } from '../features/problems/problems.data';
+import { problems } from '../features/problems/problems.data';
+import { downloadProblem } from '../features/problems/problemFile';
 import { ProblemPanel } from '../features/problems/ProblemPanel';
 import { CodeEditor } from '../features/editor/CodeEditor';
 import { LanguageSelect } from '../features/editor/LanguageSelect';
@@ -16,10 +17,26 @@ import { useExecutionStore } from '../stores/useExecutionStore';
 import { useSessionStore } from '../stores/useSessionStore';
 import { useKeystrokeStore } from '../stores/useKeystrokeStore';
 import { useAiStore } from '../stores/useAiStore';
+import { useProblemsStore } from '../stores/useProblemsStore';
 
 export function SessionPage() {
   const { problemId } = useParams();
-  const problem = problemId ? getProblem(problemId) : undefined;
+
+  const custom = useProblemsStore((s) => s.custom);
+  const customLoaded = useProblemsStore((s) => s.loaded);
+  const loadCustom = useProblemsStore((s) => s.load);
+  useEffect(() => {
+    loadCustom();
+  }, [loadCustom]);
+
+  const problem = useMemo(
+    () =>
+      problemId
+        ? problems.find((p) => p.id === problemId) ?? custom.find((p) => p.id === problemId)
+        : undefined,
+    [problemId, custom],
+  );
+  const resolving = !problem && !customLoaded;
 
   const { user } = useAuth();
   const language = useEditorStore((s) => s.language);
@@ -37,7 +54,7 @@ export function SessionPage() {
 
   const [saveMsg, setSaveMsg] = useState<string | null>(null);
 
-  // Reset everything and start a fresh recording when the problem changes.
+  // Reset everything and start a fresh recording when the resolved problem changes.
   useEffect(() => {
     if (problem) {
       setCode(problem.starterCode[language] ?? '');
@@ -79,12 +96,16 @@ export function SessionPage() {
   if (!problem) {
     return (
       <div className="flex h-full items-center justify-center bg-zinc-950 text-zinc-100">
-        <div className="text-center">
-          <p>Problem not found.</p>
-          <Link to="/" className="mt-2 inline-block text-sm text-blue-400 hover:underline">
-            &larr; Back to problems
-          </Link>
-        </div>
+        {resolving ? (
+          <p className="text-sm text-zinc-500">Loading…</p>
+        ) : (
+          <div className="text-center">
+            <p>Problem not found.</p>
+            <Link to="/" className="mt-2 inline-block text-sm text-blue-400 hover:underline">
+              &larr; Back to problems
+            </Link>
+          </div>
+        )}
       </div>
     );
   }
@@ -99,6 +120,14 @@ export function SessionPage() {
         <div className="flex shrink-0 items-center gap-4">
           <Timer />
           <LanguageSelect problem={problem} />
+          <button
+            type="button"
+            onClick={() => downloadProblem(problem)}
+            className="rounded border border-zinc-700 bg-zinc-800 px-2 py-1 text-xs hover:bg-zinc-700"
+            title="Download this problem as a shareable .json"
+          >
+            Export
+          </button>
           {user ? (
             <button
               type="button"

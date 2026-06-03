@@ -18,7 +18,7 @@ Restart `npm run dev` afterwards.
 
 ## 3. Run the migration
 In the Supabase dashboard -> **SQL Editor**, paste and run the contents of
-`supabase/migrations/0001_init.sql`. This creates the `sessions` table and the
+`supabase/migrations/0001_init.sql`, then `supabase/migrations/0002_user_problems.sql`. This creates the `sessions` table and the
 Row Level Security policy ("own sessions") so users only ever see their own data.
 
 ## 4. (Dev convenience) Disable email confirmation
