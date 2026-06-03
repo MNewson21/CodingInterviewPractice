@@ -15,6 +15,8 @@ interface TimerState {
   pause: () => void;
   toggle: () => void;
   reset: () => void;
+  /** Seed the accumulated time (used when resuming a saved session). */
+  setElapsedMs: (elapsedMs: number) => void;
   setMode: (mode: TimerMode) => void;
   setDurationMs: (durationMs: number) => void;
   /** Advance the clock by a measured delta; called by the Timer component. */
@@ -30,6 +32,7 @@ export const useTimerStore = create<TimerState>((set) => ({
   pause: () => set({ running: false }),
   toggle: () => set((s) => ({ running: !s.running })),
   reset: () => set({ elapsedMs: 0, running: false }),
+  setElapsedMs: (elapsedMs) => set({ elapsedMs }),
   setMode: (mode) => set({ mode, elapsedMs: 0, running: false }),
   setDurationMs: (durationMs) => set({ durationMs, elapsedMs: 0, running: false }),
   tick: (deltaMs) =>

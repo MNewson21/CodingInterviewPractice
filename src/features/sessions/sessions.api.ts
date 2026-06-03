@@ -63,6 +63,28 @@ export async function saveSession(input: SaveSessionInput): Promise<SessionRecor
   return fromRow(data as SessionRow);
 }
 
+/** Update an existing session in place (used when resuming/editing a saved attempt). */
+export async function updateSession(
+  id: string,
+  input: SaveSessionInput,
+): Promise<SessionRecord> {
+  const { data, error } = await supabase
+    .from('sessions')
+    .update({
+      language: input.language,
+      code: input.code,
+      status: input.status,
+      duration_ms: input.durationMs,
+      keystrokes: input.keystrokes ?? [],
+    })
+    .eq('id', id)
+    .select()
+    .single();
+
+  if (error) throw new Error(error.message);
+  return fromRow(data as SessionRow);
+}
+
 export async function listSessions(): Promise<SessionRecord[]> {
   const { data, error } = await supabase
     .from('sessions')

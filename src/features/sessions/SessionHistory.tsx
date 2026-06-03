@@ -55,6 +55,12 @@ export function SessionHistory() {
               <span className={`text-xs uppercase ${statusColor[s.status] ?? 'text-zinc-400'}`}>
                 {s.status.replace('_', ' ')}
               </span>
+              <Link
+                to={`/session/${s.problemId}?session=${s.id}`}
+                className="text-xs text-emerald-400 hover:underline"
+              >
+                Edit
+              </Link>
               {replayable && (
                 <Link to={`/replay/${s.id}`} className="text-xs text-blue-400 hover:underline">
                   Replay

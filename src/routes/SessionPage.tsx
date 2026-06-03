@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { problems } from '../features/problems/problems.data';
 import { downloadProblem } from '../features/problems/problemFile';
 import { ProblemPanel } from '../features/problems/ProblemPanel';
@@ -9,7 +9,7 @@ import { Timer } from '../features/timer/Timer';
 import { RunPanel } from '../features/execution/RunPanel';
 import { ComplexityBadge } from '../features/analysis/ComplexityBadge';
 import { AiPanel } from '../features/ai/AiPanel';
-import { saveSession } from '../features/sessions/sessions.api';
+import { getSession, saveSession, updateSession } from '../features/sessions/sessions.api';
 import { useAuth } from '../lib/auth';
 import { useEditorStore } from '../stores/useEditorStore';
 import { useTimerStore } from '../stores/useTimerStore';
@@ -21,6 +21,8 @@ import { useProblemsStore } from '../stores/useProblemsStore';
 
 export function SessionPage() {
   const { problemId } = useParams();
+  const [searchParams] = useSearchParams();
+  const resumeId = searchParams.get('session');
 
   const custom = useProblemsStore((s) => s.custom);
   const customLoaded = useProblemsStore((s) => s.loaded);
@@ -42,32 +44,66 @@ export function SessionPage() {
   const language = useEditorStore((s) => s.language);
   const code = useEditorStore((s) => s.code);
   const setCode = useEditorStore((s) => s.setCode);
+  const setLanguage = useEditorStore((s) => s.setLanguage);
   const elapsedMs = useTimerStore((s) => s.elapsedMs);
   const resetTimer = useTimerStore((s) => s.reset);
+  const setElapsedMs = useTimerStore((s) => s.setElapsedMs);
   const results = useExecutionStore((s) => s.results);
   const resetExecution = useExecutionStore((s) => s.reset);
   const saving = useSessionStore((s) => s.saving);
   const setSaving = useSessionStore((s) => s.setSaving);
+  const currentSessionId = useSessionStore((s) => s.currentSessionId);
   const setCurrentSessionId = useSessionStore((s) => s.setCurrentSessionId);
   const startRecording = useKeystrokeStore((s) => s.startRecording);
+  const resumeRecording = useKeystrokeStore((s) => s.resumeRecording);
   const resetAi = useAiStore((s) => s.reset);
 
   const [saveMsg, setSaveMsg] = useState<string | null>(null);
 
-  // Reset everything and start a fresh recording when the resolved problem changes.
+  // Initialise the workspace whenever the resolved problem (or resume target) changes.
+  // With ?session=<id> we reload that saved attempt to keep editing it; otherwise we
+  // start a fresh recording from the starter code.
   useEffect(() => {
-    if (problem) {
-      setCode(problem.starterCode[language] ?? '');
-      resetTimer();
-      resetExecution();
-      resetAi();
-      setCurrentSessionId(null);
-      setSaveMsg(null);
-      startRecording();
+    if (!problem) return;
+
+    if (resumeId) {
+      let cancelled = false;
+      getSession(resumeId)
+        .then((s) => {
+          if (cancelled) return;
+          if (!s) {
+            setSaveMsg('Could not load that session.');
+            return;
+          }
+          // Seed editor + timer from the saved attempt, then resume recording on top
+          // of its keystrokes so the replay reconstructs old + new edits in order.
+          setLanguage(s.language);
+          setCode(s.code ?? '');
+          setElapsedMs(s.durationMs ?? 0);
+          resetExecution();
+          resetAi();
+          setCurrentSessionId(s.id);
+          setSaveMsg('Resumed — edit and Save to update.');
+          resumeRecording(s.keystrokes);
+        })
+        .catch((err) => {
+          if (!cancelled) setSaveMsg(err instanceof Error ? err.message : String(err));
+        });
+      return () => {
+        cancelled = true;
+      };
     }
+
+    setCode(problem.starterCode[language] ?? '');
+    resetTimer();
+    resetExecution();
+    resetAi();
+    setCurrentSessionId(null);
+    setSaveMsg(null);
+    startRecording();
     // language switches are handled in LanguageSelect, so only depend on the problem id.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [problem?.id]);
+  }, [problem?.id, resumeId]);
 
   async function handleSave() {
     if (!problem) return;
@@ -76,16 +112,20 @@ export function SessionPage() {
     try {
       const allPassed =
         !!results && results.length > 0 && results.every((r) => r.verdict === 'pass');
-      const saved = await saveSession({
+      const input = {
         problemId: problem.id,
         language,
         code,
-        status: allPassed ? 'solved' : 'in_progress',
+        status: (allPassed ? 'solved' : 'in_progress') as 'solved' | 'in_progress',
         durationMs: elapsedMs,
         keystrokes: useKeystrokeStore.getState().events,
-      });
+      };
+      // Update the existing row when we're editing a saved attempt; insert otherwise.
+      const saved = currentSessionId
+        ? await updateSession(currentSessionId, input)
+        : await saveSession(input);
       setCurrentSessionId(saved.id);
-      setSaveMsg('Saved');
+      setSaveMsg(currentSessionId ? 'Updated' : 'Saved');
     } catch (err) {
       setSaveMsg(err instanceof Error ? err.message : String(err));
     } finally {
