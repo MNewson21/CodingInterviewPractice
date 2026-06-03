@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 import { problems } from '../features/problems/problems.data';
+import { useAuth, signOut } from '../lib/auth';
+import { SessionHistory } from '../features/sessions/SessionHistory';
 
 const difficultyColor: Record<string, string> = {
   easy: 'text-green-400',
@@ -8,13 +10,38 @@ const difficultyColor: Record<string, string> = {
 };
 
 export function HomePage() {
+  const { user, loading } = useAuth();
+
   return (
     <div className="min-h-full bg-zinc-950 text-zinc-100">
       <div className="mx-auto max-w-3xl px-6 py-10">
-        <h1 className="text-2xl font-bold">Mock Interview IDE</h1>
-        <p className="mt-1 text-sm text-zinc-400">
-          Pick a problem to start a practice session.
-        </p>
+        <div className="flex items-start justify-between">
+          <div>
+            <h1 className="text-2xl font-bold">Mock Interview IDE</h1>
+            <p className="mt-1 text-sm text-zinc-400">
+              Pick a problem to start a practice session.
+            </p>
+          </div>
+          <div className="text-right text-sm">
+            {loading ? null : user ? (
+              <div className="flex flex-col items-end gap-1">
+                <span className="text-xs text-zinc-400">{user.email}</span>
+                <button
+                  type="button"
+                  onClick={() => signOut()}
+                  className="text-xs text-zinc-400 hover:text-zinc-100"
+                >
+                  Sign out
+                </button>
+              </div>
+            ) : (
+              <Link to="/auth" className="text-sm text-blue-400 hover:underline">
+                Sign in
+              </Link>
+            )}
+          </div>
+        </div>
+
         <ul className="mt-6 divide-y divide-zinc-800 rounded-lg border border-zinc-800">
           {problems.map((p) => (
             <li key={p.id}>
@@ -30,6 +57,13 @@ export function HomePage() {
             </li>
           ))}
         </ul>
+
+        {user && (
+          <section className="mt-10">
+            <h2 className="mb-3 text-sm font-semibold text-zinc-300">Your recent sessions</h2>
+            <SessionHistory />
+          </section>
+        )}
       </div>
     </div>
   );
