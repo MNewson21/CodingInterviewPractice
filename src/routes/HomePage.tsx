@@ -1,9 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { problems } from '../features/problems/problems.data';
 import { useAuth, signOut } from '../lib/auth';
 import { SessionHistory } from '../features/sessions/SessionHistory';
 import { ImportDropzone } from '../features/problems/ImportDropzone';
+import { ProblemForm } from '../features/problems/ProblemForm';
 import { MyProblems } from '../features/problems/MyProblems';
 import { useProblemsStore } from '../stores/useProblemsStore';
 
@@ -16,6 +17,7 @@ const difficultyColor: Record<string, string> = {
 export function HomePage() {
   const { user, loading } = useAuth();
   const loadCustom = useProblemsStore((s) => s.load);
+  const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
     if (user) loadCustom();
@@ -62,8 +64,21 @@ export function HomePage() {
         {user && (
           <>
             <section className="mt-10">
-              <h2 className="mb-3 text-sm font-semibold text-zinc-300">Your problems</h2>
-              <ImportDropzone />
+              <div className="mb-3 flex items-center justify-between">
+                <h2 className="text-sm font-semibold text-zinc-300">Your problems</h2>
+                <button
+                  type="button"
+                  onClick={() => setShowForm((v) => !v)}
+                  className="text-xs text-emerald-400 hover:underline"
+                >
+                  {showForm ? 'Close' : '+ Create a problem'}
+                </button>
+              </div>
+              {showForm ? (
+                <ProblemForm onCreated={() => setShowForm(false)} />
+              ) : (
+                <ImportDropzone />
+              )}
               <div className="mt-3">
                 <MyProblems />
               </div>
