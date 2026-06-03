@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import type { Language } from '../types/problem';
+import { ENABLED_LANGUAGES } from '../lib/languages';
 
 interface EditorState {
   code: string;
@@ -10,7 +11,7 @@ interface EditorState {
 
 export const useEditorStore = create<EditorState>((set) => ({
   code: '',
-  language: 'javascript',
+  language: ENABLED_LANGUAGES[0],
   setCode: (code) => set({ code }),
   setLanguage: (language) => set({ language }),
 }));

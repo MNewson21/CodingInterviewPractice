@@ -1,13 +1,6 @@
 import { useEditorStore } from '../../stores/useEditorStore';
+import { ENABLED_LANGUAGES, LANGUAGE_LABELS } from '../../lib/languages';
 import type { Language, Problem } from '../../types/problem';
-
-const LANGUAGES: { value: Language; label: string }[] = [
-  { value: 'javascript', label: 'JavaScript' },
-  { value: 'typescript', label: 'TypeScript' },
-  { value: 'python', label: 'Python' },
-  { value: 'java', label: 'Java' },
-  { value: 'cpp', label: 'C++' },
-];
 
 export function LanguageSelect({ problem }: { problem: Problem }) {
   const language = useEditorStore((s) => s.language);
@@ -24,10 +17,11 @@ export function LanguageSelect({ problem }: { problem: Problem }) {
       value={language}
       onChange={(e) => handleChange(e.target.value as Language)}
       className="rounded border border-zinc-700 bg-zinc-800 px-2 py-1 text-sm text-zinc-100"
+      aria-label="Language"
     >
-      {LANGUAGES.map((l) => (
-        <option key={l.value} value={l.value}>
-          {l.label}
+      {ENABLED_LANGUAGES.map((l) => (
+        <option key={l} value={l}>
+          {LANGUAGE_LABELS[l]}
         </option>
       ))}
     </select>

@@ -22,7 +22,13 @@ The container ships empty — install the runtimes via the package API:
 ./scripts/setup-piston.sh https://piston.example.com/api/v2/piston
 ```
 
-Installs: Python, Node (JavaScript), TypeScript, Java, GCC (C/C++).
+Installs a LIGHT default set: Python, Node (JavaScript), TypeScript — low memory,
+fine on a small box (e.g. AWS t3.micro). To add the heavy compilers on a larger
+instance:
+
+```bash
+PISTON_PACKAGES="python node typescript java gcc" ./scripts/setup-piston.sh
+```
 
 ## 3. Point the app at it
 
