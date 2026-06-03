@@ -34,6 +34,7 @@ export function RunPanel({ problem }: { problem: Problem }) {
 
   const passed = results?.filter((r) => r.verdict === 'pass').length ?? 0;
   const total = results?.length ?? 0;
+  const pct = total ? (passed / total) * 100 : 0;
 
   return (
     <div className="flex h-full flex-col border-t border-zinc-800 bg-zinc-950">
@@ -56,7 +57,17 @@ export function RunPanel({ problem }: { problem: Problem }) {
         <span className="text-xs text-zinc-600">via Piston</span>
       </div>
 
-      <div className="min-h-0 flex-1 overflow-y-auto px-4 pb-4">
+      {/* Closeness signal: share of test cases passing. */}
+      {results && (
+        <div className="h-1 w-full bg-zinc-800">
+          <div
+            className={`h-full transition-all ${pct === 100 ? 'bg-green-500' : 'bg-emerald-500'}`}
+            style={{ width: `${pct}%` }}
+          />
+        </div>
+      )}
+
+      <div className="min-h-0 flex-1 overflow-y-auto px-4 pb-4 pt-2">
         {error && (
           <p className="rounded border border-red-900 bg-red-950/40 p-2 text-xs text-red-300">
             {error}

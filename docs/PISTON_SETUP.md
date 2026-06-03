@@ -40,3 +40,13 @@ Restart `npm run dev`. The Run panel now executes against your Piston instance.
   everyone else, `VITE_PISTON_URL` is required.
 - Hosting for a live portfolio demo: run Piston on a small VPS (or Fly.io /
   Railway) and set `VITE_PISTON_URL` to that host.
+
+## Dev: avoiding CORS (Vite proxy)
+In development the app calls a same-origin path and Vite proxies it to Piston, so
+the browser never makes a cross-origin request:
+
+- `vite.config.ts` proxies `/piston/*` -> `http://localhost:2000/*`
+- `.env.local` sets `VITE_PISTON_URL=/piston/api/v2/piston`
+
+If you later host Piston publicly, set `VITE_PISTON_URL` to its full URL instead,
+and make sure that host returns CORS headers (or sits behind your own proxy).

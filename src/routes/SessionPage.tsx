@@ -6,6 +6,8 @@ import { CodeEditor } from '../features/editor/CodeEditor';
 import { LanguageSelect } from '../features/editor/LanguageSelect';
 import { Timer } from '../features/timer/Timer';
 import { RunPanel } from '../features/execution/RunPanel';
+import { ComplexityBadge } from '../features/analysis/ComplexityBadge';
+import { AiPanel } from '../features/ai/AiPanel';
 import { saveSession } from '../features/sessions/sessions.api';
 import { useAuth } from '../lib/auth';
 import { useEditorStore } from '../stores/useEditorStore';
@@ -13,6 +15,7 @@ import { useTimerStore } from '../stores/useTimerStore';
 import { useExecutionStore } from '../stores/useExecutionStore';
 import { useSessionStore } from '../stores/useSessionStore';
 import { useKeystrokeStore } from '../stores/useKeystrokeStore';
+import { useAiStore } from '../stores/useAiStore';
 
 export function SessionPage() {
   const { problemId } = useParams();
@@ -30,15 +33,17 @@ export function SessionPage() {
   const setSaving = useSessionStore((s) => s.setSaving);
   const setCurrentSessionId = useSessionStore((s) => s.setCurrentSessionId);
   const startRecording = useKeystrokeStore((s) => s.startRecording);
+  const resetAi = useAiStore((s) => s.reset);
 
   const [saveMsg, setSaveMsg] = useState<string | null>(null);
 
-  // Reset editor, timer, results and start a fresh recording when the problem changes.
+  // Reset everything and start a fresh recording when the problem changes.
   useEffect(() => {
     if (problem) {
       setCode(problem.starterCode[language] ?? '');
       resetTimer();
       resetExecution();
+      resetAi();
       setCurrentSessionId(null);
       setSaveMsg(null);
       startRecording();
@@ -115,8 +120,10 @@ export function SessionPage() {
       <div className="flex min-h-0 flex-1">
         <section className="w-2/5 min-w-[320px] overflow-y-auto border-r border-zinc-800">
           <ProblemPanel problem={problem} />
+          <AiPanel problem={problem} />
         </section>
         <section className="flex min-w-0 flex-1 flex-col">
+          <ComplexityBadge />
           <div className="min-h-0 flex-1">
             <CodeEditor />
           </div>
