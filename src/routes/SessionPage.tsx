@@ -5,8 +5,10 @@ import { ProblemPanel } from '../features/problems/ProblemPanel';
 import { CodeEditor } from '../features/editor/CodeEditor';
 import { LanguageSelect } from '../features/editor/LanguageSelect';
 import { Timer } from '../features/timer/Timer';
+import { RunPanel } from '../features/execution/RunPanel';
 import { useEditorStore } from '../stores/useEditorStore';
 import { useTimerStore } from '../stores/useTimerStore';
+import { useExecutionStore } from '../stores/useExecutionStore';
 
 export function SessionPage() {
   const { problemId } = useParams();
@@ -14,12 +16,14 @@ export function SessionPage() {
   const language = useEditorStore((s) => s.language);
   const setCode = useEditorStore((s) => s.setCode);
   const resetTimer = useTimerStore((s) => s.reset);
+  const resetExecution = useExecutionStore((s) => s.reset);
 
-  // Seed the editor with starter code and reset the timer when the problem changes.
+  // Reset editor, timer and results when the problem changes.
   useEffect(() => {
     if (problem) {
       setCode(problem.starterCode[language] ?? '');
       resetTimer();
+      resetExecution();
     }
     // language switches are handled in LanguageSelect, so only depend on the problem id.
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -55,8 +59,13 @@ export function SessionPage() {
         <section className="w-2/5 min-w-[320px] overflow-y-auto border-r border-zinc-800">
           <ProblemPanel problem={problem} />
         </section>
-        <section className="min-w-0 flex-1">
-          <CodeEditor />
+        <section className="flex min-w-0 flex-1 flex-col">
+          <div className="min-h-0 flex-1">
+            <CodeEditor />
+          </div>
+          <div className="h-72 shrink-0">
+            <RunPanel problem={problem} />
+          </div>
         </section>
       </div>
     </div>
