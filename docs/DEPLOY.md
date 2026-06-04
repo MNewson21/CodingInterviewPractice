@@ -47,10 +47,16 @@ Only the EC2 box costs money. Tear it down when the demo is over (see end).
 > You never buy EC2 up front — it's **pay-as-you-go by the hour**, and you terminate
 > when done. So you can validate the whole Piston setup for ~$0 first:
 >
-> - **Free credits:** new AWS accounts get a credit-based free plan (~$100, up to
->   $200 after setup activities, ~6 months). That easily covers this. *(Exact terms
->   change — confirm on the signup page. Older accounts may instead have the legacy
->   12-month / 750-hours-per-month micro tier.)*
+> - **Free credits:** new AWS accounts (created on/after 2025-07-15) get a credit-based
+>   free plan: **$100 on sign-up + up to $100 more** earned in $20 chunks for setup
+>   activities (one of which is *launching + terminating an EC2 instance* — i.e. this
+>   test earns credit), expiring after **6 months or when credits run out**. That easily
+>   covers this. *(Exact terms change — confirm on the signup page. Older accounts may
+>   instead have the legacy 12-month / 750-hours-per-month micro tier.)*
+> - **Choose the "Free account plan" at sign-up** (not the Paid plan). On the free plan
+>   AWS **won't charge you at all** — when credits/time run out, services simply stop
+>   instead of billing your card. This is the safety net for a throwaway test. (Separate
+>   from the **Basic (free) support plan** in step 1 — pick both.)
 > - **Use `t3.micro` (1 GB) for testing.** It's free-tier-eligible and is enough for
 >   the **light language set this app uses (Python + JS + TS)** — `setup-piston.sh`'s
 >   default. You only need `t3.small` (Part C1) once you add heavy compilers (C++/Java).
