@@ -3,11 +3,21 @@
     "id": "two-sum",
     "title": "Two Sum",
     "difficulty": "easy",
-    "tags": ["array", "hash-map"],
+    "tags": [
+      "array",
+      "hash-map"
+    ],
     "description": "Given an array of integers nums and an integer target, return the indices of the two numbers that add up to target.\n\nYou may assume each input has exactly one solution, and you may not use the same element twice.\n\nInput: line 1 is the array as JSON, line 2 is the target.\nOutput: the two indices as a JSON array, e.g. [0,1].",
     "examples": [
-      { "input": "nums = [2,7,11,15], target = 9", "output": "[0,1]", "explanation": "nums[0] + nums[1] == 9." },
-      { "input": "nums = [3,2,4], target = 6", "output": "[1,2]" }
+      {
+        "input": "nums = [2,7,11,15], target = 9",
+        "output": "[0,1]",
+        "explanation": "nums[0] + nums[1] == 9."
+      },
+      {
+        "input": "nums = [3,2,4], target = 6",
+        "output": "[1,2]"
+      }
     ],
     "constraints": [
       "2 <= nums.length <= 10^4",
@@ -19,20 +29,50 @@
       "typescript": "function twoSum(nums: number[], target: number): number[] {\n  // your code here\n  return [];\n}\n",
       "python": "def two_sum(nums, target):\n    # your code here\n    pass\n"
     },
+    "harness": {
+      "javascript": "const __lines = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nconsole.log(JSON.stringify(twoSum(JSON.parse(__lines[0]), parseInt(__lines[1], 10))));\n",
+      "typescript": "const __lines = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nconsole.log(JSON.stringify(twoSum(JSON.parse(__lines[0]), parseInt(__lines[1], 10))));\n",
+      "python": "import sys, json\n__lines = sys.stdin.read().splitlines()\nprint(json.dumps(two_sum(json.loads(__lines[0]), int(__lines[1])), separators=(\",\", \":\")))\n"
+    },
+    "params": [
+      {
+        "name": "nums"
+      },
+      {
+        "name": "target"
+      }
+    ],
     "testCases": [
-      { "name": "example 1", "stdin": "[2,7,11,15]\n9\n", "expectedStdout": "[0,1]" },
-      { "name": "example 2", "stdin": "[3,2,4]\n6\n", "expectedStdout": "[1,2]" }
+      {
+        "name": "example 1",
+        "stdin": "[2,7,11,15]\n9\n",
+        "expectedStdout": "[0,1]"
+      },
+      {
+        "name": "example 2",
+        "stdin": "[3,2,4]\n6\n",
+        "expectedStdout": "[1,2]"
+      }
     ]
   },
   {
     "id": "valid-parentheses",
     "title": "Valid Parentheses",
     "difficulty": "easy",
-    "tags": ["stack", "string"],
+    "tags": [
+      "stack",
+      "string"
+    ],
     "description": "Given a string s containing just the characters '()[]{}', determine if the input string is valid.\n\nAn input string is valid if open brackets are closed by the same type of bracket and in the correct order.\n\nOutput: 'true' or 'false'.",
     "examples": [
-      { "input": "s = \"()[]{}\"", "output": "true" },
-      { "input": "s = \"([)]\"", "output": "false" }
+      {
+        "input": "s = \"()[]{}\"",
+        "output": "true"
+      },
+      {
+        "input": "s = \"([)]\"",
+        "output": "false"
+      }
     ],
     "constraints": [
       "1 <= s.length <= 10^4",
@@ -43,19 +83,44 @@
       "typescript": "function isValid(s: string): boolean {\n  // your code here\n  return false;\n}\n",
       "python": "def is_valid(s):\n    # your code here\n    pass\n"
     },
+    "harness": {
+      "javascript": "const __s = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0];\nconsole.log(isValid(__s));\n",
+      "typescript": "const __s = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0];\nconsole.log(isValid(__s));\n",
+      "python": "import sys\n__lines = sys.stdin.read().splitlines()\n__s = __lines[0] if __lines else \"\"\nprint(\"true\" if is_valid(__s) else \"false\")\n"
+    },
+    "params": [
+      {
+        "name": "s",
+        "quote": true
+      }
+    ],
     "testCases": [
-      { "name": "balanced", "stdin": "()[]{}\n", "expectedStdout": "true" },
-      { "name": "interleaved", "stdin": "([)]\n", "expectedStdout": "false" }
+      {
+        "name": "balanced",
+        "stdin": "()[]{}\n",
+        "expectedStdout": "true"
+      },
+      {
+        "name": "interleaved",
+        "stdin": "([)]\n",
+        "expectedStdout": "false"
+      }
     ]
   },
   {
     "id": "reverse-string",
     "title": "Reverse String",
     "difficulty": "easy",
-    "tags": ["string", "two-pointers"],
+    "tags": [
+      "string",
+      "two-pointers"
+    ],
     "description": "Write a function that reverses a string. The input is a single line of text. Output the reversed string.",
     "examples": [
-      { "input": "s = \"hello\"", "output": "olleh" }
+      {
+        "input": "s = \"hello\"",
+        "output": "olleh"
+      }
     ],
     "constraints": [
       "1 <= s.length <= 10^5"
@@ -65,19 +130,46 @@
       "typescript": "function reverseString(s: string): string {\n  // your code here\n  return '';\n}\n",
       "python": "def reverse_string(s):\n    # your code here\n    pass\n"
     },
+    "harness": {
+      "javascript": "const __s = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0];\nconsole.log(reverseString(__s));\n",
+      "typescript": "const __s = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0];\nconsole.log(reverseString(__s));\n",
+      "python": "import sys\n__lines = sys.stdin.read().splitlines()\n__s = __lines[0] if __lines else \"\"\nprint(reverse_string(__s))\n"
+    },
+    "params": [
+      {
+        "name": "s",
+        "quote": true
+      }
+    ],
     "testCases": [
-      { "name": "basic", "stdin": "hello\n", "expectedStdout": "olleh" }
+      {
+        "name": "basic",
+        "stdin": "hello\n",
+        "expectedStdout": "olleh"
+      }
     ]
   },
   {
     "id": "maximum-subarray",
     "title": "Maximum Subarray",
     "difficulty": "medium",
-    "tags": ["array", "dynamic-programming", "divide-and-conquer"],
+    "tags": [
+      "array",
+      "dynamic-programming",
+      "divide-and-conquer"
+    ],
     "description": "Given an integer array nums, find the contiguous subarray (containing at least one number) with the largest sum and return that sum.\n\nInput: a single line containing the array as JSON, e.g. [-2,1,-3].\nOutput: the maximum subarray sum as a single integer.",
     "examples": [
-      { "input": "nums = [-2,1,-3,4,-1,2,1,-5,4]", "output": "6", "explanation": "The subarray [4,-1,2,1] has the largest sum 6." },
-      { "input": "nums = [5,4,-1,7,8]", "output": "23", "explanation": "The whole array sums to 23." }
+      {
+        "input": "nums = [-2,1,-3,4,-1,2,1,-5,4]",
+        "output": "6",
+        "explanation": "The subarray [4,-1,2,1] has the largest sum 6."
+      },
+      {
+        "input": "nums = [5,4,-1,7,8]",
+        "output": "23",
+        "explanation": "The whole array sums to 23."
+      }
     ],
     "constraints": [
       "1 <= nums.length <= 10^5",
@@ -88,23 +180,65 @@
       "typescript": "function maxSubArray(nums: number[]): number {\n  // your code here\n  return 0;\n}\n",
       "python": "def max_sub_array(nums):\n    # your code here\n    pass\n"
     },
+    "harness": {
+      "javascript": "const __nums = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(maxSubArray(__nums));\n",
+      "typescript": "const __nums = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(maxSubArray(__nums));\n",
+      "python": "import sys, json\n__nums = json.loads(sys.stdin.read().splitlines()[0])\nprint(max_sub_array(__nums))\n"
+    },
+    "params": [
+      {
+        "name": "nums"
+      }
+    ],
     "testCases": [
-      { "name": "mixed signs", "stdin": "[-2,1,-3,4,-1,2,1,-5,4]\n", "expectedStdout": "6" },
-      { "name": "single element", "stdin": "[1]\n", "expectedStdout": "1" },
-      { "name": "all useful", "stdin": "[5,4,-1,7,8]\n", "expectedStdout": "23" },
-      { "name": "all negative", "stdin": "[-2,-1]\n", "expectedStdout": "-1" }
+      {
+        "name": "mixed signs",
+        "stdin": "[-2,1,-3,4,-1,2,1,-5,4]\n",
+        "expectedStdout": "6"
+      },
+      {
+        "name": "single element",
+        "stdin": "[1]\n",
+        "expectedStdout": "1"
+      },
+      {
+        "name": "all useful",
+        "stdin": "[5,4,-1,7,8]\n",
+        "expectedStdout": "23"
+      },
+      {
+        "name": "all negative",
+        "stdin": "[-2,-1]\n",
+        "expectedStdout": "-1"
+      }
     ]
   },
   {
     "id": "longest-substring-no-repeat",
     "title": "Longest Substring Without Repeating Characters",
     "difficulty": "medium",
-    "tags": ["string", "sliding-window", "hash-map"],
+    "tags": [
+      "string",
+      "sliding-window",
+      "hash-map"
+    ],
     "description": "Given a string s, return the length of the longest substring that contains no repeating characters.\n\nInput: a single line containing the string s (it may be empty). The test strings contain no spaces.\nOutput: the length as a single integer.",
     "examples": [
-      { "input": "s = \"abcabcbb\"", "output": "3", "explanation": "The answer is \"abc\", with length 3." },
-      { "input": "s = \"bbbbb\"", "output": "1", "explanation": "The answer is \"b\", with length 1." },
-      { "input": "s = \"pwwkew\"", "output": "3", "explanation": "The answer is \"wke\". Note \"pwke\" is a subsequence, not a substring." }
+      {
+        "input": "s = \"abcabcbb\"",
+        "output": "3",
+        "explanation": "The answer is \"abc\", with length 3."
+      },
+      {
+        "input": "s = \"bbbbb\"",
+        "output": "1",
+        "explanation": "The answer is \"b\", with length 1."
+      },
+      {
+        "input": "s = \"pwwkew\"",
+        "output": "3",
+        "explanation": "The answer is \"wke\". Note \"pwke\" is a subsequence, not a substring."
+      }
     ],
     "constraints": [
       "0 <= s.length <= 5 * 10^4",
@@ -115,23 +249,65 @@
       "typescript": "function lengthOfLongestSubstring(s: string): number {\n  // your code here\n  return 0;\n}\n",
       "python": "def length_of_longest_substring(s):\n    # your code here\n    pass\n"
     },
+    "harness": {
+      "javascript": "const __s = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0];\nconsole.log(lengthOfLongestSubstring(__s));\n",
+      "typescript": "const __s = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0];\nconsole.log(lengthOfLongestSubstring(__s));\n",
+      "python": "import sys\n__lines = sys.stdin.read().splitlines()\n__s = __lines[0] if __lines else \"\"\nprint(length_of_longest_substring(__s))\n"
+    },
+    "params": [
+      {
+        "name": "s",
+        "quote": true
+      }
+    ],
     "testCases": [
-      { "name": "abcabcbb", "stdin": "abcabcbb\n", "expectedStdout": "3" },
-      { "name": "all same", "stdin": "bbbbb\n", "expectedStdout": "1" },
-      { "name": "pwwkew", "stdin": "pwwkew\n", "expectedStdout": "3" },
-      { "name": "dvdf", "stdin": "dvdf\n", "expectedStdout": "3" },
-      { "name": "abba", "stdin": "abba\n", "expectedStdout": "2" }
+      {
+        "name": "abcabcbb",
+        "stdin": "abcabcbb\n",
+        "expectedStdout": "3"
+      },
+      {
+        "name": "all same",
+        "stdin": "bbbbb\n",
+        "expectedStdout": "1"
+      },
+      {
+        "name": "pwwkew",
+        "stdin": "pwwkew\n",
+        "expectedStdout": "3"
+      },
+      {
+        "name": "dvdf",
+        "stdin": "dvdf\n",
+        "expectedStdout": "3"
+      },
+      {
+        "name": "abba",
+        "stdin": "abba\n",
+        "expectedStdout": "2"
+      }
     ]
   },
   {
     "id": "house-robber",
     "title": "House Robber",
     "difficulty": "medium",
-    "tags": ["array", "dynamic-programming"],
+    "tags": [
+      "array",
+      "dynamic-programming"
+    ],
     "description": "You are a robber planning to rob houses along a street. Each house has some money, but adjacent houses have connected security systems that trigger if two adjacent houses are robbed on the same night.\n\nGiven an integer array nums representing the money in each house, return the maximum amount you can rob without alerting the police.\n\nInput: a single line containing the array as JSON.\nOutput: the maximum amount as a single integer.",
     "examples": [
-      { "input": "nums = [1,2,3,1]", "output": "4", "explanation": "Rob house 0 (1) and house 2 (3): total 4." },
-      { "input": "nums = [2,7,9,3,1]", "output": "12", "explanation": "Rob houses 0, 2 and 4: 2 + 9 + 1 = 12." }
+      {
+        "input": "nums = [1,2,3,1]",
+        "output": "4",
+        "explanation": "Rob house 0 (1) and house 2 (3): total 4."
+      },
+      {
+        "input": "nums = [2,7,9,3,1]",
+        "output": "12",
+        "explanation": "Rob houses 0, 2 and 4: 2 + 9 + 1 = 12."
+      }
     ],
     "constraints": [
       "1 <= nums.length <= 100",
@@ -142,22 +318,60 @@
       "typescript": "function rob(nums: number[]): number {\n  // your code here\n  return 0;\n}\n",
       "python": "def rob(nums):\n    # your code here\n    pass\n"
     },
+    "harness": {
+      "javascript": "const __nums = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(rob(__nums));\n",
+      "typescript": "const __nums = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(rob(__nums));\n",
+      "python": "import sys, json\n__nums = json.loads(sys.stdin.read().splitlines()[0])\nprint(rob(__nums))\n"
+    },
+    "params": [
+      {
+        "name": "nums"
+      }
+    ],
     "testCases": [
-      { "name": "example 1", "stdin": "[1,2,3,1]\n", "expectedStdout": "4" },
-      { "name": "example 2", "stdin": "[2,7,9,3,1]\n", "expectedStdout": "12" },
-      { "name": "single house", "stdin": "[5]\n", "expectedStdout": "5" },
-      { "name": "ends win", "stdin": "[2,1,1,2]\n", "expectedStdout": "4" }
+      {
+        "name": "example 1",
+        "stdin": "[1,2,3,1]\n",
+        "expectedStdout": "4"
+      },
+      {
+        "name": "example 2",
+        "stdin": "[2,7,9,3,1]\n",
+        "expectedStdout": "12"
+      },
+      {
+        "name": "single house",
+        "stdin": "[5]\n",
+        "expectedStdout": "5"
+      },
+      {
+        "name": "ends win",
+        "stdin": "[2,1,1,2]\n",
+        "expectedStdout": "4"
+      }
     ]
   },
   {
     "id": "coin-change",
     "title": "Coin Change",
     "difficulty": "medium",
-    "tags": ["array", "dynamic-programming", "breadth-first-search"],
+    "tags": [
+      "array",
+      "dynamic-programming",
+      "breadth-first-search"
+    ],
     "description": "You are given coins of different denominations and a total amount of money. Return the fewest number of coins needed to make up that amount. If it cannot be made from any combination of the coins, return -1. You have an unlimited number of each coin.\n\nInput: line 1 is the coins array as JSON; line 2 is the target amount.\nOutput: the fewest number of coins (or -1) as a single integer.",
     "examples": [
-      { "input": "coins = [1,2,5], amount = 11", "output": "3", "explanation": "11 = 5 + 5 + 1." },
-      { "input": "coins = [2], amount = 3", "output": "-1", "explanation": "3 cannot be made from only 2s." }
+      {
+        "input": "coins = [1,2,5], amount = 11",
+        "output": "3",
+        "explanation": "11 = 5 + 5 + 1."
+      },
+      {
+        "input": "coins = [2], amount = 3",
+        "output": "-1",
+        "explanation": "3 cannot be made from only 2s."
+      }
     ],
     "constraints": [
       "1 <= coins.length <= 12",
@@ -169,23 +383,69 @@
       "typescript": "function coinChange(coins: number[], amount: number): number {\n  // your code here\n  return -1;\n}\n",
       "python": "def coin_change(coins, amount):\n    # your code here\n    pass\n"
     },
+    "harness": {
+      "javascript": "const __lines = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nconsole.log(coinChange(JSON.parse(__lines[0]), parseInt(__lines[1], 10)));\n",
+      "typescript": "const __lines = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nconsole.log(coinChange(JSON.parse(__lines[0]), parseInt(__lines[1], 10)));\n",
+      "python": "import sys, json\n__lines = sys.stdin.read().splitlines()\nprint(coin_change(json.loads(__lines[0]), int(__lines[1])))\n"
+    },
+    "params": [
+      {
+        "name": "coins"
+      },
+      {
+        "name": "amount"
+      }
+    ],
     "testCases": [
-      { "name": "example 1", "stdin": "[1,2,5]\n11\n", "expectedStdout": "3" },
-      { "name": "impossible", "stdin": "[2]\n3\n", "expectedStdout": "-1" },
-      { "name": "zero amount", "stdin": "[1]\n0\n", "expectedStdout": "0" },
-      { "name": "mixed", "stdin": "[2,5,10,1]\n27\n", "expectedStdout": "4" },
-      { "name": "small", "stdin": "[1,2,5]\n3\n", "expectedStdout": "2" }
+      {
+        "name": "example 1",
+        "stdin": "[1,2,5]\n11\n",
+        "expectedStdout": "3"
+      },
+      {
+        "name": "impossible",
+        "stdin": "[2]\n3\n",
+        "expectedStdout": "-1"
+      },
+      {
+        "name": "zero amount",
+        "stdin": "[1]\n0\n",
+        "expectedStdout": "0"
+      },
+      {
+        "name": "mixed",
+        "stdin": "[2,5,10,1]\n27\n",
+        "expectedStdout": "4"
+      },
+      {
+        "name": "small",
+        "stdin": "[1,2,5]\n3\n",
+        "expectedStdout": "2"
+      }
     ]
   },
   {
     "id": "number-of-islands",
     "title": "Number of Islands",
     "difficulty": "medium",
-    "tags": ["grid", "depth-first-search", "breadth-first-search", "union-find"],
-    "description": "Given a 2D grid of '1' (land) and '0' (water), count the number of islands. An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically (not diagonally). The grid edges are all surrounded by water.\n\nInput: line 1 is the number of rows m; the next m lines are each a row of '0' and '1' characters.\nOutput: the number of islands as a single integer.",
+    "tags": [
+      "grid",
+      "depth-first-search",
+      "breadth-first-search",
+      "union-find"
+    ],
+    "description": "Given a 2D grid of \"1\" (land) and \"0\" (water), count the number of islands. An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically (not diagonally).\n\nInput: a single line containing the grid as a JSON array of row strings, e.g. [\"11110\",\"11010\"].\nOutput: the number of islands as a single integer.",
     "examples": [
-      { "input": "11110\n11010\n11000\n00000", "output": "1", "explanation": "All the land cells are connected into one island." },
-      { "input": "11000\n11000\n00100\n00011", "output": "3", "explanation": "Three separate land groups." }
+      {
+        "input": "grid = [\"11110\",\"11010\",\"11000\",\"00000\"]",
+        "output": "1",
+        "explanation": "All the land cells are connected into one island."
+      },
+      {
+        "input": "grid = [\"11000\",\"11000\",\"00100\",\"00011\"]",
+        "output": "3",
+        "explanation": "Three separate land groups."
+      }
     ],
     "constraints": [
       "1 <= m, n <= 300",
@@ -196,23 +456,65 @@
       "typescript": "function numIslands(grid: string[]): number {\n  // grid is an array of strings; return the island count\n  // your code here\n  return 0;\n}\n",
       "python": "def num_islands(grid):\n    # grid is a list of strings; return the island count\n    # your code here\n    pass\n"
     },
+    "harness": {
+      "javascript": "const __grid = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(numIslands(__grid));\n",
+      "typescript": "const __grid = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(numIslands(__grid));\n",
+      "python": "import sys, json\n__grid = json.loads(sys.stdin.read().splitlines()[0])\nprint(num_islands(__grid))\n"
+    },
+    "params": [
+      {
+        "name": "grid"
+      }
+    ],
     "testCases": [
-      { "name": "one island", "stdin": "4\n11110\n11010\n11000\n00000\n", "expectedStdout": "1" },
-      { "name": "three islands", "stdin": "4\n11000\n11000\n00100\n00011\n", "expectedStdout": "3" },
-      { "name": "single land", "stdin": "1\n1\n", "expectedStdout": "1" },
-      { "name": "single water", "stdin": "1\n0\n", "expectedStdout": "0" },
-      { "name": "checkerboard", "stdin": "3\n101\n010\n101\n", "expectedStdout": "5" }
+      {
+        "name": "one island",
+        "stdin": "[\"11110\",\"11010\",\"11000\",\"00000\"]\n",
+        "expectedStdout": "1"
+      },
+      {
+        "name": "three islands",
+        "stdin": "[\"11000\",\"11000\",\"00100\",\"00011\"]\n",
+        "expectedStdout": "3"
+      },
+      {
+        "name": "single land",
+        "stdin": "[\"1\"]\n",
+        "expectedStdout": "1"
+      },
+      {
+        "name": "single water",
+        "stdin": "[\"0\"]\n",
+        "expectedStdout": "0"
+      },
+      {
+        "name": "checkerboard",
+        "stdin": "[\"101\",\"010\",\"101\"]\n",
+        "expectedStdout": "5"
+      }
     ]
   },
   {
     "id": "trapping-rain-water",
     "title": "Trapping Rain Water",
     "difficulty": "hard",
-    "tags": ["array", "two-pointers", "stack", "dynamic-programming"],
+    "tags": [
+      "array",
+      "two-pointers",
+      "stack",
+      "dynamic-programming"
+    ],
     "description": "Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it can trap after raining.\n\nInput: a single line containing the heights array as JSON.\nOutput: the total units of trapped water as a single integer.",
     "examples": [
-      { "input": "height = [0,1,0,2,1,0,1,3,2,1,2,1]", "output": "6", "explanation": "The elevation map traps 6 units of water." },
-      { "input": "height = [4,2,0,3,2,5]", "output": "9" }
+      {
+        "input": "height = [0,1,0,2,1,0,1,3,2,1,2,1]",
+        "output": "6",
+        "explanation": "The elevation map traps 6 units of water."
+      },
+      {
+        "input": "height = [4,2,0,3,2,5]",
+        "output": "9"
+      }
     ],
     "constraints": [
       "1 <= n <= 2 * 10^4",
@@ -223,23 +525,63 @@
       "typescript": "function trap(height: number[]): number {\n  // your code here\n  return 0;\n}\n",
       "python": "def trap(height):\n    # your code here\n    pass\n"
     },
+    "harness": {
+      "javascript": "const __height = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(trap(__height));\n",
+      "typescript": "const __height = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(trap(__height));\n",
+      "python": "import sys, json\n__height = json.loads(sys.stdin.read().splitlines()[0])\nprint(trap(__height))\n"
+    },
+    "params": [
+      {
+        "name": "height"
+      }
+    ],
     "testCases": [
-      { "name": "example 1", "stdin": "[0,1,0,2,1,0,1,3,2,1,2,1]\n", "expectedStdout": "6" },
-      { "name": "example 2", "stdin": "[4,2,0,3,2,5]\n", "expectedStdout": "9" },
-      { "name": "no basin", "stdin": "[1,1,1]\n", "expectedStdout": "0" },
-      { "name": "one dip", "stdin": "[5,4,1,2]\n", "expectedStdout": "1" },
-      { "name": "simple well", "stdin": "[2,0,2]\n", "expectedStdout": "2" }
+      {
+        "name": "example 1",
+        "stdin": "[0,1,0,2,1,0,1,3,2,1,2,1]\n",
+        "expectedStdout": "6"
+      },
+      {
+        "name": "example 2",
+        "stdin": "[4,2,0,3,2,5]\n",
+        "expectedStdout": "9"
+      },
+      {
+        "name": "no basin",
+        "stdin": "[1,1,1]\n",
+        "expectedStdout": "0"
+      },
+      {
+        "name": "one dip",
+        "stdin": "[5,4,1,2]\n",
+        "expectedStdout": "1"
+      },
+      {
+        "name": "simple well",
+        "stdin": "[2,0,2]\n",
+        "expectedStdout": "2"
+      }
     ]
   },
   {
     "id": "edit-distance",
     "title": "Edit Distance",
     "difficulty": "hard",
-    "tags": ["string", "dynamic-programming"],
+    "tags": [
+      "string",
+      "dynamic-programming"
+    ],
     "description": "Given two strings word1 and word2, return the minimum number of operations required to convert word1 into word2. The permitted operations are: insert a character, delete a character, or replace a character.\n\nInput: line 1 is word1; line 2 is word2.\nOutput: the minimum number of operations as a single integer.",
     "examples": [
-      { "input": "word1 = \"horse\", word2 = \"ros\"", "output": "3", "explanation": "horse -> rorse (replace h) -> rose (delete r) -> ros (delete e)." },
-      { "input": "word1 = \"intention\", word2 = \"execution\"", "output": "5" }
+      {
+        "input": "word1 = \"horse\", word2 = \"ros\"",
+        "output": "3",
+        "explanation": "horse -> rorse (replace h) -> rose (delete r) -> ros (delete e)."
+      },
+      {
+        "input": "word1 = \"intention\", word2 = \"execution\"",
+        "output": "5"
+      }
     ],
     "constraints": [
       "0 <= word1.length, word2.length <= 500",
@@ -250,12 +592,47 @@
       "typescript": "function minDistance(word1: string, word2: string): number {\n  // your code here\n  return 0;\n}\n",
       "python": "def min_distance(word1, word2):\n    # your code here\n    pass\n"
     },
+    "harness": {
+      "javascript": "const __lines = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nconsole.log(minDistance(__lines[0], __lines[1]));\n",
+      "typescript": "const __lines = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nconsole.log(minDistance(__lines[0], __lines[1]));\n",
+      "python": "import sys\n__lines = sys.stdin.read().splitlines()\nprint(min_distance(__lines[0], __lines[1]))\n"
+    },
+    "params": [
+      {
+        "name": "word1",
+        "quote": true
+      },
+      {
+        "name": "word2",
+        "quote": true
+      }
+    ],
     "testCases": [
-      { "name": "horse to ros", "stdin": "horse\nros\n", "expectedStdout": "3" },
-      { "name": "intention to execution", "stdin": "intention\nexecution\n", "expectedStdout": "5" },
-      { "name": "identical", "stdin": "abc\nabc\n", "expectedStdout": "0" },
-      { "name": "single replace", "stdin": "a\nb\n", "expectedStdout": "1" },
-      { "name": "sunday to saturday", "stdin": "sunday\nsaturday\n", "expectedStdout": "3" }
+      {
+        "name": "horse to ros",
+        "stdin": "horse\nros\n",
+        "expectedStdout": "3"
+      },
+      {
+        "name": "intention to execution",
+        "stdin": "intention\nexecution\n",
+        "expectedStdout": "5"
+      },
+      {
+        "name": "identical",
+        "stdin": "abc\nabc\n",
+        "expectedStdout": "0"
+      },
+      {
+        "name": "single replace",
+        "stdin": "a\nb\n",
+        "expectedStdout": "1"
+      },
+      {
+        "name": "sunday to saturday",
+        "stdin": "sunday\nsaturday\n",
+        "expectedStdout": "3"
+      }
     ]
   }
 ]

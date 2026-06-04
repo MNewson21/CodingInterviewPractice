@@ -9,6 +9,21 @@ const verdictStyle: Record<Verdict, string> = {
   error: 'text-yellow-400',
 };
 
+/**
+ * Render a test's stdin as named arguments (e.g. `word1="sunday", word2="saturday"`)
+ * using the problem's `params`. Falls back to the raw stdin when no params are given.
+ */
+function formatInput(input: string, params?: Problem['params']): string {
+  if (!params || params.length === 0) return input.trim() || '(none)';
+  const lines = input.replace(/\n+$/, '').split('\n');
+  return params
+    .map((p, i) => {
+      const value = lines[i] ?? '';
+      return `${p.name}=${p.quote ? `"${value}"` : value}`;
+    })
+    .join(', ');
+}
+
 export function RunPanel({ problem }: { problem: Problem }) {
   const code = useEditorStore((s) => s.code);
   const language = useEditorStore((s) => s.language);
@@ -23,7 +38,12 @@ export function RunPanel({ problem }: { problem: Problem }) {
     setRunning(true);
     setError(null);
     try {
-      const res = await runTests({ language, code, testCases: problem.testCases });
+      const res = await runTests({
+        language,
+        code,
+        testCases: problem.testCases,
+        harness: problem.harness,
+      });
       setResults(res);
     } catch (err) {
       setError(err instanceof Error ? err.message : String(err));
@@ -86,24 +106,26 @@ export function RunPanel({ problem }: { problem: Problem }) {
                     {r.verdict}
                   </span>
                 </div>
-                {r.verdict !== 'pass' && (
-                  <div className="mt-2 space-y-1 font-mono text-xs">
-                    <div>
-                      <span className="text-zinc-500">expected: </span>
-                      <span className="whitespace-pre-wrap text-zinc-300">{r.expected}</span>
-                    </div>
-                    <div>
-                      <span className="text-zinc-500">actual: </span>
-                      <span className="whitespace-pre-wrap text-zinc-300">{r.actual || '(empty)'}</span>
-                    </div>
-                    {r.stderr && (
-                      <div>
-                        <span className="text-zinc-500">stderr: </span>
-                        <span className="whitespace-pre-wrap text-red-300">{r.stderr}</span>
-                      </div>
-                    )}
+                <div className="mt-2 space-y-1 font-mono text-xs">
+                  <div>
+                    <span className="text-zinc-500">input: </span>
+                    <span className="whitespace-pre-wrap text-zinc-300">{formatInput(r.input, problem.params)}</span>
                   </div>
-                )}
+                  <div>
+                    <span className="text-zinc-500">expected: </span>
+                    <span className="whitespace-pre-wrap text-zinc-300">{r.expected || '(empty)'}</span>
+                  </div>
+                  <div>
+                    <span className="text-zinc-500">actual: </span>
+                    <span className="whitespace-pre-wrap text-zinc-300">{r.actual || '(empty)'}</span>
+                  </div>
+                  {r.stderr && (
+                    <div>
+                      <span className="text-zinc-500">stderr: </span>
+                      <span className="whitespace-pre-wrap text-red-300">{r.stderr}</span>
+                    </div>
+                  )}
+                </div>
               </li>
             ))}
           </ul>
