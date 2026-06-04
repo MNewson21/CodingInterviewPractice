@@ -78,6 +78,29 @@ export function parseProblemData(text: string): ProblemData {
     }
   }
 
+  // Hidden per-language I/O glue appended to the solver's code at run time.
+  const harness: Partial<Record<Language, string>> = {};
+  if (raw.harness && typeof raw.harness === 'object') {
+    const h = raw.harness as Record<string, unknown>;
+    for (const l of LANGUAGES) {
+      if (typeof h[l] === 'string') {
+        harness[l] = str(h[l], `harness.${l}`, { max: MAX_LEN });
+      }
+    }
+  }
+
+  // Argument names for the input display (one per stdin line).
+  const params: { name: string; quote?: boolean }[] = Array.isArray(raw.params)
+    ? raw.params
+        .slice(0, 10)
+        .filter((p): p is Record<string, unknown> => typeof p === 'object' && p != null)
+        .map((p) => {
+          const name = str(p.name, 'param.name', { required: true, max: 100 }).trim();
+          if (!name) throw new Error('Each parameter needs a name');
+          return p.quote ? { name, quote: true } : { name };
+        })
+    : [];
+
   if (!Array.isArray(raw.testCases) || raw.testCases.length === 0) {
     throw new Error('"testCases" must be a non-empty array');
   }
@@ -93,7 +116,18 @@ export function parseProblemData(text: string): ProblemData {
     };
   });
 
-  return { title, difficulty, tags, description, examples, constraints, starterCode, testCases };
+  return {
+    title,
+    difficulty,
+    tags,
+    description,
+    examples,
+    constraints,
+    starterCode,
+    ...(Object.keys(harness).length ? { harness } : {}),
+    ...(params.length ? { params } : {}),
+    testCases,
+  };
 }
 
 /** Serialize a problem to the shareable file format (with a schema-version marker). */

@@ -12,6 +12,23 @@ const labelClass = 'mb-1 block text-xs font-medium text-zinc-400';
 
 const DIFFICULTIES: Difficulty[] = ['easy', 'medium', 'hard'];
 
+// Default I/O glue used to pre-fill the harness fields. The author edits these
+// lines (rename the function, add/remove parsing) rather than starting from blank.
+const HARNESS_PLACEHOLDER: Record<string, string> = {
+  python: '# rename solve(...) below to match your function\'s name\nimport sys, json\n__lines = sys.stdin.read().splitlines()\nprint(solve(json.loads(__lines[0])))\n',
+  javascript: '// rename solve(...) below to match your function\'s name\nconst __lines = require("fs").readFileSync(0, "utf8").split("\\n");\nconsole.log(solve(JSON.parse(__lines[0])));\n',
+  typescript: '// rename solve(...) below to match your function\'s name\nconst __lines = require("fs").readFileSync(0, "utf8").split("\\n");\nconsole.log(solve(JSON.parse(__lines[0])));\n',
+};
+
+/** Seed the harness fields with the default glue for each enabled language. */
+function defaultHarness(): Record<string, string> {
+  const h: Record<string, string> = {};
+  for (const lang of ENABLED_LANGUAGES) {
+    if (HARNESS_PLACEHOLDER[lang]) h[lang] = HARNESS_PLACEHOLDER[lang];
+  }
+  return h;
+}
+
 interface ExampleField {
   input: string;
   output: string;
@@ -41,6 +58,8 @@ export function ProblemForm({ onCreated }: { onCreated?: () => void }) {
   const [examples, setExamples] = useState<ExampleField[]>([emptyExample()]);
   const [constraintsText, setConstraintsText] = useState('');
   const [starter, setStarter] = useState<Record<string, string>>({});
+  const [harness, setHarness] = useState<Record<string, string>>(defaultHarness);
+  const [params, setParams] = useState<{ name: string; quote: boolean }[]>([]);
   const [testCases, setTestCases] = useState<TestCaseField[]>([emptyTestCase()]);
 
   const [busy, setBusy] = useState(false);
@@ -54,6 +73,8 @@ export function ProblemForm({ onCreated }: { onCreated?: () => void }) {
     setExamples([emptyExample()]);
     setConstraintsText('');
     setStarter({});
+    setHarness(defaultHarness());
+    setParams([]);
     setTestCases([emptyTestCase()]);
   }
 
@@ -80,6 +101,12 @@ export function ProblemForm({ onCreated }: { onCreated?: () => void }) {
         starterCode: Object.fromEntries(
           Object.entries(starter).filter(([, code]) => code.trim()),
         ),
+        harness: Object.fromEntries(
+          Object.entries(harness).filter(([, code]) => code.trim()),
+        ),
+        params: params
+          .filter((p) => p.name.trim())
+          .map((p) => (p.quote ? { name: p.name.trim(), quote: true } : { name: p.name.trim() })),
         testCases: testCases
           .filter((tc) => tc.stdin.trim() || tc.expectedStdout.trim())
           .map((tc) => ({
@@ -231,6 +258,73 @@ export function ProblemForm({ onCreated }: { onCreated?: () => void }) {
             />
           </div>
         ))}
+      </fieldset>
+
+      {/* Run harness (hidden I/O glue) */}
+      <fieldset className="space-y-3">
+        <legend className="text-xs font-semibold text-zinc-300">Run harness (optional)</legend>
+        <p className="text-xs text-zinc-500">
+          Hidden glue appended to the solver's code so they only write the function (LeetCode-style):
+          read <code className="text-zinc-400">stdin</code>, call the function, and{' '}
+          <code className="text-zinc-400">print</code> the result. Print arrays without spaces and
+          booleans lowercase. Leave blank to make solvers print their own output.
+        </p>
+        {ENABLED_LANGUAGES.map((lang) => (
+          <div key={lang}>
+            <label className={labelClass} htmlFor={`pf-harness-${lang}`}>{LANGUAGE_LABELS[lang]}</label>
+            <textarea
+              id={`pf-harness-${lang}`}
+              className={codeClass}
+              rows={3}
+              value={harness[lang] ?? ''}
+              onChange={(e) => setHarness((h) => ({ ...h, [lang]: e.target.value }))}
+              placeholder={HARNESS_PLACEHOLDER[lang] ?? '// read stdin, call your function, print the result'}
+              spellCheck={false}
+            />
+          </div>
+        ))}
+      </fieldset>
+
+      {/* Function arguments (input display labels) */}
+      <fieldset className="space-y-3">
+        <legend className="text-xs font-semibold text-zinc-300">Function arguments (optional)</legend>
+        <p className="text-xs text-zinc-500">
+          Name each argument in order (one per stdin line) to show inputs as{' '}
+          <code className="text-zinc-400">name=value</code> in results. Tick “string” to display the
+          value in quotes.
+        </p>
+        {params.map((p, i) => (
+          <div key={i} className="flex items-center gap-3">
+            <input
+              className={inputClass}
+              value={p.name}
+              onChange={(e) => setParams((ps) => ps.map((x, j) => (j === i ? { ...x, name: e.target.value } : x)))}
+              placeholder={`Argument ${i + 1} name — e.g. nums`}
+            />
+            <label className="flex shrink-0 items-center gap-1 text-xs text-zinc-400">
+              <input
+                type="checkbox"
+                checked={p.quote}
+                onChange={(e) => setParams((ps) => ps.map((x, j) => (j === i ? { ...x, quote: e.target.checked } : x)))}
+              />
+              string
+            </label>
+            <button
+              type="button"
+              onClick={() => setParams((ps) => ps.filter((_, j) => j !== i))}
+              className="shrink-0 text-xs text-zinc-500 hover:text-red-400"
+            >
+              Remove
+            </button>
+          </div>
+        ))}
+        <button
+          type="button"
+          onClick={() => setParams((ps) => [...ps, { name: '', quote: false }])}
+          className="text-xs text-emerald-400 hover:underline"
+        >
+          + Add argument
+        </button>
       </fieldset>
 
       {/* Test cases */}
