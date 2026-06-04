@@ -11,6 +11,7 @@ import { ComplexityBadge } from '../features/analysis/ComplexityBadge';
 import { AiPanel } from '../features/ai/AiPanel';
 import { AuthRequiredError, getSession, saveSession, updateSession } from '../features/sessions/sessions.api';
 import { useAuth } from '../lib/auth';
+import { starterFor } from '../lib/languages';
 import { useEditorStore } from '../stores/useEditorStore';
 import { useTimerStore } from '../stores/useTimerStore';
 import { useExecutionStore } from '../stores/useExecutionStore';
@@ -94,7 +95,7 @@ export function SessionPage() {
       };
     }
 
-    setCode(problem.starterCode[language] ?? '');
+    setCode(starterFor(problem, language));
     resetTimer();
     resetExecution();
     resetAi();

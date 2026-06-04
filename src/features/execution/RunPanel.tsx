@@ -17,6 +17,18 @@ function describeRunError(err: unknown): string {
   return err instanceof Error ? err.message : String(err);
 }
 
+/**
+ * Detect the most common custom-problem mistake: the hidden harness calls a function
+ * the solver hasn't defined (usually a name mismatch, e.g. harness calls `solve` but
+ * the function is named differently). Returns a plain-language hint, or null.
+ */
+function harnessHint(stderr: string): string | null {
+  // Python: NameError: name 'solve' is not defined  |  JS/TS: ReferenceError: solve is not defined
+  const m = stderr.match(/name '([^']+)' is not defined/) ?? stderr.match(/(\w+) is not defined/);
+  if (!m) return null;
+  return `"${m[1]}" isn't defined. The hidden run harness calls your function by a fixed name — rename your function (or the harness) so they match.`;
+}
+
 const verdictStyle: Record<Verdict, string> = {
   pass: 'text-green-400',
   fail: 'text-red-400',
@@ -141,6 +153,11 @@ export function RunPanel({ problem }: { problem: Problem }) {
                     <div>
                       <span className="text-zinc-500">stderr: </span>
                       <span className="whitespace-pre-wrap text-red-300">{r.stderr}</span>
+                    </div>
+                  )}
+                  {r.stderr && harnessHint(r.stderr) && (
+                    <div className="rounded border border-amber-900/60 bg-amber-950/30 px-2 py-1 text-amber-300">
+                      Hint: {harnessHint(r.stderr)}
                     </div>
                   )}
                 </div>

@@ -1,5 +1,5 @@
 import { useEditorStore } from '../../stores/useEditorStore';
-import { ENABLED_LANGUAGES, LANGUAGE_LABELS } from '../../lib/languages';
+import { ENABLED_LANGUAGES, LANGUAGE_LABELS, starterFor } from '../../lib/languages';
 import type { Language, Problem } from '../../types/problem';
 
 export function LanguageSelect({ problem }: { problem: Problem }) {
@@ -9,7 +9,7 @@ export function LanguageSelect({ problem }: { problem: Problem }) {
 
   function handleChange(next: Language) {
     setLanguage(next);
-    setCode(problem.starterCode[next] ?? '');
+    setCode(starterFor(problem, next));
   }
 
   return (
