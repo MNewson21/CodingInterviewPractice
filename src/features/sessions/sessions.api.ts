@@ -40,6 +40,19 @@ export interface SaveSessionInput {
   keystrokes?: KeystrokeEvent[];
 }
 
+/**
+ * Above this serialized size we drop the keystroke log from a save so the row still
+ * persists. Replay is the expendable part of a session; the code/progress is not.
+ * Postgres handles large jsonb, but multi-MB payloads get slow and can hit request
+ * limits — a long pair-programming-length session can accrue tens of thousands of events.
+ */
+export const MAX_KEYSTROKES_BYTES = 3_000_000; // ~3 MB
+
+/** Rough byte size of the serialized keystroke log (UTF-16 length ≈ bytes for typical code). */
+export function keystrokesByteSize(events: KeystrokeEvent[]): number {
+  return JSON.stringify(events).length;
+}
+
 /** Thrown when a save/update is attempted without a valid session (signed out / token expired). */
 export class AuthRequiredError extends Error {
   constructor(message = 'You must be signed in to save a session.') {

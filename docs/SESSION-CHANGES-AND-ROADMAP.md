@@ -132,14 +132,24 @@ LinkedIn** as a portfolio piece.
       - [x] **Problem / data edge cases** — done 2026-06-04 (cluster #3): `starterFor()`
             fallback comment for languages with no starter; `harnessHint()` flags
             function-name/harness mismatch; deleted/unknown problem already handled.
-      - [ ] Long sessions (large keystroke log) — size guard / save-failure recovery.
+      - [x] **Long sessions (large keystroke log)** — done 2026-06-04: `sessions.api`
+            exposes `keystrokesByteSize()` + `MAX_KEYSTROKES_BYTES` (~3 MB); `handleSave`
+            drops the replay log above the cap so code/progress still saves (with a clear
+            message), and on any non-auth save failure retries once **without** keystrokes
+            so the user's code is never lost to an oversized/rejected payload.
       - [x] **Unauthenticated flows** — done 2026-06-04 (cluster #2): typed
             `AuthRequiredError`; `saveSession` + `updateSession` both guard auth;
             `handleSave` shows a clear "sign-in expired / sign in to save — code is kept"
             message and a signed-out guard. *Follow-up: signing in via the link still
             re-seeds starter code on return — buffer-preserve needs an init/reset tweak.*
-      - [ ] Mobile / narrow layout — stack panels or "best on desktop" notice.
-      - [ ] Top-level React error boundary (recovery card, not a white page).
+      - [x] **Mobile / narrow layout** — done 2026-06-04: `SessionPage` body is now
+            responsive — stacks problem panel / editor / run panel vertically and
+            scrolls below `md`, keeps the side-by-side split at `md+`. Editor gets a
+            fixed `60vh` height on mobile so Monaco renders; header wraps (`flex-wrap`).
+      - [x] **Top-level React error boundary** — done 2026-06-04:
+            `src/components/ErrorBoundary.tsx` wraps the router in `App.tsx`; catches
+            render/lifecycle errors and shows a recovery card (Try again / Go home /
+            Reload) instead of a blank white page. Logs `componentStack` for debugging.
 - [ ] (Optional) More seed problems; richer markdown problem rendering.
 
 ### Phase 2 — Host on AWS + custom domain

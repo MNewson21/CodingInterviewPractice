@@ -9,7 +9,15 @@ import { Timer } from '../features/timer/Timer';
 import { RunPanel } from '../features/execution/RunPanel';
 import { ComplexityBadge } from '../features/analysis/ComplexityBadge';
 import { AiPanel } from '../features/ai/AiPanel';
-import { AuthRequiredError, getSession, saveSession, updateSession } from '../features/sessions/sessions.api';
+import {
+  AuthRequiredError,
+  getSession,
+  keystrokesByteSize,
+  MAX_KEYSTROKES_BYTES,
+  saveSession,
+  updateSession,
+} from '../features/sessions/sessions.api';
+import type { KeystrokeEvent } from '../types/session';
 import { useAuth } from '../lib/auth';
 import { starterFor } from '../lib/languages';
 import { useEditorStore } from '../stores/useEditorStore';
@@ -114,28 +122,53 @@ export function SessionPage() {
     }
     setSaving(true);
     setSaveMsg(null);
+
+    const allPassed =
+      !!results && results.length > 0 && results.every((r) => r.verdict === 'pass');
+    const base = {
+      problemId: problem.id,
+      language,
+      code,
+      status: (allPassed ? 'solved' : 'in_progress') as 'solved' | 'in_progress',
+      durationMs: elapsedMs,
+    };
+    const events = useKeystrokeStore.getState().events;
+    // Size guard: a very long session can produce a multi-MB keystroke log. Rather than
+    // risk a slow or rejected save, drop the replay log when it's oversized so the row
+    // (code + progress) still persists — replay is the expendable part.
+    const oversized = keystrokesByteSize(events) > MAX_KEYSTROKES_BYTES;
+
+    // Update the existing row when editing a saved attempt; insert otherwise.
+    const persist = (keystrokes: KeystrokeEvent[]) => {
+      const input = { ...base, keystrokes };
+      return currentSessionId ? updateSession(currentSessionId, input) : saveSession(input);
+    };
+
     try {
-      const allPassed =
-        !!results && results.length > 0 && results.every((r) => r.verdict === 'pass');
-      const input = {
-        problemId: problem.id,
-        language,
-        code,
-        status: (allPassed ? 'solved' : 'in_progress') as 'solved' | 'in_progress',
-        durationMs: elapsedMs,
-        keystrokes: useKeystrokeStore.getState().events,
-      };
-      // Update the existing row when we're editing a saved attempt; insert otherwise.
-      const saved = currentSessionId
-        ? await updateSession(currentSessionId, input)
-        : await saveSession(input);
+      const saved = await persist(oversized ? [] : events);
       setCurrentSessionId(saved.id);
-      setSaveMsg(currentSessionId ? 'Updated' : 'Saved');
+      setSaveMsg(
+        oversized
+          ? 'Saved — this session is too long to store keystroke replay, so replay is unavailable for it. Your code is saved.'
+          : currentSessionId
+            ? 'Updated'
+            : 'Saved',
+      );
     } catch (err) {
       // Token expired mid-session: useAuth flips `user` to null (swapping the button to
       // "Sign in to save"); show a clear message and keep the buffer so no work is lost.
       if (err instanceof AuthRequiredError) {
         setSaveMsg('Your sign-in expired — sign in again to save. Your code is kept.');
+      } else if (!oversized && events.length > 0) {
+        // Save-failure recovery: the keystroke payload may have been rejected (size/network).
+        // Retry once without it so the user's code is never lost to a replay-log problem.
+        try {
+          const saved = await persist([]);
+          setCurrentSessionId(saved.id);
+          setSaveMsg('Saved your code, but keystroke replay could not be saved this time.');
+        } catch (err2) {
+          setSaveMsg(err2 instanceof Error ? err2.message : String(err2));
+        }
       } else {
         setSaveMsg(err instanceof Error ? err.message : String(err));
       }
@@ -163,7 +196,7 @@ export function SessionPage() {
 
   return (
     <div className="flex h-full flex-col bg-zinc-950 text-zinc-100">
-      <header className="flex items-center justify-between gap-4 border-b border-zinc-800 px-4 py-2">
+      <header className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-b border-zinc-800 px-4 py-2">
         <Link to="/" className="shrink-0 text-sm text-zinc-400 hover:text-zinc-100">
           &larr; Problems
         </Link>
@@ -197,14 +230,17 @@ export function SessionPage() {
         </div>
       </header>
 
-      <div className="flex min-h-0 flex-1">
-        <section className="w-2/5 min-w-[320px] overflow-y-auto border-r border-zinc-800">
+      {/* Mobile: stack the panels and let the whole area scroll (the editor gets a
+          fixed height so Monaco can render). md+: the classic side-by-side split with
+          each pane managing its own scroll inside the viewport. */}
+      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto md:flex-row md:overflow-hidden">
+        <section className="border-b border-zinc-800 md:w-2/5 md:min-w-[320px] md:overflow-y-auto md:border-b-0 md:border-r">
           <ProblemPanel problem={problem} />
           <AiPanel problem={problem} />
         </section>
-        <section className="flex min-w-0 flex-1 flex-col">
+        <section className="flex min-w-0 flex-col md:flex-1">
           <ComplexityBadge />
-          <div className="min-h-0 flex-1">
+          <div className="h-[60vh] md:h-auto md:min-h-0 md:flex-1">
             <CodeEditor />
           </div>
           <div className="h-72 shrink-0">
