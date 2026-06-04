@@ -129,6 +129,9 @@ LinkedIn** as a portfolio piece.
             (cluster #1): typed `PistonError` (`unavailable`/`rate-limited`/`runtime`),
             infra errors surfaced once not per-test, `run.signal` flagged as timeout,
             friendly `RunPanel` banner + empty-code guard. Compile errors already handled.
+      - [x] **Problem / data edge cases** — done 2026-06-04 (cluster #3): `starterFor()`
+            fallback comment for languages with no starter; `harnessHint()` flags
+            function-name/harness mismatch; deleted/unknown problem already handled.
       - [ ] Long sessions (large keystroke log) — size guard / save-failure recovery.
       - [x] **Unauthenticated flows** — done 2026-06-04 (cluster #2): typed
             `AuthRequiredError`; `saveSession` + `updateSession` both guard auth;

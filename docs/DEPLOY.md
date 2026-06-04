@@ -20,7 +20,7 @@ Only the EC2 box costs money. Tear it down when the demo is over (see end).
    client-side routes work on refresh.
 3. Add Environment Variables (Project Settings -> Environment Variables):
    ```
-   VITE_SUPABASE_URL=https://jdvupaqhglrbriyhcmbz.supabase.co
+   VITE_SUPABASE_URL=https://YOUR-PROJECT-REF.supabase.co
    VITE_SUPABASE_ANON_KEY=<your anon key>
    VITE_PISTON_URL=https://piston.YOURDOMAIN.com/api/v2          # from Part C (note: /api/v2, NOT /api/v2/piston)
    VITE_ENABLED_LANGUAGES=python,javascript,typescript        # match installed runtimes

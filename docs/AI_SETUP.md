@@ -19,7 +19,7 @@ All are rate-limited and can change (like Piston did) — fine for a portfolio d
 ```bash
 npm install -g supabase
 supabase login
-supabase link --project-ref jdvupaqhglrbriyhcmbz
+supabase link --project-ref YOUR-PROJECT-REF
 
 # point at a free provider (example: OpenRouter free model)
 supabase secrets set AI_API_KEY=sk-or-...                       # your free key
