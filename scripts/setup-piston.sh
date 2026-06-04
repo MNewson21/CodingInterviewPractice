@@ -40,8 +40,10 @@ done
 AVAILABLE="$(curl -fs "$PISTON/packages")"
 
 for pkg in "${PACKAGES[@]}"; do
+  # Sort versions numerically by semver parts (NOT lexically — a string sort would rank
+  # "9.x" above "10.x"). tonumber? // 0 keeps any non-numeric segment from erroring.
   ver="$(echo "$AVAILABLE" | jq -r --arg l "$pkg" \
-    '[.[] | select(.language==$l)] | sort_by(.language_version) | last | .language_version // empty')"
+    '[.[] | select(.language==$l)] | sort_by(.language_version | split(".") | map(tonumber? // 0)) | last | .language_version // empty')"
   if [ -z "$ver" ]; then
     echo "!! no package found for '$pkg' (skipping)"
     continue
