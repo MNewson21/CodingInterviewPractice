@@ -68,5 +68,194 @@
     "testCases": [
       { "name": "basic", "stdin": "hello\n", "expectedStdout": "olleh" }
     ]
+  },
+  {
+    "id": "maximum-subarray",
+    "title": "Maximum Subarray",
+    "difficulty": "medium",
+    "tags": ["array", "dynamic-programming", "divide-and-conquer"],
+    "description": "Given an integer array nums, find the contiguous subarray (containing at least one number) with the largest sum and return that sum.\n\nInput: a single line containing the array as JSON, e.g. [-2,1,-3].\nOutput: the maximum subarray sum as a single integer.",
+    "examples": [
+      { "input": "nums = [-2,1,-3,4,-1,2,1,-5,4]", "output": "6", "explanation": "The subarray [4,-1,2,1] has the largest sum 6." },
+      { "input": "nums = [5,4,-1,7,8]", "output": "23", "explanation": "The whole array sums to 23." }
+    ],
+    "constraints": [
+      "1 <= nums.length <= 10^5",
+      "-10^4 <= nums[i] <= 10^4"
+    ],
+    "starterCode": {
+      "javascript": "function maxSubArray(nums) {\n  // your code here\n}\n",
+      "typescript": "function maxSubArray(nums: number[]): number {\n  // your code here\n  return 0;\n}\n",
+      "python": "def max_sub_array(nums):\n    # your code here\n    pass\n"
+    },
+    "testCases": [
+      { "name": "mixed signs", "stdin": "[-2,1,-3,4,-1,2,1,-5,4]\n", "expectedStdout": "6" },
+      { "name": "single element", "stdin": "[1]\n", "expectedStdout": "1" },
+      { "name": "all useful", "stdin": "[5,4,-1,7,8]\n", "expectedStdout": "23" },
+      { "name": "all negative", "stdin": "[-2,-1]\n", "expectedStdout": "-1" }
+    ]
+  },
+  {
+    "id": "longest-substring-no-repeat",
+    "title": "Longest Substring Without Repeating Characters",
+    "difficulty": "medium",
+    "tags": ["string", "sliding-window", "hash-map"],
+    "description": "Given a string s, return the length of the longest substring that contains no repeating characters.\n\nInput: a single line containing the string s (it may be empty). The test strings contain no spaces.\nOutput: the length as a single integer.",
+    "examples": [
+      { "input": "s = \"abcabcbb\"", "output": "3", "explanation": "The answer is \"abc\", with length 3." },
+      { "input": "s = \"bbbbb\"", "output": "1", "explanation": "The answer is \"b\", with length 1." },
+      { "input": "s = \"pwwkew\"", "output": "3", "explanation": "The answer is \"wke\". Note \"pwke\" is a subsequence, not a substring." }
+    ],
+    "constraints": [
+      "0 <= s.length <= 5 * 10^4",
+      "s consists of English letters, digits and symbols (no spaces in tests)."
+    ],
+    "starterCode": {
+      "javascript": "function lengthOfLongestSubstring(s) {\n  // your code here\n}\n",
+      "typescript": "function lengthOfLongestSubstring(s: string): number {\n  // your code here\n  return 0;\n}\n",
+      "python": "def length_of_longest_substring(s):\n    # your code here\n    pass\n"
+    },
+    "testCases": [
+      { "name": "abcabcbb", "stdin": "abcabcbb\n", "expectedStdout": "3" },
+      { "name": "all same", "stdin": "bbbbb\n", "expectedStdout": "1" },
+      { "name": "pwwkew", "stdin": "pwwkew\n", "expectedStdout": "3" },
+      { "name": "dvdf", "stdin": "dvdf\n", "expectedStdout": "3" },
+      { "name": "abba", "stdin": "abba\n", "expectedStdout": "2" }
+    ]
+  },
+  {
+    "id": "house-robber",
+    "title": "House Robber",
+    "difficulty": "medium",
+    "tags": ["array", "dynamic-programming"],
+    "description": "You are a robber planning to rob houses along a street. Each house has some money, but adjacent houses have connected security systems that trigger if two adjacent houses are robbed on the same night.\n\nGiven an integer array nums representing the money in each house, return the maximum amount you can rob without alerting the police.\n\nInput: a single line containing the array as JSON.\nOutput: the maximum amount as a single integer.",
+    "examples": [
+      { "input": "nums = [1,2,3,1]", "output": "4", "explanation": "Rob house 0 (1) and house 2 (3): total 4." },
+      { "input": "nums = [2,7,9,3,1]", "output": "12", "explanation": "Rob houses 0, 2 and 4: 2 + 9 + 1 = 12." }
+    ],
+    "constraints": [
+      "1 <= nums.length <= 100",
+      "0 <= nums[i] <= 400"
+    ],
+    "starterCode": {
+      "javascript": "function rob(nums) {\n  // your code here\n}\n",
+      "typescript": "function rob(nums: number[]): number {\n  // your code here\n  return 0;\n}\n",
+      "python": "def rob(nums):\n    # your code here\n    pass\n"
+    },
+    "testCases": [
+      { "name": "example 1", "stdin": "[1,2,3,1]\n", "expectedStdout": "4" },
+      { "name": "example 2", "stdin": "[2,7,9,3,1]\n", "expectedStdout": "12" },
+      { "name": "single house", "stdin": "[5]\n", "expectedStdout": "5" },
+      { "name": "ends win", "stdin": "[2,1,1,2]\n", "expectedStdout": "4" }
+    ]
+  },
+  {
+    "id": "coin-change",
+    "title": "Coin Change",
+    "difficulty": "medium",
+    "tags": ["array", "dynamic-programming", "breadth-first-search"],
+    "description": "You are given coins of different denominations and a total amount of money. Return the fewest number of coins needed to make up that amount. If it cannot be made from any combination of the coins, return -1. You have an unlimited number of each coin.\n\nInput: line 1 is the coins array as JSON; line 2 is the target amount.\nOutput: the fewest number of coins (or -1) as a single integer.",
+    "examples": [
+      { "input": "coins = [1,2,5], amount = 11", "output": "3", "explanation": "11 = 5 + 5 + 1." },
+      { "input": "coins = [2], amount = 3", "output": "-1", "explanation": "3 cannot be made from only 2s." }
+    ],
+    "constraints": [
+      "1 <= coins.length <= 12",
+      "1 <= coins[i] <= 2^31 - 1",
+      "0 <= amount <= 10^4"
+    ],
+    "starterCode": {
+      "javascript": "function coinChange(coins, amount) {\n  // your code here\n}\n",
+      "typescript": "function coinChange(coins: number[], amount: number): number {\n  // your code here\n  return -1;\n}\n",
+      "python": "def coin_change(coins, amount):\n    # your code here\n    pass\n"
+    },
+    "testCases": [
+      { "name": "example 1", "stdin": "[1,2,5]\n11\n", "expectedStdout": "3" },
+      { "name": "impossible", "stdin": "[2]\n3\n", "expectedStdout": "-1" },
+      { "name": "zero amount", "stdin": "[1]\n0\n", "expectedStdout": "0" },
+      { "name": "mixed", "stdin": "[2,5,10,1]\n27\n", "expectedStdout": "4" },
+      { "name": "small", "stdin": "[1,2,5]\n3\n", "expectedStdout": "2" }
+    ]
+  },
+  {
+    "id": "number-of-islands",
+    "title": "Number of Islands",
+    "difficulty": "medium",
+    "tags": ["grid", "depth-first-search", "breadth-first-search", "union-find"],
+    "description": "Given a 2D grid of '1' (land) and '0' (water), count the number of islands. An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically (not diagonally). The grid edges are all surrounded by water.\n\nInput: line 1 is the number of rows m; the next m lines are each a row of '0' and '1' characters.\nOutput: the number of islands as a single integer.",
+    "examples": [
+      { "input": "11110\n11010\n11000\n00000", "output": "1", "explanation": "All the land cells are connected into one island." },
+      { "input": "11000\n11000\n00100\n00011", "output": "3", "explanation": "Three separate land groups." }
+    ],
+    "constraints": [
+      "1 <= m, n <= 300",
+      "Each cell is '0' or '1'."
+    ],
+    "starterCode": {
+      "javascript": "function numIslands(grid) {\n  // grid is an array of strings; return the island count\n  // your code here\n}\n",
+      "typescript": "function numIslands(grid: string[]): number {\n  // grid is an array of strings; return the island count\n  // your code here\n  return 0;\n}\n",
+      "python": "def num_islands(grid):\n    # grid is a list of strings; return the island count\n    # your code here\n    pass\n"
+    },
+    "testCases": [
+      { "name": "one island", "stdin": "4\n11110\n11010\n11000\n00000\n", "expectedStdout": "1" },
+      { "name": "three islands", "stdin": "4\n11000\n11000\n00100\n00011\n", "expectedStdout": "3" },
+      { "name": "single land", "stdin": "1\n1\n", "expectedStdout": "1" },
+      { "name": "single water", "stdin": "1\n0\n", "expectedStdout": "0" },
+      { "name": "checkerboard", "stdin": "3\n101\n010\n101\n", "expectedStdout": "5" }
+    ]
+  },
+  {
+    "id": "trapping-rain-water",
+    "title": "Trapping Rain Water",
+    "difficulty": "hard",
+    "tags": ["array", "two-pointers", "stack", "dynamic-programming"],
+    "description": "Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it can trap after raining.\n\nInput: a single line containing the heights array as JSON.\nOutput: the total units of trapped water as a single integer.",
+    "examples": [
+      { "input": "height = [0,1,0,2,1,0,1,3,2,1,2,1]", "output": "6", "explanation": "The elevation map traps 6 units of water." },
+      { "input": "height = [4,2,0,3,2,5]", "output": "9" }
+    ],
+    "constraints": [
+      "1 <= n <= 2 * 10^4",
+      "0 <= height[i] <= 10^5"
+    ],
+    "starterCode": {
+      "javascript": "function trap(height) {\n  // your code here\n}\n",
+      "typescript": "function trap(height: number[]): number {\n  // your code here\n  return 0;\n}\n",
+      "python": "def trap(height):\n    # your code here\n    pass\n"
+    },
+    "testCases": [
+      { "name": "example 1", "stdin": "[0,1,0,2,1,0,1,3,2,1,2,1]\n", "expectedStdout": "6" },
+      { "name": "example 2", "stdin": "[4,2,0,3,2,5]\n", "expectedStdout": "9" },
+      { "name": "no basin", "stdin": "[1,1,1]\n", "expectedStdout": "0" },
+      { "name": "one dip", "stdin": "[5,4,1,2]\n", "expectedStdout": "1" },
+      { "name": "simple well", "stdin": "[2,0,2]\n", "expectedStdout": "2" }
+    ]
+  },
+  {
+    "id": "edit-distance",
+    "title": "Edit Distance",
+    "difficulty": "hard",
+    "tags": ["string", "dynamic-programming"],
+    "description": "Given two strings word1 and word2, return the minimum number of operations required to convert word1 into word2. The permitted operations are: insert a character, delete a character, or replace a character.\n\nInput: line 1 is word1; line 2 is word2.\nOutput: the minimum number of operations as a single integer.",
+    "examples": [
+      { "input": "word1 = \"horse\", word2 = \"ros\"", "output": "3", "explanation": "horse -> rorse (replace h) -> rose (delete r) -> ros (delete e)." },
+      { "input": "word1 = \"intention\", word2 = \"execution\"", "output": "5" }
+    ],
+    "constraints": [
+      "0 <= word1.length, word2.length <= 500",
+      "Both strings consist of lowercase English letters."
+    ],
+    "starterCode": {
+      "javascript": "function minDistance(word1, word2) {\n  // your code here\n}\n",
+      "typescript": "function minDistance(word1: string, word2: string): number {\n  // your code here\n  return 0;\n}\n",
+      "python": "def min_distance(word1, word2):\n    # your code here\n    pass\n"
+    },
+    "testCases": [
+      { "name": "horse to ros", "stdin": "horse\nros\n", "expectedStdout": "3" },
+      { "name": "intention to execution", "stdin": "intention\nexecution\n", "expectedStdout": "5" },
+      { "name": "identical", "stdin": "abc\nabc\n", "expectedStdout": "0" },
+      { "name": "single replace", "stdin": "a\nb\n", "expectedStdout": "1" },
+      { "name": "sunday to saturday", "stdin": "sunday\nsaturday\n", "expectedStdout": "3" }
+    ]
   }
 ]
