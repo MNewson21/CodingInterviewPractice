@@ -40,10 +40,24 @@ export interface SaveSessionInput {
   keystrokes?: KeystrokeEvent[];
 }
 
-export async function saveSession(input: SaveSessionInput): Promise<SessionRecord> {
+/** Thrown when a save/update is attempted without a valid session (signed out / token expired). */
+export class AuthRequiredError extends Error {
+  constructor(message = 'You must be signed in to save a session.') {
+    super(message);
+    this.name = 'AuthRequiredError';
+  }
+}
+
+/** Resolve the current user id, or throw AuthRequiredError if the session is gone/expired. */
+async function requireUserId(): Promise<string> {
   const { data: auth } = await supabase.auth.getUser();
   const userId = auth.user?.id;
-  if (!userId) throw new Error('You must be signed in to save a session.');
+  if (!userId) throw new AuthRequiredError();
+  return userId;
+}
+
+export async function saveSession(input: SaveSessionInput): Promise<SessionRecord> {
+  const userId = await requireUserId();
 
   const { data, error } = await supabase
     .from('sessions')
@@ -68,6 +82,10 @@ export async function updateSession(
   id: string,
   input: SaveSessionInput,
 ): Promise<SessionRecord> {
+  // Guard explicitly: without a session, RLS silently matches no rows and .single()
+  // would throw a cryptic "no rows" error instead of a clear "please sign in".
+  await requireUserId();
+
   const { data, error } = await supabase
     .from('sessions')
     .update({

@@ -9,7 +9,7 @@ import { Timer } from '../features/timer/Timer';
 import { RunPanel } from '../features/execution/RunPanel';
 import { ComplexityBadge } from '../features/analysis/ComplexityBadge';
 import { AiPanel } from '../features/ai/AiPanel';
-import { getSession, saveSession, updateSession } from '../features/sessions/sessions.api';
+import { AuthRequiredError, getSession, saveSession, updateSession } from '../features/sessions/sessions.api';
 import { useAuth } from '../lib/auth';
 import { useEditorStore } from '../stores/useEditorStore';
 import { useTimerStore } from '../stores/useTimerStore';
@@ -107,6 +107,10 @@ export function SessionPage() {
 
   async function handleSave() {
     if (!problem) return;
+    if (!user) {
+      setSaveMsg('Sign in to save your progress — your code stays in the editor.');
+      return;
+    }
     setSaving(true);
     setSaveMsg(null);
     try {
@@ -127,7 +131,13 @@ export function SessionPage() {
       setCurrentSessionId(saved.id);
       setSaveMsg(currentSessionId ? 'Updated' : 'Saved');
     } catch (err) {
-      setSaveMsg(err instanceof Error ? err.message : String(err));
+      // Token expired mid-session: useAuth flips `user` to null (swapping the button to
+      // "Sign in to save"); show a clear message and keep the buffer so no work is lost.
+      if (err instanceof AuthRequiredError) {
+        setSaveMsg('Your sign-in expired — sign in again to save. Your code is kept.');
+      } else {
+        setSaveMsg(err instanceof Error ? err.message : String(err));
+      }
     } finally {
       setSaving(false);
     }

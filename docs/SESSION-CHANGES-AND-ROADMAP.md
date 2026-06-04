@@ -130,7 +130,11 @@ LinkedIn** as a portfolio piece.
             infra errors surfaced once not per-test, `run.signal` flagged as timeout,
             friendly `RunPanel` banner + empty-code guard. Compile errors already handled.
       - [ ] Long sessions (large keystroke log) — size guard / save-failure recovery.
-      - [ ] Unauthenticated flows — graceful Save prompt, token-expiry re-auth.
+      - [x] **Unauthenticated flows** — done 2026-06-04 (cluster #2): typed
+            `AuthRequiredError`; `saveSession` + `updateSession` both guard auth;
+            `handleSave` shows a clear "sign-in expired / sign in to save — code is kept"
+            message and a signed-out guard. *Follow-up: signing in via the link still
+            re-seeds starter code on return — buffer-preserve needs an init/reset tweak.*
       - [ ] Mobile / narrow layout — stack panels or "best on desktop" notice.
       - [ ] Top-level React error boundary (recovery card, not a white page).
 - [ ] (Optional) More seed problems; richer markdown problem rendering.
