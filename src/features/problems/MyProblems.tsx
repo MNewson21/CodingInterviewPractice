@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import type { Problem } from '../../types/problem';
 import { useProblemsStore } from '../../stores/useProblemsStore';
 import { downloadProblem } from './problemFile';
 import { deleteUserProblem } from './userProblems.api';
@@ -9,7 +10,7 @@ const difficultyColor: Record<string, string> = {
   hard: 'text-red-400',
 };
 
-export function MyProblems() {
+export function MyProblems({ onEdit }: { onEdit?: (p: Problem) => void }) {
   const custom = useProblemsStore((s) => s.custom);
   const loaded = useProblemsStore((s) => s.loaded);
   const loading = useProblemsStore((s) => s.loading);
@@ -43,6 +44,15 @@ export function MyProblems() {
             <span className={`text-xs uppercase ${difficultyColor[p.difficulty] ?? 'text-zinc-400'}`}>
               {p.difficulty}
             </span>
+            {onEdit && (
+              <button
+                type="button"
+                onClick={() => onEdit(p)}
+                className="text-xs text-emerald-400 hover:underline"
+              >
+                Edit
+              </button>
+            )}
             <button
               type="button"
               onClick={() => downloadProblem(p)}

@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import type { Difficulty } from '../../types/problem';
+import type { Difficulty, Language, Problem } from '../../types/problem';
 import { ENABLED_LANGUAGES, LANGUAGE_LABELS } from '../../lib/languages';
 import { parseProblemData } from './problemFile';
-import { saveUserProblem } from './userProblems.api';
+import { saveUserProblem, updateUserProblem } from './userProblems.api';
 import { useProblemsStore } from '../../stores/useProblemsStore';
 
 const inputClass =
@@ -29,6 +29,17 @@ function defaultHarness(): Record<string, string> {
   return h;
 }
 
+/** Flatten a Partial per-language record into a plain string map for the form fields. */
+function toStringMap(rec?: Partial<Record<Language, string>>): Record<string, string> {
+  const out: Record<string, string> = {};
+  if (rec) {
+    for (const [k, v] of Object.entries(rec)) {
+      if (typeof v === 'string') out[k] = v;
+    }
+  }
+  return out;
+}
+
 interface ExampleField {
   input: string;
   output: string;
@@ -48,19 +59,41 @@ const emptyTestCase = (): TestCaseField => ({ name: '', stdin: '', expectedStdou
  * object and runs it through `parseProblemData` (the same validator used for file
  * imports) so there is one source of truth for what a valid problem looks like.
  */
-export function ProblemForm({ onCreated }: { onCreated?: () => void }) {
+export function ProblemForm({
+  initial,
+  onDone,
+}: {
+  /** When provided, the form edits this existing problem instead of creating a new one. */
+  initial?: Problem;
+  onDone?: () => void;
+}) {
   const addCustom = useProblemsStore((s) => s.addCustom);
+  const updateCustom = useProblemsStore((s) => s.updateCustom);
+  const isEdit = initial != null;
 
-  const [title, setTitle] = useState('');
-  const [difficulty, setDifficulty] = useState<Difficulty>('easy');
-  const [tagsText, setTagsText] = useState('');
-  const [description, setDescription] = useState('');
-  const [examples, setExamples] = useState<ExampleField[]>([emptyExample()]);
-  const [constraintsText, setConstraintsText] = useState('');
-  const [starter, setStarter] = useState<Record<string, string>>({});
-  const [harness, setHarness] = useState<Record<string, string>>(defaultHarness);
-  const [params, setParams] = useState<{ name: string; quote: boolean }[]>([]);
-  const [testCases, setTestCases] = useState<TestCaseField[]>([emptyTestCase()]);
+  const [title, setTitle] = useState(initial?.title ?? '');
+  const [difficulty, setDifficulty] = useState<Difficulty>(initial?.difficulty ?? 'easy');
+  const [tagsText, setTagsText] = useState(initial?.tags.join(', ') ?? '');
+  const [description, setDescription] = useState(initial?.description ?? '');
+  const [examples, setExamples] = useState<ExampleField[]>(() =>
+    initial?.examples.length
+      ? initial.examples.map((ex) => ({ input: ex.input, output: ex.output, explanation: ex.explanation ?? '' }))
+      : [emptyExample()],
+  );
+  const [constraintsText, setConstraintsText] = useState(initial?.constraints.join('\n') ?? '');
+  const [starter, setStarter] = useState<Record<string, string>>(() => toStringMap(initial?.starterCode));
+  // Editing keeps the problem's existing harness (even if empty); creating seeds the default glue.
+  const [harness, setHarness] = useState<Record<string, string>>(() =>
+    isEdit ? toStringMap(initial.harness) : defaultHarness(),
+  );
+  const [params, setParams] = useState<{ name: string; quote: boolean }[]>(
+    () => initial?.params?.map((p) => ({ name: p.name, quote: !!p.quote })) ?? [],
+  );
+  const [testCases, setTestCases] = useState<TestCaseField[]>(() =>
+    initial?.testCases.length
+      ? initial.testCases.map((tc) => ({ name: tc.name ?? '', stdin: tc.stdin, expectedStdout: tc.expectedStdout }))
+      : [emptyTestCase()],
+  );
 
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -117,10 +150,15 @@ export function ProblemForm({ onCreated }: { onCreated?: () => void }) {
       };
 
       const data = parseProblemData(JSON.stringify(draft)); // throws on invalid input
-      const saved = await saveUserProblem(data);
-      addCustom(saved);
-      reset();
-      onCreated?.();
+      if (isEdit) {
+        const updated = await updateUserProblem(initial.id, data);
+        updateCustom(updated);
+      } else {
+        const saved = await saveUserProblem(data);
+        addCustom(saved);
+        reset();
+      }
+      onDone?.();
     } catch (err) {
       setError(err instanceof Error ? err.message : String(err));
     } finally {
@@ -386,7 +424,9 @@ export function ProblemForm({ onCreated }: { onCreated?: () => void }) {
         </button>
       </fieldset>
 
-      {error && <p className="text-xs text-red-400">Could not create: {error}</p>}
+      {error && (
+        <p className="text-xs text-red-400">Could not {isEdit ? 'save' : 'create'}: {error}</p>
+      )}
 
       <div className="flex items-center gap-3">
         <button
@@ -394,11 +434,19 @@ export function ProblemForm({ onCreated }: { onCreated?: () => void }) {
           disabled={busy}
           className="rounded bg-emerald-600 px-4 py-1.5 text-sm font-medium text-white hover:bg-emerald-500 disabled:opacity-50"
         >
-          {busy ? 'Creating…' : 'Create problem'}
+          {busy
+            ? isEdit ? 'Saving…' : 'Creating…'
+            : isEdit ? 'Save changes' : 'Create problem'}
         </button>
-        <button type="button" onClick={reset} className="text-xs text-zinc-500 hover:text-zinc-300">
-          Clear form
-        </button>
+        {isEdit ? (
+          <button type="button" onClick={() => onDone?.()} className="text-xs text-zinc-500 hover:text-zinc-300">
+            Cancel
+          </button>
+        ) : (
+          <button type="button" onClick={reset} className="text-xs text-zinc-500 hover:text-zinc-300">
+            Clear form
+          </button>
+        )}
       </div>
     </form>
   );

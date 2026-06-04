@@ -57,9 +57,11 @@ VITE_ENABLED_LANGUAGES=python,javascript,typescript
 ```
 Day-to-day: `docker start piston` (runtimes persist in the volume) → `npm run dev`.
 
-> ⚠️ The same three bugs still live in `docs/PISTON_SETUP.md`, `docs/DEPLOY.md`, and
-> `scripts/setup-piston.sh` (default base + Caddy path). **Fix these before the AWS
-> deploy** or the EC2 box will hit the exact same wall. (See roadmap below.)
+> ✅ **Fixed (2026-06-04):** the same three bugs were carried over into
+> `docs/PISTON_SETUP.md`, `docs/DEPLOY.md`, `scripts/setup-piston.sh`, and
+> `docs/PROJECT_STATUS.md` — all now use `--privileged`, `-v piston-data:/piston`, and
+> the `/api/v2` base. `docs/DEPLOY.md` also gained a **C0 free-tier test walkthrough**
+> (throwaway `t3.micro`, no domain/Caddy, end-to-end via the Vite proxy).
 
 ### E. LeetCode-style hidden harness + better results panel
 Problem: function-only starter code printed nothing, so every test showed
@@ -90,16 +92,19 @@ harness so the editor shows **only the function**.
 
 ## 2. Known gaps / immediate TODOs
 
-- **No edit screen for custom problems** — the form only *creates*. To fix a saved
-  problem (e.g. a wrong harness function name) you must delete and recreate.
-  *Planned: add an "Edit" button for custom problems.*
+- ~~**No edit screen for custom problems** — the form only *creates*~~ — ✅ **done
+  (2026-06-04)**: `MyProblems` has an **Edit** button; `ProblemForm` takes an optional
+  `initial` problem and pre-fills every field (incl. harness) to update in place via
+  `updateUserProblem`. A wrong harness function name is now fixable in-app.
 - **Harness/function-name mismatch is easy to hit** — the prefilled harness calls
   `solve(...)`; the author must rename it to match their function (now flagged by an
   inline comment).
-- **Piston deploy docs/script are still wrong** (privileged, volume, `/api/v2`) — must
-  be corrected before AWS.
-- **Supabase activation** still pending for a full demo: run migrations `0001` + `0002`,
-  turn off email confirmation (dev), optionally deploy the AI Edge Functions.
+- ~~**Piston deploy docs/script are still wrong** (privileged, volume, `/api/v2`)~~ —
+  ✅ **done (2026-06-04)**; docs/script corrected + C0 free-tier test walkthrough added.
+- ~~**Supabase activation** still pending~~ — ✅ **active (2026-06-04)**: project
+  provisioned, migrations `0001` + `0002` run, auth working; sign-in, save/resume, and
+  custom problems (create/edit/import/export) all verified end-to-end. *Still optional:
+  deploy the AI Edge Functions (`docs/AI_SETUP.md`) — hints/review stay inert until then.*
 - `problems.json` was reformatted to standard 2-space JSON when regenerated (same data,
   larger diff).
 
@@ -111,14 +116,23 @@ Goal: a polished, self-hostable mock-interview IDE good enough to **show off on
 LinkedIn** as a portfolio piece.
 
 ### Phase 1 — Make it robust (before paying for hosting)
-- [ ] **Fix the Piston deploy assets** (`docs/PISTON_SETUP.md`, `docs/DEPLOY.md`,
+- [x] **Fix the Piston deploy assets** (`docs/PISTON_SETUP.md`, `docs/DEPLOY.md`,
       `scripts/setup-piston.sh`): add `--privileged`, `-v piston-data:/piston`, and the
       `/api/v2` base + Caddy reverse-proxy path. (Carry over the three local fixes.)
-- [ ] **Add edit for custom problems** so a bad harness can be fixed in-app.
+      *Done 2026-06-04 — also added a C0 free-tier test walkthrough to `docs/DEPLOY.md`.*
+- [x] **Add edit for custom problems** so a bad harness can be fixed in-app.
+      *Done 2026-06-04 — Edit button + `initial`-prefilled `ProblemForm` → `updateUserProblem`.*
 - [ ] **Full end-to-end pass** with Supabase live: sign up/in, run tests, save, resume,
       replay, AI hints/review, create/import/export custom problems.
-- [ ] **Edge cases & error states**: Piston down / rate-limited, empty inputs, compile
-      errors, long sessions, unauthenticated flows, mobile/narrow layout.
+- [ ] **Edge cases & error states** *(in progress)*:
+      - [x] **Piston down / rate-limited / timeout / empty code** — done 2026-06-04
+            (cluster #1): typed `PistonError` (`unavailable`/`rate-limited`/`runtime`),
+            infra errors surfaced once not per-test, `run.signal` flagged as timeout,
+            friendly `RunPanel` banner + empty-code guard. Compile errors already handled.
+      - [ ] Long sessions (large keystroke log) — size guard / save-failure recovery.
+      - [ ] Unauthenticated flows — graceful Save prompt, token-expiry re-auth.
+      - [ ] Mobile / narrow layout — stack panels or "best on desktop" notice.
+      - [ ] Top-level React error boundary (recovery card, not a white page).
 - [ ] (Optional) More seed problems; richer markdown problem rendering.
 
 ### Phase 2 — Host on AWS + custom domain

@@ -4,7 +4,7 @@
 > conversation can get up to speed without re-deriving anything.
 > See also: `ARCHITECTURE.md`, and the setup guides in `docs/`.
 
-Last updated: 2026-06-03.
+Last updated: 2026-06-04.
 
 ## What it is
 A browser-based coding-interview practice platform (CoderPad-like, free, with
@@ -36,9 +36,11 @@ choice), not code — see "Deferred setup" below.
 7. **AI** — progressive hints (stuck-gated) + post-solve review via Edge Functions.
    On-demand only. Plus a **free in-browser complexity estimator** (loop-nesting
    heuristic, labeled "rough estimate") — no tokens.
-8. **Custom problems** — drag-and-drop `.json` import (validated) into a Supabase
-   `user_problems` table; **Export** any problem to a shareable `.json`;
-   "Your problems" list. Sharing is file-based (no server sharing infra).
+8. **Custom problems** — author via a **create-problem form** OR drag-and-drop `.json`
+   import (both validated through the same parser) into a Supabase `user_problems`
+   table; **Edit** a saved problem in-place (form pre-fills, incl. harness); **Export**
+   any problem to a shareable `.json`; "Your problems" list. Sharing is file-based
+   (no server sharing infra).
 
 ## Routes
 - `/` — HomePage (problem list, sign-in, import + your problems, recent sessions)
@@ -73,7 +75,7 @@ src/
     ai/{aiClient,useStuckDetector,HintPanel,ReviewPanel,AiPanel}.ts(x)
     auth/AuthPage.tsx
     sessions/{sessions.api.ts,SessionHistory.tsx}
-  data/problems.json              3 built-in seed problems (Two Sum, Valid Parens, Reverse String)
+  data/problems.json              10 built-in seed problems (Two Sum … Edit Distance), each with hidden harness + params
 supabase/
   migrations/0001_init.sql        sessions table + RLS
   migrations/0002_user_problems.sql  user_problems table + RLS
@@ -103,14 +105,16 @@ npm run build        # vite build    (clean)
 ```
 The app runs without any backend; auth/save/run/AI just stay inert until activated.
 
-## Deferred setup (infra, optional, each independent)
-1. **Piston** (code execution): `docs/PISTON_SETUP.md`. Public emkc endpoint is
-   whitelist-only since 2026-02-15 — self-host via Docker; `scripts/setup-piston.sh`
-   installs a light language set (py/js/ts) so it fits a small box.
-2. **Supabase** (auth/save/custom problems): `docs/SUPABASE_SETUP.md`. Run
-   migrations 0001 then 0002 in the SQL Editor; turn off email confirmation for dev.
-3. **AI** (hints/review): `docs/AI_SETUP.md`. Deploy the two Edge Functions and set
-   a free LLM key. On-demand only.
+## Setup status (infra, each independent)
+1. **Piston** (code execution): ✅ **active locally** — self-hosted via Docker
+   (`docs/PISTON_SETUP.md`). Public emkc endpoint is whitelist-only since 2026-02-15;
+   `scripts/setup-piston.sh` installs a light language set (py/js/ts). Still needs an
+   AWS box for the public demo (Phase 2).
+2. **Supabase** (auth/save/custom problems): ✅ **active** — project provisioned,
+   migrations 0001 + 0002 run, auth working. Sign-in, session save/resume, and custom
+   problems (create/edit/import/export) all function end-to-end. (`docs/SUPABASE_SETUP.md`)
+3. **AI** (hints/review): ⏳ **deferred** — `docs/AI_SETUP.md`. Deploy the two Edge
+   Functions and set a free LLM key. On-demand only; the only remaining inert feature.
 4. **Deploy**: `docs/DEPLOY.md` — Vercel (frontend) + Supabase + Piston on AWS EC2
    (Caddy for HTTPS/CORS). Remember to tear down EC2 + release the Elastic IP after.
 
@@ -123,6 +127,13 @@ The app runs without any backend; auth/save/run/AI just stay inert until activat
   import (a blank screen bug we hit).
 
 ## Planned / not yet built
-- A **create-problem form** to complement JSON upload (`feature-custom-problems-plan`
-  in memory has context).
-- More seed problems in `data/problems.json` (currently 3).
+- **AI Edge Functions** not yet deployed (hints/review inert until then) — see
+  `docs/AI_SETUP.md`.
+- **Phase 2 — AWS hosting** for the public demo (Piston on EC2 + domain): see
+  `docs/DEPLOY.md` (includes a C0 free-tier test walkthrough).
+- **Robustness pass**: edge/error states (Piston down, compile errors, empty input,
+  unauthenticated, narrow/mobile).
+- (Optional) More seed problems (currently 10); richer markdown problem rendering.
+
+> Built since this list last named them: the **create-problem form**, **in-place edit**
+> for custom problems, and the **LeetCode-style hidden harness** are all done.

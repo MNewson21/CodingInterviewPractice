@@ -1,7 +1,21 @@
 import { useEditorStore } from '../../stores/useEditorStore';
 import { useExecutionStore } from '../../stores/useExecutionStore';
 import { runTests, type Verdict } from './testRunner';
+import { PistonError } from './pistonClient';
 import type { Problem } from '../../types/problem';
+
+/** Turn a thrown error into a user-facing message, with hints for known infra failures. */
+function describeRunError(err: unknown): string {
+  if (err instanceof PistonError) {
+    if (err.kind === 'unavailable') {
+      return 'Code-execution service is unavailable. If you are running locally, check that the Piston container is up (docker start piston).';
+    }
+    if (err.kind === 'rate-limited') {
+      return 'Too many runs in a short time — wait a few seconds and try again.';
+    }
+  }
+  return err instanceof Error ? err.message : String(err);
+}
 
 const verdictStyle: Record<Verdict, string> = {
   pass: 'text-green-400',
@@ -35,6 +49,10 @@ export function RunPanel({ problem }: { problem: Problem }) {
   const setError = useExecutionStore((s) => s.setError);
 
   async function handleRun() {
+    if (!code.trim()) {
+      setError('Write some code before running the tests.');
+      return;
+    }
     setRunning(true);
     setError(null);
     try {
@@ -46,7 +64,7 @@ export function RunPanel({ problem }: { problem: Problem }) {
       });
       setResults(res);
     } catch (err) {
-      setError(err instanceof Error ? err.message : String(err));
+      setError(describeRunError(err));
     } finally {
       setRunning(false);
     }

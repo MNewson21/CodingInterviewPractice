@@ -23,6 +23,33 @@ const FILE_NAME: Record<Language, string> = {
   cpp: 'main.cpp',
 };
 
+/** Distinguishes infrastructure failures from real run/compile errors so the UI can react. */
+export type PistonErrorKind = 'unavailable' | 'rate-limited' | 'runtime';
+
+export class PistonError extends Error {
+  kind: PistonErrorKind;
+  constructor(kind: PistonErrorKind, message: string) {
+    super(message);
+    this.name = 'PistonError';
+    this.kind = kind;
+  }
+}
+
+/** fetch wrapper that maps network failures and rate-limits onto typed PistonErrors. */
+async function pistonFetch(path: string, init?: RequestInit): Promise<Response> {
+  let res: Response;
+  try {
+    res = await fetch(`${PISTON_URL}${path}`, init);
+  } catch {
+    // Network-level failure: container down, wrong URL, offline, or blocked by CORS.
+    throw new PistonError('unavailable', 'Could not reach the code-execution service.');
+  }
+  if (res.status === 429) {
+    throw new PistonError('rate-limited', 'Code-execution service is rate-limited.');
+  }
+  return res;
+}
+
 interface Runtime {
   language: string;
   version: string;
@@ -34,8 +61,8 @@ let runtimesCache: Runtime[] | null = null;
 
 async function getRuntimes(): Promise<Runtime[]> {
   if (runtimesCache) return runtimesCache;
-  const res = await fetch(`${PISTON_URL}/runtimes`);
-  if (!res.ok) throw new Error(`Failed to load Piston runtimes (${res.status})`);
+  const res = await pistonFetch('/runtimes');
+  if (!res.ok) throw new PistonError('unavailable', `Failed to load Piston runtimes (${res.status}).`);
   runtimesCache = (await res.json()) as Runtime[];
   return runtimesCache;
 }
@@ -69,7 +96,7 @@ export async function executeCode(params: {
   const { language, code, stdin } = params;
   const version = await resolveVersion(language);
 
-  const res = await fetch(`${PISTON_URL}/execute`, {
+  const res = await pistonFetch('/execute', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -82,7 +109,7 @@ export async function executeCode(params: {
 
   if (!res.ok) {
     const text = await res.text().catch(() => '');
-    throw new Error(`Piston execute failed (${res.status}): ${text}`);
+    throw new PistonError('runtime', `Execution failed (${res.status}): ${text}`);
   }
 
   return (await res.json()) as PistonResponse;

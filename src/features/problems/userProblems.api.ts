@@ -37,6 +37,17 @@ export async function saveUserProblem(data: ProblemData): Promise<Problem> {
   return fromRow(row as UserProblemRow);
 }
 
+export async function updateUserProblem(id: string, data: ProblemData): Promise<Problem> {
+  const { data: row, error } = await supabase
+    .from('user_problems')
+    .update({ data })
+    .eq('id', id)
+    .select()
+    .single();
+  if (error) throw new Error(error.message);
+  return fromRow(row as UserProblemRow);
+}
+
 export async function deleteUserProblem(id: string): Promise<void> {
   const { error } = await supabase.from('user_problems').delete().eq('id', id);
   if (error) throw new Error(error.message);

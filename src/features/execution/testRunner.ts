@@ -1,5 +1,5 @@
 import type { Language, TestCase } from '../../types/problem';
-import { executeCode, type PistonResponse } from './pistonClient';
+import { executeCode, PistonError, type PistonResponse } from './pistonClient';
 
 export type Verdict = 'pass' | 'fail' | 'error';
 
@@ -49,6 +49,15 @@ function evaluate(
   const run = response.run;
   const actual = normalize(run.stdout);
 
+  // Piston kills runs that exceed the time/memory limit; it reports a signal (e.g. SIGKILL).
+  if (run.signal) {
+    return {
+      verdict: 'error',
+      actual,
+      stderr: run.stderr || `Killed (${run.signal}) — likely a timeout or out of memory.`,
+    };
+  }
+
   if (run.code !== 0) {
     return { verdict: 'error', actual, stderr: run.stderr || `exited with code ${run.code}` };
   }
@@ -79,6 +88,11 @@ export async function runTests(params: {
       const { verdict, actual, stderr } = evaluate(response, tc.expectedStdout);
       results.push({ name, verdict, input: tc.stdin, expected: normalize(tc.expectedStdout), actual, stderr });
     } catch (err) {
+      // Infrastructure failures (service down / rate-limited) hit every test the same
+      // way — surface them once to the caller instead of as N identical per-test rows.
+      if (err instanceof PistonError && (err.kind === 'unavailable' || err.kind === 'rate-limited')) {
+        throw err;
+      }
       results.push({
         name,
         verdict: 'error',

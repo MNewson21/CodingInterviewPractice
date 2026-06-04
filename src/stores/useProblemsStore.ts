@@ -9,6 +9,7 @@ interface ProblemsState {
   error: string | null;
   load: () => Promise<void>;
   addCustom: (p: Problem) => void;
+  updateCustom: (p: Problem) => void;
   removeCustom: (id: string) => void;
 }
 
@@ -30,5 +31,6 @@ export const useProblemsStore = create<ProblemsState>((set, get) => ({
     }
   },
   addCustom: (p) => set((s) => ({ custom: [p, ...s.custom] })),
+  updateCustom: (p) => set((s) => ({ custom: s.custom.map((x) => (x.id === p.id ? p : x)) })),
   removeCustom: (id) => set((s) => ({ custom: s.custom.filter((p) => p.id !== id) })),
 }));

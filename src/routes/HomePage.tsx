@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import type { Problem } from '../types/problem';
 import { problems } from '../features/problems/problems.data';
 import { useAuth, signOut } from '../lib/auth';
 import { SessionHistory } from '../features/sessions/SessionHistory';
@@ -17,7 +18,8 @@ const difficultyColor: Record<string, string> = {
 export function HomePage() {
   const { user, loading } = useAuth();
   const loadCustom = useProblemsStore((s) => s.load);
-  const [showForm, setShowForm] = useState(false);
+  // null = show the import dropzone; otherwise the form is open in create or edit mode.
+  const [form, setForm] = useState<{ kind: 'create' } | { kind: 'edit'; problem: Problem } | null>(null);
 
   useEffect(() => {
     if (user) loadCustom();
@@ -68,19 +70,23 @@ export function HomePage() {
                 <h2 className="text-sm font-semibold text-zinc-300">Your problems</h2>
                 <button
                   type="button"
-                  onClick={() => setShowForm((v) => !v)}
+                  onClick={() => setForm((f) => (f?.kind === 'create' ? null : { kind: 'create' }))}
                   className="text-xs text-emerald-400 hover:underline"
                 >
-                  {showForm ? 'Close' : '+ Create a problem'}
+                  {form?.kind === 'create' ? 'Close' : '+ Create a problem'}
                 </button>
               </div>
-              {showForm ? (
-                <ProblemForm onCreated={() => setShowForm(false)} />
+              {form ? (
+                <ProblemForm
+                  key={form.kind === 'edit' ? form.problem.id : 'new'}
+                  initial={form.kind === 'edit' ? form.problem : undefined}
+                  onDone={() => setForm(null)}
+                />
               ) : (
                 <ImportDropzone />
               )}
               <div className="mt-3">
-                <MyProblems />
+                <MyProblems onEdit={(p) => setForm({ kind: 'edit', problem: p })} />
               </div>
             </section>
 
