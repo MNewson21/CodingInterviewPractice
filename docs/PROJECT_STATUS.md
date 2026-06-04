@@ -89,7 +89,7 @@ vercel.json                       SPA rewrite for client-side routes
 ```
 VITE_SUPABASE_URL=https://<ref>.supabase.co     # BASE url only, no /rest/v1
 VITE_SUPABASE_ANON_KEY=<anon jwt>
-VITE_PISTON_URL=/piston/api/v2/piston           # dev: proxy path; prod: full https URL
+VITE_PISTON_URL=/piston/api/v2                   # dev: proxy path; prod: full https URL (self-host serves /api/v2)
 VITE_ENABLED_LANGUAGES=python,javascript,typescript   # optional; unset = all 5
 ```
 LLM secrets live in Supabase (NOT here): `AI_API_KEY`, `AI_BASE_URL`, `AI_MODEL`.

@@ -22,7 +22,7 @@ Only the EC2 box costs money. Tear it down when the demo is over (see end).
    ```
    VITE_SUPABASE_URL=https://jdvupaqhglrbriyhcmbz.supabase.co
    VITE_SUPABASE_ANON_KEY=<your anon key>
-   VITE_PISTON_URL=https://piston.YOURDOMAIN.com/api/v2/piston   # from Part C
+   VITE_PISTON_URL=https://piston.YOURDOMAIN.com/api/v2          # from Part C (note: /api/v2, NOT /api/v2/piston)
    VITE_ENABLED_LANGUAGES=python,javascript,typescript        # match installed runtimes
    ```
 4. Deploy. You get `https://your-app.vercel.app`.
@@ -42,6 +42,86 @@ Only the EC2 box costs money. Tear it down when the demo is over (see end).
 ---
 
 ## Part C — Piston on AWS EC2
+
+> ### Testing on the free tier first (do this before the "real" deploy)
+> You never buy EC2 up front — it's **pay-as-you-go by the hour**, and you terminate
+> when done. So you can validate the whole Piston setup for ~$0 first:
+>
+> - **Free credits:** new AWS accounts get a credit-based free plan (~$100, up to
+>   $200 after setup activities, ~6 months). That easily covers this. *(Exact terms
+>   change — confirm on the signup page. Older accounts may instead have the legacy
+>   12-month / 750-hours-per-month micro tier.)*
+> - **Use `t3.micro` (1 GB) for testing.** It's free-tier-eligible and is enough for
+>   the **light language set this app uses (Python + JS + TS)** — `setup-piston.sh`'s
+>   default. You only need `t3.small` (Part C1) once you add heavy compilers (C++/Java).
+> - **Skip the Elastic IP while testing.** Since Feb 2024 AWS bills public IPv4
+>   addresses (~$3.60/mo, ~$0.005/hr) **even when attached to a running instance**.
+>   For a throwaway test just use the instance's auto-assigned public IP (it changes
+>   on restart, which is fine for a one-off). Only allocate an Elastic IP for the real
+>   demo, when you want a stable IP for DNS — and **release it** as soon as you're done
+>   (an unattached EIP keeps billing). See Teardown below.
+> - **When the test passes:** terminate the `t3.micro`, then do the real deploy
+>   (`t3.small` + Elastic IP + Caddy/HTTPS + domain) following C1–C4.
+
+### C0. Free-tier test walkthrough (no domain, no Caddy, no Elastic IP)
+
+A throwaway run to prove Piston works on AWS before committing to the real deploy.
+Code execution does **not** need Supabase or the AI features, so they can stay inert.
+
+> **(Optional) Prove it locally first** so AWS is the only new variable:
+> `docker start piston && npm run dev` → solve a problem, hit **Run**, tests pass.
+
+1. **Create the AWS account** at aws.amazon.com → *Create an AWS Account*. A
+   credit/debit card is required for verification (not charged within free credits);
+   choose the **Basic (free)** support plan.
+
+2. **Launch a `t3.micro`** (EC2 → Launch instance):
+   - AMI **Ubuntu Server 24.04 LTS**, type **`t3.micro`**.
+   - Create + download a **key pair** (`.pem`) for SSH.
+   - **Security group** (test-only): SSH (22) from *My IP*, **Custom TCP 2000 from
+     *My IP*** (temporary — the real deploy closes this and puts Caddy in front).
+   - **No Elastic IP** — use the auto-assigned public IP.
+
+3. **Install Docker + Piston** (SSH in: `ssh -i your-key.pem ubuntu@<public-ip>`):
+   ```bash
+   sudo apt update && sudo apt install -y docker.io jq
+   sudo systemctl enable --now docker
+
+   sudo docker run --privileged -d --name piston --restart unless-stopped \
+     -p 2000:2000 -v piston-data:/piston ghcr.io/engineer-man/piston
+
+   curl -s http://localhost:2000/api/v2/runtimes ; echo     # wait until this prints []
+   ./setup-piston.sh                                         # installs Python + JS + TS
+   ```
+   (Copy `scripts/setup-piston.sh` onto the box, or paste its contents.)
+
+4. **Smoke test (proves hosting works)** — on the box:
+   ```bash
+   curl -s http://localhost:2000/api/v2/runtimes | jq -r '.[] | "\(.language) \(.version)"'
+   ```
+   Seeing `python` / `javascript` / `typescript` confirms Piston runs on EC2.
+
+5. **Full end-to-end from your app (no CORS/HTTPS needed yet).** Point the **Vite dev
+   proxy** at the instance — the proxy runs server-side, so the browser never makes a
+   cross-origin call. In `vite.config.ts`, temporarily change the target:
+   ```ts
+   '/piston': {
+     target: 'http://<your-ec2-public-ip>:2000',   // was http://localhost:2000
+     changeOrigin: true,
+     rewrite: (path) => path.replace(/^\/piston/, ''),
+   },
+   ```
+   Keep `.env.local` as `VITE_PISTON_URL=/piston/api/v2`, restart `npm run dev`, open a
+   problem, hit **Run**. Passing tests = your app is executing code on AWS.
+
+   > Pointing the browser *directly* at `http://<ec2-ip>:2000` would fail (cross-origin,
+   > and later mixed HTTP/HTTPS). That's exactly what Caddy + a domain fix in the real
+   > deploy (C3); the dev proxy sidesteps it for a test.
+
+6. **Tear down:** EC2 → **Terminate** the instance; revert the `vite.config.ts` proxy
+   change. No Elastic IP was allocated, so nothing lingers. Cost: pennies.
+
+Once this is green, proceed to the real deploy (C1–C4) for a stable public URL.
 
 ### C1. Launch the instance
 - EC2 -> Launch instance
@@ -64,11 +144,14 @@ SSH in (`ssh -i key.pem ubuntu@<elastic-ip>`), then:
 sudo apt update && sudo apt install -y docker.io jq
 sudo systemctl enable --now docker
 
-sudo docker run -d --name piston --restart unless-stopped \
-  -p 2000:2000 ghcr.io/engineer-man/piston
+sudo docker run --privileged -d --name piston --restart unless-stopped \
+  -p 2000:2000 -v piston-data:/piston ghcr.io/engineer-man/piston
+
+# --privileged (isolate sandbox) and -v piston-data:/piston (persistent data dir)
+# are both required; without them the container errors on mkdir 'isolate/' / chown '/piston'.
 
 # wait until this prints []  then install runtimes
-curl -s http://localhost:2000/api/v2/piston/runtimes ; echo
+curl -s http://localhost:2000/api/v2/runtimes ; echo
 ```
 Copy `scripts/setup-piston.sh` to the box (or paste it) and run it:
 ```bash
@@ -105,11 +188,11 @@ gives Piston HTTPS and adds the CORS header.
 
 Test from your laptop:
 ```bash
-curl -s https://piston.YOURDOMAIN.com/api/v2/piston/runtimes | jq length
+curl -s https://piston.YOURDOMAIN.com/api/v2/runtimes | jq length
 ```
 
 ### C4. Wire it up
-Set `VITE_PISTON_URL=https://piston.YOURDOMAIN.com/api/v2/piston` in Vercel and redeploy.
+Set `VITE_PISTON_URL=https://piston.YOURDOMAIN.com/api/v2` in Vercel and redeploy.
 
 ---
 

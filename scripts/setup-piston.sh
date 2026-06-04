@@ -7,8 +7,11 @@
 # Usage:
 #   ./scripts/setup-piston.sh [PISTON_BASE_URL]
 #   PISTON_PACKAGES="python node" ./scripts/setup-piston.sh   # custom set
+#   ./scripts/setup-piston.sh https://piston.example.com/api/v2   # remote instance
 #
-# Default base URL: http://localhost:2000/api/v2/piston
+# Default base URL: http://localhost:2000/api/v2
+# NOTE: the self-hosted image serves at /api/v2 — the extra /piston segment only
+# exists on the public emkc.org host.
 #
 # LIGHT default set (Python + JavaScript + TypeScript) keeps memory low so it runs
 # on a small box like an AWS t3.micro (1 GB). The heavy compilers (Java, C++/gcc)
@@ -22,7 +25,7 @@
 # Requires: curl, jq
 set -euo pipefail
 
-PISTON="${1:-http://localhost:2000/api/v2/piston}"
+PISTON="${1:-http://localhost:2000/api/v2}"
 read -ra PACKAGES <<< "${PISTON_PACKAGES:-python node typescript}"
 
 command -v jq >/dev/null || { echo "jq is required (e.g. 'sudo apt install jq')"; exit 1; }
