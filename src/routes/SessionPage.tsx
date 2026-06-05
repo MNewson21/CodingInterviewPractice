@@ -230,6 +230,16 @@ export function SessionPage() {
         </div>
       </header>
 
+      {!user && (
+        <div className="border-b border-zinc-800 bg-zinc-900/60 px-4 py-1.5 text-xs text-zinc-400">
+          Guest mode — solve and run freely.{' '}
+          <Link to="/auth" className="text-blue-400 hover:underline">
+            Sign in
+          </Link>{' '}
+          to save your history.
+        </div>
+      )}
+
       {/* Mobile: stack the panels and let the whole area scroll (the editor gets a
           fixed height so Monaco can render). md+: the classic side-by-side split with
           each pane managing its own scroll inside the viewport. */}

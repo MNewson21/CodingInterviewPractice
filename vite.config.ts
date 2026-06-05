@@ -6,7 +6,7 @@ export default defineConfig(({ mode }) => {
   // Dev-only: point the /piston proxy at a remote Piston (e.g. an AWS test box) by
   // setting VITE_PISTON_PROXY_TARGET in .env.local (gitignored). Defaults to the local
   // Piston container — keeps any real instance IP out of the committed config.
-  const env = loadEnv(mode, process.cwd(), '');
+  const env = loadEnv(mode, '.', '');
   const pistonTarget = env.VITE_PISTON_PROXY_TARGET || 'http://localhost:2000';
 
   return {

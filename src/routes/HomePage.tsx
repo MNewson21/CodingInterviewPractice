@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import type { Problem } from '../types/problem';
 import { problems } from '../features/problems/problems.data';
@@ -7,6 +7,7 @@ import { SessionHistory } from '../features/sessions/SessionHistory';
 import { ImportDropzone } from '../features/problems/ImportDropzone';
 import { ProblemForm } from '../features/problems/ProblemForm';
 import { MyProblems } from '../features/problems/MyProblems';
+import { LandingHero } from '../features/landing/LandingHero';
 import { useProblemsStore } from '../stores/useProblemsStore';
 
 const difficultyColor: Record<string, string> = {
@@ -20,6 +21,9 @@ export function HomePage() {
   const loadCustom = useProblemsStore((s) => s.load);
   // null = show the import dropzone; otherwise the form is open in create or edit mode.
   const [form, setForm] = useState<{ kind: 'create' } | { kind: 'edit'; problem: Problem } | null>(null);
+  // The landing hero's CTA scrolls the (logged-out) visitor down to the problem list.
+  const listRef = useRef<HTMLDivElement>(null);
+  const scrollToList = () => listRef.current?.scrollIntoView({ behavior: 'smooth' });
 
   useEffect(() => {
     if (user) loadCustom();
@@ -30,8 +34,10 @@ export function HomePage() {
       <div className="mx-auto max-w-3xl px-6 py-10">
         <div className="flex items-start justify-between">
           <div>
-            <h1 className="text-2xl font-bold">Mock Interview IDE</h1>
-            <p className="mt-1 text-sm text-zinc-400">Pick a problem to start a practice session.</p>
+            <h1 className="text-2xl font-bold">CodingInterviewPractice</h1>
+            {user && (
+              <p className="mt-1 text-sm text-zinc-400">Welcome back — pick a problem to continue.</p>
+            )}
           </div>
           <div className="text-right text-sm">
             {loading ? null : user ? (
@@ -49,19 +55,24 @@ export function HomePage() {
           </div>
         </div>
 
-        <ul className="mt-6 divide-y divide-zinc-800 rounded-lg border border-zinc-800">
-          {problems.map((p) => (
-            <li key={p.id}>
-              <Link
-                to={`/session/${p.id}`}
-                className="flex items-center justify-between px-4 py-3 hover:bg-zinc-900"
-              >
-                <span className="font-medium">{p.title}</span>
-                <span className={`text-xs uppercase ${difficultyColor[p.difficulty]}`}>{p.difficulty}</span>
-              </Link>
-            </li>
-          ))}
-        </ul>
+        {!loading && !user && <LandingHero onTryProblem={scrollToList} />}
+
+        <section ref={listRef} className="scroll-mt-4">
+          <h2 className="mt-10 mb-3 text-sm font-semibold text-zinc-300">Problems</h2>
+          <ul className="divide-y divide-zinc-800 rounded-lg border border-zinc-800">
+            {problems.map((p) => (
+              <li key={p.id}>
+                <Link
+                  to={`/session/${p.id}`}
+                  className="flex items-center justify-between px-4 py-3 hover:bg-zinc-900"
+                >
+                  <span className="font-medium">{p.title}</span>
+                  <span className={`text-xs uppercase ${difficultyColor[p.difficulty]}`}>{p.difficulty}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
 
         {user && (
           <>
