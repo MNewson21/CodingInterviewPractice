@@ -6,16 +6,16 @@
 ## Where you are
 - [x] AWS account created — **Free account plan**, $100 credits. No real charges.
 - [x] EC2 instance launched (`t3.micro`, Ubuntu 24.04).
-- [x] Key pair downloaded → `/home/miles/Downloads/MainKey.pem`.
-- [ ] **NEXT:** fix the key file permissions (below), then SSH in.
-- [ ] Install Docker + Piston on the box.
-- [ ] Smoke test (runtimes list).
-- [ ] Wire the local app to it (Claude edits `vite.config.ts` — just send the IP).
-- [ ] Tear down the instance when done.
+- [x] Key pair downloaded → moved to `~/.ssh/MainKey.pem`, `chmod 400` applied.
+- [x] SSH in — confirmed (Ubuntu 26.04).
+- [x] Install Docker + Piston on the box — container up, `/runtimes` returns `[]`.
+- [x] Installed runtimes — python 3.12.0, javascript 20.11.1, typescript 5.0.3.
+- [x] Wired local app via `vite.config.ts` proxy → Run + all tests pass on AWS. ✅ TEST PASSED.
+- [ ] **NEXT:** Tear down the instance (Step 6) + revert the `vite.config.ts` proxy.
 
 ## Fill these in (from the EC2 console)
-- **Region:** `__________` (top-right of the AWS console — keep everything in this one)
-- **Public IP:** `__________` (Instance summary → "Public IPv4 address"; changes if you stop/start)
+- **Region:** `eu-west-2` (London)
+- **Public IP:** `<PUBLIC-IP>` (kept locally in `.env.local`; changes if you stop/start)
 - **Key file:** `/home/miles/Downloads/MainKey.pem`
 
 ---
