@@ -1,4 +1,5 @@
 import type { Problem } from '../../types/problem';
+import { Markdown } from '../../components/Markdown';
 
 const difficultyColor: Record<string, string> = {
   easy: 'text-green-400',
@@ -23,8 +24,7 @@ export function ProblemPanel({ problem }: { problem: Problem }) {
         </div>
       </div>
 
-      {/* v1 renders description as plain text. Upgrade to react-markdown later. */}
-      <p className="whitespace-pre-wrap text-zinc-200">{problem.description}</p>
+      <Markdown>{problem.description}</Markdown>
 
       <div>
         <h3 className="mb-2 font-semibold text-zinc-100">Examples</h3>

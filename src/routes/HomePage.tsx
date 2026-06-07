@@ -7,15 +7,10 @@ import { SessionHistory } from '../features/sessions/SessionHistory';
 import { ImportDropzone } from '../features/problems/ImportDropzone';
 import { ProblemForm } from '../features/problems/ProblemForm';
 import { MyProblems } from '../features/problems/MyProblems';
+import { ProblemList } from '../features/problems/ProblemList';
 import { LandingHero } from '../features/landing/LandingHero';
 import { ThemeSwitcher } from '../features/editor/ThemeSwitcher';
 import { useProblemsStore } from '../stores/useProblemsStore';
-
-const difficultyColor: Record<string, string> = {
-  easy: 'text-green-400',
-  medium: 'text-yellow-400',
-  hard: 'text-red-400',
-};
 
 export function HomePage() {
   const { user, loading } = useAuth();
@@ -67,19 +62,7 @@ export function HomePage() {
 
         <section ref={listRef} className="scroll-mt-4">
           <h2 className="mt-10 mb-3 text-sm font-semibold text-zinc-300">Problems</h2>
-          <ul className="divide-y divide-zinc-800 rounded-lg border border-zinc-800">
-            {problems.map((p) => (
-              <li key={p.id}>
-                <Link
-                  to={`/session/${p.id}`}
-                  className="flex items-center justify-between px-4 py-3 hover:bg-zinc-900"
-                >
-                  <span className="font-medium">{p.title}</span>
-                  <span className={`text-xs uppercase ${difficultyColor[p.difficulty]}`}>{p.difficulty}</span>
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <ProblemList problems={problems} />
         </section>
 
         {user && (
