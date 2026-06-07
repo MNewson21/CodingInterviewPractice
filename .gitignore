@@ -4,3 +4,10 @@ dist
 .env
 *.local
 .DS_Store
+
+
+supabase/.temp/
+supabase/.branches/
+
+
+notes/
