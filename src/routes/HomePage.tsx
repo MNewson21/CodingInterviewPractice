@@ -40,7 +40,10 @@ export function HomePage() {
               <p className="mt-1 text-sm text-zinc-400">Welcome back — pick a problem to continue.</p>
             )}
           </div>
-          <div className="text-right text-sm">
+          <div className="flex flex-col items-end gap-1 text-right text-sm">
+            <Link to="/about" className="text-xs text-zinc-400 hover:text-zinc-100">
+              Why did I build this?
+            </Link>
             {loading ? null : user ? (
               <div className="flex flex-col items-end gap-1">
                 <span className="text-xs text-zinc-400">{user.email}</span>

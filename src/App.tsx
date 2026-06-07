@@ -4,6 +4,7 @@ import { ErrorBoundary } from './components/ErrorBoundary';
 import { HomePage } from './routes/HomePage';
 import { SessionPage } from './routes/SessionPage';
 import { ReplayPage } from './routes/ReplayPage';
+import { AboutPage } from './routes/AboutPage';
 import { AuthPage } from './features/auth/AuthPage';
 import { useThemeStore } from './stores/useThemeStore';
 
@@ -24,6 +25,7 @@ export function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/about" element={<AboutPage />} />
           <Route path="/auth" element={<AuthPage />} />
           <Route path="/session/:problemId" element={<SessionPage />} />
           <Route path="/replay/:sessionId" element={<ReplayPage />} />
