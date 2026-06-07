@@ -6,3 +6,98 @@ body,
   height: 100%;
   margin: 0;
 }
+
+/*
+ * Whole-page theming.
+ *
+ * Tailwind v4 compiles colour utilities (bg-zinc-800, text-zinc-100, …) to
+ * var(--color-zinc-*). The app is built dark-first on the zinc scale, so when
+ * `data-app-theme` is present on <html> we simply override that scale and the
+ * entire UI re-tints — no per-component changes. The light theme inverts the
+ * ramp (950 = lightest) so the dark-built classes flip to a light palette.
+ */
+
+:root[data-app-theme="vs-dark"] {
+  --color-zinc-50: #f5f5f5;
+  --color-zinc-100: #e8e8e8;
+  --color-zinc-200: #d4d4d4;
+  --color-zinc-300: #bcbcc0;
+  --color-zinc-400: #9a9a9e;
+  --color-zinc-500: #6e6e72;
+  --color-zinc-600: #555558;
+  --color-zinc-700: #3e3e42;
+  --color-zinc-800: #2d2d30;
+  --color-zinc-900: #252526;
+  --color-zinc-950: #1e1e1e;
+}
+
+:root[data-app-theme="vs"] {
+  color-scheme: light;
+  --color-zinc-50: #111111;
+  --color-zinc-100: #1f1f1f;
+  --color-zinc-200: #333333;
+  --color-zinc-300: #4a4a4a;
+  --color-zinc-400: #6a6a6a;
+  --color-zinc-500: #8a8a8a;
+  --color-zinc-600: #b0b0b0;
+  --color-zinc-700: #d6d6d6;
+  --color-zinc-800: #ececec;
+  --color-zinc-900: #f7f7f7;
+  --color-zinc-950: #ffffff;
+}
+
+:root[data-app-theme="hc-black"] {
+  --color-zinc-50: #ffffff;
+  --color-zinc-100: #f2f2f2;
+  --color-zinc-200: #e6e6e6;
+  --color-zinc-300: #cccccc;
+  --color-zinc-400: #a6a6a6;
+  --color-zinc-500: #7a7a7a;
+  --color-zinc-600: #4d4d4d;
+  --color-zinc-700: #2a2a2a;
+  --color-zinc-800: #1a1a1a;
+  --color-zinc-900: #0a0a0a;
+  --color-zinc-950: #000000;
+}
+
+:root[data-app-theme="monokai"] {
+  --color-zinc-50: #fefef9;
+  --color-zinc-100: #f8f8f2;
+  --color-zinc-200: #e3e1d3;
+  --color-zinc-300: #cfccb8;
+  --color-zinc-400: #b5b29a;
+  --color-zinc-500: #908d78;
+  --color-zinc-600: #75715e;
+  --color-zinc-700: #49483e;
+  --color-zinc-800: #34352f;
+  --color-zinc-900: #272822;
+  --color-zinc-950: #1e1f1c;
+}
+
+:root[data-app-theme="solarized-dark"] {
+  --color-zinc-50: #fdf6e3;
+  --color-zinc-100: #eee8d5;
+  --color-zinc-200: #b3bcbc;
+  --color-zinc-300: #93a1a1;
+  --color-zinc-400: #839496;
+  --color-zinc-500: #657b83;
+  --color-zinc-600: #586e75;
+  --color-zinc-700: #0a4250;
+  --color-zinc-800: #073642;
+  --color-zinc-900: #002b36;
+  --color-zinc-950: #002028;
+}
+
+:root[data-app-theme="github-dark"] {
+  --color-zinc-50: #f0f6fc;
+  --color-zinc-100: #e6edf3;
+  --color-zinc-200: #c9d1d9;
+  --color-zinc-300: #b1bac4;
+  --color-zinc-400: #8b949e;
+  --color-zinc-500: #6e7681;
+  --color-zinc-600: #484f58;
+  --color-zinc-700: #30363d;
+  --color-zinc-800: #21262d;
+  --color-zinc-900: #161b22;
+  --color-zinc-950: #0d1117;
+}

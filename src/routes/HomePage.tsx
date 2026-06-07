@@ -8,6 +8,7 @@ import { ImportDropzone } from '../features/problems/ImportDropzone';
 import { ProblemForm } from '../features/problems/ProblemForm';
 import { MyProblems } from '../features/problems/MyProblems';
 import { LandingHero } from '../features/landing/LandingHero';
+import { ThemeSwitcher } from '../features/editor/ThemeSwitcher';
 import { useProblemsStore } from '../stores/useProblemsStore';
 
 const difficultyColor: Record<string, string> = {
@@ -53,6 +54,10 @@ export function HomePage() {
               </Link>
             )}
           </div>
+        </div>
+
+        <div className="mt-3 flex justify-end">
+          <ThemeSwitcher />
         </div>
 
         {!loading && !user && <LandingHero onTryProblem={scrollToList} />}

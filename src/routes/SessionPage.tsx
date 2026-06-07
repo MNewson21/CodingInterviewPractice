@@ -5,6 +5,7 @@ import { downloadProblem } from '../features/problems/problemFile';
 import { ProblemPanel } from '../features/problems/ProblemPanel';
 import { CodeEditor } from '../features/editor/CodeEditor';
 import { LanguageSelect } from '../features/editor/LanguageSelect';
+import { ThemeSwitcher } from '../features/editor/ThemeSwitcher';
 import { Timer } from '../features/timer/Timer';
 import { RunPanel } from '../features/execution/RunPanel';
 import { ComplexityBadge } from '../features/analysis/ComplexityBadge';
@@ -202,6 +203,7 @@ export function SessionPage() {
         </Link>
         <h1 className="truncate text-sm font-semibold">{problem.title}</h1>
         <div className="flex shrink-0 items-center gap-4">
+          <ThemeSwitcher />
           <Timer />
           <LanguageSelect problem={problem} />
           <button

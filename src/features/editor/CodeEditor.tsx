@@ -1,6 +1,8 @@
-import Editor, { type OnMount } from '@monaco-editor/react';
+import Editor, { type BeforeMount, type OnMount } from '@monaco-editor/react';
 import { useEditorStore } from '../../stores/useEditorStore';
 import { useKeystrokeStore } from '../../stores/useKeystrokeStore';
+import { useThemeStore } from '../../stores/useThemeStore';
+import { registerEditorThemes } from './themes';
 import { changesToEvents } from '../keystrokes/recorder';
 import type { Language } from '../../types/problem';
 
@@ -16,6 +18,10 @@ export function CodeEditor() {
   const code = useEditorStore((s) => s.code);
   const language = useEditorStore((s) => s.language);
   const setCode = useEditorStore((s) => s.setCode);
+  const editorTheme = useThemeStore((s) => s.editorTheme);
+
+  // Register custom themes before Monaco applies the `theme` prop on first render.
+  const handleBeforeMount: BeforeMount = (monaco) => registerEditorThemes(monaco);
 
   const handleMount: OnMount = (editor) => {
     editor.onDidChangeModelContent((e) => {
@@ -38,10 +44,11 @@ export function CodeEditor() {
   return (
     <Editor
       height="100%"
-      theme="vs-dark"
+      theme={editorTheme}
       language={MONACO_LANGUAGE[language]}
       value={code}
       onChange={(value) => setCode(value ?? '')}
+      beforeMount={handleBeforeMount}
       onMount={handleMount}
       options={{
         fontSize: 14,

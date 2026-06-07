@@ -1,11 +1,24 @@
+import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { HomePage } from './routes/HomePage';
 import { SessionPage } from './routes/SessionPage';
 import { ReplayPage } from './routes/ReplayPage';
 import { AuthPage } from './features/auth/AuthPage';
+import { useThemeStore } from './stores/useThemeStore';
 
 export function App() {
+  const editorTheme = useThemeStore((s) => s.editorTheme);
+  const scope = useThemeStore((s) => s.scope);
+
+  // When scope is 'page', expose the theme on <html> so the CSS zinc-scale overrides
+  // re-tint the whole app. 'editor' scope leaves the default palette in place.
+  useEffect(() => {
+    const root = document.documentElement;
+    if (scope === 'page') root.dataset.appTheme = editorTheme;
+    else delete root.dataset.appTheme;
+  }, [editorTheme, scope]);
+
   return (
     <ErrorBoundary>
       <BrowserRouter>

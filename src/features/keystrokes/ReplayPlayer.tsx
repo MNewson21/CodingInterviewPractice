@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Editor, { type OnMount } from '@monaco-editor/react';
+import { useThemeStore } from '../../stores/useThemeStore';
+import { registerEditorThemes } from '../editor/themes';
 import type { KeystrokeEvent } from '../../types/session';
 
 type EditorInstance = Parameters<OnMount>[0];
@@ -33,10 +35,12 @@ export function ReplayPlayer({
   const [currentMs, setCurrentMs] = useState(0);
   const [playing, setPlaying] = useState(false);
   const [speed, setSpeed] = useState(1);
+  const editorTheme = useThemeStore((s) => s.editorTheme);
 
   const handleMount: OnMount = (editor, monaco) => {
     editorRef.current = editor;
     monacoRef.current = monaco;
+    registerEditorThemes(monaco);
     // Start from the starter code, not an empty buffer, so the function lines show
     // and the recorded edit positions line up.
     editor.getModel()?.setValue(initialCode);
@@ -108,7 +112,7 @@ export function ReplayPlayer({
       <div className="min-h-0 flex-1">
         <Editor
           height="100%"
-          theme="vs-dark"
+          theme={editorTheme}
           defaultValue={initialCode}
           language={language}
           onMount={handleMount}
