@@ -23,6 +23,18 @@ const FILE_NAME: Record<Language, string> = {
   cpp: 'main.cpp',
 };
 
+// Per-request resource limits sent on every /execute. These are defence-in-depth:
+// the authoritative caps live in the Piston server config + reverse proxy (see
+// docs/PISTON_SETUP.md), but sending sane limits from the client keeps a single
+// runaway submission from tying up a worker even on legitimate traffic.
+//
+// Piston REJECTS any request value that exceeds its configured ceiling, so these must
+// stay <= the box's PISTON_RUN_TIMEOUT / PISTON_COMPILE_TIMEOUT. We use Piston's stock
+// defaults (3000ms run, 10000ms compile) so the app works against an un-tuned box too.
+const RUN_TIMEOUT_MS = 3_000;
+const COMPILE_TIMEOUT_MS = 10_000;
+const MEMORY_LIMIT_BYTES = 256 * 1024 * 1024; // 256 MB per run/compile
+
 /** Distinguishes infrastructure failures from real run/compile errors so the UI can react. */
 export type PistonErrorKind = 'unavailable' | 'rate-limited' | 'runtime';
 
@@ -104,6 +116,10 @@ export async function executeCode(params: {
       version,
       files: [{ name: FILE_NAME[language], content: code }],
       stdin,
+      run_timeout: RUN_TIMEOUT_MS,
+      compile_timeout: COMPILE_TIMEOUT_MS,
+      run_memory_limit: MEMORY_LIMIT_BYTES,
+      compile_memory_limit: MEMORY_LIMIT_BYTES,
     }),
   });
 
