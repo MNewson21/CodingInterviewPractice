@@ -89,16 +89,16 @@ VITE_PISTON_URL=/piston/api/v2                            # dev proxy path (see 
 VITE_ENABLED_LANGUAGES=python,javascript,typescript      # optional; unset = all
 ```
 
-LLM secrets are **not** here — they live in Supabase Edge Function secrets (see
-[`docs/AI_SETUP.md`](./docs/AI_SETUP.md)), never in a `VITE_` variable.
+LLM secrets are **not** here — they live in Supabase Edge Function secrets, never
+in a `VITE_` variable.
 
 ### Backend pieces (each independent, each optional to start)
 
 | Piece            | What it powers              | Setup guide                                |
 |------------------|-----------------------------|--------------------------------------------|
 | **Piston**       | Running code                | [`docs/PISTON_SETUP.md`](./docs/PISTON_SETUP.md) |
-| **Supabase**     | Auth, saved sessions, custom problems | [`docs/SUPABASE_SETUP.md`](./docs/SUPABASE_SETUP.md) |
-| **AI functions** | Hints & review _(optional)_ | [`docs/AI_SETUP.md`](./docs/AI_SETUP.md)   |
+| **Supabase**     | Auth, saved sessions, custom problems | Supabase project + DB migrations |
+| **AI functions** | Hints & review _(optional)_ | OpenAI-compatible LLM via Supabase Edge Function |
 
 Quick Piston (local):
 
@@ -134,15 +134,13 @@ src/
 supabase/
   migrations/    sessions + user_problems tables with RLS
   functions/     ai-hint, ai-review Edge Functions + shared LLM proxy
-docs/            architecture, setup guides, deploy walkthrough
+docs/            Piston setup guide + privacy notice
 ```
 
 ## Deployment
 
 The app is three independently-hosted pieces: the frontend (Vercel, free), Supabase
 (free tier), and Piston on a small AWS EC2 box (the only part that costs money).
-[`docs/DEPLOY.md`](./docs/DEPLOY.md) has the full walkthrough, including a **free-tier
-test (§C0)** that proves Piston-on-AWS for pennies before you commit to a domain.
 
 ## License
 

@@ -57,7 +57,7 @@ export function HintPanel({ problem }: { problem: Problem }) {
 
       {!isSupabaseConfigured && (
         <p className="text-xs text-zinc-600">
-          AI features need the Edge Functions deployed — see docs/AI_SETUP.md.
+          AI features need the Supabase Edge Functions deployed.
         </p>
       )}
       {isSupabaseConfigured && !unlocked && hints.length === 0 && (
