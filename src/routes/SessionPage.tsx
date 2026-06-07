@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState, type PointerEvent as ReactPointerEvent } from 'react';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { problems } from '../features/problems/problems.data';
 import { downloadProblem } from '../features/problems/problemFile';
@@ -69,6 +69,58 @@ export function SessionPage() {
   const resetAi = useAiStore((s) => s.reset);
 
   const [saveMsg, setSaveMsg] = useState<string | null>(null);
+
+  // Resizable split layout. Active on desktop only; mobile keeps the stacked layout.
+  const splitRef = useRef<HTMLDivElement>(null);
+  const rightPaneRef = useRef<HTMLDivElement>(null);
+  const [leftWidth, setLeftWidth] = useState(40); // problem panel width, % of the split
+  const [runHeight, setRunHeight] = useState(288); // test-cases panel height, px
+  const [isDesktop, setIsDesktop] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia('(min-width: 768px)').matches,
+  );
+
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 768px)');
+    const onChange = (e: MediaQueryListEvent) => setIsDesktop(e.matches);
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, []);
+
+  // Drag the vertical divider to resize the problem panel vs. the editor.
+  const startDragX = (e: ReactPointerEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    const container = splitRef.current;
+    if (!container) return;
+    const onMove = (ev: PointerEvent) => {
+      const rect = container.getBoundingClientRect();
+      const pct = ((ev.clientX - rect.left) / rect.width) * 100;
+      setLeftWidth(Math.min(70, Math.max(20, pct)));
+    };
+    const onUp = () => {
+      window.removeEventListener('pointermove', onMove);
+      window.removeEventListener('pointerup', onUp);
+    };
+    window.addEventListener('pointermove', onMove);
+    window.addEventListener('pointerup', onUp);
+  };
+
+  // Drag the horizontal divider to resize the editor vs. the test-cases panel.
+  const startDragY = (e: ReactPointerEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    const pane = rightPaneRef.current;
+    if (!pane) return;
+    const onMove = (ev: PointerEvent) => {
+      const rect = pane.getBoundingClientRect();
+      const h = rect.bottom - ev.clientY;
+      setRunHeight(Math.min(rect.height - 160, Math.max(120, h)));
+    };
+    const onUp = () => {
+      window.removeEventListener('pointermove', onMove);
+      window.removeEventListener('pointerup', onUp);
+    };
+    window.addEventListener('pointermove', onMove);
+    window.addEventListener('pointerup', onUp);
+  };
 
   // Initialise the workspace whenever the resolved problem (or resume target) changes.
   // With ?session=<id> we reload that saved attempt to keep editing it; otherwise we
@@ -245,17 +297,40 @@ export function SessionPage() {
       {/* Mobile: stack the panels and let the whole area scroll (the editor gets a
           fixed height so Monaco can render). md+: the classic side-by-side split with
           each pane managing its own scroll inside the viewport. */}
-      <div className="flex min-h-0 flex-1 flex-col overflow-y-auto md:flex-row md:overflow-hidden">
-        <section className="border-b border-zinc-800 md:w-2/5 md:min-w-[320px] md:overflow-y-auto md:border-b-0 md:border-r">
+      <div ref={splitRef} className="flex min-h-0 flex-1 flex-col overflow-y-auto md:flex-row md:overflow-hidden">
+        <section
+          style={isDesktop ? { width: `${leftWidth}%` } : undefined}
+          className="border-b border-zinc-800 md:min-w-[200px] md:shrink-0 md:overflow-y-auto md:border-b-0 md:border-r"
+        >
           <ProblemPanel problem={problem} />
           <AiPanel problem={problem} />
         </section>
-        <section className="flex min-w-0 flex-col md:flex-1">
+
+        {/* Drag to resize the problem panel vs. the editor (desktop only). */}
+        <div
+          onPointerDown={startDragX}
+          role="separator"
+          aria-orientation="vertical"
+          aria-label="Resize problem panel"
+          className="hidden w-1.5 shrink-0 cursor-col-resize bg-zinc-800 transition-colors hover:bg-blue-500/60 md:block"
+        />
+
+        <section ref={rightPaneRef} className="flex min-w-0 flex-col md:flex-1">
           <ComplexityBadge />
           <div className="h-[60vh] md:h-auto md:min-h-0 md:flex-1">
             <CodeEditor />
           </div>
-          <div className="h-72 shrink-0">
+
+          {/* Drag to resize the editor vs. the test-cases panel (desktop only). */}
+          <div
+            onPointerDown={startDragY}
+            role="separator"
+            aria-orientation="horizontal"
+            aria-label="Resize test cases panel"
+            className="hidden h-1.5 shrink-0 cursor-row-resize bg-zinc-800 transition-colors hover:bg-blue-500/60 md:block"
+          />
+
+          <div style={isDesktop ? { height: runHeight } : undefined} className="h-72 shrink-0">
             <RunPanel problem={problem} />
           </div>
         </section>

@@ -136,7 +136,7 @@ export function RunPanel({ problem }: { problem: Problem }) {
                     {r.verdict}
                   </span>
                 </div>
-                <div className="mt-2 space-y-1 font-mono text-xs">
+                <div className="mt-2 space-y-1 overflow-x-auto font-mono text-xs">
                   <div>
                     <span className="text-zinc-500">input: </span>
                     <span className="whitespace-pre-wrap text-zinc-300">{formatInput(r.input, problem.params)}</span>

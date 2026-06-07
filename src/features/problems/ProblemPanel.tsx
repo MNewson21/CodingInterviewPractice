@@ -32,7 +32,7 @@ export function ProblemPanel({ problem }: { problem: Problem }) {
           {problem.examples.map((ex, i) => (
             <div
               key={i}
-              className="rounded border border-zinc-800 bg-zinc-900 p-3 font-mono text-xs"
+              className="overflow-x-auto rounded border border-zinc-800 bg-zinc-900 p-3 font-mono text-xs"
             >
               <div>
                 <span className="text-zinc-500">Input: </span>
