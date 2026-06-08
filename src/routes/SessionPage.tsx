@@ -317,6 +317,12 @@ export function SessionPage() {
         </div>
       )}
 
+      {/* Small screens get the stacked layout, but the editor is really a desktop
+          experience - set expectations rather than pretend otherwise. */}
+      <div className="border-b border-amber-900/40 bg-amber-950/30 px-4 py-1.5 text-xs text-amber-300/90 md:hidden">
+        Best experienced on a desktop - the code editor has more room on a larger screen.
+      </div>
+
       {/* Mobile: stack the panels and let the whole area scroll (the editor gets a
           fixed height so Monaco can render). md+: the classic side-by-side split with
           each pane managing its own scroll inside the viewport. */}
