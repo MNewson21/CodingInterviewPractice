@@ -11,7 +11,7 @@ This notice explains what personal data **${SITE.name}** ("we", "I") collects wh
 use **${SITE.domain}** (the "Service"), why, and your rights under UK GDPR and the Data
 Protection Act 2018.
 
-**Controller:** ${SITE.author} — contact: **${SITE.email}**.
+**Controller:** ${SITE.author} - contact: **${SITE.email}**.
 
 ## 1. What we collect
 
@@ -21,7 +21,7 @@ as you practise.
 | Data | What it is | Source |
 |------|-----------|--------|
 | **Email address** | Used to create and sign in to your account | You, at sign-up |
-| **Password** | Stored only as a salted hash by our auth provider — we never see it | You, at sign-up |
+| **Password** | Stored only as a salted hash by our auth provider - we never see it | You, at sign-up |
 | **Practice sessions** | The code you write, the problem attempted, language, status, time spent, and keystroke timing data for each attempt | Generated as you practise |
 | **AI review feedback** | Automated feedback generated about your submitted code (if you use the AI feature) | Generated on request |
 | **Custom problems** | Any practice problems you create and save | You |
@@ -36,7 +36,7 @@ cookies. We do not use advertising or third-party analytics trackers.
 ## 2. Why we use it (lawful basis)
 
 - **To provide the Service** (create your account, save and show your sessions and custom
-  problems, run your code, generate AI review) — lawful basis: **performance of a contract**
+  problems, run your code, generate AI review) - lawful basis: **performance of a contract**
   / **legitimate interests** in operating the Service you asked to use.
 - We do **not** use your data for marketing and do **not** sell or share it for advertising.
 
@@ -44,13 +44,15 @@ cookies. We do not use advertising or third-party analytics trackers.
 
 Your data is stored and processed on our behalf by:
 
-- **Supabase** — database, authentication, and storage hosting (EU region).
-- **Amazon Web Services (AWS)** — runs the sandbox that executes your submitted code
+- **Supabase** - database, authentication, and storage hosting (EU region).
+- **Amazon Web Services (AWS)** - runs the sandbox that executes your submitted code
   (London, eu-west-2). Code is run transiently and not retained by the execution sandbox.
-- **Vercel** — serves the website frontend.
-- **Groq** — if you use the AI hint/review feature, your submitted code is sent to Groq's
+- **Vercel** - serves the website frontend.
+- **Groq** - if you use the AI hint/review feature, your submitted code is sent to Groq's
   API (running the Llama 3.3 70B model) to generate feedback. Groq processes this in the
-  United States.
+  United States. This involves a transfer of your data outside the UK; it is protected by
+  the UK International Data Transfer Addendum to the EU Standard Contractual Clauses under
+  our agreement with Groq.
 
 Each acts as a **processor** under our instructions. We do not transfer your data to anyone
 else.
