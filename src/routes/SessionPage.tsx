@@ -8,6 +8,7 @@ import { LanguageSelect } from '../features/editor/LanguageSelect';
 import { ThemeSwitcher } from '../features/editor/ThemeSwitcher';
 import { Timer } from '../features/timer/Timer';
 import { RunPanel } from '../features/execution/RunPanel';
+import type { TestResult } from '../features/execution/testRunner';
 import { ComplexityBadge } from '../features/analysis/ComplexityBadge';
 import { AiPanel } from '../features/ai/AiPanel';
 import {
@@ -69,6 +70,11 @@ export function SessionPage() {
   const resetAi = useAiStore((s) => s.reset);
 
   const [saveMsg, setSaveMsg] = useState<string | null>(null);
+
+  // Guards auto-save: holds the exact results array we last auto-saved on, so an
+  // all-pass run saves once (re-running and passing again is a new array, so it
+  // re-saves to update the row).
+  const autoSavedResults = useRef<TestResult[] | null>(null);
 
   // Resizable split layout. Active on desktop only; mobile keeps the stacked layout.
   const splitRef = useRef<HTMLDivElement>(null);
@@ -162,12 +168,13 @@ export function SessionPage() {
     resetAi();
     setCurrentSessionId(null);
     setSaveMsg(null);
+    autoSavedResults.current = null;
     startRecording();
     // language switches are handled in LanguageSelect, so only depend on the problem id.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [problem?.id, resumeId]);
 
-  async function handleSave() {
+  async function handleSave(auto = false) {
     if (!problem) return;
     if (!user) {
       setSaveMsg('Sign in to save your progress - your code stays in the editor.');
@@ -203,9 +210,11 @@ export function SessionPage() {
       setSaveMsg(
         oversized
           ? 'Saved - this session is too long to store keystroke replay, so replay is unavailable for it. Your code is saved.'
-          : currentSessionId
-            ? 'Updated'
-            : 'Saved',
+          : auto
+            ? 'Solved! Progress saved automatically.'
+            : currentSessionId
+              ? 'Updated'
+              : 'Saved',
       );
     } catch (err) {
       // Token expired mid-session: useAuth flips `user` to null (swapping the button to
@@ -229,6 +238,20 @@ export function SessionPage() {
       setSaving(false);
     }
   }
+
+  // Auto-save when a signed-in user passes every test, so "solved" is recorded
+  // without them having to remember to click Save. Guarded by `autoSavedResults`
+  // so it fires once per all-pass run, not on every render.
+  useEffect(() => {
+    if (!user || !problem || saving) return;
+    if (!results || results.length === 0) return;
+    if (autoSavedResults.current === results) return;
+    if (!results.every((r) => r.verdict === 'pass')) return;
+    autoSavedResults.current = results;
+    void handleSave(true);
+    // handleSave reads fresh state via closure each render; deps intentionally narrow.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [results, user, problem, saving]);
 
   if (!problem) {
     return (
@@ -269,7 +292,7 @@ export function SessionPage() {
           {user ? (
             <button
               type="button"
-              onClick={handleSave}
+              onClick={() => handleSave()}
               disabled={saving}
               className="rounded border border-zinc-700 bg-zinc-800 px-2 py-1 text-xs hover:bg-zinc-700 disabled:opacity-60"
             >
