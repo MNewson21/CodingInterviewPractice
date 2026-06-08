@@ -634,5 +634,1047 @@
         "expectedStdout": "3"
       }
     ]
+  },
+  {
+    "id": "contains-duplicate",
+    "title": "Contains Duplicate",
+    "difficulty": "easy",
+    "tags": [
+      "array",
+      "hash-set"
+    ],
+    "description": "Given an integer array nums, return true if any value appears at least twice, and false if every element is distinct.\n\nInput: a single line containing the array as JSON.\nOutput: 'true' or 'false'.",
+    "examples": [
+      {
+        "input": "nums = [1,2,3,1]",
+        "output": "true"
+      },
+      {
+        "input": "nums = [1,2,3,4]",
+        "output": "false"
+      }
+    ],
+    "constraints": [
+      "1 <= nums.length <= 10^5",
+      "-10^9 <= nums[i] <= 10^9"
+    ],
+    "starterCode": {
+      "javascript": "function containsDuplicate(nums) {\n  // your code here\n}\n",
+      "typescript": "function containsDuplicate(nums: number[]): boolean {\n  // your code here\n  return false;\n}\n",
+      "python": "def contains_duplicate(nums):\n    # your code here\n    pass\n"
+    },
+    "harness": {
+      "javascript": "const __nums = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(containsDuplicate(__nums));\n",
+      "typescript": "const __nums = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(containsDuplicate(__nums));\n",
+      "python": "import sys, json\n__nums = json.loads(sys.stdin.read().splitlines()[0])\nprint(\"true\" if contains_duplicate(__nums) else \"false\")\n"
+    },
+    "params": [
+      {
+        "name": "nums"
+      }
+    ],
+    "testCases": [
+      {
+        "name": "has duplicate",
+        "stdin": "[1,2,3,1]\n",
+        "expectedStdout": "true"
+      },
+      {
+        "name": "all distinct",
+        "stdin": "[1,2,3,4]\n",
+        "expectedStdout": "false"
+      },
+      {
+        "name": "single element",
+        "stdin": "[5]\n",
+        "expectedStdout": "false"
+      },
+      {
+        "name": "many repeats",
+        "stdin": "[1,1,1,3,3,4,3,2,4,2]\n",
+        "expectedStdout": "true"
+      }
+    ]
+  },
+  {
+    "id": "valid-anagram",
+    "title": "Valid Anagram",
+    "difficulty": "easy",
+    "tags": [
+      "string",
+      "hash-map",
+      "sorting"
+    ],
+    "description": "Given two strings s and t, return true if t is an anagram of s, and false otherwise. An anagram uses all the original letters exactly once.\n\nInput: line 1 is s; line 2 is t.\nOutput: 'true' or 'false'.",
+    "examples": [
+      {
+        "input": "s = \"anagram\", t = \"nagaram\"",
+        "output": "true"
+      },
+      {
+        "input": "s = \"rat\", t = \"car\"",
+        "output": "false"
+      }
+    ],
+    "constraints": [
+      "1 <= s.length, t.length <= 5 * 10^4",
+      "s and t consist of lowercase English letters."
+    ],
+    "starterCode": {
+      "javascript": "function isAnagram(s, t) {\n  // your code here\n}\n",
+      "typescript": "function isAnagram(s: string, t: string): boolean {\n  // your code here\n  return false;\n}\n",
+      "python": "def is_anagram(s, t):\n    # your code here\n    pass\n"
+    },
+    "harness": {
+      "javascript": "const __lines = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nconsole.log(isAnagram(__lines[0], __lines[1]));\n",
+      "typescript": "const __lines = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nconsole.log(isAnagram(__lines[0], __lines[1]));\n",
+      "python": "import sys\n__lines = sys.stdin.read().splitlines()\nprint(\"true\" if is_anagram(__lines[0], __lines[1]) else \"false\")\n"
+    },
+    "params": [
+      {
+        "name": "s",
+        "quote": true
+      },
+      {
+        "name": "t",
+        "quote": true
+      }
+    ],
+    "testCases": [
+      {
+        "name": "anagram",
+        "stdin": "anagram\nnagaram\n",
+        "expectedStdout": "true"
+      },
+      {
+        "name": "not anagram",
+        "stdin": "rat\ncar\n",
+        "expectedStdout": "false"
+      },
+      {
+        "name": "different length",
+        "stdin": "a\nab\n",
+        "expectedStdout": "false"
+      },
+      {
+        "name": "two letters",
+        "stdin": "ab\nba\n",
+        "expectedStdout": "true"
+      },
+      {
+        "name": "listen silent",
+        "stdin": "listen\nsilent\n",
+        "expectedStdout": "true"
+      }
+    ]
+  },
+  {
+    "id": "best-time-to-buy-sell-stock",
+    "title": "Best Time to Buy and Sell Stock",
+    "difficulty": "easy",
+    "tags": [
+      "array",
+      "dynamic-programming"
+    ],
+    "description": "You are given an array prices where prices[i] is the price of a stock on day i. You want to maximise profit by choosing a single day to buy and a later day to sell.\n\nReturn the maximum profit you can achieve. If no profit is possible, return 0.\n\nInput: a single line containing the prices array as JSON.\nOutput: the maximum profit as a single integer.",
+    "examples": [
+      {
+        "input": "prices = [7,1,5,3,6,4]",
+        "output": "5",
+        "explanation": "Buy on day 1 (price 1) and sell on day 4 (price 6): profit 5."
+      },
+      {
+        "input": "prices = [7,6,4,3,1]",
+        "output": "0",
+        "explanation": "Prices only fall, so no profit is possible."
+      }
+    ],
+    "constraints": [
+      "1 <= prices.length <= 10^5",
+      "0 <= prices[i] <= 10^4"
+    ],
+    "starterCode": {
+      "javascript": "function maxProfit(prices) {\n  // your code here\n}\n",
+      "typescript": "function maxProfit(prices: number[]): number {\n  // your code here\n  return 0;\n}\n",
+      "python": "def max_profit(prices):\n    # your code here\n    pass\n"
+    },
+    "harness": {
+      "javascript": "const __prices = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(maxProfit(__prices));\n",
+      "typescript": "const __prices = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(maxProfit(__prices));\n",
+      "python": "import sys, json\n__prices = json.loads(sys.stdin.read().splitlines()[0])\nprint(max_profit(__prices))\n"
+    },
+    "params": [
+      {
+        "name": "prices"
+      }
+    ],
+    "testCases": [
+      {
+        "name": "example 1",
+        "stdin": "[7,1,5,3,6,4]\n",
+        "expectedStdout": "5"
+      },
+      {
+        "name": "only falls",
+        "stdin": "[7,6,4,3,1]\n",
+        "expectedStdout": "0"
+      },
+      {
+        "name": "single day",
+        "stdin": "[1]\n",
+        "expectedStdout": "0"
+      },
+      {
+        "name": "dip then peak",
+        "stdin": "[3,2,6,5,0,3]\n",
+        "expectedStdout": "4"
+      },
+      {
+        "name": "small",
+        "stdin": "[2,4,1]\n",
+        "expectedStdout": "2"
+      }
+    ]
+  },
+  {
+    "id": "climbing-stairs",
+    "title": "Climbing Stairs",
+    "difficulty": "easy",
+    "tags": [
+      "dynamic-programming",
+      "math"
+    ],
+    "description": "You are climbing a staircase that takes n steps to reach the top. Each time you can climb either 1 or 2 steps. In how many distinct ways can you reach the top?\n\nInput: a single line containing the integer n.\nOutput: the number of distinct ways as a single integer.",
+    "examples": [
+      {
+        "input": "n = 2",
+        "output": "2",
+        "explanation": "1+1 or 2."
+      },
+      {
+        "input": "n = 3",
+        "output": "3",
+        "explanation": "1+1+1, 1+2, or 2+1."
+      }
+    ],
+    "constraints": [
+      "1 <= n <= 45"
+    ],
+    "starterCode": {
+      "javascript": "function climbStairs(n) {\n  // your code here\n}\n",
+      "typescript": "function climbStairs(n: number): number {\n  // your code here\n  return 0;\n}\n",
+      "python": "def climb_stairs(n):\n    # your code here\n    pass\n"
+    },
+    "harness": {
+      "javascript": "const __n = parseInt(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0], 10);\nconsole.log(climbStairs(__n));\n",
+      "typescript": "const __n = parseInt(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0], 10);\nconsole.log(climbStairs(__n));\n",
+      "python": "import sys\n__n = int(sys.stdin.read().splitlines()[0])\nprint(climb_stairs(__n))\n"
+    },
+    "params": [
+      {
+        "name": "n"
+      }
+    ],
+    "testCases": [
+      {
+        "name": "two steps",
+        "stdin": "2\n",
+        "expectedStdout": "2"
+      },
+      {
+        "name": "three steps",
+        "stdin": "3\n",
+        "expectedStdout": "3"
+      },
+      {
+        "name": "one step",
+        "stdin": "1\n",
+        "expectedStdout": "1"
+      },
+      {
+        "name": "five steps",
+        "stdin": "5\n",
+        "expectedStdout": "8"
+      },
+      {
+        "name": "ten steps",
+        "stdin": "10\n",
+        "expectedStdout": "89"
+      }
+    ]
+  },
+  {
+    "id": "binary-search",
+    "title": "Binary Search",
+    "difficulty": "easy",
+    "tags": [
+      "array",
+      "binary-search"
+    ],
+    "description": "Given a sorted (ascending) array of distinct integers nums and a target, return the index of target if it is present, otherwise return -1. Your algorithm should run in O(log n) time.\n\nInput: line 1 is the array as JSON; line 2 is the target.\nOutput: the index (or -1) as a single integer.",
+    "examples": [
+      {
+        "input": "nums = [-1,0,3,5,9,12], target = 9",
+        "output": "4"
+      },
+      {
+        "input": "nums = [-1,0,3,5,9,12], target = 2",
+        "output": "-1"
+      }
+    ],
+    "constraints": [
+      "1 <= nums.length <= 10^4",
+      "nums is sorted in ascending order and all values are distinct."
+    ],
+    "starterCode": {
+      "javascript": "function search(nums, target) {\n  // your code here\n}\n",
+      "typescript": "function search(nums: number[], target: number): number {\n  // your code here\n  return -1;\n}\n",
+      "python": "def search(nums, target):\n    # your code here\n    pass\n"
+    },
+    "harness": {
+      "javascript": "const __lines = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nconsole.log(search(JSON.parse(__lines[0]), parseInt(__lines[1], 10)));\n",
+      "typescript": "const __lines = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nconsole.log(search(JSON.parse(__lines[0]), parseInt(__lines[1], 10)));\n",
+      "python": "import sys, json\n__lines = sys.stdin.read().splitlines()\nprint(search(json.loads(__lines[0]), int(__lines[1])))\n"
+    },
+    "params": [
+      {
+        "name": "nums"
+      },
+      {
+        "name": "target"
+      }
+    ],
+    "testCases": [
+      {
+        "name": "found",
+        "stdin": "[-1,0,3,5,9,12]\n9\n",
+        "expectedStdout": "4"
+      },
+      {
+        "name": "missing",
+        "stdin": "[-1,0,3,5,9,12]\n2\n",
+        "expectedStdout": "-1"
+      },
+      {
+        "name": "single hit",
+        "stdin": "[5]\n5\n",
+        "expectedStdout": "0"
+      },
+      {
+        "name": "single miss",
+        "stdin": "[5]\n-5\n",
+        "expectedStdout": "-1"
+      },
+      {
+        "name": "first element",
+        "stdin": "[1,2,3,4,5]\n1\n",
+        "expectedStdout": "0"
+      }
+    ]
+  },
+  {
+    "id": "majority-element",
+    "title": "Majority Element",
+    "difficulty": "easy",
+    "tags": [
+      "array",
+      "hash-map",
+      "divide-and-conquer"
+    ],
+    "description": "Given an array nums of size n, return the majority element - the element that appears more than n/2 times (rounded down). You may assume the majority element always exists.\n\nInput: a single line containing the array as JSON.\nOutput: the majority element as a single integer.",
+    "examples": [
+      {
+        "input": "nums = [3,2,3]",
+        "output": "3"
+      },
+      {
+        "input": "nums = [2,2,1,1,1,2,2]",
+        "output": "2"
+      }
+    ],
+    "constraints": [
+      "1 <= nums.length <= 5 * 10^4",
+      "A majority element always exists in the array."
+    ],
+    "starterCode": {
+      "javascript": "function majorityElement(nums) {\n  // your code here\n}\n",
+      "typescript": "function majorityElement(nums: number[]): number {\n  // your code here\n  return 0;\n}\n",
+      "python": "def majority_element(nums):\n    # your code here\n    pass\n"
+    },
+    "harness": {
+      "javascript": "const __nums = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(majorityElement(__nums));\n",
+      "typescript": "const __nums = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(majorityElement(__nums));\n",
+      "python": "import sys, json\n__nums = json.loads(sys.stdin.read().splitlines()[0])\nprint(majority_element(__nums))\n"
+    },
+    "params": [
+      {
+        "name": "nums"
+      }
+    ],
+    "testCases": [
+      {
+        "name": "example 1",
+        "stdin": "[3,2,3]\n",
+        "expectedStdout": "3"
+      },
+      {
+        "name": "example 2",
+        "stdin": "[2,2,1,1,1,2,2]\n",
+        "expectedStdout": "2"
+      },
+      {
+        "name": "single",
+        "stdin": "[1]\n",
+        "expectedStdout": "1"
+      },
+      {
+        "name": "three of five",
+        "stdin": "[6,6,6,7,7]\n",
+        "expectedStdout": "6"
+      }
+    ]
+  },
+  {
+    "id": "single-number",
+    "title": "Single Number",
+    "difficulty": "easy",
+    "tags": [
+      "array",
+      "bit-manipulation"
+    ],
+    "description": "Given a non-empty array nums where every element appears exactly twice except for one, find that single element. Aim for linear time and constant extra space.\n\nInput: a single line containing the array as JSON.\nOutput: the element that appears once, as a single integer.",
+    "examples": [
+      {
+        "input": "nums = [2,2,1]",
+        "output": "1"
+      },
+      {
+        "input": "nums = [4,1,2,1,2]",
+        "output": "4"
+      }
+    ],
+    "constraints": [
+      "1 <= nums.length <= 3 * 10^4",
+      "Every element appears twice except for one which appears once."
+    ],
+    "starterCode": {
+      "javascript": "function singleNumber(nums) {\n  // your code here\n}\n",
+      "typescript": "function singleNumber(nums: number[]): number {\n  // your code here\n  return 0;\n}\n",
+      "python": "def single_number(nums):\n    # your code here\n    pass\n"
+    },
+    "harness": {
+      "javascript": "const __nums = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(singleNumber(__nums));\n",
+      "typescript": "const __nums = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(singleNumber(__nums));\n",
+      "python": "import sys, json\n__nums = json.loads(sys.stdin.read().splitlines()[0])\nprint(single_number(__nums))\n"
+    },
+    "params": [
+      {
+        "name": "nums"
+      }
+    ],
+    "testCases": [
+      {
+        "name": "example 1",
+        "stdin": "[2,2,1]\n",
+        "expectedStdout": "1"
+      },
+      {
+        "name": "example 2",
+        "stdin": "[4,1,2,1,2]\n",
+        "expectedStdout": "4"
+      },
+      {
+        "name": "single element",
+        "stdin": "[1]\n",
+        "expectedStdout": "1"
+      },
+      {
+        "name": "leading unique",
+        "stdin": "[7,3,3]\n",
+        "expectedStdout": "7"
+      }
+    ]
+  },
+  {
+    "id": "product-except-self",
+    "title": "Product of Array Except Self",
+    "difficulty": "medium",
+    "tags": [
+      "array",
+      "prefix-sum"
+    ],
+    "description": "Given an integer array nums, return an array answer such that answer[i] equals the product of all elements of nums except nums[i]. Solve it without using the division operator.\n\nInput: a single line containing the array as JSON.\nOutput: the answer array as a JSON array, e.g. [24,12,8,6].",
+    "examples": [
+      {
+        "input": "nums = [1,2,3,4]",
+        "output": "[24,12,8,6]"
+      },
+      {
+        "input": "nums = [-1,1,0,-3,3]",
+        "output": "[0,0,9,0,0]"
+      }
+    ],
+    "constraints": [
+      "2 <= nums.length <= 10^5",
+      "The product of any prefix or suffix fits in a 32-bit integer."
+    ],
+    "starterCode": {
+      "javascript": "function productExceptSelf(nums) {\n  // your code here\n}\n",
+      "typescript": "function productExceptSelf(nums: number[]): number[] {\n  // your code here\n  return [];\n}\n",
+      "python": "def product_except_self(nums):\n    # your code here\n    pass\n"
+    },
+    "harness": {
+      "javascript": "const __nums = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(JSON.stringify(productExceptSelf(__nums)));\n",
+      "typescript": "const __nums = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(JSON.stringify(productExceptSelf(__nums)));\n",
+      "python": "import sys, json\n__nums = json.loads(sys.stdin.read().splitlines()[0])\nprint(json.dumps(product_except_self(__nums), separators=(\",\", \":\")))\n"
+    },
+    "params": [
+      {
+        "name": "nums"
+      }
+    ],
+    "testCases": [
+      {
+        "name": "example 1",
+        "stdin": "[1,2,3,4]\n",
+        "expectedStdout": "[24,12,8,6]"
+      },
+      {
+        "name": "with zero",
+        "stdin": "[-1,1,0,-3,3]\n",
+        "expectedStdout": "[0,0,9,0,0]"
+      },
+      {
+        "name": "pair",
+        "stdin": "[2,3]\n",
+        "expectedStdout": "[3,2]"
+      },
+      {
+        "name": "ones",
+        "stdin": "[1,1]\n",
+        "expectedStdout": "[1,1]"
+      }
+    ]
+  },
+  {
+    "id": "move-zeroes",
+    "title": "Move Zeroes",
+    "difficulty": "easy",
+    "tags": [
+      "array",
+      "two-pointers"
+    ],
+    "description": "Given an integer array nums, move all 0s to the end while keeping the relative order of the non-zero elements. Return the resulting array.\n\nInput: a single line containing the array as JSON.\nOutput: the resulting array as a JSON array.",
+    "examples": [
+      {
+        "input": "nums = [0,1,0,3,12]",
+        "output": "[1,3,12,0,0]"
+      },
+      {
+        "input": "nums = [0]",
+        "output": "[0]"
+      }
+    ],
+    "constraints": [
+      "1 <= nums.length <= 10^4",
+      "-2^31 <= nums[i] <= 2^31 - 1"
+    ],
+    "starterCode": {
+      "javascript": "function moveZeroes(nums) {\n  // your code here\n  return nums;\n}\n",
+      "typescript": "function moveZeroes(nums: number[]): number[] {\n  // your code here\n  return nums;\n}\n",
+      "python": "def move_zeroes(nums):\n    # your code here\n    return nums\n"
+    },
+    "harness": {
+      "javascript": "const __nums = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(JSON.stringify(moveZeroes(__nums)));\n",
+      "typescript": "const __nums = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(JSON.stringify(moveZeroes(__nums)));\n",
+      "python": "import sys, json\n__nums = json.loads(sys.stdin.read().splitlines()[0])\nprint(json.dumps(move_zeroes(__nums), separators=(\",\", \":\")))\n"
+    },
+    "params": [
+      {
+        "name": "nums"
+      }
+    ],
+    "testCases": [
+      {
+        "name": "example 1",
+        "stdin": "[0,1,0,3,12]\n",
+        "expectedStdout": "[1,3,12,0,0]"
+      },
+      {
+        "name": "single zero",
+        "stdin": "[0]\n",
+        "expectedStdout": "[0]"
+      },
+      {
+        "name": "no zeroes",
+        "stdin": "[1,2,3]\n",
+        "expectedStdout": "[1,2,3]"
+      },
+      {
+        "name": "trailing one",
+        "stdin": "[0,0,1]\n",
+        "expectedStdout": "[1,0,0]"
+      }
+    ]
+  },
+  {
+    "id": "longest-common-prefix",
+    "title": "Longest Common Prefix",
+    "difficulty": "easy",
+    "tags": [
+      "string"
+    ],
+    "description": "Write a function to find the longest common prefix string amongst an array of strings. If there is no common prefix, return an empty string.\n\nInput: a single line containing the strings as a JSON array, e.g. [\"flower\",\"flow\",\"flight\"].\nOutput: the longest common prefix (an empty line if there is none).",
+    "examples": [
+      {
+        "input": "strs = [\"flower\",\"flow\",\"flight\"]",
+        "output": "fl"
+      },
+      {
+        "input": "strs = [\"dog\",\"racecar\",\"car\"]",
+        "output": "(empty)",
+        "explanation": "There is no common prefix."
+      }
+    ],
+    "constraints": [
+      "1 <= strs.length <= 200",
+      "0 <= strs[i].length <= 200",
+      "strs[i] consists of lowercase English letters."
+    ],
+    "starterCode": {
+      "javascript": "function longestCommonPrefix(strs) {\n  // your code here\n}\n",
+      "typescript": "function longestCommonPrefix(strs: string[]): string {\n  // your code here\n  return '';\n}\n",
+      "python": "def longest_common_prefix(strs):\n    # your code here\n    pass\n"
+    },
+    "harness": {
+      "javascript": "const __strs = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(longestCommonPrefix(__strs));\n",
+      "typescript": "const __strs = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(longestCommonPrefix(__strs));\n",
+      "python": "import sys, json\n__strs = json.loads(sys.stdin.read().splitlines()[0])\nprint(longest_common_prefix(__strs))\n"
+    },
+    "params": [
+      {
+        "name": "strs"
+      }
+    ],
+    "testCases": [
+      {
+        "name": "common fl",
+        "stdin": "[\"flower\",\"flow\",\"flight\"]\n",
+        "expectedStdout": "fl"
+      },
+      {
+        "name": "no prefix",
+        "stdin": "[\"dog\",\"racecar\",\"car\"]\n",
+        "expectedStdout": ""
+      },
+      {
+        "name": "long prefix",
+        "stdin": "[\"interspecies\",\"interstellar\",\"interstate\"]\n",
+        "expectedStdout": "inters"
+      },
+      {
+        "name": "single string",
+        "stdin": "[\"a\"]\n",
+        "expectedStdout": "a"
+      },
+      {
+        "name": "empty member",
+        "stdin": "[\"\",\"abc\"]\n",
+        "expectedStdout": ""
+      }
+    ]
+  },
+  {
+    "id": "roman-to-integer",
+    "title": "Roman to Integer",
+    "difficulty": "easy",
+    "tags": [
+      "string",
+      "hash-map",
+      "math"
+    ],
+    "description": "Given a Roman numeral, convert it to an integer. Roman numerals use the symbols I, V, X, L, C, D and M. When a smaller numeral precedes a larger one it is subtracted (e.g. IV = 4, IX = 9, XL = 40).\n\nInput: a single line containing the Roman numeral.\nOutput: the integer value.",
+    "examples": [
+      {
+        "input": "s = \"III\"",
+        "output": "3"
+      },
+      {
+        "input": "s = \"MCMXCIV\"",
+        "output": "1994",
+        "explanation": "M = 1000, CM = 900, XC = 90, IV = 4."
+      }
+    ],
+    "constraints": [
+      "1 <= s.length <= 15",
+      "s is a valid Roman numeral in the range [1, 3999]."
+    ],
+    "starterCode": {
+      "javascript": "function romanToInt(s) {\n  // your code here\n}\n",
+      "typescript": "function romanToInt(s: string): number {\n  // your code here\n  return 0;\n}\n",
+      "python": "def roman_to_int(s):\n    # your code here\n    pass\n"
+    },
+    "harness": {
+      "javascript": "const __s = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0];\nconsole.log(romanToInt(__s));\n",
+      "typescript": "const __s = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0];\nconsole.log(romanToInt(__s));\n",
+      "python": "import sys\n__lines = sys.stdin.read().splitlines()\n__s = __lines[0] if __lines else \"\"\nprint(roman_to_int(__s))\n"
+    },
+    "params": [
+      {
+        "name": "s",
+        "quote": true
+      }
+    ],
+    "testCases": [
+      {
+        "name": "three",
+        "stdin": "III\n",
+        "expectedStdout": "3"
+      },
+      {
+        "name": "fifty-eight",
+        "stdin": "LVIII\n",
+        "expectedStdout": "58"
+      },
+      {
+        "name": "year",
+        "stdin": "MCMXCIV\n",
+        "expectedStdout": "1994"
+      },
+      {
+        "name": "four",
+        "stdin": "IV\n",
+        "expectedStdout": "4"
+      },
+      {
+        "name": "nine",
+        "stdin": "IX\n",
+        "expectedStdout": "9"
+      }
+    ]
+  },
+  {
+    "id": "fizzbuzz",
+    "title": "Fizz Buzz",
+    "difficulty": "easy",
+    "tags": [
+      "math",
+      "string",
+      "simulation"
+    ],
+    "description": "Given an integer n, return a string array answer (1-indexed) where for each i from 1 to n: answer[i] is \"FizzBuzz\" if i is divisible by both 3 and 5, \"Fizz\" if divisible by 3, \"Buzz\" if divisible by 5, otherwise the decimal of i as a string.\n\nInput: a single line containing the integer n.\nOutput: the answer as a JSON array of strings.",
+    "examples": [
+      {
+        "input": "n = 3",
+        "output": "[\"1\",\"2\",\"Fizz\"]"
+      },
+      {
+        "input": "n = 5",
+        "output": "[\"1\",\"2\",\"Fizz\",\"4\",\"Buzz\"]"
+      }
+    ],
+    "constraints": [
+      "1 <= n <= 10^4"
+    ],
+    "starterCode": {
+      "javascript": "function fizzBuzz(n) {\n  // your code here\n}\n",
+      "typescript": "function fizzBuzz(n: number): string[] {\n  // your code here\n  return [];\n}\n",
+      "python": "def fizz_buzz(n):\n    # your code here\n    pass\n"
+    },
+    "harness": {
+      "javascript": "const __n = parseInt(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0], 10);\nconsole.log(JSON.stringify(fizzBuzz(__n)));\n",
+      "typescript": "const __n = parseInt(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0], 10);\nconsole.log(JSON.stringify(fizzBuzz(__n)));\n",
+      "python": "import sys, json\n__n = int(sys.stdin.read().splitlines()[0])\nprint(json.dumps(fizz_buzz(__n), separators=(\",\", \":\")))\n"
+    },
+    "params": [
+      {
+        "name": "n"
+      }
+    ],
+    "testCases": [
+      {
+        "name": "three",
+        "stdin": "3\n",
+        "expectedStdout": "[\"1\",\"2\",\"Fizz\"]"
+      },
+      {
+        "name": "five",
+        "stdin": "5\n",
+        "expectedStdout": "[\"1\",\"2\",\"Fizz\",\"4\",\"Buzz\"]"
+      },
+      {
+        "name": "one",
+        "stdin": "1\n",
+        "expectedStdout": "[\"1\"]"
+      },
+      {
+        "name": "fifteen",
+        "stdin": "15\n",
+        "expectedStdout": "[\"1\",\"2\",\"Fizz\",\"4\",\"Buzz\",\"Fizz\",\"7\",\"8\",\"Fizz\",\"Buzz\",\"11\",\"Fizz\",\"13\",\"14\",\"FizzBuzz\"]"
+      }
+    ]
+  },
+  {
+    "id": "vowel-count",
+    "title": "Vowel Count",
+    "difficulty": "easy",
+    "tags": [
+      "string",
+      "counting"
+    ],
+    "description": "Count how many vowels (a, e, i, o, u) appear in a string. Treat the input as case-insensitive, so both 'A' and 'a' count.\n\nInput: a single line of text (it may be empty).\nOutput: the number of vowels as a single integer.",
+    "examples": [
+      {
+        "input": "s = \"hello\"",
+        "output": "2",
+        "explanation": "'e' and 'o'."
+      },
+      {
+        "input": "s = \"AEIOU\"",
+        "output": "5"
+      }
+    ],
+    "constraints": [
+      "0 <= s.length <= 10^5",
+      "s consists of English letters (no spaces in tests)."
+    ],
+    "starterCode": {
+      "javascript": "function countVowels(s) {\n  // your code here\n}\n",
+      "typescript": "function countVowels(s: string): number {\n  // your code here\n  return 0;\n}\n",
+      "python": "def count_vowels(s):\n    # your code here\n    pass\n"
+    },
+    "harness": {
+      "javascript": "const __s = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0];\nconsole.log(countVowels(__s));\n",
+      "typescript": "const __s = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0];\nconsole.log(countVowels(__s));\n",
+      "python": "import sys\n__lines = sys.stdin.read().splitlines()\n__s = __lines[0] if __lines else \"\"\nprint(count_vowels(__s))\n"
+    },
+    "params": [
+      {
+        "name": "s",
+        "quote": true
+      }
+    ],
+    "testCases": [
+      {
+        "name": "hello",
+        "stdin": "hello\n",
+        "expectedStdout": "2"
+      },
+      {
+        "name": "no vowels",
+        "stdin": "xyz\n",
+        "expectedStdout": "0"
+      },
+      {
+        "name": "all caps vowels",
+        "stdin": "AEIOU\n",
+        "expectedStdout": "5"
+      },
+      {
+        "name": "mixed case",
+        "stdin": "Programming\n",
+        "expectedStdout": "3"
+      }
+    ]
+  },
+  {
+    "id": "caesar-cipher",
+    "title": "Caesar Cipher",
+    "difficulty": "medium",
+    "tags": [
+      "string",
+      "math"
+    ],
+    "description": "Encrypt a message with a Caesar cipher: shift each lowercase letter forward in the alphabet by a given amount, wrapping from z back to a. The shift may be larger than 26.\n\nInput: line 1 is the message (lowercase letters only); line 2 is the integer shift.\nOutput: the encrypted message.",
+    "examples": [
+      {
+        "input": "s = \"abc\", shift = 1",
+        "output": "bcd"
+      },
+      {
+        "input": "s = \"xyz\", shift = 3",
+        "output": "abc",
+        "explanation": "z wraps around to c."
+      }
+    ],
+    "constraints": [
+      "1 <= s.length <= 10^4",
+      "0 <= shift <= 10^9",
+      "s consists of lowercase English letters."
+    ],
+    "starterCode": {
+      "javascript": "function caesarCipher(s, shift) {\n  // your code here\n}\n",
+      "typescript": "function caesarCipher(s: string, shift: number): string {\n  // your code here\n  return '';\n}\n",
+      "python": "def caesar_cipher(s, shift):\n    # your code here\n    pass\n"
+    },
+    "harness": {
+      "javascript": "const __lines = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nconsole.log(caesarCipher(__lines[0], parseInt(__lines[1], 10)));\n",
+      "typescript": "const __lines = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nconsole.log(caesarCipher(__lines[0], parseInt(__lines[1], 10)));\n",
+      "python": "import sys\n__lines = sys.stdin.read().splitlines()\nprint(caesar_cipher(__lines[0], int(__lines[1])))\n"
+    },
+    "params": [
+      {
+        "name": "s",
+        "quote": true
+      },
+      {
+        "name": "shift"
+      }
+    ],
+    "testCases": [
+      {
+        "name": "shift one",
+        "stdin": "abc\n1\n",
+        "expectedStdout": "bcd"
+      },
+      {
+        "name": "wrap around",
+        "stdin": "xyz\n3\n",
+        "expectedStdout": "abc"
+      },
+      {
+        "name": "rot13",
+        "stdin": "hello\n13\n",
+        "expectedStdout": "uryyb"
+      },
+      {
+        "name": "zero shift",
+        "stdin": "abc\n0\n",
+        "expectedStdout": "abc"
+      },
+      {
+        "name": "full wrap",
+        "stdin": "hello\n26\n",
+        "expectedStdout": "hello"
+      }
+    ]
+  },
+  {
+    "id": "run-length-encode",
+    "title": "Run-Length Encoding",
+    "difficulty": "medium",
+    "tags": [
+      "string",
+      "two-pointers"
+    ],
+    "description": "Compress a string by replacing each run of consecutive identical characters with the character followed by the run length. For example \"aaabbc\" becomes \"a3b2c1\". The empty string encodes to the empty string.\n\nInput: a single line of text (lowercase letters, possibly empty).\nOutput: the run-length encoded string.",
+    "examples": [
+      {
+        "input": "s = \"aaabbc\"",
+        "output": "a3b2c1"
+      },
+      {
+        "input": "s = \"abc\"",
+        "output": "a1b1c1"
+      }
+    ],
+    "constraints": [
+      "0 <= s.length <= 10^4",
+      "s consists of lowercase English letters."
+    ],
+    "starterCode": {
+      "javascript": "function runLengthEncode(s) {\n  // your code here\n}\n",
+      "typescript": "function runLengthEncode(s: string): string {\n  // your code here\n  return '';\n}\n",
+      "python": "def run_length_encode(s):\n    # your code here\n    pass\n"
+    },
+    "harness": {
+      "javascript": "const __s = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0];\nconsole.log(runLengthEncode(__s));\n",
+      "typescript": "const __s = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0];\nconsole.log(runLengthEncode(__s));\n",
+      "python": "import sys\n__lines = sys.stdin.read().splitlines()\n__s = __lines[0] if __lines else \"\"\nprint(run_length_encode(__s))\n"
+    },
+    "params": [
+      {
+        "name": "s",
+        "quote": true
+      }
+    ],
+    "testCases": [
+      {
+        "name": "runs",
+        "stdin": "aaabbc\n",
+        "expectedStdout": "a3b2c1"
+      },
+      {
+        "name": "no runs",
+        "stdin": "abc\n",
+        "expectedStdout": "a1b1c1"
+      },
+      {
+        "name": "all same",
+        "stdin": "aaaa\n",
+        "expectedStdout": "a4"
+      },
+      {
+        "name": "mixed lengths",
+        "stdin": "wwwwaaadexxxxxx\n",
+        "expectedStdout": "w4a3d1e1x6"
+      }
+    ]
+  },
+  {
+    "id": "digital-root",
+    "title": "Digital Root",
+    "difficulty": "easy",
+    "tags": [
+      "math",
+      "simulation"
+    ],
+    "description": "Repeatedly sum the digits of a non-negative integer until a single digit remains, and return that digit. For example 38 -> 3 + 8 = 11 -> 1 + 1 = 2.\n\nInput: a single line containing the integer n.\nOutput: the digital root as a single integer.",
+    "examples": [
+      {
+        "input": "n = 38",
+        "output": "2",
+        "explanation": "38 -> 11 -> 2."
+      },
+      {
+        "input": "n = 0",
+        "output": "0"
+      }
+    ],
+    "constraints": [
+      "0 <= n <= 2^31 - 1"
+    ],
+    "starterCode": {
+      "javascript": "function digitalRoot(n) {\n  // your code here\n}\n",
+      "typescript": "function digitalRoot(n: number): number {\n  // your code here\n  return 0;\n}\n",
+      "python": "def digital_root(n):\n    # your code here\n    pass\n"
+    },
+    "harness": {
+      "javascript": "const __n = parseInt(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0], 10);\nconsole.log(digitalRoot(__n));\n",
+      "typescript": "const __n = parseInt(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0], 10);\nconsole.log(digitalRoot(__n));\n",
+      "python": "import sys\n__n = int(sys.stdin.read().splitlines()[0])\nprint(digital_root(__n))\n"
+    },
+    "params": [
+      {
+        "name": "n"
+      }
+    ],
+    "testCases": [
+      {
+        "name": "thirty-eight",
+        "stdin": "38\n",
+        "expectedStdout": "2"
+      },
+      {
+        "name": "zero",
+        "stdin": "0\n",
+        "expectedStdout": "0"
+      },
+      {
+        "name": "single digit",
+        "stdin": "9\n",
+        "expectedStdout": "9"
+      },
+      {
+        "name": "twelve-three-four-five",
+        "stdin": "12345\n",
+        "expectedStdout": "6"
+      },
+      {
+        "name": "all nines",
+        "stdin": "99999\n",
+        "expectedStdout": "9"
+      }
+    ]
   }
 ]
