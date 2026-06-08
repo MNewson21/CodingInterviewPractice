@@ -40,7 +40,7 @@ export function ReplayPage() {
         <Link to="/" className="text-sm text-zinc-400 hover:text-zinc-100">
           &larr; Home
         </Link>
-        <h1 className="text-sm font-semibold">{title ? `Replay — ${title}` : 'Replay'}</h1>
+        <h1 className="text-sm font-semibold">{title ? `Replay - ${title}` : 'Replay'}</h1>
         <span className="w-12" />
       </header>
 

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 
 const features = [
-  { title: 'Run real code in-browser', body: 'Solve in Python, JavaScript, or TypeScript and run your code against real test cases — no setup.' },
+  { title: 'Run real code in-browser', body: 'Solve in Python, JavaScript, or TypeScript and run your code against real test cases - no setup.' },
   { title: 'Replay your keystrokes', body: 'Every attempt is recorded so you can replay exactly how you worked through a problem.' },
   { title: 'AI interview feedback', body: 'Get an AI review of your solution, the way an interviewer would talk through it with you.' },
 ];
@@ -37,13 +37,13 @@ export function LandingHero({ onTryProblem }: { onTryProblem: () => void }) {
           onClick={onTryProblem}
           className="rounded-lg bg-blue-500 px-5 py-2.5 text-sm font-semibold text-white hover:bg-blue-400"
         >
-          Try a problem — no signup
+          Try a problem - no signup
         </button>
         <Link to="/auth" className="text-sm text-zinc-300 hover:text-zinc-100">
           Sign in to save your progress
         </Link>
       </div>
-      <p className="mt-3 text-xs text-zinc-500">No account needed to try — sign in only to save your history.</p>
+      <p className="mt-3 text-xs text-zinc-500">No account needed to try - sign in only to save your history.</p>
     </section>
   );
 }

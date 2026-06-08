@@ -1,8 +1,10 @@
 import { useState, type FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { signIn, signUp } from '../../lib/auth';
+import { usePageTitle } from '../../hooks/usePageTitle';
 
 export function AuthPage() {
+  usePageTitle('Sign in');
   const navigate = useNavigate();
   const [mode, setMode] = useState<'signin' | 'signup'>('signin');
   const [email, setEmail] = useState('');

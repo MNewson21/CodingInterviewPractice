@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ThemeSwitcher } from '../features/editor/ThemeSwitcher';
+import { SiteFooter } from '../components/SiteFooter';
+import { usePageTitle } from '../hooks/usePageTitle';
 
 // Each motivation maps a real reason I built the tool to the feature that answers it.
 const motivations = [
@@ -11,7 +13,7 @@ const motivations = [
   {
     title: 'Creating and Solving new problems',
     body: 'I got tired of signing up to yet another site, or hand-writing the boilerplate code and test files just to try one problem. I wanted to drop in a single JSON file and go.',
-    feature: 'Create, edit, and import/export problems as JSON — no signup to other platforms, no manual scaffolding.',
+    feature: 'Create, edit, and import/export problems as JSON - no signup to other platforms, no manual scaffolding.',
   },
   {
     title: 'See how I actually got to the answer',
@@ -30,6 +32,8 @@ const motivations = [
  * and maps each one to the feature that addresses it. Linked from the home page header.
  */
 export function AboutPage() {
+  usePageTitle('Why I built this');
+
   return (
     <div className="min-h-full bg-zinc-950 text-zinc-100">
       <div className="mx-auto max-w-3xl px-6 py-10">
@@ -86,6 +90,8 @@ export function AboutPage() {
             Sign in to save your progress
           </Link>
         </div>
+
+        <SiteFooter />
       </div>
     </div>
   );

@@ -5,6 +5,8 @@ import { HomePage } from './routes/HomePage';
 import { SessionPage } from './routes/SessionPage';
 import { ReplayPage } from './routes/ReplayPage';
 import { AboutPage } from './routes/AboutPage';
+import { PrivacyPage } from './routes/PrivacyPage';
+import { NotFoundPage } from './routes/NotFoundPage';
 import { AuthPage } from './features/auth/AuthPage';
 import { useThemeStore } from './stores/useThemeStore';
 
@@ -29,6 +31,8 @@ export function App() {
           <Route path="/auth" element={<AuthPage />} />
           <Route path="/session/:problemId" element={<SessionPage />} />
           <Route path="/replay/:sessionId" element={<ReplayPage />} />
+          <Route path="/privacy" element={<PrivacyPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>
     </ErrorBoundary>

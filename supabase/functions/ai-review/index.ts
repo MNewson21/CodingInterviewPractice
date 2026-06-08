@@ -1,10 +1,23 @@
 import { corsHeaders, json } from '../_shared/cors.ts';
 import { callLLM, extractJsonObject } from '../_shared/llm.ts';
+import { checkRateLimit } from '../_shared/rateLimit.ts';
 
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
 
   try {
+    // Reviews are the heaviest LLM call, so throttle tighter: 6/min and 50/hour per caller.
+    const limit = await checkRateLimit(req, 'ai-review', [
+      { max: 6, windowSeconds: 60 },
+      { max: 50, windowSeconds: 3600 },
+    ]);
+    if (!limit.allowed) {
+      return json(
+        { error: 'You are requesting reviews too quickly. Please wait a moment and try again.' },
+        429,
+      );
+    }
+
     const { title, description, language, code, testSummary } = await req.json();
 
     const system =

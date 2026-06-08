@@ -11,8 +11,11 @@ import { ProblemList } from '../features/problems/ProblemList';
 import { LandingHero } from '../features/landing/LandingHero';
 import { ThemeSwitcher } from '../features/editor/ThemeSwitcher';
 import { useProblemsStore } from '../stores/useProblemsStore';
+import { SiteFooter } from '../components/SiteFooter';
+import { usePageTitle } from '../hooks/usePageTitle';
 
 export function HomePage() {
+  usePageTitle();
   const { user, loading } = useAuth();
   const loadCustom = useProblemsStore((s) => s.load);
   // null = show the import dropzone; otherwise the form is open in create or edit mode.
@@ -32,7 +35,7 @@ export function HomePage() {
           <div>
             <h1 className="text-2xl font-bold">CodingInterviewPractice</h1>
             {user && (
-              <p className="mt-1 text-sm text-zinc-400">Welcome back — pick a problem to continue.</p>
+              <p className="mt-1 text-sm text-zinc-400">Welcome back - pick a problem to continue.</p>
             )}
           </div>
           <div className="flex flex-col items-end gap-1 text-right text-sm">
@@ -98,6 +101,8 @@ export function HomePage() {
             </section>
           </>
         )}
+
+        <SiteFooter />
       </div>
     </div>
   );

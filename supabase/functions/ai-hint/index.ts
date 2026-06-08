@@ -1,10 +1,23 @@
 import { corsHeaders, json } from '../_shared/cors.ts';
 import { callLLM } from '../_shared/llm.ts';
+import { checkRateLimit } from '../_shared/rateLimit.ts';
 
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
 
   try {
+    // Throttle before doing any LLM work: 12 hints/min and 120/hour per caller.
+    const limit = await checkRateLimit(req, 'ai-hint', [
+      { max: 12, windowSeconds: 60 },
+      { max: 120, windowSeconds: 3600 },
+    ]);
+    if (!limit.allowed) {
+      return json(
+        { error: 'You are requesting hints too quickly. Please wait a moment and try again.' },
+        429,
+      );
+    }
+
     const { title, description, language, code, level, priorHints } = await req.json();
 
     const system =

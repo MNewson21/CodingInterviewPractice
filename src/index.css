@@ -13,7 +13,7 @@ body,
  * Tailwind v4 compiles colour utilities (bg-zinc-800, text-zinc-100, …) to
  * var(--color-zinc-*). The app is built dark-first on the zinc scale, so when
  * `data-app-theme` is present on <html> we simply override that scale and the
- * entire UI re-tints — no per-component changes. The light theme inverts the
+ * entire UI re-tints - no per-component changes. The light theme inverts the
  * ramp (950 = lightest) so the dark-built classes flip to a light palette.
  */
 

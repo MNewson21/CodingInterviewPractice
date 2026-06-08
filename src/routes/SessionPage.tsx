@@ -145,7 +145,7 @@ export function SessionPage() {
           resetExecution();
           resetAi();
           setCurrentSessionId(s.id);
-          setSaveMsg('Resumed — edit and Save to update.');
+          setSaveMsg('Resumed - edit and Save to update.');
           resumeRecording(s.keystrokes);
         })
         .catch((err) => {
@@ -170,7 +170,7 @@ export function SessionPage() {
   async function handleSave() {
     if (!problem) return;
     if (!user) {
-      setSaveMsg('Sign in to save your progress — your code stays in the editor.');
+      setSaveMsg('Sign in to save your progress - your code stays in the editor.');
       return;
     }
     setSaving(true);
@@ -188,7 +188,7 @@ export function SessionPage() {
     const events = useKeystrokeStore.getState().events;
     // Size guard: a very long session can produce a multi-MB keystroke log. Rather than
     // risk a slow or rejected save, drop the replay log when it's oversized so the row
-    // (code + progress) still persists — replay is the expendable part.
+    // (code + progress) still persists - replay is the expendable part.
     const oversized = keystrokesByteSize(events) > MAX_KEYSTROKES_BYTES;
 
     // Update the existing row when editing a saved attempt; insert otherwise.
@@ -202,7 +202,7 @@ export function SessionPage() {
       setCurrentSessionId(saved.id);
       setSaveMsg(
         oversized
-          ? 'Saved — this session is too long to store keystroke replay, so replay is unavailable for it. Your code is saved.'
+          ? 'Saved - this session is too long to store keystroke replay, so replay is unavailable for it. Your code is saved.'
           : currentSessionId
             ? 'Updated'
             : 'Saved',
@@ -211,7 +211,7 @@ export function SessionPage() {
       // Token expired mid-session: useAuth flips `user` to null (swapping the button to
       // "Sign in to save"); show a clear message and keep the buffer so no work is lost.
       if (err instanceof AuthRequiredError) {
-        setSaveMsg('Your sign-in expired — sign in again to save. Your code is kept.');
+        setSaveMsg('Your sign-in expired - sign in again to save. Your code is kept.');
       } else if (!oversized && events.length > 0) {
         // Save-failure recovery: the keystroke payload may have been rejected (size/network).
         // Retry once without it so the user's code is never lost to a replay-log problem.
@@ -286,7 +286,7 @@ export function SessionPage() {
 
       {!user && (
         <div className="border-b border-zinc-800 bg-zinc-900/60 px-4 py-1.5 text-xs text-zinc-400">
-          Guest mode — solve and run freely.{' '}
+          Guest mode - solve and run freely.{' '}
           <Link to="/auth" className="text-blue-400 hover:underline">
             Sign in
           </Link>{' '}
