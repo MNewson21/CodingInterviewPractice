@@ -3,6 +3,7 @@ import { useEditorStore } from '../../stores/useEditorStore';
 import { useKeystrokeStore } from '../../stores/useKeystrokeStore';
 import { useThemeStore } from '../../stores/useThemeStore';
 import { registerEditorThemes } from './themes';
+import { registerCompletions } from './completions';
 import { changesToEvents } from '../keystrokes/recorder';
 import type { Language } from '../../types/problem';
 
@@ -20,8 +21,11 @@ export function CodeEditor() {
   const setCode = useEditorStore((s) => s.setCode);
   const editorTheme = useThemeStore((s) => s.editorTheme);
 
-  // Register custom themes before Monaco applies the `theme` prop on first render.
-  const handleBeforeMount: BeforeMount = (monaco) => registerEditorThemes(monaco);
+  // Register custom themes + curated completions before Monaco's first render.
+  const handleBeforeMount: BeforeMount = (monaco) => {
+    registerEditorThemes(monaco);
+    registerCompletions(monaco);
+  };
 
   const handleMount: OnMount = (editor) => {
     editor.onDidChangeModelContent((e) => {
