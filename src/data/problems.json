@@ -27,12 +27,16 @@
     "starterCode": {
       "javascript": "function twoSum(nums, target) {\n  // your code here\n}\n",
       "typescript": "function twoSum(nums: number[], target: number): number[] {\n  // your code here\n  return [];\n}\n",
-      "python": "def two_sum(nums, target):\n    # your code here\n    pass\n"
+      "python": "def two_sum(nums, target):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int[] twoSum(int[] nums, int target) {\n        // your code here (java.util.* is already imported)\n        return new int[]{};\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nvector<int> twoSum(vector<int>& nums, int target) {\n    // your code here\n    return {};\n}\n"
     },
     "harness": {
       "javascript": "const __lines = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nconsole.log(JSON.stringify(twoSum(JSON.parse(__lines[0]), parseInt(__lines[1], 10))));\n",
       "typescript": "const __lines = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nconsole.log(JSON.stringify(twoSum(JSON.parse(__lines[0]), parseInt(__lines[1], 10))));\n",
-      "python": "import sys, json\n__lines = sys.stdin.read().splitlines()\nprint(json.dumps(two_sum(json.loads(__lines[0]), int(__lines[1])), separators=(\",\", \":\")))\n"
+      "python": "import sys, json\n__lines = sys.stdin.read().splitlines()\nprint(json.dumps(two_sum(json.loads(__lines[0]), int(__lines[1])), separators=(\",\", \":\")))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    static int[] pi(String s) {\n        int a = s.indexOf('['), b = s.lastIndexOf(']');\n        if (a >= 0 && b >= 0) s = s.substring(a + 1, b);\n        s = s.trim();\n        if (s.isEmpty()) return new int[0];\n        String[] p = s.split(\",\");\n        int[] r = new int[p.length];\n        for (int i = 0; i < p.length; i++) r[i] = Integer.parseInt(p[i].trim());\n        return r;\n    }\n    static String ia(int[] a) {\n        StringBuilder b = new StringBuilder(\"[\");\n        for (int i = 0; i < a.length; i++) { if (i > 0) b.append(','); b.append(a[i]); }\n        return b.append(']').toString();\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(ia(sol.twoSum(pi(x[0]), Integer.parseInt(x[1].trim()))));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nstatic vector<int> PI(const string& s){string t;for(char c:s)t+=(c=='['||c==']'||c==',')?' ':c;vector<int> r;stringstream ss(t);int x;while(ss>>x)r.push_back(x);return r;}\nstatic string IA(const vector<int>& a){string o=\"[\";for(size_t i=0;i<a.size();i++){if(i)o+=\",\";o+=to_string(a[i]);}return o+\"]\";}\nint main(){\n    vector<string> x = RL();\n    auto a0=PI(x[0]);int a1=stoi(x[1]);\n    cout << IA(twoSum(a0, a1)) << \"\\n\";\n    return 0;\n}\n"
     },
     "params": [
       {
@@ -81,12 +85,16 @@
     "starterCode": {
       "javascript": "function isValid(s) {\n  // your code here\n}\n",
       "typescript": "function isValid(s: string): boolean {\n  // your code here\n  return false;\n}\n",
-      "python": "def is_valid(s):\n    # your code here\n    pass\n"
+      "python": "def is_valid(s):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    boolean isValid(String s) {\n        // your code here (java.util.* is already imported)\n        return false;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nbool isValid(string s) {\n    // your code here\n    return false;\n}\n"
     },
     "harness": {
       "javascript": "const __s = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0];\nconsole.log(isValid(__s));\n",
       "typescript": "const __s = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0];\nconsole.log(isValid(__s));\n",
-      "python": "import sys\n__lines = sys.stdin.read().splitlines()\n__s = __lines[0] if __lines else \"\"\nprint(\"true\" if is_valid(__s) else \"false\")\n"
+      "python": "import sys\n__lines = sys.stdin.read().splitlines()\n__s = __lines[0] if __lines else \"\"\nprint(\"true\" if is_valid(__s) else \"false\")\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.isValid(x[0]));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nint main(){\n    vector<string> x = RL();\n    cout << (isValid(x[0]) ? \"true\" : \"false\") << \"\\n\";\n    return 0;\n}\n"
     },
     "params": [
       {
@@ -128,12 +136,16 @@
     "starterCode": {
       "javascript": "function reverseString(s) {\n  // your code here\n}\n",
       "typescript": "function reverseString(s: string): string {\n  // your code here\n  return '';\n}\n",
-      "python": "def reverse_string(s):\n    # your code here\n    pass\n"
+      "python": "def reverse_string(s):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    String reverseString(String s) {\n        // your code here (java.util.* is already imported)\n        return \"\";\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nstring reverseString(string s) {\n    // your code here\n    return \"\";\n}\n"
     },
     "harness": {
       "javascript": "const __s = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0];\nconsole.log(reverseString(__s));\n",
       "typescript": "const __s = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0];\nconsole.log(reverseString(__s));\n",
-      "python": "import sys\n__lines = sys.stdin.read().splitlines()\n__s = __lines[0] if __lines else \"\"\nprint(reverse_string(__s))\n"
+      "python": "import sys\n__lines = sys.stdin.read().splitlines()\n__s = __lines[0] if __lines else \"\"\nprint(reverse_string(__s))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.reverseString(x[0]));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nint main(){\n    vector<string> x = RL();\n    cout << reverseString(x[0]) << \"\\n\";\n    return 0;\n}\n"
     },
     "params": [
       {
@@ -178,12 +190,16 @@
     "starterCode": {
       "javascript": "function maxSubArray(nums) {\n  // your code here\n}\n",
       "typescript": "function maxSubArray(nums: number[]): number {\n  // your code here\n  return 0;\n}\n",
-      "python": "def max_sub_array(nums):\n    # your code here\n    pass\n"
+      "python": "def max_sub_array(nums):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int maxSubArray(int[] nums) {\n        // your code here (java.util.* is already imported)\n        return 0;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint maxSubArray(vector<int>& nums) {\n    // your code here\n    return 0;\n}\n"
     },
     "harness": {
       "javascript": "const __nums = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(maxSubArray(__nums));\n",
       "typescript": "const __nums = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(maxSubArray(__nums));\n",
-      "python": "import sys, json\n__nums = json.loads(sys.stdin.read().splitlines()[0])\nprint(max_sub_array(__nums))\n"
+      "python": "import sys, json\n__nums = json.loads(sys.stdin.read().splitlines()[0])\nprint(max_sub_array(__nums))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    static int[] pi(String s) {\n        int a = s.indexOf('['), b = s.lastIndexOf(']');\n        if (a >= 0 && b >= 0) s = s.substring(a + 1, b);\n        s = s.trim();\n        if (s.isEmpty()) return new int[0];\n        String[] p = s.split(\",\");\n        int[] r = new int[p.length];\n        for (int i = 0; i < p.length; i++) r[i] = Integer.parseInt(p[i].trim());\n        return r;\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.maxSubArray(pi(x[0])));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nstatic vector<int> PI(const string& s){string t;for(char c:s)t+=(c=='['||c==']'||c==',')?' ':c;vector<int> r;stringstream ss(t);int x;while(ss>>x)r.push_back(x);return r;}\nint main(){\n    vector<string> x = RL();\n    auto a0=PI(x[0]);\n    cout << maxSubArray(a0) << \"\\n\";\n    return 0;\n}\n"
     },
     "params": [
       {
@@ -247,12 +263,16 @@
     "starterCode": {
       "javascript": "function lengthOfLongestSubstring(s) {\n  // your code here\n}\n",
       "typescript": "function lengthOfLongestSubstring(s: string): number {\n  // your code here\n  return 0;\n}\n",
-      "python": "def length_of_longest_substring(s):\n    # your code here\n    pass\n"
+      "python": "def length_of_longest_substring(s):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int lengthOfLongestSubstring(String s) {\n        // your code here (java.util.* is already imported)\n        return 0;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint lengthOfLongestSubstring(string s) {\n    // your code here\n    return 0;\n}\n"
     },
     "harness": {
       "javascript": "const __s = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0];\nconsole.log(lengthOfLongestSubstring(__s));\n",
       "typescript": "const __s = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0];\nconsole.log(lengthOfLongestSubstring(__s));\n",
-      "python": "import sys\n__lines = sys.stdin.read().splitlines()\n__s = __lines[0] if __lines else \"\"\nprint(length_of_longest_substring(__s))\n"
+      "python": "import sys\n__lines = sys.stdin.read().splitlines()\n__s = __lines[0] if __lines else \"\"\nprint(length_of_longest_substring(__s))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.lengthOfLongestSubstring(x[0]));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nint main(){\n    vector<string> x = RL();\n    cout << lengthOfLongestSubstring(x[0]) << \"\\n\";\n    return 0;\n}\n"
     },
     "params": [
       {
@@ -316,12 +336,16 @@
     "starterCode": {
       "javascript": "function rob(nums) {\n  // your code here\n}\n",
       "typescript": "function rob(nums: number[]): number {\n  // your code here\n  return 0;\n}\n",
-      "python": "def rob(nums):\n    # your code here\n    pass\n"
+      "python": "def rob(nums):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int rob(int[] nums) {\n        // your code here (java.util.* is already imported)\n        return 0;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint rob(vector<int>& nums) {\n    // your code here\n    return 0;\n}\n"
     },
     "harness": {
       "javascript": "const __nums = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(rob(__nums));\n",
       "typescript": "const __nums = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(rob(__nums));\n",
-      "python": "import sys, json\n__nums = json.loads(sys.stdin.read().splitlines()[0])\nprint(rob(__nums))\n"
+      "python": "import sys, json\n__nums = json.loads(sys.stdin.read().splitlines()[0])\nprint(rob(__nums))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    static int[] pi(String s) {\n        int a = s.indexOf('['), b = s.lastIndexOf(']');\n        if (a >= 0 && b >= 0) s = s.substring(a + 1, b);\n        s = s.trim();\n        if (s.isEmpty()) return new int[0];\n        String[] p = s.split(\",\");\n        int[] r = new int[p.length];\n        for (int i = 0; i < p.length; i++) r[i] = Integer.parseInt(p[i].trim());\n        return r;\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.rob(pi(x[0])));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nstatic vector<int> PI(const string& s){string t;for(char c:s)t+=(c=='['||c==']'||c==',')?' ':c;vector<int> r;stringstream ss(t);int x;while(ss>>x)r.push_back(x);return r;}\nint main(){\n    vector<string> x = RL();\n    auto a0=PI(x[0]);\n    cout << rob(a0) << \"\\n\";\n    return 0;\n}\n"
     },
     "params": [
       {
@@ -381,12 +405,16 @@
     "starterCode": {
       "javascript": "function coinChange(coins, amount) {\n  // your code here\n}\n",
       "typescript": "function coinChange(coins: number[], amount: number): number {\n  // your code here\n  return -1;\n}\n",
-      "python": "def coin_change(coins, amount):\n    # your code here\n    pass\n"
+      "python": "def coin_change(coins, amount):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int coinChange(int[] nums, int target) {\n        // your code here (java.util.* is already imported)\n        return 0;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint coinChange(vector<int>& nums, int target) {\n    // your code here\n    return 0;\n}\n"
     },
     "harness": {
       "javascript": "const __lines = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nconsole.log(coinChange(JSON.parse(__lines[0]), parseInt(__lines[1], 10)));\n",
       "typescript": "const __lines = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nconsole.log(coinChange(JSON.parse(__lines[0]), parseInt(__lines[1], 10)));\n",
-      "python": "import sys, json\n__lines = sys.stdin.read().splitlines()\nprint(coin_change(json.loads(__lines[0]), int(__lines[1])))\n"
+      "python": "import sys, json\n__lines = sys.stdin.read().splitlines()\nprint(coin_change(json.loads(__lines[0]), int(__lines[1])))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    static int[] pi(String s) {\n        int a = s.indexOf('['), b = s.lastIndexOf(']');\n        if (a >= 0 && b >= 0) s = s.substring(a + 1, b);\n        s = s.trim();\n        if (s.isEmpty()) return new int[0];\n        String[] p = s.split(\",\");\n        int[] r = new int[p.length];\n        for (int i = 0; i < p.length; i++) r[i] = Integer.parseInt(p[i].trim());\n        return r;\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.coinChange(pi(x[0]), Integer.parseInt(x[1].trim())));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nstatic vector<int> PI(const string& s){string t;for(char c:s)t+=(c=='['||c==']'||c==',')?' ':c;vector<int> r;stringstream ss(t);int x;while(ss>>x)r.push_back(x);return r;}\nint main(){\n    vector<string> x = RL();\n    auto a0=PI(x[0]);int a1=stoi(x[1]);\n    cout << coinChange(a0, a1) << \"\\n\";\n    return 0;\n}\n"
     },
     "params": [
       {
@@ -454,12 +482,16 @@
     "starterCode": {
       "javascript": "function numIslands(grid) {\n  // grid is an array of strings; return the island count\n  // your code here\n}\n",
       "typescript": "function numIslands(grid: string[]): number {\n  // grid is an array of strings; return the island count\n  // your code here\n  return 0;\n}\n",
-      "python": "def num_islands(grid):\n    # grid is a list of strings; return the island count\n    # your code here\n    pass\n"
+      "python": "def num_islands(grid):\n    # grid is a list of strings; return the island count\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int numIslands(String[] strs) {\n        // your code here (java.util.* is already imported)\n        return 0;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint numIslands(vector<string>& strs) {\n    // your code here\n    return 0;\n}\n"
     },
     "harness": {
       "javascript": "const __grid = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(numIslands(__grid));\n",
       "typescript": "const __grid = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(numIslands(__grid));\n",
-      "python": "import sys, json\n__grid = json.loads(sys.stdin.read().splitlines()[0])\nprint(num_islands(__grid))\n"
+      "python": "import sys, json\n__grid = json.loads(sys.stdin.read().splitlines()[0])\nprint(num_islands(__grid))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    static String[] ps(String s) {\n        java.util.List<String> o = new java.util.ArrayList<>();\n        boolean in = false; StringBuilder c = new StringBuilder();\n        for (int i = 0; i < s.length(); i++) {\n            char ch = s.charAt(i);\n            if (ch == '\"') { if (in) { o.add(c.toString()); c.setLength(0); in = false; } else in = true; }\n            else if (in) c.append(ch);\n        }\n        return o.toArray(new String[0]);\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.numIslands(ps(x[0])));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nstatic vector<string> PS(const string& s){vector<string> r;bool in=false;string c;for(char ch:s){if(ch=='\"'){if(in){r.push_back(c);c.clear();in=false;}else in=true;}else if(in)c+=ch;}return r;}\nint main(){\n    vector<string> x = RL();\n    auto a0=PS(x[0]);\n    cout << numIslands(a0) << \"\\n\";\n    return 0;\n}\n"
     },
     "params": [
       {
@@ -523,12 +555,16 @@
     "starterCode": {
       "javascript": "function trap(height) {\n  // your code here\n}\n",
       "typescript": "function trap(height: number[]): number {\n  // your code here\n  return 0;\n}\n",
-      "python": "def trap(height):\n    # your code here\n    pass\n"
+      "python": "def trap(height):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int trap(int[] nums) {\n        // your code here (java.util.* is already imported)\n        return 0;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint trap(vector<int>& nums) {\n    // your code here\n    return 0;\n}\n"
     },
     "harness": {
       "javascript": "const __height = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(trap(__height));\n",
       "typescript": "const __height = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(trap(__height));\n",
-      "python": "import sys, json\n__height = json.loads(sys.stdin.read().splitlines()[0])\nprint(trap(__height))\n"
+      "python": "import sys, json\n__height = json.loads(sys.stdin.read().splitlines()[0])\nprint(trap(__height))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    static int[] pi(String s) {\n        int a = s.indexOf('['), b = s.lastIndexOf(']');\n        if (a >= 0 && b >= 0) s = s.substring(a + 1, b);\n        s = s.trim();\n        if (s.isEmpty()) return new int[0];\n        String[] p = s.split(\",\");\n        int[] r = new int[p.length];\n        for (int i = 0; i < p.length; i++) r[i] = Integer.parseInt(p[i].trim());\n        return r;\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.trap(pi(x[0])));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nstatic vector<int> PI(const string& s){string t;for(char c:s)t+=(c=='['||c==']'||c==',')?' ':c;vector<int> r;stringstream ss(t);int x;while(ss>>x)r.push_back(x);return r;}\nint main(){\n    vector<string> x = RL();\n    auto a0=PI(x[0]);\n    cout << trap(a0) << \"\\n\";\n    return 0;\n}\n"
     },
     "params": [
       {
@@ -590,12 +626,16 @@
     "starterCode": {
       "javascript": "function minDistance(word1, word2) {\n  // your code here\n}\n",
       "typescript": "function minDistance(word1: string, word2: string): number {\n  // your code here\n  return 0;\n}\n",
-      "python": "def min_distance(word1, word2):\n    # your code here\n    pass\n"
+      "python": "def min_distance(word1, word2):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int minDistance(String word1, String word2) {\n        // your code here (java.util.* is already imported)\n        return 0;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint minDistance(string word1, string word2) {\n    // your code here\n    return 0;\n}\n"
     },
     "harness": {
       "javascript": "const __lines = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nconsole.log(minDistance(__lines[0], __lines[1]));\n",
       "typescript": "const __lines = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nconsole.log(minDistance(__lines[0], __lines[1]));\n",
-      "python": "import sys\n__lines = sys.stdin.read().splitlines()\nprint(min_distance(__lines[0], __lines[1]))\n"
+      "python": "import sys\n__lines = sys.stdin.read().splitlines()\nprint(min_distance(__lines[0], __lines[1]))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.minDistance(x[0], x[1]));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nint main(){\n    vector<string> x = RL();\n    cout << minDistance(x[0], x[1]) << \"\\n\";\n    return 0;\n}\n"
     },
     "params": [
       {
@@ -661,12 +701,16 @@
     "starterCode": {
       "javascript": "function containsDuplicate(nums) {\n  // your code here\n}\n",
       "typescript": "function containsDuplicate(nums: number[]): boolean {\n  // your code here\n  return false;\n}\n",
-      "python": "def contains_duplicate(nums):\n    # your code here\n    pass\n"
+      "python": "def contains_duplicate(nums):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    boolean containsDuplicate(int[] nums) {\n        // your code here (java.util.* is already imported)\n        return false;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nbool containsDuplicate(vector<int>& nums) {\n    // your code here\n    return false;\n}\n"
     },
     "harness": {
       "javascript": "const __nums = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(containsDuplicate(__nums));\n",
       "typescript": "const __nums = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(containsDuplicate(__nums));\n",
-      "python": "import sys, json\n__nums = json.loads(sys.stdin.read().splitlines()[0])\nprint(\"true\" if contains_duplicate(__nums) else \"false\")\n"
+      "python": "import sys, json\n__nums = json.loads(sys.stdin.read().splitlines()[0])\nprint(\"true\" if contains_duplicate(__nums) else \"false\")\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    static int[] pi(String s) {\n        int a = s.indexOf('['), b = s.lastIndexOf(']');\n        if (a >= 0 && b >= 0) s = s.substring(a + 1, b);\n        s = s.trim();\n        if (s.isEmpty()) return new int[0];\n        String[] p = s.split(\",\");\n        int[] r = new int[p.length];\n        for (int i = 0; i < p.length; i++) r[i] = Integer.parseInt(p[i].trim());\n        return r;\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.containsDuplicate(pi(x[0])));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nstatic vector<int> PI(const string& s){string t;for(char c:s)t+=(c=='['||c==']'||c==',')?' ':c;vector<int> r;stringstream ss(t);int x;while(ss>>x)r.push_back(x);return r;}\nint main(){\n    vector<string> x = RL();\n    auto a0=PI(x[0]);\n    cout << (containsDuplicate(a0) ? \"true\" : \"false\") << \"\\n\";\n    return 0;\n}\n"
     },
     "params": [
       {
@@ -723,12 +767,16 @@
     "starterCode": {
       "javascript": "function isAnagram(s, t) {\n  // your code here\n}\n",
       "typescript": "function isAnagram(s: string, t: string): boolean {\n  // your code here\n  return false;\n}\n",
-      "python": "def is_anagram(s, t):\n    # your code here\n    pass\n"
+      "python": "def is_anagram(s, t):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    boolean isAnagram(String word1, String word2) {\n        // your code here (java.util.* is already imported)\n        return false;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nbool isAnagram(string word1, string word2) {\n    // your code here\n    return false;\n}\n"
     },
     "harness": {
       "javascript": "const __lines = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nconsole.log(isAnagram(__lines[0], __lines[1]));\n",
       "typescript": "const __lines = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nconsole.log(isAnagram(__lines[0], __lines[1]));\n",
-      "python": "import sys\n__lines = sys.stdin.read().splitlines()\nprint(\"true\" if is_anagram(__lines[0], __lines[1]) else \"false\")\n"
+      "python": "import sys\n__lines = sys.stdin.read().splitlines()\nprint(\"true\" if is_anagram(__lines[0], __lines[1]) else \"false\")\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.isAnagram(x[0], x[1]));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nint main(){\n    vector<string> x = RL();\n    cout << (isAnagram(x[0], x[1]) ? \"true\" : \"false\") << \"\\n\";\n    return 0;\n}\n"
     },
     "params": [
       {
@@ -796,12 +844,16 @@
     "starterCode": {
       "javascript": "function maxProfit(prices) {\n  // your code here\n}\n",
       "typescript": "function maxProfit(prices: number[]): number {\n  // your code here\n  return 0;\n}\n",
-      "python": "def max_profit(prices):\n    # your code here\n    pass\n"
+      "python": "def max_profit(prices):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int maxProfit(int[] nums) {\n        // your code here (java.util.* is already imported)\n        return 0;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint maxProfit(vector<int>& nums) {\n    // your code here\n    return 0;\n}\n"
     },
     "harness": {
       "javascript": "const __prices = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(maxProfit(__prices));\n",
       "typescript": "const __prices = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(maxProfit(__prices));\n",
-      "python": "import sys, json\n__prices = json.loads(sys.stdin.read().splitlines()[0])\nprint(max_profit(__prices))\n"
+      "python": "import sys, json\n__prices = json.loads(sys.stdin.read().splitlines()[0])\nprint(max_profit(__prices))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    static int[] pi(String s) {\n        int a = s.indexOf('['), b = s.lastIndexOf(']');\n        if (a >= 0 && b >= 0) s = s.substring(a + 1, b);\n        s = s.trim();\n        if (s.isEmpty()) return new int[0];\n        String[] p = s.split(\",\");\n        int[] r = new int[p.length];\n        for (int i = 0; i < p.length; i++) r[i] = Integer.parseInt(p[i].trim());\n        return r;\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.maxProfit(pi(x[0])));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nstatic vector<int> PI(const string& s){string t;for(char c:s)t+=(c=='['||c==']'||c==',')?' ':c;vector<int> r;stringstream ss(t);int x;while(ss>>x)r.push_back(x);return r;}\nint main(){\n    vector<string> x = RL();\n    auto a0=PI(x[0]);\n    cout << maxProfit(a0) << \"\\n\";\n    return 0;\n}\n"
     },
     "params": [
       {
@@ -863,12 +915,16 @@
     "starterCode": {
       "javascript": "function climbStairs(n) {\n  // your code here\n}\n",
       "typescript": "function climbStairs(n: number): number {\n  // your code here\n  return 0;\n}\n",
-      "python": "def climb_stairs(n):\n    # your code here\n    pass\n"
+      "python": "def climb_stairs(n):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int climbStairs(int n) {\n        // your code here (java.util.* is already imported)\n        return 0;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint climbStairs(int n) {\n    // your code here\n    return 0;\n}\n"
     },
     "harness": {
       "javascript": "const __n = parseInt(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0], 10);\nconsole.log(climbStairs(__n));\n",
       "typescript": "const __n = parseInt(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0], 10);\nconsole.log(climbStairs(__n));\n",
-      "python": "import sys\n__n = int(sys.stdin.read().splitlines()[0])\nprint(climb_stairs(__n))\n"
+      "python": "import sys\n__n = int(sys.stdin.read().splitlines()[0])\nprint(climb_stairs(__n))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.climbStairs(Integer.parseInt(x[0].trim())));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nint main(){\n    vector<string> x = RL();\n    int a0=stoi(x[0]);\n    cout << climbStairs(a0) << \"\\n\";\n    return 0;\n}\n"
     },
     "params": [
       {
@@ -929,12 +985,16 @@
     "starterCode": {
       "javascript": "function search(nums, target) {\n  // your code here\n}\n",
       "typescript": "function search(nums: number[], target: number): number {\n  // your code here\n  return -1;\n}\n",
-      "python": "def search(nums, target):\n    # your code here\n    pass\n"
+      "python": "def search(nums, target):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int search(int[] nums, int target) {\n        // your code here (java.util.* is already imported)\n        return 0;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint search(vector<int>& nums, int target) {\n    // your code here\n    return 0;\n}\n"
     },
     "harness": {
       "javascript": "const __lines = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nconsole.log(search(JSON.parse(__lines[0]), parseInt(__lines[1], 10)));\n",
       "typescript": "const __lines = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nconsole.log(search(JSON.parse(__lines[0]), parseInt(__lines[1], 10)));\n",
-      "python": "import sys, json\n__lines = sys.stdin.read().splitlines()\nprint(search(json.loads(__lines[0]), int(__lines[1])))\n"
+      "python": "import sys, json\n__lines = sys.stdin.read().splitlines()\nprint(search(json.loads(__lines[0]), int(__lines[1])))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    static int[] pi(String s) {\n        int a = s.indexOf('['), b = s.lastIndexOf(']');\n        if (a >= 0 && b >= 0) s = s.substring(a + 1, b);\n        s = s.trim();\n        if (s.isEmpty()) return new int[0];\n        String[] p = s.split(\",\");\n        int[] r = new int[p.length];\n        for (int i = 0; i < p.length; i++) r[i] = Integer.parseInt(p[i].trim());\n        return r;\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.search(pi(x[0]), Integer.parseInt(x[1].trim())));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nstatic vector<int> PI(const string& s){string t;for(char c:s)t+=(c=='['||c==']'||c==',')?' ':c;vector<int> r;stringstream ss(t);int x;while(ss>>x)r.push_back(x);return r;}\nint main(){\n    vector<string> x = RL();\n    auto a0=PI(x[0]);int a1=stoi(x[1]);\n    cout << search(a0, a1) << \"\\n\";\n    return 0;\n}\n"
     },
     "params": [
       {
@@ -999,12 +1059,16 @@
     "starterCode": {
       "javascript": "function majorityElement(nums) {\n  // your code here\n}\n",
       "typescript": "function majorityElement(nums: number[]): number {\n  // your code here\n  return 0;\n}\n",
-      "python": "def majority_element(nums):\n    # your code here\n    pass\n"
+      "python": "def majority_element(nums):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int majorityElement(int[] nums) {\n        // your code here (java.util.* is already imported)\n        return 0;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint majorityElement(vector<int>& nums) {\n    // your code here\n    return 0;\n}\n"
     },
     "harness": {
       "javascript": "const __nums = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(majorityElement(__nums));\n",
       "typescript": "const __nums = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(majorityElement(__nums));\n",
-      "python": "import sys, json\n__nums = json.loads(sys.stdin.read().splitlines()[0])\nprint(majority_element(__nums))\n"
+      "python": "import sys, json\n__nums = json.loads(sys.stdin.read().splitlines()[0])\nprint(majority_element(__nums))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    static int[] pi(String s) {\n        int a = s.indexOf('['), b = s.lastIndexOf(']');\n        if (a >= 0 && b >= 0) s = s.substring(a + 1, b);\n        s = s.trim();\n        if (s.isEmpty()) return new int[0];\n        String[] p = s.split(\",\");\n        int[] r = new int[p.length];\n        for (int i = 0; i < p.length; i++) r[i] = Integer.parseInt(p[i].trim());\n        return r;\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.majorityElement(pi(x[0])));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nstatic vector<int> PI(const string& s){string t;for(char c:s)t+=(c=='['||c==']'||c==',')?' ':c;vector<int> r;stringstream ss(t);int x;while(ss>>x)r.push_back(x);return r;}\nint main(){\n    vector<string> x = RL();\n    auto a0=PI(x[0]);\n    cout << majorityElement(a0) << \"\\n\";\n    return 0;\n}\n"
     },
     "params": [
       {
@@ -1060,12 +1124,16 @@
     "starterCode": {
       "javascript": "function singleNumber(nums) {\n  // your code here\n}\n",
       "typescript": "function singleNumber(nums: number[]): number {\n  // your code here\n  return 0;\n}\n",
-      "python": "def single_number(nums):\n    # your code here\n    pass\n"
+      "python": "def single_number(nums):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int singleNumber(int[] nums) {\n        // your code here (java.util.* is already imported)\n        return 0;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint singleNumber(vector<int>& nums) {\n    // your code here\n    return 0;\n}\n"
     },
     "harness": {
       "javascript": "const __nums = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(singleNumber(__nums));\n",
       "typescript": "const __nums = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(singleNumber(__nums));\n",
-      "python": "import sys, json\n__nums = json.loads(sys.stdin.read().splitlines()[0])\nprint(single_number(__nums))\n"
+      "python": "import sys, json\n__nums = json.loads(sys.stdin.read().splitlines()[0])\nprint(single_number(__nums))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    static int[] pi(String s) {\n        int a = s.indexOf('['), b = s.lastIndexOf(']');\n        if (a >= 0 && b >= 0) s = s.substring(a + 1, b);\n        s = s.trim();\n        if (s.isEmpty()) return new int[0];\n        String[] p = s.split(\",\");\n        int[] r = new int[p.length];\n        for (int i = 0; i < p.length; i++) r[i] = Integer.parseInt(p[i].trim());\n        return r;\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.singleNumber(pi(x[0])));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nstatic vector<int> PI(const string& s){string t;for(char c:s)t+=(c=='['||c==']'||c==',')?' ':c;vector<int> r;stringstream ss(t);int x;while(ss>>x)r.push_back(x);return r;}\nint main(){\n    vector<string> x = RL();\n    auto a0=PI(x[0]);\n    cout << singleNumber(a0) << \"\\n\";\n    return 0;\n}\n"
     },
     "params": [
       {
@@ -1121,12 +1189,16 @@
     "starterCode": {
       "javascript": "function productExceptSelf(nums) {\n  // your code here\n}\n",
       "typescript": "function productExceptSelf(nums: number[]): number[] {\n  // your code here\n  return [];\n}\n",
-      "python": "def product_except_self(nums):\n    # your code here\n    pass\n"
+      "python": "def product_except_self(nums):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int[] productExceptSelf(int[] nums) {\n        // your code here (java.util.* is already imported)\n        return new int[]{};\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nvector<int> productExceptSelf(vector<int>& nums) {\n    // your code here\n    return {};\n}\n"
     },
     "harness": {
       "javascript": "const __nums = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(JSON.stringify(productExceptSelf(__nums)));\n",
       "typescript": "const __nums = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(JSON.stringify(productExceptSelf(__nums)));\n",
-      "python": "import sys, json\n__nums = json.loads(sys.stdin.read().splitlines()[0])\nprint(json.dumps(product_except_self(__nums), separators=(\",\", \":\")))\n"
+      "python": "import sys, json\n__nums = json.loads(sys.stdin.read().splitlines()[0])\nprint(json.dumps(product_except_self(__nums), separators=(\",\", \":\")))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    static int[] pi(String s) {\n        int a = s.indexOf('['), b = s.lastIndexOf(']');\n        if (a >= 0 && b >= 0) s = s.substring(a + 1, b);\n        s = s.trim();\n        if (s.isEmpty()) return new int[0];\n        String[] p = s.split(\",\");\n        int[] r = new int[p.length];\n        for (int i = 0; i < p.length; i++) r[i] = Integer.parseInt(p[i].trim());\n        return r;\n    }\n    static String ia(int[] a) {\n        StringBuilder b = new StringBuilder(\"[\");\n        for (int i = 0; i < a.length; i++) { if (i > 0) b.append(','); b.append(a[i]); }\n        return b.append(']').toString();\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(ia(sol.productExceptSelf(pi(x[0]))));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nstatic vector<int> PI(const string& s){string t;for(char c:s)t+=(c=='['||c==']'||c==',')?' ':c;vector<int> r;stringstream ss(t);int x;while(ss>>x)r.push_back(x);return r;}\nstatic string IA(const vector<int>& a){string o=\"[\";for(size_t i=0;i<a.size();i++){if(i)o+=\",\";o+=to_string(a[i]);}return o+\"]\";}\nint main(){\n    vector<string> x = RL();\n    auto a0=PI(x[0]);\n    cout << IA(productExceptSelf(a0)) << \"\\n\";\n    return 0;\n}\n"
     },
     "params": [
       {
@@ -1182,12 +1254,16 @@
     "starterCode": {
       "javascript": "function moveZeroes(nums) {\n  // your code here\n  return nums;\n}\n",
       "typescript": "function moveZeroes(nums: number[]): number[] {\n  // your code here\n  return nums;\n}\n",
-      "python": "def move_zeroes(nums):\n    # your code here\n    return nums\n"
+      "python": "def move_zeroes(nums):\n    # your code here\n    return nums\n",
+      "java": "class Solution {\n    int[] moveZeroes(int[] nums) {\n        // your code here (java.util.* is already imported)\n        return new int[]{};\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nvector<int> moveZeroes(vector<int>& nums) {\n    // your code here\n    return {};\n}\n"
     },
     "harness": {
       "javascript": "const __nums = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(JSON.stringify(moveZeroes(__nums)));\n",
       "typescript": "const __nums = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(JSON.stringify(moveZeroes(__nums)));\n",
-      "python": "import sys, json\n__nums = json.loads(sys.stdin.read().splitlines()[0])\nprint(json.dumps(move_zeroes(__nums), separators=(\",\", \":\")))\n"
+      "python": "import sys, json\n__nums = json.loads(sys.stdin.read().splitlines()[0])\nprint(json.dumps(move_zeroes(__nums), separators=(\",\", \":\")))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    static int[] pi(String s) {\n        int a = s.indexOf('['), b = s.lastIndexOf(']');\n        if (a >= 0 && b >= 0) s = s.substring(a + 1, b);\n        s = s.trim();\n        if (s.isEmpty()) return new int[0];\n        String[] p = s.split(\",\");\n        int[] r = new int[p.length];\n        for (int i = 0; i < p.length; i++) r[i] = Integer.parseInt(p[i].trim());\n        return r;\n    }\n    static String ia(int[] a) {\n        StringBuilder b = new StringBuilder(\"[\");\n        for (int i = 0; i < a.length; i++) { if (i > 0) b.append(','); b.append(a[i]); }\n        return b.append(']').toString();\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(ia(sol.moveZeroes(pi(x[0]))));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nstatic vector<int> PI(const string& s){string t;for(char c:s)t+=(c=='['||c==']'||c==',')?' ':c;vector<int> r;stringstream ss(t);int x;while(ss>>x)r.push_back(x);return r;}\nstatic string IA(const vector<int>& a){string o=\"[\";for(size_t i=0;i<a.size();i++){if(i)o+=\",\";o+=to_string(a[i]);}return o+\"]\";}\nint main(){\n    vector<string> x = RL();\n    auto a0=PI(x[0]);\n    cout << IA(moveZeroes(a0)) << \"\\n\";\n    return 0;\n}\n"
     },
     "params": [
       {
@@ -1244,12 +1320,16 @@
     "starterCode": {
       "javascript": "function longestCommonPrefix(strs) {\n  // your code here\n}\n",
       "typescript": "function longestCommonPrefix(strs: string[]): string {\n  // your code here\n  return '';\n}\n",
-      "python": "def longest_common_prefix(strs):\n    # your code here\n    pass\n"
+      "python": "def longest_common_prefix(strs):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    String longestCommonPrefix(String[] strs) {\n        // your code here (java.util.* is already imported)\n        return \"\";\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nstring longestCommonPrefix(vector<string>& strs) {\n    // your code here\n    return \"\";\n}\n"
     },
     "harness": {
       "javascript": "const __strs = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(longestCommonPrefix(__strs));\n",
       "typescript": "const __strs = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(longestCommonPrefix(__strs));\n",
-      "python": "import sys, json\n__strs = json.loads(sys.stdin.read().splitlines()[0])\nprint(longest_common_prefix(__strs))\n"
+      "python": "import sys, json\n__strs = json.loads(sys.stdin.read().splitlines()[0])\nprint(longest_common_prefix(__strs))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    static String[] ps(String s) {\n        java.util.List<String> o = new java.util.ArrayList<>();\n        boolean in = false; StringBuilder c = new StringBuilder();\n        for (int i = 0; i < s.length(); i++) {\n            char ch = s.charAt(i);\n            if (ch == '\"') { if (in) { o.add(c.toString()); c.setLength(0); in = false; } else in = true; }\n            else if (in) c.append(ch);\n        }\n        return o.toArray(new String[0]);\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.longestCommonPrefix(ps(x[0])));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nstatic vector<string> PS(const string& s){vector<string> r;bool in=false;string c;for(char ch:s){if(ch=='\"'){if(in){r.push_back(c);c.clear();in=false;}else in=true;}else if(in)c+=ch;}return r;}\nint main(){\n    vector<string> x = RL();\n    auto a0=PS(x[0]);\n    cout << longestCommonPrefix(a0) << \"\\n\";\n    return 0;\n}\n"
     },
     "params": [
       {
@@ -1312,12 +1392,16 @@
     "starterCode": {
       "javascript": "function romanToInt(s) {\n  // your code here\n}\n",
       "typescript": "function romanToInt(s: string): number {\n  // your code here\n  return 0;\n}\n",
-      "python": "def roman_to_int(s):\n    # your code here\n    pass\n"
+      "python": "def roman_to_int(s):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int romanToInt(String s) {\n        // your code here (java.util.* is already imported)\n        return 0;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint romanToInt(string s) {\n    // your code here\n    return 0;\n}\n"
     },
     "harness": {
       "javascript": "const __s = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0];\nconsole.log(romanToInt(__s));\n",
       "typescript": "const __s = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0];\nconsole.log(romanToInt(__s));\n",
-      "python": "import sys\n__lines = sys.stdin.read().splitlines()\n__s = __lines[0] if __lines else \"\"\nprint(roman_to_int(__s))\n"
+      "python": "import sys\n__lines = sys.stdin.read().splitlines()\n__s = __lines[0] if __lines else \"\"\nprint(roman_to_int(__s))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.romanToInt(x[0]));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nint main(){\n    vector<string> x = RL();\n    cout << romanToInt(x[0]) << \"\\n\";\n    return 0;\n}\n"
     },
     "params": [
       {
@@ -1379,12 +1463,16 @@
     "starterCode": {
       "javascript": "function fizzBuzz(n) {\n  // your code here\n}\n",
       "typescript": "function fizzBuzz(n: number): string[] {\n  // your code here\n  return [];\n}\n",
-      "python": "def fizz_buzz(n):\n    # your code here\n    pass\n"
+      "python": "def fizz_buzz(n):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    String[] fizzBuzz(int n) {\n        // your code here (java.util.* is already imported)\n        return new String[]{};\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nvector<string> fizzBuzz(int n) {\n    // your code here\n    return {};\n}\n"
     },
     "harness": {
       "javascript": "const __n = parseInt(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0], 10);\nconsole.log(JSON.stringify(fizzBuzz(__n)));\n",
       "typescript": "const __n = parseInt(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0], 10);\nconsole.log(JSON.stringify(fizzBuzz(__n)));\n",
-      "python": "import sys, json\n__n = int(sys.stdin.read().splitlines()[0])\nprint(json.dumps(fizz_buzz(__n), separators=(\",\", \":\")))\n"
+      "python": "import sys, json\n__n = int(sys.stdin.read().splitlines()[0])\nprint(json.dumps(fizz_buzz(__n), separators=(\",\", \":\")))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    static String sa(String[] a) {\n        StringBuilder b = new StringBuilder(\"[\");\n        for (int i = 0; i < a.length; i++) { if (i > 0) b.append(','); b.append('\"').append(a[i]).append('\"'); }\n        return b.append(']').toString();\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sa(sol.fizzBuzz(Integer.parseInt(x[0].trim()))));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nstatic string SA(const vector<string>& a){string o=\"[\";for(size_t i=0;i<a.size();i++){if(i)o+=\",\";o+=\"\\\"\"+a[i]+\"\\\"\";}return o+\"]\";}\nint main(){\n    vector<string> x = RL();\n    int a0=stoi(x[0]);\n    cout << SA(fizzBuzz(a0)) << \"\\n\";\n    return 0;\n}\n"
     },
     "params": [
       {
@@ -1441,12 +1529,16 @@
     "starterCode": {
       "javascript": "function countVowels(s) {\n  // your code here\n}\n",
       "typescript": "function countVowels(s: string): number {\n  // your code here\n  return 0;\n}\n",
-      "python": "def count_vowels(s):\n    # your code here\n    pass\n"
+      "python": "def count_vowels(s):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int countVowels(String s) {\n        // your code here (java.util.* is already imported)\n        return 0;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint countVowels(string s) {\n    // your code here\n    return 0;\n}\n"
     },
     "harness": {
       "javascript": "const __s = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0];\nconsole.log(countVowels(__s));\n",
       "typescript": "const __s = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0];\nconsole.log(countVowels(__s));\n",
-      "python": "import sys\n__lines = sys.stdin.read().splitlines()\n__s = __lines[0] if __lines else \"\"\nprint(count_vowels(__s))\n"
+      "python": "import sys\n__lines = sys.stdin.read().splitlines()\n__s = __lines[0] if __lines else \"\"\nprint(count_vowels(__s))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.countVowels(x[0]));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nint main(){\n    vector<string> x = RL();\n    cout << countVowels(x[0]) << \"\\n\";\n    return 0;\n}\n"
     },
     "params": [
       {
@@ -1505,12 +1597,16 @@
     "starterCode": {
       "javascript": "function caesarCipher(s, shift) {\n  // your code here\n}\n",
       "typescript": "function caesarCipher(s: string, shift: number): string {\n  // your code here\n  return '';\n}\n",
-      "python": "def caesar_cipher(s, shift):\n    # your code here\n    pass\n"
+      "python": "def caesar_cipher(s, shift):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    String caesarCipher(String s, int shift) {\n        // your code here (java.util.* is already imported)\n        return \"\";\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nstring caesarCipher(string s, int shift) {\n    // your code here\n    return \"\";\n}\n"
     },
     "harness": {
       "javascript": "const __lines = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nconsole.log(caesarCipher(__lines[0], parseInt(__lines[1], 10)));\n",
       "typescript": "const __lines = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nconsole.log(caesarCipher(__lines[0], parseInt(__lines[1], 10)));\n",
-      "python": "import sys\n__lines = sys.stdin.read().splitlines()\nprint(caesar_cipher(__lines[0], int(__lines[1])))\n"
+      "python": "import sys\n__lines = sys.stdin.read().splitlines()\nprint(caesar_cipher(__lines[0], int(__lines[1])))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.caesarCipher(x[0], Integer.parseInt(x[1].trim())));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nint main(){\n    vector<string> x = RL();\n    int a1=stoi(x[1]);\n    cout << caesarCipher(x[0], a1) << \"\\n\";\n    return 0;\n}\n"
     },
     "params": [
       {
@@ -1575,12 +1671,16 @@
     "starterCode": {
       "javascript": "function runLengthEncode(s) {\n  // your code here\n}\n",
       "typescript": "function runLengthEncode(s: string): string {\n  // your code here\n  return '';\n}\n",
-      "python": "def run_length_encode(s):\n    # your code here\n    pass\n"
+      "python": "def run_length_encode(s):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    String runLengthEncode(String s) {\n        // your code here (java.util.* is already imported)\n        return \"\";\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nstring runLengthEncode(string s) {\n    // your code here\n    return \"\";\n}\n"
     },
     "harness": {
       "javascript": "const __s = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0];\nconsole.log(runLengthEncode(__s));\n",
       "typescript": "const __s = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0];\nconsole.log(runLengthEncode(__s));\n",
-      "python": "import sys\n__lines = sys.stdin.read().splitlines()\n__s = __lines[0] if __lines else \"\"\nprint(run_length_encode(__s))\n"
+      "python": "import sys\n__lines = sys.stdin.read().splitlines()\n__s = __lines[0] if __lines else \"\"\nprint(run_length_encode(__s))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.runLengthEncode(x[0]));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nint main(){\n    vector<string> x = RL();\n    cout << runLengthEncode(x[0]) << \"\\n\";\n    return 0;\n}\n"
     },
     "params": [
       {
@@ -1637,12 +1737,16 @@
     "starterCode": {
       "javascript": "function digitalRoot(n) {\n  // your code here\n}\n",
       "typescript": "function digitalRoot(n: number): number {\n  // your code here\n  return 0;\n}\n",
-      "python": "def digital_root(n):\n    # your code here\n    pass\n"
+      "python": "def digital_root(n):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int digitalRoot(int n) {\n        // your code here (java.util.* is already imported)\n        return 0;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint digitalRoot(int n) {\n    // your code here\n    return 0;\n}\n"
     },
     "harness": {
       "javascript": "const __n = parseInt(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0], 10);\nconsole.log(digitalRoot(__n));\n",
       "typescript": "const __n = parseInt(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0], 10);\nconsole.log(digitalRoot(__n));\n",
-      "python": "import sys\n__n = int(sys.stdin.read().splitlines()[0])\nprint(digital_root(__n))\n"
+      "python": "import sys\n__n = int(sys.stdin.read().splitlines()[0])\nprint(digital_root(__n))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.digitalRoot(Integer.parseInt(x[0].trim())));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nint main(){\n    vector<string> x = RL();\n    int a0=stoi(x[0]);\n    cout << digitalRoot(a0) << \"\\n\";\n    return 0;\n}\n"
     },
     "params": [
       {

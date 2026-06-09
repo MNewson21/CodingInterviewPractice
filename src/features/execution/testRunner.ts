@@ -13,9 +13,17 @@ export interface TestResult {
 }
 
 /**
- * Combine the user's code with the problem's hidden harness (LeetCode-style I/O
- * glue). The harness is appended so the user's function is in scope; for
+ * Combine the user's code with the problem's hidden harness.
+ * The harness is appended so the user's function is in scope; for
  * TypeScript we prepend `// @ts-nocheck` so the harness's Node `require` compiles.
+ *
+ * Java is the exception: Piston runs it via the single-file source launcher
+ * (`java Main.java`), which executes the FIRST top-level class in the file - so
+ * the harness (`public class Main` with `main`) must come first, with its imports
+ * at the very top, and the user's `class Solution` follows (forward reference is
+ * fine). The harness pre-imports `java.util.*`, so user code must not add imports.
+ * 
+ * This is to test the code btw
  */
 function buildSource(
   language: Language,
@@ -23,6 +31,7 @@ function buildSource(
   harness: string | undefined,
 ): string {
   if (!harness) return code;
+  if (language === 'java') return `${harness}\n\n${code}`;
   const combined = `${code}\n\n${harness}`;
   return language === 'typescript' ? `// @ts-nocheck\n${combined}` : combined;
 }
@@ -54,7 +63,7 @@ function evaluate(
     return {
       verdict: 'error',
       actual,
-      stderr: run.stderr || `Killed (${run.signal}) — likely a timeout or out of memory.`,
+      stderr: run.stderr || `Killed (${run.signal}) - likely a timeout or out of memory.`,
     };
   }
 
@@ -89,7 +98,7 @@ export async function runTests(params: {
       results.push({ name, verdict, input: tc.stdin, expected: normalize(tc.expectedStdout), actual, stderr });
     } catch (err) {
       // Infrastructure failures (service down / rate-limited) hit every test the same
-      // way — surface them once to the caller instead of as N identical per-test rows.
+      // way - surface them once to the caller instead of as N identical per-test rows.
       if (err instanceof PistonError && (err.kind === 'unavailable' || err.kind === 'rate-limited')) {
         throw err;
       }
