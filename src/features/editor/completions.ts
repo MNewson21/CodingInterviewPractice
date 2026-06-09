@@ -101,8 +101,41 @@ const PYTHON: Entry[] = [
   m('items', 'items()', 'dict.items() → view of (K, V)', 'Iterable of key/value pairs.'),
   m('keys', 'keys()', 'dict.keys() → view of K', 'Iterable of keys.'),
   m('values', 'values()', 'dict.values() → view of V', 'Iterable of values.'),
+  // heapq (priority queue) — call as heapq.<fn>(heap, …); heap is a plain list
+  m('heappush', 'heappush(${1:heap}, ${2:item})', 'heapq.heappush(heap, item) → None', 'Push onto a min-heap.'),
+  m('heappop', 'heappop(${1:heap})', 'heapq.heappop(heap) → item', 'Pop and return the smallest item.'),
+  m('heapify', 'heapify(${1:list})', 'heapq.heapify(list) → None', 'Rearrange a list into a heap in place.'),
+  // str char-classification (used by the string/counting problems)
+  m('islower', 'islower()', 'str.islower() → bool', 'True if all cased chars are lowercase.'),
+  m('isupper', 'isupper()', 'str.isupper() → bool', 'True if all cased chars are uppercase.'),
+  m('isalpha', 'isalpha()', 'str.isalpha() → bool', 'True if every char is a letter.'),
+  m('isalnum', 'isalnum()', 'str.isalnum() → bool', 'True if every char is a letter or digit.'),
+  m('isspace', 'isspace()', 'str.isspace() → bool', 'True if every char is whitespace.'),
+  m('capitalize', 'capitalize()', 'str.capitalize() → str', 'First char upper, rest lower.'),
+  m('title', 'title()', 'str.title() → str', 'Title-case each word.'),
+  m('swapcase', 'swapcase()', 'str.swapcase() → str', 'Swap the case of every letter.'),
+  m('zfill', 'zfill(${1:width})', 'str.zfill(width) → str', 'Left-pad with zeros to width.'),
+  m('rfind', 'rfind(${1:sub})', 'str.rfind(sub) → int', 'Highest index of sub, or -1.'),
+  m('lstrip', 'lstrip(${1})', 'str.lstrip(chars=None) → str', 'Trim from the left.'),
+  m('rstrip', 'rstrip(${1})', 'str.rstrip(chars=None) → str', 'Trim from the right.'),
+  // set / list / dict mutation
+  m('add', 'add(${1})', 'set.add(x) → None', 'Insert into a set.'),
+  m('discard', 'discard(${1})', 'set.discard(x) → None', 'Remove if present (no error if absent).'),
+  m('remove', 'remove(${1})', 'list/set.remove(x) → None', 'Remove the first matching item.'),
+  m('extend', 'extend(${1:iterable})', 'list.extend(iterable) → None', 'Append all items from an iterable.'),
+  m('clear', 'clear()', 'list/dict/set.clear() → None', 'Remove all items.'),
+  m('setdefault', 'setdefault(${1:key}, ${2:default})', 'dict.setdefault(key, default) → V', 'Get key, inserting default if absent.'),
+  m('update', 'update(${1})', 'dict/set.update(other) → None', 'Merge in another dict/iterable.'),
   // snippets
   snip('for', 'for ${1:item} in ${2:iterable}:\n    ${0:pass}', 'for loop'),
+  // data structures
+  snip('dictt', '${1:d} = {}', 'new dict (hashmap)', 'Key → value mapping.'),
+  snip('listt', '${1:lst} = []', 'new list'),
+  snip('sett', '${1:s} = set()', 'new set', 'Unique elements.'),
+  snip('deque', 'from collections import deque\n${1:dq} = deque()', 'deque (stack/queue)', 'append/appendleft/pop/popleft, O(1) both ends.'),
+  snip('defaultdict', 'from collections import defaultdict\n${1:d} = defaultdict(${2:int})', 'defaultdict', 'Auto-creates missing values (int/list/set).'),
+  snip('counter', 'from collections import Counter\n${1:c} = Counter(${2:iterable})', 'Counter (multiset)', 'Counts occurrences; .most_common(n).'),
+  snip('heap', 'import heapq\n${1:heap} = []\nheapq.heappush(${1:heap}, ${2:item})', 'min-heap via heapq', 'A list managed by heapq as a priority queue.'),
   snip('fori', 'for ${1:i} in range(${2:n}):\n    ${0:pass}', 'indexed for loop'),
   snip('ifmain', 'if __name__ == "__main__":\n    ${0:main()}', 'main guard'),
   snip('deff', 'def ${1:name}(${2:args}):\n    ${0:pass}', 'function def'),
@@ -160,8 +193,48 @@ const JAVA: Entry[] = [
   m('getOrDefault', 'getOrDefault(${1:key}, ${2:def})', 'Map.getOrDefault(k, def) → V', 'Value for key, or def.'),
   m('isEmpty', 'isEmpty()', 'Collection/String.isEmpty() → boolean', 'True if empty.'),
   m('append', 'append(${1})', 'StringBuilder.append(x) → StringBuilder', 'Append (chainable).'),
+  // ADT methods — Stack / Queue / Deque / PriorityQueue
+  m('push', 'push(${1})', 'Stack/Deque.push(x) → void | E', 'Push onto the stack (top).'),
+  m('pop', 'pop()', 'Stack/Deque.pop() → E', 'Remove and return the top.'),
+  m('peek', 'peek()', 'Stack/Queue/Deque/PriorityQueue.peek() → E', 'Look at the head/top without removing.'),
+  m('poll', 'poll()', 'Queue/Deque/PriorityQueue.poll() → E', 'Remove and return the head, or null if empty.'),
+  m('offer', 'offer(${1})', 'Queue/Deque/PriorityQueue.offer(x) → boolean', 'Add an element to the queue/heap.'),
+  m('remove', 'remove(${1})', 'Collection.remove(x) / Map.remove(k) → boolean | V', 'Remove an element or key.'),
+  m('keySet', 'keySet()', 'Map.keySet() → Set<K>', 'Set of keys.'),
+  m('values', 'values()', 'Map.values() → Collection<V>', 'Collection of values.'),
+  m('entrySet', 'entrySet()', 'Map.entrySet() → Set<Map.Entry<K,V>>', 'Key/value entries (use .getKey()/.getValue()).'),
+  // Character classification (static — type the name and pick the full call)
+  fn('Character.isLetter', 'Character.isLetter(${1:c})', 'Character.isLetter(c) → boolean', 'True if c is a letter.'),
+  fn('Character.isDigit', 'Character.isDigit(${1:c})', 'Character.isDigit(c) → boolean', 'True if c is a digit.'),
+  fn('Character.isLetterOrDigit', 'Character.isLetterOrDigit(${1:c})', 'Character.isLetterOrDigit(c) → boolean', 'Letter or digit.'),
+  fn('Character.isLowerCase', 'Character.isLowerCase(${1:c})', 'Character.isLowerCase(c) → boolean', 'True if c is lowercase.'),
+  fn('Character.isUpperCase', 'Character.isUpperCase(${1:c})', 'Character.isUpperCase(c) → boolean', 'True if c is uppercase.'),
+  fn('Character.isWhitespace', 'Character.isWhitespace(${1:c})', 'Character.isWhitespace(c) → boolean', 'True if c is whitespace.'),
+  fn('Character.toLowerCase', 'Character.toLowerCase(${1:c})', 'Character.toLowerCase(c) → char', 'Lowercased char.'),
+  fn('Character.toUpperCase', 'Character.toUpperCase(${1:c})', 'Character.toUpperCase(c) → char', 'Uppercased char.'),
+  fn('Character.getNumericValue', 'Character.getNumericValue(${1:c})', 'Character.getNumericValue(c) → int', "Digit value of c ('7' → 7)."),
+  fn('Math.floor', 'Math.floor(${1})', 'Math.floor(x) → double', 'Round down.'),
+  fn('Math.ceil', 'Math.ceil(${1})', 'Math.ceil(x) → double', 'Round up.'),
+  fn('Math.round', 'Math.round(${1})', 'Math.round(x) → long | int', 'Round to the nearest integer.'),
+  cls('Integer.MAX_VALUE', 'Integer.MAX_VALUE → int (2^31 − 1)'),
+  cls('Integer.MIN_VALUE', 'Integer.MIN_VALUE → int (−2^31)'),
+  // more String methods
+  m('startsWith', 'startsWith(${1:prefix})', 'String.startsWith(prefix) → boolean', 'Prefix test.'),
+  m('endsWith', 'endsWith(${1:suffix})', 'String.endsWith(suffix) → boolean', 'Suffix test.'),
+  m('replace', 'replace(${1:a}, ${2:b})', 'String.replace(a, b) → String', 'Replace chars or sequences.'),
+  m('compareTo', 'compareTo(${1})', 'String.compareTo(o) → int', 'Lexicographic comparison.'),
+  m('repeat', 'repeat(${1:n})', 'String.repeat(n) → String', 'Repeat the string n times.'),
   // snippets
   snip('sout', 'System.out.println(${1});', 'print line'),
+  // data-structure declarations (with generics)
+  snip('Stack<>', 'Stack<${1:Integer}> ${2:stack} = new Stack<>();', 'new Stack<>()', 'LIFO stack.'),
+  snip('ArrayList<>', 'List<${1:Integer}> ${2:list} = new ArrayList<>();', 'new ArrayList<>()', 'Resizable list.'),
+  snip('HashMap<>', 'Map<${1:Integer}, ${2:Integer}> ${3:map} = new HashMap<>();', 'new HashMap<>()', 'Key → value dictionary.'),
+  snip('HashSet<>', 'Set<${1:Integer}> ${2:set} = new HashSet<>();', 'new HashSet<>()', 'Unique elements.'),
+  snip('ArrayDeque<>', 'Deque<${1:Integer}> ${2:deque} = new ArrayDeque<>();', 'new ArrayDeque<>()', 'Double-ended queue — use as a stack or queue.'),
+  snip('PriorityQueue<>', 'PriorityQueue<${1:Integer}> ${2:pq} = new PriorityQueue<>();', 'min-heap (default)', 'Smallest element first.'),
+  snip('PriorityQueue<> max', 'PriorityQueue<${1:Integer}> ${2:pq} = new PriorityQueue<>(Collections.reverseOrder());', 'max-heap', 'Largest element first.'),
+  snip('Queue<>', 'Queue<${1:Integer}> ${2:queue} = new LinkedList<>();', 'new LinkedList<>() as a Queue', 'FIFO queue.'),
   snip('fori', 'for (int ${1:i} = 0; ${1:i} < ${2:n}; ${1:i}++) {\n    ${0}\n}', 'indexed for loop'),
   snip('foreach', 'for (${1:Type} ${2:item} : ${3:collection}) {\n    ${0}\n}', 'enhanced for loop'),
   snip('ifx', 'if (${1:condition}) {\n    ${0}\n}', 'if block'),
@@ -213,11 +286,44 @@ const CPP: Entry[] = [
   m('insert', 'insert(${1})', 'container.insert(x) → ...', 'Insert an element.'),
   m('substr', 'substr(${1:pos}, ${2:len})', 'string.substr(pos, len) → string', 'Substring starting at pos.'),
   m('length', 'length()', 'string.length() → size_t', 'Number of characters.'),
-  m('top', 'top()', 'stack/priority_queue.top() → T&', 'The top element.'),
-  m('push', 'push(${1})', 'stack/queue.push(x) → void', 'Add an element.'),
-  m('pop', 'pop()', 'stack/queue.pop() → void', 'Remove the next element.'),
+  m('top', 'top()', 'stack/priority_queue.top() → T&', 'The top element (largest for a default priority_queue).'),
+  m('push', 'push(${1})', 'stack/queue/priority_queue.push(x) → void', 'Add an element.'),
+  m('pop', 'pop()', 'stack/queue/priority_queue.pop() → void', 'Remove the next element (does not return it).'),
+  m('emplace', 'emplace(${1})', 'container.emplace(args…) → ...', 'Construct an element in place.'),
+  m('erase', 'erase(${1})', 'container.erase(pos|key) → ...', 'Remove element(s) by position or key.'),
+  m('lower_bound', 'lower_bound(${1:key})', 'set/map.lower_bound(key) → iterator', 'First element ≥ key.'),
+  m('upper_bound', 'upper_bound(${1:key})', 'set/map.upper_bound(key) → iterator', 'First element > key.'),
+  m('first', 'first', 'pair.first → T', 'First element of a pair.'),
+  m('second', 'second', 'pair.second → U', 'Second element of a pair.'),
+  // <cctype> char classification + <cmath> helpers (free functions — call as fn(c))
+  fn('islower', 'islower(${1:c})', 'islower(c) → int (nonzero = true)', 'True if c is lowercase. <cctype>'),
+  fn('isupper', 'isupper(${1:c})', 'isupper(c) → int', 'True if c is uppercase. <cctype>'),
+  fn('isalpha', 'isalpha(${1:c})', 'isalpha(c) → int', 'True if c is a letter. <cctype>'),
+  fn('isdigit', 'isdigit(${1:c})', 'isdigit(c) → int', 'True if c is a digit. <cctype>'),
+  fn('isalnum', 'isalnum(${1:c})', 'isalnum(c) → int', 'Letter or digit. <cctype>'),
+  fn('isspace', 'isspace(${1:c})', 'isspace(c) → int', 'True if c is whitespace. <cctype>'),
+  fn('tolower', 'tolower(${1:c})', 'tolower(c) → int', 'Lowercased char. <cctype>'),
+  fn('toupper', 'toupper(${1:c})', 'toupper(c) → int', 'Uppercased char. <cctype>'),
+  fn('sqrt', 'sqrt(${1})', 'sqrt(x) → double', 'Square root. <cmath>'),
+  fn('pow', 'pow(${1:a}, ${2:b})', 'pow(a, b) → double', 'a raised to the power b. <cmath>'),
+  fn('floor', 'floor(${1})', 'floor(x) → double', 'Round down. <cmath>'),
+  fn('ceil', 'ceil(${1})', 'ceil(x) → double', 'Round up. <cmath>'),
+  fn('gcd', 'gcd(${1:a}, ${2:b})', 'gcd(a, b) → T (C++17, <numeric>)', 'Greatest common divisor.'),
+  cls('INT_MAX', 'INT_MAX → largest int (<climits>)'),
+  cls('INT_MIN', 'INT_MIN → smallest int (<climits>)'),
   // snippets
   snip('fori', 'for (int ${1:i} = 0; ${1:i} < ${2:n}; ${1:i}++) {\n    ${0}\n}', 'indexed for loop'),
+  // data-structure declarations (with generics)
+  snip('stack<>', 'stack<${1:int}> ${2:st};', 'LIFO stack', 'top()/push()/pop()/empty().'),
+  snip('queue<>', 'queue<${1:int}> ${2:q};', 'FIFO queue', 'front()/push()/pop()/empty().'),
+  snip('priority_queue<>', 'priority_queue<${1:int}> ${2:pq};', 'max-heap (default)', 'top() is the largest.'),
+  snip('priority_queue<> min', 'priority_queue<${1:int}, vector<${1:int}>, greater<${1:int}>> ${2:pq};', 'min-heap', 'top() is the smallest.'),
+  snip('map<>', 'map<${1:int}, ${2:int}> ${3:m};', 'ordered map', 'Sorted by key (tree).'),
+  snip('unordered_map<>', 'unordered_map<${1:int}, ${2:int}> ${3:m};', 'hash map', 'Average O(1) lookup.'),
+  snip('set<>', 'set<${1:int}> ${2:s};', 'ordered set', 'Unique, sorted.'),
+  snip('unordered_set<>', 'unordered_set<${1:int}> ${2:s};', 'hash set', 'Unique, average O(1).'),
+  snip('pair<>', 'pair<${1:int}, ${2:int}> ${3:p};', 'declare pair', 'Access with .first / .second.'),
+  snip('grid<>', 'vector<vector<${1:int}>> ${2:grid};', '2D vector', 'Matrix / grid.'),
   snip('foreach', 'for (auto& ${1:x} : ${2:container}) {\n    ${0}\n}', 'range-based for loop'),
   snip('ifx', 'if (${1:condition}) {\n    ${0}\n}', 'if block'),
   snip('whilex', 'while (${1:condition}) {\n    ${0}\n}', 'while loop'),
@@ -247,6 +353,8 @@ export function registerCompletions(monaco: Monaco): void {
 
   for (const [lang, entries] of Object.entries(TABLE)) {
     monaco.languages.registerCompletionItemProvider(lang, {
+      // Open the popup after a dot too, not just while typing a word.
+      triggerCharacters: ['.'],
       provideCompletionItems(model: editor.ITextModel, position: Position) {
         const word = model.getWordUntilPosition(position);
         const range = {
@@ -255,7 +363,16 @@ export function registerCompletions(monaco: Monaco): void {
           startColumn: word.startColumn,
           endColumn: word.endColumn,
         };
-        const suggestions: languages.CompletionItem[] = entries.map((e) => ({
+        // Member access: if the character before the current word is '.', we're
+        // after a dot (e.g. `st.`). Without a type server we can't know st's type,
+        // so show every known method; otherwise show the non-method entries
+        // (keywords / functions / classes / snippets) to keep the list relevant.
+        const line = model.getLineContent(position.lineNumber);
+        const afterDot = line[word.startColumn - 2] === '.';
+        const pool = afterDot
+          ? entries.filter((e) => e.kind === 'method')
+          : entries.filter((e) => e.kind !== 'method');
+        const suggestions: languages.CompletionItem[] = pool.map((e) => ({
           label: e.label,
           kind: kindMap[e.kind],
           insertText: e.insert ?? e.label,

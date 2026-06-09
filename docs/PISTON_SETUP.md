@@ -1,4 +1,4 @@
-# Code Execution — Self-Hosted Piston
+# Code Execution - Self-Hosted Piston
 
 The app runs user code through [Piston](https://github.com/engineer-man/piston).
 The **public `emkc.org` endpoint became whitelist-only on 2026-02-15**, so we
@@ -14,15 +14,15 @@ docker run --privileged -d --name piston -p 2000:2000 \
 This starts the API on `http://localhost:2000`. **It has no languages yet.**
 
 Both flags are required:
-- `--privileged` — Piston uses `isolate` for sandboxing; without it you get
+- `--privileged` - Piston uses `isolate` for sandboxing; without it you get
   `mkdir: cannot create directory 'isolate/'`.
-- `-v piston-data:/piston` — a persistent data volume; without it you get
+- `-v piston-data:/piston` - a persistent data volume; without it you get
   `chown: cannot access '/piston'`, and installed runtimes would not survive a
   restart. Day-to-day you then just `docker start piston` (runtimes persist).
 
 ## 2. Install the language runtimes
 
-The container ships empty — install the runtimes via the package API:
+The container ships empty - install the runtimes via the package API:
 
 ```bash
 ./scripts/setup-piston.sh
@@ -30,7 +30,7 @@ The container ships empty — install the runtimes via the package API:
 ./scripts/setup-piston.sh https://piston.example.com/api/v2
 ```
 
-Installs a LIGHT default set: Python, Node (JavaScript), TypeScript — low memory,
+Installs a LIGHT default set: Python, Node (JavaScript), TypeScript - low memory,
 fine on a small box (e.g. AWS t3.micro). To add the heavy compilers on a larger
 instance:
 
@@ -46,7 +46,7 @@ In `.env.local`:
 VITE_PISTON_URL=http://localhost:2000/api/v2
 ```
 
-> The self-hosted image serves at **`/api/v2`** — *not* `/api/v2/piston`. That extra
+> The self-hosted image serves at **`/api/v2`** - *not* `/api/v2/piston`. That extra
 > `/piston` segment only exists on the public emkc.org host. (In dev you normally use
 > the Vite proxy path below instead of this direct URL.)
 
@@ -74,7 +74,7 @@ and make sure that host returns CORS headers (or sits behind your own proxy).
 The browser calls Piston directly, so a public box runs **arbitrary user code on
 request from anyone who finds the URL**. Before pointing a domain at it, apply all
 three layers below. The client also sends per-request limits (`run_timeout`,
-`run_memory_limit`, …) as defence-in-depth, but never rely on the client — these
+`run_memory_limit`, …) as defence-in-depth, but never rely on the client - these
 server-side controls are the real boundary.
 
 ### 1. Constrain the container + Piston runtime
@@ -85,21 +85,21 @@ docker run --privileged -d --name piston \
   --memory 900m --memory-swap 900m \
   --cpus 1 \
   --pids-limit 256 \
-  -p 127.0.0.1:2000:2000 \                # bind to localhost ONLY — proxy faces the world
+  -p 127.0.0.1:2000:2000 \                # bind to localhost ONLY - proxy faces the world
   -e PISTON_RUN_TIMEOUT=5000 \            # ms per run
   -e PISTON_COMPILE_TIMEOUT=10000 \
   -e PISTON_RUN_MEMORY_LIMIT=256000000 \  # 256 MB per run (default is unlimited!)
   -e PISTON_COMPILE_MEMORY_LIMIT=256000000 \
   -e PISTON_MAX_CONCURRENT_JOBS=8 \       # default 64 is too high for a small box
   -e PISTON_OUTPUT_MAX_SIZE=65536 \       # cap stdout/stderr bytes
-  -e PISTON_DISABLE_NETWORKING=true \     # default true; keep it — no egress from sandboxes
+  -e PISTON_DISABLE_NETWORKING=true \     # default true; keep it - no egress from sandboxes
   -v piston-data:/piston ghcr.io/engineer-man/piston
 ```
 
 Key points:
-- `-p 127.0.0.1:2000:2000` — the raw API must **not** be reachable from the internet;
+- `-p 127.0.0.1:2000:2000` - the raw API must **not** be reachable from the internet;
   only the reverse proxy talks to it.
-- `PISTON_RUN_MEMORY_LIMIT` defaults to **unlimited** — set it or one submission can
+- `PISTON_RUN_MEMORY_LIMIT` defaults to **unlimited** - set it or one submission can
   OOM the box.
 - `--memory` / `--cpus` / `--pids-limit` cap the whole container as a backstop.
 
@@ -125,7 +125,7 @@ Then point the app at the proxy (HTTPS), not the box:
 
 - **443** (HTTPS): open to `0.0.0.0/0`.
 - **22** (SSH): your IP only.
-- **2000** (Piston): **closed** to the internet — it's localhost-only now.
+- **2000** (Piston): **closed** to the internet - it's localhost-only now.
 - **80**: open only if using HTTP→HTTPS redirect / certbot.
 
 ### Verify
