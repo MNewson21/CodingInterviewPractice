@@ -8,11 +8,11 @@ const motivations = [
   {
     title: 'Learn faster, without being handed the answer',
     body: 'Most practice sites either leave you stuck or just show you the solution. I wanted quick, targeted feedback that nudges me toward the answer so the learning actually sticks.',
-    feature: 'Hints + AI feedback that talk through your approach instead of dumping the solution.',
+    feature: 'Hints + AI feedback that talk through your approach instead of telling you the answer. Language autocomplete to help you code and think faster.',
   },
   {
     title: 'Creating and Solving new problems',
-    body: 'I got tired of signing up to yet another site, or hand-writing the boilerplate code and test files just to try one problem. I wanted to drop in a single JSON file and go.',
+    body: 'I got tired of signing up to yet another site, or hand-writing the boilerplate code and test files just to try one problem. I wanted to be able to drop a single file and start.',
     feature: 'Create, edit, and import/export problems as JSON - no signup to other platforms, no manual scaffolding.',
   },
   {
@@ -23,7 +23,7 @@ const motivations = [
   {
     title: 'Practice under interview conditions',
     body: 'Having sat many online coding interviews, I knew that solving a problem and solving it in time are different skills. I wanted to rehearse under pressure and unblock myself fast when stuck.',
-    feature: 'A built-in timer and on-demand hints so you can optimise how you spend your practice time.',
+    feature: 'A built-in timer and on-demand hints so you can optimise how you practice your problems',
   },
 ];
 
@@ -52,8 +52,7 @@ export function AboutPage() {
           <p className="text-lg leading-relaxed text-zinc-300">
             I&rsquo;m a second-year Computer Science student at the{' '}
             <span className="font-semibold text-zinc-100">University of Nottingham</span>. I built
-            CodingInterviewPractice for myself as a place to learn faster, get quicker feedback
-            without being handed the answer, and rehearse coding interview problems, in your own way
+            CodingInterviewPractice for myself as a way to practice coding problems more effectively and not to be given the answer straight away - when I get stuck.
           </p>
           <p className="mt-4 leading-relaxed text-zinc-400">
             Every feature below started as something I personally wished existing tools did
