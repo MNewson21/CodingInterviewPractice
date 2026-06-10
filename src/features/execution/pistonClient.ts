@@ -24,8 +24,8 @@ const FILE_NAME: Record<Language, string> = {
 };
 
 // Per-request resource limits sent on every /execute. These are defence-in-depth:
-// the authoritative caps live in the Piston server config + reverse proxy (see
-// docs/PISTON_SETUP.md), but sending sane limits from the client keeps a single
+// the authoritative caps live in the Piston server config + reverse proxy, but
+// sending sane limits from the client keeps a single
 // runaway submission from tying up a worker even on legitimate traffic.
 //
 // Piston REJECTS any request value that exceeds its configured ceiling, so these must

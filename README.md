@@ -1,58 +1,61 @@
-# Mock Interview IDE
+# Coding Interview Practice
 
-A browser-based coding-interview practice platform — think CoderPad, free, with AI
-features built in natively. Pick a LeetCode-style problem, write a solution in a real
-Monaco (VS Code) editor, run it against test cases, and **replay your entire
-keystroke-by-keystroke thought process** afterwards.
+**A free, browser-based mock technical-interview IDE.** Pick a problem, write a real
+solution in a VS Code–grade editor, run it against hidden test cases, get AI feedback —
+and then **replay your entire keystroke-by-keystroke thought process** to see how you
+actually solved it.
 
-Built as a portfolio project to demonstrate full-stack architecture, not just feature
-count. The interesting parts are documented below and in [`ARCHITECTURE.md`](./ARCHITECTURE.md).
-
-> _Live demo: coming once hosted (see [Deployment](#deployment))._
-> _Screenshot / GIF placeholder — add a recording of a solve + replay here._
+🔗 **Live:** [codinginterviewpractice.dev](https://codinginterviewpractice.dev)
 
 ---
 
-## Features
+## Why this exists
 
-- **Real editor** — Monaco (the editor that powers VS Code) with per-language syntax
-  highlighting and a resizable split layout (problem on the left, editor on the right).
-  Responsive: stacks vertically on mobile.
-- **Code execution** — run your solution against real test cases via a self-hosted
-  [Piston](https://github.com/engineer-man/piston) sandbox. Pass/fail/error verdicts
-  with a closeness progress bar, and friendly error states for compile errors,
-  timeouts, and a downed runtime.
-- **Keystroke replay** — every edit is recorded as an event-sourced delta log and can
-  be replayed on a scrubber with variable speed. The showcase feature.
-- **Timer** — count-up and countdown modes, drift-corrected.
-- **AI hints & review** _(optional)_ — progressive, "stuck"-gated hints that nudge
-  without spoiling, plus a post-solve review of correctness and complexity. The LLM key
-  lives only in a server-side Edge Function, never in the browser. Also ships a **free,
-  in-browser Big-O estimator** that uses no tokens.
-- **Custom problems** — author your own via a form or drag-and-drop `.json` import,
-  edit them in place, and export any problem as a shareable file. Includes a
-  LeetCode-style **hidden harness** so authors write just the function while the I/O
-  glue is appended at run time.
-- **Auth & persistence** — sign in, save a session, and resume or replay it later.
+Practising for technical interviews is weirdly fragmented. LeetCode drills algorithms
+but feels nothing like a real interview. CoderPad and similar shared-editor tools *do*
+feel like the real thing — a live editor, someone watching how you think — but they're
+built for companies and sit behind a paywall.
 
-## Architecture highlights
+I wanted the middle ground, for free:
 
-The decisions worth talking about in an interview (full write-up in
-[`ARCHITECTURE.md`](./ARCHITECTURE.md)):
+- **The feel of a real interview, not a quiz.** A genuine code editor, a problem on one
+  side, a timer running, and your code executed against tests you can't see — the same
+  pressure shape as a live pairing round.
+- **A way to review *how* you think, not just whether you passed.** The standout feature
+  is keystroke replay: every edit is recorded, so afterwards you can scrub back through
+  your whole attempt and watch where you hesitated, backtracked, or went down a dead end.
+  That's the part of interview prep nobody usually gets to see.
+- **AI that coaches instead of spoiling.** Hints only unlock once you've actually been
+  stuck for a while, and they nudge rather than hand you the answer. A post-solve review
+  then talks through correctness and complexity like an interviewer would.
+- **Something I can stand behind and explain.** It started as a portfolio project, so the
+  architecture is deliberate and the code is meant to be readable end to end.
 
-- **Keystroke replay via event sourcing.** Rather than storing full-text snapshots per
-  keystroke, it records Monaco's content-change *deltas* with relative timestamps.
-  Replay = apply the event log over an empty buffer, driven by a playhead clock — the
-  same idea as Redux time-travel. Compact storage, trivial speed control.
-- **Security model is Row Level Security.** Supabase RLS *is* the entire backend trust
-  boundary: every query is automatically scoped to `auth.uid()`, so a user can only ever
-  read/write their own rows. There's no server code to trust.
-- **The AI key never touches the client.** Hints/review call a Supabase Edge Function
-  that holds the LLM key server-side and validates the caller's JWT first — no anonymous
-  abuse of the key. The proxy is OpenAI-compatible, so it can point at any free provider.
-- **Hidden harness for code execution.** Problems carry a per-language harness that's
-  appended to the user's function at run time, giving a real LeetCode-style "write the
-  function" experience over a simple stdin/stdout sandbox.
+## Who it's for
+
+- **Candidates** preparing for coding interviews who want realistic reps and honest
+  self-review, without a subscription.
+- **Students and self-taught developers** building algorithmic fluency across multiple
+  languages.
+- **Anyone running practice sessions** who wants to author their own problems and share
+  them as a file.
+
+## What you can do with it
+
+- Solve **LeetCode-style problems** in **Python, JavaScript, TypeScript, Java, or C++**,
+  in a real Monaco (VS Code) editor with syntax highlighting and curated autocomplete.
+- **Run your code** against real test cases and get pass / fail / error verdicts with a
+  "how close were you" progress bar and friendly handling of compile errors and timeouts.
+- **Replay any attempt** keystroke by keystroke on a scrubber with variable speed.
+- Use a **timer** in count-up or countdown mode.
+- Get **progressive AI hints** (gated until you're genuinely stuck) and an **AI post-solve
+  review**, plus a free, in-browser Big-O estimator that uses no AI tokens.
+- **Author custom problems** via a form or by dragging in a `.json` file, edit them in
+  place, and export any problem to share.
+- **Sign in to save sessions**, then resume or replay them later — and delete the ones you
+  no longer want.
+
+> New here? The [**User Guide**](./docs/USER-GUIDE.md) walks through every feature.
 
 ## Tech stack
 
@@ -62,53 +65,65 @@ The decisions worth talking about in an interview (full write-up in
 | Styling          | Tailwind CSS v4                                   |
 | State            | Zustand (one store per concern)                   |
 | Editor           | Monaco (`@monaco-editor/react`)                   |
-| Auth + database  | Supabase (Postgres + RLS)                         |
+| Auth + database  | Supabase (Postgres + Row Level Security)          |
 | AI proxy         | Supabase Edge Functions (Deno), provider-agnostic |
-| Code execution   | Self-hosted Piston                                |
+| Code execution   | Self-hosted [Piston](https://github.com/engineer-man/piston) sandbox |
 
-## Getting started
+A few decisions worth knowing:
 
-**Prerequisites:** Node 20+ and (for running code locally) Docker.
+- **Keystroke replay is event-sourced.** It stores Monaco's content-change *deltas* with
+  relative timestamps rather than full snapshots, so replay is just applying the log over
+  an empty buffer against a playhead clock. Compact to store, trivial to speed-control.
+- **Security is Row Level Security.** Supabase RLS is the entire backend trust boundary —
+  every query is auto-scoped to `auth.uid()`, so a user can only ever read or write their
+  own rows. There's no bespoke server code to trust.
+- **The AI key never reaches the browser.** Hints and review call a Supabase Edge Function
+  that holds the LLM key server-side and validates the caller's JWT first. The proxy is
+  OpenAI-compatible, so it can point at any provider.
+
+## Getting started (local dev)
+
+**Prerequisites:** Node 20+ and (to run user code locally) Docker.
 
 ```bash
 npm install
 npm run dev        # http://localhost:5173
 ```
 
-The app boots and is usable without any backend — auth, save, run, and AI features
-simply stay inert until you wire up their services below.
+The app boots and is usable without any backend — auth, run, and AI features simply stay
+inert until you wire up their services.
 
 ### Environment variables
 
-Create `.env.local` (note the leading dot):
+Create a `.env.local` file in the project root:
 
 ```
 VITE_SUPABASE_URL=https://YOUR-PROJECT-REF.supabase.co   # base host only, no /rest/v1
 VITE_SUPABASE_ANON_KEY=<your anon key>
-VITE_PISTON_URL=/piston/api/v2                            # dev proxy path (see below)
-VITE_ENABLED_LANGUAGES=python,javascript,typescript      # optional; unset = all
+VITE_PISTON_URL=/piston/api/v2                            # dev proxy path
+VITE_ENABLED_LANGUAGES=python,javascript,typescript,java,cpp   # optional; unset = all
 ```
 
-LLM secrets are **not** here — they live in Supabase Edge Function secrets, never
-in a `VITE_` variable.
+LLM secrets are **not** here — they live in Supabase Edge Function secrets, never in a
+`VITE_` variable (those ship to the browser).
 
 ### Backend pieces (each independent, each optional to start)
 
-| Piece            | What it powers              | Setup guide                                |
-|------------------|-----------------------------|--------------------------------------------|
-| **Piston**       | Running code                | [`docs/PISTON_SETUP.md`](./docs/PISTON_SETUP.md) |
-| **Supabase**     | Auth, saved sessions, custom problems | Supabase project + DB migrations |
-| **AI functions** | Hints & review _(optional)_ | OpenAI-compatible LLM via Supabase Edge Function |
+| Piece            | What it powers                        |
+|------------------|---------------------------------------|
+| **Piston**       | Running submitted code                |
+| **Supabase**     | Auth, saved sessions, custom problems |
+| **AI functions** | Hints & review _(optional)_           |
 
-Quick Piston (local):
+Quick local Piston:
 
 ```bash
 docker run --privileged -d --name piston -p 2000:2000 \
   -v piston-data:/piston ghcr.io/engineer-man/piston
-bash scripts/setup-piston.sh        # installs Python + JS + TS runtimes
+bash scripts/setup-piston.sh        # installs the language runtimes
 ```
 
-Day-to-day after that: `docker start piston` (runtimes persist in the volume).
+After that, day-to-day is just `docker start piston` (runtimes persist in the volume).
 
 ### Scripts
 
@@ -134,13 +149,13 @@ src/
 supabase/
   migrations/    sessions + user_problems tables with RLS
   functions/     ai-hint, ai-review Edge Functions + shared LLM proxy
-docs/            Piston setup guide + privacy notice
+docs/            user guide
 ```
 
 ## Deployment
 
-The app is three independently-hosted pieces: the frontend (Vercel, free), Supabase
-(free tier), and Piston on a small AWS EC2 box (the only part that costs money).
+Three independently-hosted pieces: the frontend (Vercel, free), Supabase (free tier), and
+Piston on a small AWS EC2 box (the only part that costs money).
 
 ## License
 
