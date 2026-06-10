@@ -126,6 +126,17 @@ export async function listSessions(): Promise<SessionRecord[]> {
   return (data as SessionRow[]).map(fromRow);
 }
 
+/** Permanently delete one of the caller's saved sessions. RLS ensures only own rows match. */
+export async function deleteSession(id: string): Promise<void> {
+  // Guard explicitly so a signed-out caller gets a clear error rather than a silent
+  // no-op (RLS would match zero rows and the delete would appear to "succeed").
+  await requireUserId();
+
+  const { error } = await supabase.from('sessions').delete().eq('id', id);
+
+  if (error) throw new Error(error.message);
+}
+
 export async function getSession(id: string): Promise<SessionRecord | null> {
   const { data, error } = await supabase
     .from('sessions')
