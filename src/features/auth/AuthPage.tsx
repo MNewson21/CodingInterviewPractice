@@ -21,7 +21,7 @@ export function AuthPage() {
     try {
       if (mode === 'signup') {
         await signUp(email, password);
-        setNotice('Account created. If email confirmation is on, check your inbox; otherwise sign in.');
+        setNotice('Account created, check your email for the confirmation link.');
         setMode('signin');
       } else {
         await signIn(email, password);
