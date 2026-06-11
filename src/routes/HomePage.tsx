@@ -8,6 +8,7 @@ import { ImportDropzone } from '../features/problems/ImportDropzone';
 import { ProblemForm } from '../features/problems/ProblemForm';
 import { MyProblems } from '../features/problems/MyProblems';
 import { ProblemList } from '../features/problems/ProblemList';
+import { DeleteAccount } from '../features/auth/DeleteAccount';
 import { LandingHero } from '../features/landing/LandingHero';
 import { ThemeSwitcher } from '../features/editor/ThemeSwitcher';
 import { useProblemsStore } from '../stores/useProblemsStore';
@@ -99,6 +100,13 @@ export function HomePage() {
               <h2 className="mb-3 text-sm font-semibold text-zinc-300">Your recent sessions</h2>
               <SessionHistory />
             </section>
+
+            {user.email && (
+              <section className="mt-10">
+                <h2 className="mb-3 text-sm font-semibold text-zinc-300">Account</h2>
+                <DeleteAccount email={user.email} />
+              </section>
+            )}
           </>
         )}
 
