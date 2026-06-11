@@ -80,7 +80,9 @@ export async function saveSession(input: SaveSessionInput): Promise<SessionRecor
       language: input.language,
       code: input.code,
       status: input.status,
-      duration_ms: input.durationMs,
+      // duration_ms is an integer column; the timer accumulates fractional ms from
+      // performance.now() deltas, so round before writing or Postgres rejects the float.
+      duration_ms: Math.round(input.durationMs),
       keystrokes: input.keystrokes ?? [],
     })
     .select()
@@ -105,7 +107,9 @@ export async function updateSession(
       language: input.language,
       code: input.code,
       status: input.status,
-      duration_ms: input.durationMs,
+      // duration_ms is an integer column; the timer accumulates fractional ms from
+      // performance.now() deltas, so round before writing or Postgres rejects the float.
+      duration_ms: Math.round(input.durationMs),
       keystrokes: input.keystrokes ?? [],
     })
     .eq('id', id)
