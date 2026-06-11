@@ -5,7 +5,7 @@ import { SITE } from '../config/site';
  * Identity values come from `SITE` so they stay in sync with the rest of the app.
  * Update the "Last updated" date below whenever the substance changes.
  */
-export const PRIVACY_NOTICE = `_Last updated: 8 June 2026_
+export const PRIVACY_NOTICE = `_Last updated: 11 June 2026_
 
 This notice explains what personal data **${SITE.name}** ("we", "I") collects when you
 use **${SITE.domain}** (the "Service"), why, and your rights under UK GDPR and the Data
@@ -78,7 +78,14 @@ Office (ICO): https://ico.org.uk/make-a-complaint/.
 Access to your data is restricted to your own account through database row-level security,
 passwords are stored only as salted hashes, and all traffic is served over HTTPS.
 
-## 7. Changes
+## 7. Children's privacy
+
+The Service is intended for adults and older students preparing for technical interviews. It
+is **not directed at children under 16**, and we do not knowingly collect personal data from
+them. If you believe a child under 16 has created an account or provided us with their data,
+please email **${SITE.email}** and we will delete it.
+
+## 8. Changes
 
 We may update this notice; the "Last updated" date above will change. Material changes will
 be highlighted in-app.
