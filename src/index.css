@@ -101,3 +101,17 @@ body,
   --color-zinc-900: #161b22;
   --color-zinc-950: #0d1117;
 }
+
+:root[data-app-theme="night-light"] {
+  --color-zinc-50: #fbf3dc;
+  --color-zinc-100: #f3e6c4;
+  --color-zinc-200: #e6d4a6;
+  --color-zinc-300: #d4bd83;
+  --color-zinc-400: #bfa264;
+  --color-zinc-500: #9c8147;
+  --color-zinc-600: #7a6436;
+  --color-zinc-700: #574826;
+  --color-zinc-800: #3a301a;
+  --color-zinc-900: #2f2718;
+  --color-zinc-950: #251f12;
+}

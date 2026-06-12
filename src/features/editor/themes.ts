@@ -59,6 +59,23 @@ const CUSTOM_THEMES: Record<string, ThemeData> = {
       'editor.foreground': '#c9d1d9',
     },
   },
+  // Warm, low-blue-light "night light" palette - amber/gold on a warm dark
+  // background equivalent to the night light windows feature which I have on 24/7
+  'night-light': {
+    base: 'vs-dark',
+    inherit: true,
+    rules: [
+      { token: 'comment', foreground: 'a08c5b' },
+      { token: 'string', foreground: 'd9a441' },
+      { token: 'keyword', foreground: 'e08e45' },
+      { token: 'number', foreground: 'c9b458' },
+      { token: 'type', foreground: 'e6c068' },
+    ],
+    colors: {
+      'editor.background': '#2a2419',
+      'editor.foreground': '#f3e0b8',
+    },
+  },
 };
 
 // Order shown in the switcher. Built-ins first, then our custom palettes.
@@ -69,6 +86,7 @@ export const EDITOR_THEMES: EditorThemeDef[] = [
   { id: 'monokai', label: 'Monokai', swatch: '#272822' },
   { id: 'solarized-dark', label: 'Solarized', swatch: '#002b36' },
   { id: 'github-dark', label: 'GitHub', swatch: '#0d1117' },
+  { id: 'night-light', label: 'Night Light', swatch: '#e0a82e' },
 ];
 
 let registered = false;
