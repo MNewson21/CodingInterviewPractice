@@ -7,7 +7,7 @@
       "array",
       "hash-map"
     ],
-    "description": "Given an array of integers nums and an integer target, return the indices of the two numbers that add up to target.\n\nYou may assume each input has exactly one solution, and you may not use the same element twice.\n\nInput: line 1 is the array as JSON, line 2 is the target.\nOutput: the two indices as a JSON array, e.g. [0,1].",
+    "description": "Given an array of integers nums and an integer target, return the indices of the two numbers that add up to target.\n\nYou may assume each input has exactly one solution, and you may not use the same element twice.\n\nInput: line 1 is the array, e.g. [2,7,11,15]; line 2 is the target.\nOutput: the two indices, e.g. [0,1].",
     "examples": [
       {
         "input": "nums = [2,7,11,15], target = 9",
@@ -170,7 +170,7 @@
       "dynamic-programming",
       "divide-and-conquer"
     ],
-    "description": "Given an integer array nums, find the contiguous subarray (containing at least one number) with the largest sum and return that sum.\n\nInput: a single line containing the array as JSON, e.g. [-2,1,-3].\nOutput: the maximum subarray sum as a single integer.",
+    "description": "Given an integer array nums, find the contiguous subarray (containing at least one number) with the largest sum and return that sum.\n\nInput: a single line containing the array, e.g. [-2,1,-3].\nOutput: the maximum subarray sum as a single integer.",
     "examples": [
       {
         "input": "nums = [-2,1,-3,4,-1,2,1,-5,4]",
@@ -316,7 +316,7 @@
       "array",
       "dynamic-programming"
     ],
-    "description": "You are a robber planning to rob houses along a street. Each house has some money, but adjacent houses have connected security systems that trigger if two adjacent houses are robbed on the same night.\n\nGiven an integer array nums representing the money in each house, return the maximum amount you can rob without alerting the police.\n\nInput: a single line containing the array as JSON.\nOutput: the maximum amount as a single integer.",
+    "description": "You are a robber planning to rob houses along a street. Each house has some money, but adjacent houses have connected security systems that trigger if two adjacent houses are robbed on the same night.\n\nGiven an integer array nums representing the money in each house, return the maximum amount you can rob without alerting the police.\n\nInput: a single line containing the array, e.g. [2,7,9,3,1].\nOutput: the maximum amount as a single integer.",
     "examples": [
       {
         "input": "nums = [1,2,3,1]",
@@ -384,7 +384,7 @@
       "dynamic-programming",
       "breadth-first-search"
     ],
-    "description": "You are given coins of different denominations and a total amount of money. Return the fewest number of coins needed to make up that amount. If it cannot be made from any combination of the coins, return -1. You have an unlimited number of each coin.\n\nInput: line 1 is the coins array as JSON; line 2 is the target amount.\nOutput: the fewest number of coins (or -1) as a single integer.",
+    "description": "You are given coins of different denominations and a total amount of money. Return the fewest number of coins needed to make up that amount. If it cannot be made from any combination of the coins, return -1. You have an unlimited number of each coin.\n\nInput: line 1 is the coins array, e.g. [1,2,5]; line 2 is the target amount.\nOutput: the fewest number of coins (or -1) as a single integer.",
     "examples": [
       {
         "input": "coins = [1,2,5], amount = 11",
@@ -462,7 +462,7 @@
       "breadth-first-search",
       "union-find"
     ],
-    "description": "Given a 2D grid of \"1\" (land) and \"0\" (water), count the number of islands. An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically (not diagonally).\n\nInput: a single line containing the grid as a JSON array of row strings, e.g. [\"11110\",\"11010\"].\nOutput: the number of islands as a single integer.",
+    "description": "Given a 2D grid of \"1\" (land) and \"0\" (water), count the number of islands. An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically (not diagonally).\n\nInput: a single line containing the grid as a list of row strings, e.g. [\"11110\",\"11010\"].\nOutput: the number of islands as a single integer.",
     "examples": [
       {
         "input": "grid = [\"11110\",\"11010\",\"11000\",\"00000\"]",
@@ -536,7 +536,7 @@
       "stack",
       "dynamic-programming"
     ],
-    "description": "Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it can trap after raining.\n\nInput: a single line containing the heights array as JSON.\nOutput: the total units of trapped water as a single integer.",
+    "description": "Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it can trap after raining.\n\nInput: a single line containing the heights array, e.g. [0,1,0,2,1,0,1,3,2,1,2,1].\nOutput: the total units of trapped water as a single integer.",
     "examples": [
       {
         "input": "height = [0,1,0,2,1,0,1,3,2,1,2,1]",
@@ -683,7 +683,7 @@
       "array",
       "hash-set"
     ],
-    "description": "Given an integer array nums, return true if any value appears at least twice, and false if every element is distinct.\n\nInput: a single line containing the array as JSON.\nOutput: 'true' or 'false'.",
+    "description": "Given an integer array nums, return true if any value appears at least twice, and false if every element is distinct.\n\nInput: a single line containing the array, e.g. [1,2,3,1].\nOutput: 'true' or 'false'.",
     "examples": [
       {
         "input": "nums = [1,2,3,1]",
@@ -824,7 +824,7 @@
       "array",
       "dynamic-programming"
     ],
-    "description": "You are given an array prices where prices[i] is the price of a stock on day i. You want to maximise profit by choosing a single day to buy and a later day to sell.\n\nReturn the maximum profit you can achieve. If no profit is possible, return 0.\n\nInput: a single line containing the prices array as JSON.\nOutput: the maximum profit as a single integer.",
+    "description": "You are given an array prices where prices[i] is the price of a stock on day i. You want to maximise profit by choosing a single day to buy and a later day to sell.\n\nReturn the maximum profit you can achieve. If no profit is possible, return 0.\n\nInput: a single line containing the prices array, e.g. [7,1,5,3,6,4].\nOutput: the maximum profit as a single integer.",
     "examples": [
       {
         "input": "prices = [7,1,5,3,6,4]",
@@ -967,7 +967,7 @@
       "array",
       "binary-search"
     ],
-    "description": "Given a sorted (ascending) array of distinct integers nums and a target, return the index of target if it is present, otherwise return -1. Your algorithm should run in O(log n) time.\n\nInput: line 1 is the array as JSON; line 2 is the target.\nOutput: the index (or -1) as a single integer.",
+    "description": "Given a sorted (ascending) array of distinct integers nums and a target, return the index of target if it is present, otherwise return -1. Your algorithm should run in O(log n) time.\n\nInput: line 1 is the array, e.g. [-1,0,3,5,9,12]; line 2 is the target.\nOutput: the index (or -1) as a single integer.",
     "examples": [
       {
         "input": "nums = [-1,0,3,5,9,12], target = 9",
@@ -1041,7 +1041,7 @@
       "hash-map",
       "divide-and-conquer"
     ],
-    "description": "Given an array nums of size n, return the majority element - the element that appears more than n/2 times (rounded down). You may assume the majority element always exists.\n\nInput: a single line containing the array as JSON.\nOutput: the majority element as a single integer.",
+    "description": "Given an array nums of size n, return the majority element - the element that appears more than n/2 times (rounded down). You may assume the majority element always exists.\n\nInput: a single line containing the array, e.g. [2,2,1,1,1,2,2].\nOutput: the majority element as a single integer.",
     "examples": [
       {
         "input": "nums = [3,2,3]",
@@ -1106,7 +1106,7 @@
       "array",
       "bit-manipulation"
     ],
-    "description": "Given a non-empty array nums where every element appears exactly twice except for one, find that single element. Aim for linear time and constant extra space.\n\nInput: a single line containing the array as JSON.\nOutput: the element that appears once, as a single integer.",
+    "description": "Given a non-empty array nums where every element appears exactly twice except for one, find that single element. Aim for linear time and constant extra space.\n\nInput: a single line containing the array, e.g. [4,1,2,1,2].\nOutput: the element that appears once, as a single integer.",
     "examples": [
       {
         "input": "nums = [2,2,1]",
@@ -1171,7 +1171,7 @@
       "array",
       "prefix-sum"
     ],
-    "description": "Given an integer array nums, return an array answer such that answer[i] equals the product of all elements of nums except nums[i]. Solve it without using the division operator.\n\nInput: a single line containing the array as JSON.\nOutput: the answer array as a JSON array, e.g. [24,12,8,6].",
+    "description": "Given an integer array nums, return an array answer such that answer[i] equals the product of all elements of nums except nums[i]. Solve it without using the division operator.\n\nInput: a single line containing the array, e.g. [1,2,3,4].\nOutput: the answer array, e.g. [24,12,8,6].",
     "examples": [
       {
         "input": "nums = [1,2,3,4]",
@@ -1236,7 +1236,7 @@
       "array",
       "two-pointers"
     ],
-    "description": "Given an integer array nums, move all 0s to the end while keeping the relative order of the non-zero elements. Return the resulting array.\n\nInput: a single line containing the array as JSON.\nOutput: the resulting array as a JSON array.",
+    "description": "Given an integer array nums, move all 0s to the end while keeping the relative order of the non-zero elements. Return the resulting array.\n\nInput: a single line containing the array, e.g. [0,1,0,3,12].\nOutput: the resulting array, e.g. [1,3,12,0,0].",
     "examples": [
       {
         "input": "nums = [0,1,0,3,12]",
@@ -1300,7 +1300,7 @@
     "tags": [
       "string"
     ],
-    "description": "Write a function to find the longest common prefix string amongst an array of strings. If there is no common prefix, return an empty string.\n\nInput: a single line containing the strings as a JSON array, e.g. [\"flower\",\"flow\",\"flight\"].\nOutput: the longest common prefix (an empty line if there is none).",
+    "description": "Write a function to find the longest common prefix string amongst an array of strings. If there is no common prefix, return an empty string.\n\nInput: a single line containing the strings, e.g. [\"flower\",\"flow\",\"flight\"].\nOutput: the longest common prefix (an empty line if there is none).",
     "examples": [
       {
         "input": "strs = [\"flower\",\"flow\",\"flight\"]",
@@ -1446,7 +1446,7 @@
       "string",
       "simulation"
     ],
-    "description": "Given an integer n, return a string array answer (1-indexed) where for each i from 1 to n: answer[i] is \"FizzBuzz\" if i is divisible by both 3 and 5, \"Fizz\" if divisible by 3, \"Buzz\" if divisible by 5, otherwise the decimal of i as a string.\n\nInput: a single line containing the integer n.\nOutput: the answer as a JSON array of strings.",
+    "description": "Given an integer n, return a string array answer (1-indexed) where for each i from 1 to n: answer[i] is \"FizzBuzz\" if i is divisible by both 3 and 5, \"Fizz\" if divisible by 3, \"Buzz\" if divisible by 5, otherwise the decimal of i as a string.\n\nInput: a single line containing the integer n.\nOutput: the answer as a list of strings, e.g. [\"1\",\"2\",\"Fizz\"].",
     "examples": [
       {
         "input": "n = 3",
@@ -1790,7 +1790,7 @@
       "math",
       "bit-manipulation"
     ],
-    "description": "Given an array nums containing n distinct numbers taken from the range [0, n], return the one number in that range that is missing.\n\nInput: a single line containing the array as JSON.\nOutput: the missing number as a single integer.",
+    "description": "Given an array nums containing n distinct numbers taken from the range [0, n], return the one number in that range that is missing.\n\nInput: a single line containing the array, e.g. [3,0,1].\nOutput: the missing number as a single integer.",
     "examples": [
       {
         "input": "nums = [3,0,1]",
@@ -2072,7 +2072,7 @@
       "two-pointers",
       "greedy"
     ],
-    "description": "You are given an integer array height of length n. There are n vertical lines where the i-th line has endpoints (i, 0) and (i, height[i]). Find two lines that, together with the x-axis, form a container holding the most water, and return that maximum amount.\n\nInput: a single line containing the height array as JSON.\nOutput: the maximum water the container can store as a single integer.",
+    "description": "You are given an integer array height of length n. There are n vertical lines where the i-th line has endpoints (i, 0) and (i, height[i]). Find two lines that, together with the x-axis, form a container holding the most water, and return that maximum amount.\n\nInput: a single line containing the height array, e.g. [1,8,6,2,5,4,8,3,7].\nOutput: the maximum water the container can store as a single integer.",
     "examples": [
       {
         "input": "height = [1,8,6,2,5,4,8,3,7]",
@@ -2143,7 +2143,7 @@
       "array",
       "binary-search"
     ],
-    "description": "An ascending sorted array of distinct integers is rotated at some unknown pivot (e.g. [0,1,2,4,5,6,7] might become [4,5,6,7,0,1,2]). Given the rotated array nums and an integer target, return the index of target, or -1 if it is not present. Aim for O(log n) time.\n\nInput: line 1 is the array as JSON; line 2 is the target.\nOutput: the index (or -1) as a single integer.",
+    "description": "An ascending sorted array of distinct integers is rotated at some unknown pivot (e.g. [0,1,2,4,5,6,7] might become [4,5,6,7,0,1,2]). Given the rotated array nums and an integer target, return the index of target, or -1 if it is not present. Aim for O(log n) time.\n\nInput: line 1 is the array, e.g. [4,5,6,7,0,1,2]; line 2 is the target.\nOutput: the index (or -1) as a single integer.",
     "examples": [
       {
         "input": "nums = [4,5,6,7,0,1,2], target = 0",
@@ -2218,7 +2218,7 @@
       "greedy",
       "dynamic-programming"
     ],
-    "description": "You are given an integer array nums. You start at the first index, and each element represents your maximum jump length from that position. Return true if you can reach the last index, otherwise false.\n\nInput: a single line containing the array as JSON.\nOutput: 'true' or 'false'.",
+    "description": "You are given an integer array nums. You start at the first index, and each element represents your maximum jump length from that position. Return true if you can reach the last index, otherwise false.\n\nInput: a single line containing the array, e.g. [2,3,1,1,4].\nOutput: 'true' or 'false'.",
     "examples": [
       {
         "input": "nums = [2,3,1,1,4]",
@@ -2291,7 +2291,7 @@
       "prefix-sum",
       "hash-map"
     ],
-    "description": "Given an integer array nums and an integer k, return the total number of contiguous subarrays whose elements sum to exactly k.\n\nInput: line 1 is the array as JSON; line 2 is the integer k.\nOutput: the number of qualifying subarrays as a single integer.",
+    "description": "Given an integer array nums and an integer k, return the total number of contiguous subarrays whose elements sum to exactly k.\n\nInput: line 1 is the array, e.g. [1,1,1]; line 2 is the integer k.\nOutput: the number of qualifying subarrays as a single integer.",
     "examples": [
       {
         "input": "nums = [1,1,1], k = 2",
@@ -2368,7 +2368,7 @@
       "heap",
       "sorting"
     ],
-    "description": "Given an integer array nums and an integer k, return the k most frequent elements. To make the answer unique, return them ordered by frequency from highest to lowest; if two elements have the same frequency, order them by value from lowest to highest.\n\nInput: line 1 is the array as JSON; line 2 is the integer k.\nOutput: the k elements as a JSON array, e.g. [1,2].",
+    "description": "Given an integer array nums and an integer k, return the k most frequent elements. To make the answer unique, return them ordered by frequency from highest to lowest; if two elements have the same frequency, order them by value from lowest to highest.\n\nInput: line 1 is the array, e.g. [1,1,1,2,2,3]; line 2 is the integer k.\nOutput: the k elements, e.g. [1,2].",
     "examples": [
       {
         "input": "nums = [1,1,1,2,2,3], k = 2",
@@ -2443,7 +2443,7 @@
       "stack",
       "monotonic-stack"
     ],
-    "description": "Given an array heights representing the heights of bars in a histogram where each bar has width 1, return the area of the largest rectangle that fits entirely within the histogram.\n\nInput: a single line containing the heights array as JSON.\nOutput: the largest rectangle area as a single integer.",
+    "description": "Given an array heights representing the heights of bars in a histogram where each bar has width 1, return the area of the largest rectangle that fits entirely within the histogram.\n\nInput: a single line containing the heights array, e.g. [2,1,5,6,2,3].\nOutput: the largest rectangle area as a single integer.",
     "examples": [
       {
         "input": "heights = [2,1,5,6,2,3]",
@@ -2514,7 +2514,7 @@
       "array",
       "hash-set"
     ],
-    "description": "Given an unsorted integer array nums, return the smallest positive integer (starting from 1) that does not appear in the array. The classic challenge is to do it in O(n) time and O(1) extra space.\n\nInput: a single line containing the array as JSON.\nOutput: the smallest missing positive integer.",
+    "description": "Given an unsorted integer array nums, return the smallest positive integer (starting from 1) that does not appear in the array. The classic challenge is to do it in O(n) time and O(1) extra space.\n\nInput: a single line containing the array, e.g. [3,4,-1,1].\nOutput: the smallest missing positive integer.",
     "examples": [
       {
         "input": "nums = [1,2,0]",
@@ -2590,7 +2590,7 @@
       "monotonic-deque",
       "heap"
     ],
-    "description": "Given an integer array nums and a window size k, the window slides from the left to the right of the array one position at a time. Return an array of the maximum value within each window position.\n\nInput: line 1 is the array as JSON; line 2 is the window size k.\nOutput: the array of window maxima as a JSON array.",
+    "description": "Given an integer array nums and a window size k, the window slides from the left to the right of the array one position at a time. Return an array of the maximum value within each window position.\n\nInput: line 1 is the array, e.g. [1,3,-1,-3,5,3,6,7]; line 2 is the window size k.\nOutput: the array of window maxima, e.g. [3,3,5,5,6,7].",
     "examples": [
       {
         "input": "nums = [1,3,-1,-3,5,3,6,7], k = 3",
