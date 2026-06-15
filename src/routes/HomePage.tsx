@@ -40,6 +40,9 @@ export function HomePage() {
             )}
           </div>
           <div className="flex flex-col items-end gap-1 text-right text-sm">
+            <Link to="/revise" className="text-xs font-bold text-emerald-400 hover:text-emerald-300">
+              Revise
+            </Link>
             <Link to="/about" className="text-xs text-zinc-400 hover:text-zinc-100">
               Why did I build this?
             </Link>

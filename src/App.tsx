@@ -5,6 +5,7 @@ import { HomePage } from './routes/HomePage';
 import { SessionPage } from './routes/SessionPage';
 import { ReplayPage } from './routes/ReplayPage';
 import { AboutPage } from './routes/AboutPage';
+import { RevisePage } from './routes/RevisePage';
 import { PrivacyPage } from './routes/PrivacyPage';
 import { NotFoundPage } from './routes/NotFoundPage';
 import { AuthPage } from './features/auth/AuthPage';
@@ -28,6 +29,7 @@ export function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/revise" element={<RevisePage />} />
           <Route path="/auth" element={<AuthPage />} />
           <Route path="/session/:problemId" element={<SessionPage />} />
           <Route path="/replay/:sessionId" element={<ReplayPage />} />
