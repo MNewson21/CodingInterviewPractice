@@ -8,7 +8,7 @@
  * open /session/:problemId. Keep them in sync if a problem id ever changes.
  */
 
-export type PatternCategory = 'technique' | 'structure';
+export type PatternCategory = 'technique' | 'structure' | 'theory';
 
 export interface PatternExample {
   /** Must match a problem id in problems.json so the link resolves. */
@@ -359,8 +359,23 @@ return heap                    # the k largest`,
       { problemId: 'top-k-frequent', title: 'Top K Frequent Elements', note: 'Count, then keep a size-k heap of frequencies.' },
     ],
   },
+  {
+    id: 'Big-Oh Complexity',
+    name: 'Big-Oh Complexity',
+    category: 'theory',
+    oneLiner: 'Terminology for how an algorithm scales with input size.',
+    whatItIs: 'Big-O is a term used that belongs to a family of terms that classify how runtimes scale with input size. Let f(n) and g(n) be two functions defined on a set of positive integers. We say that f(n) is O(g(n)) if there exist positive constants c and n₀ such that: f(n) <= cg(n) , c>0, ∀n > n0 where n0 >= 0',
+    whenToUse: ['To describe behaviour of how an algorithm scales with input size'],
+    whyItWorks: 'All algorithms have a spatial complexity and a time complexity, so this enables comparisons of different algorithms given the same input',
+    complexity: 'O(1) - Constant time, O(log n) - Logarithmic time, O(n) - Linear time, O(n log n) - Log Linear time, O(n^2) - Quadratic time, O(2^n) - Exponential time, O(n!) - Factorial time',
+    sketch: `O(1) - Constant time \nO(log n) - Logarithmic time\nO(n) - Linear time\nO(n log n) - Log Linear time\nO(n^2) - Quadratic time\nO(2^n) - Exponential time\nO(n!) - Factorial time`,
+    examples: [{problemId: 'top-k-frequent', title: 'Top K Frequent Elements', note: 'Count, then keep a size-k heap of frequencies.'}
+    ],
+  },
+      
 ];
 
 /** Stable ordering for the two on-page groups. */
 export const TECHNIQUES = PATTERNS.filter((p) => p.category === 'technique');
 export const STRUCTURES = PATTERNS.filter((p) => p.category === 'structure');
+export const THEORY = PATTERNS.filter((p) => p.category === 'theory');

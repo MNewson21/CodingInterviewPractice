@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { ThemeSwitcher } from '../features/editor/ThemeSwitcher';
 import { SiteFooter } from '../components/SiteFooter';
 import { usePageTitle } from '../hooks/usePageTitle';
-import { PATTERNS, TECHNIQUES, STRUCTURES, type RevisionPattern } from '../content/revisionPatterns';
+import { PATTERNS, TECHNIQUES, STRUCTURES, THEORY, type RevisionPattern } from '../content/revisionPatterns';
 
 /**
  * Renders the currently selected pattern/ADT: what it is, when to reach for it, why it
@@ -106,6 +106,7 @@ export function RevisePage() {
   const groups: { heading: string; items: RevisionPattern[] }[] = [
     { heading: 'Techniques', items: TECHNIQUES },
     { heading: 'Data structures (ADTs)', items: STRUCTURES },
+    { heading: 'Theory', items: THEORY },
   ];
 
   return (
