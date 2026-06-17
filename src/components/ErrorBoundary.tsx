@@ -11,7 +11,7 @@ interface State {
 /**
  * Top-level error boundary. Catches render/lifecycle errors anywhere below it
  * and shows a recovery card instead of React unmounting to a blank white page.
- * (Event-handler and async errors aren't caught by React boundaries — those are
+ * (Event-handler and async errors aren't caught by React boundaries - those are
  * handled at their call sites, e.g. the Run panel and save flow.)
  */
 export class ErrorBoundary extends Component<Props, State> {
@@ -40,7 +40,7 @@ export class ErrorBoundary extends Component<Props, State> {
           <h1 className="text-lg font-bold">Something went wrong</h1>
           <p className="mt-2 text-sm text-zinc-400">
             The app hit an unexpected error and couldn't render this view. Your saved work isn't
-            affected — try again, or head back to the home page.
+            affected - try again, or head back to the home page.
           </p>
 
           {error.message && (

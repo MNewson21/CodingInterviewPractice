@@ -6,7 +6,7 @@ import type {
   TestCase,
 } from '../../types/problem';
 
-/** A Problem without its id — what we store in the DB and ship in shared files. */
+/** A Problem without its id - what we store in the DB and ship in shared files. */
 export type ProblemData = Omit<Problem, 'id'>;
 
 export const PROBLEM_SCHEMA_VERSION = 1;

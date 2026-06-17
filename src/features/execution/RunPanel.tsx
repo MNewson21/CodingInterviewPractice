@@ -11,7 +11,7 @@ function describeRunError(err: unknown): string {
       return 'Code-execution service is unavailable. If you are running locally, check that the Piston container is up (docker start piston).';
     }
     if (err.kind === 'rate-limited') {
-      return 'Too many runs in a short time — wait a few seconds and try again.';
+      return 'Too many runs in a short time - wait a few seconds and try again.';
     }
   }
   return err instanceof Error ? err.message : String(err);
@@ -26,7 +26,7 @@ function harnessHint(stderr: string): string | null {
   // Python: NameError: name 'solve' is not defined  |  JS/TS: ReferenceError: solve is not defined
   const m = stderr.match(/name '([^']+)' is not defined/) ?? stderr.match(/(\w+) is not defined/);
   if (!m) return null;
-  return `"${m[1]}" isn't defined. The hidden run harness calls your function by a fixed name — rename your function (or the harness) so they match.`;
+  return `"${m[1]}" isn't defined. The hidden run harness calls your function by a fixed name - rename your function (or the harness) so they match.`;
 }
 
 const verdictStyle: Record<Verdict, string> = {

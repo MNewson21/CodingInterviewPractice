@@ -18,7 +18,7 @@ const COMMENT_PREFIX: Record<Language, string> = {
 export function starterFor(problem: Problem, language: Language): string {
   const existing = problem.starterCode[language];
   if (existing != null) return existing;
-  return `${COMMENT_PREFIX[language]} No starter code for ${LANGUAGE_LABELS[language]} here — write your solution below.\n`;
+  return `${COMMENT_PREFIX[language]} No starter code for ${LANGUAGE_LABELS[language]} here - write your solution below.\n`;
 }
 
 export const LANGUAGE_LABELS: Record<Language, string> = {

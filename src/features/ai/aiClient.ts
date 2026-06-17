@@ -4,7 +4,7 @@ import type { HintResponse, ReviewResponse } from '../../types/ai';
 /**
  * Invoke an Edge Function and surface a clean error message. On a non-2xx response
  * (e.g. a 429 rate limit) supabase-js sets `error` and leaves `data` null, with the
- * JSON body on `error.context` (a Response) — so we read our `{ error }` payload from
+ * JSON body on `error.context` (a Response) - so we read our `{ error }` payload from
  * there to show the real reason instead of a generic "non-2xx status code".
  */
 async function invokeAi<T>(fn: 'ai-hint' | 'ai-review', body: Record<string, unknown>): Promise<T> {

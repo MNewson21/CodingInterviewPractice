@@ -101,7 +101,7 @@ const PYTHON: Entry[] = [
   m('items', 'items()', 'dict.items() → view of (K, V)', 'Iterable of key/value pairs.'),
   m('keys', 'keys()', 'dict.keys() → view of K', 'Iterable of keys.'),
   m('values', 'values()', 'dict.values() → view of V', 'Iterable of values.'),
-  // heapq (priority queue) — call as heapq.<fn>(heap, …); heap is a plain list
+  // heapq (priority queue) - call as heapq.<fn>(heap, …); heap is a plain list
   m('heappush', 'heappush(${1:heap}, ${2:item})', 'heapq.heappush(heap, item) → None', 'Push onto a min-heap.'),
   m('heappop', 'heappop(${1:heap})', 'heapq.heappop(heap) → item', 'Pop and return the smallest item.'),
   m('heapify', 'heapify(${1:list})', 'heapq.heapify(list) → None', 'Rearrange a list into a heap in place.'),
@@ -193,7 +193,7 @@ const JAVA: Entry[] = [
   m('getOrDefault', 'getOrDefault(${1:key}, ${2:def})', 'Map.getOrDefault(k, def) → V', 'Value for key, or def.'),
   m('isEmpty', 'isEmpty()', 'Collection/String.isEmpty() → boolean', 'True if empty.'),
   m('append', 'append(${1})', 'StringBuilder.append(x) → StringBuilder', 'Append (chainable).'),
-  // ADT methods — Stack / Queue / Deque / PriorityQueue
+  // ADT methods - Stack / Queue / Deque / PriorityQueue
   m('push', 'push(${1})', 'Stack/Deque.push(x) → void | E', 'Push onto the stack (top).'),
   m('pop', 'pop()', 'Stack/Deque.pop() → E', 'Remove and return the top.'),
   m('peek', 'peek()', 'Stack/Queue/Deque/PriorityQueue.peek() → E', 'Look at the head/top without removing.'),
@@ -203,7 +203,7 @@ const JAVA: Entry[] = [
   m('keySet', 'keySet()', 'Map.keySet() → Set<K>', 'Set of keys.'),
   m('values', 'values()', 'Map.values() → Collection<V>', 'Collection of values.'),
   m('entrySet', 'entrySet()', 'Map.entrySet() → Set<Map.Entry<K,V>>', 'Key/value entries (use .getKey()/.getValue()).'),
-  // Character classification (static — type the name and pick the full call)
+  // Character classification (static - type the name and pick the full call)
   fn('Character.isLetter', 'Character.isLetter(${1:c})', 'Character.isLetter(c) → boolean', 'True if c is a letter.'),
   fn('Character.isDigit', 'Character.isDigit(${1:c})', 'Character.isDigit(c) → boolean', 'True if c is a digit.'),
   fn('Character.isLetterOrDigit', 'Character.isLetterOrDigit(${1:c})', 'Character.isLetterOrDigit(c) → boolean', 'Letter or digit.'),
@@ -231,7 +231,7 @@ const JAVA: Entry[] = [
   snip('ArrayList<>', 'List<${1:Integer}> ${2:list} = new ArrayList<>();', 'new ArrayList<>()', 'Resizable list.'),
   snip('HashMap<>', 'Map<${1:Integer}, ${2:Integer}> ${3:map} = new HashMap<>();', 'new HashMap<>()', 'Key → value dictionary.'),
   snip('HashSet<>', 'Set<${1:Integer}> ${2:set} = new HashSet<>();', 'new HashSet<>()', 'Unique elements.'),
-  snip('ArrayDeque<>', 'Deque<${1:Integer}> ${2:deque} = new ArrayDeque<>();', 'new ArrayDeque<>()', 'Double-ended queue — use as a stack or queue.'),
+  snip('ArrayDeque<>', 'Deque<${1:Integer}> ${2:deque} = new ArrayDeque<>();', 'new ArrayDeque<>()', 'Double-ended queue - use as a stack or queue.'),
   snip('PriorityQueue<>', 'PriorityQueue<${1:Integer}> ${2:pq} = new PriorityQueue<>();', 'min-heap (default)', 'Smallest element first.'),
   snip('PriorityQueue<> max', 'PriorityQueue<${1:Integer}> ${2:pq} = new PriorityQueue<>(Collections.reverseOrder());', 'max-heap', 'Largest element first.'),
   snip('Queue<>', 'Queue<${1:Integer}> ${2:queue} = new LinkedList<>();', 'new LinkedList<>() as a Queue', 'FIFO queue.'),
@@ -295,7 +295,7 @@ const CPP: Entry[] = [
   m('upper_bound', 'upper_bound(${1:key})', 'set/map.upper_bound(key) → iterator', 'First element > key.'),
   m('first', 'first', 'pair.first → T', 'First element of a pair.'),
   m('second', 'second', 'pair.second → U', 'Second element of a pair.'),
-  // <cctype> char classification + <cmath> helpers (free functions — call as fn(c))
+  // <cctype> char classification + <cmath> helpers (free functions - call as fn(c))
   fn('islower', 'islower(${1:c})', 'islower(c) → int (nonzero = true)', 'True if c is lowercase. <cctype>'),
   fn('isupper', 'isupper(${1:c})', 'isupper(c) → int', 'True if c is uppercase. <cctype>'),
   fn('isalpha', 'isalpha(${1:c})', 'isalpha(c) → int', 'True if c is a letter. <cctype>'),

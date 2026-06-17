@@ -8,7 +8,7 @@ export interface ComplexityEstimate {
 const POW = ['O(1)', 'O(n)', 'O(n²)', 'O(n³)'];
 
 // Brace languages: estimate max loop-nesting by matching for/while keywords to the
-// next `{` block. Rough — ignores strings/comments and single-statement loops.
+// next `{` block. Rough - ignores strings/comments and single-statement loops.
 function maxLoopNestingBrace(code: string): number {
   type Ev = { i: number; type: 'loop' | 'open' | 'close' };
   const events: Ev[] = [];
@@ -53,7 +53,7 @@ function maxLoopNestingPython(code: string): number {
 }
 
 export function estimateComplexity(code: string, language: Language): ComplexityEstimate {
-  if (!code.trim()) return { label: '—', detail: 'empty' };
+  if (!code.trim()) return { label: '-', detail: 'empty' };
 
   const depth = language === 'python' ? maxLoopNestingPython(code) : maxLoopNestingBrace(code);
   const hasSort = /\bsorted\s*\(|Arrays\.sort|std::sort|\.sort\s*\(/.test(code);

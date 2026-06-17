@@ -372,6 +372,17 @@ return heap                    # the k largest`,
     examples: [{problemId: 'top-k-frequent', title: 'Top K Frequent Elements', note: 'Count, then keep a size-k heap of frequencies.'}
     ],
   },
+  { id:'Sorting Algorithms',
+    name: 'Sorting Algorithms',
+    category: 'theory',
+    oneLiner: 'Methods of sorting a list in ascending order',
+    whatItIs: 'There many methods for sorting algorithms, the most common include MergeSort, Selection Sort, Insertion Sort and Bubble Sort. A sort is adaptive if it can run faster from an input which is almost sorted. A sort is called stable if it preserves the ordering of duplicates since sorting algorithms can sort different types of objects. Note: Any comparison sort cannot beat O(nlogn) complexity due to the nature of comparisons.',
+    whenToUse: ['If you would benefit from the representation being in a non-decreasing or non-increasing order'],
+    whyItWorks: 'Makes it so you do not need to recheck every index again - making it more efficient in the long term',
+    complexity: 'MergeSort - O(nlogn), Selection Sort - O(n^2), Insertion Sort - O(n^2), Bubble Sort - O(n^2) - average case ',
+    sketch: 'MergeSort - Stable, Not Adaptive\nSelection Sort - Not Stable, Not Adaptive\nInsertion Sort - Stable, Adaptive\nBubble Sort - Stable, Not naturally Adaptive but can be altered to be',
+    examples: [{ problemId: 'search-rotated-array', title: 'Search in Rotated Sorted Array', note: 'Decide which half is sorted, then recurse into it.' }],
+  }
       
 ];
 

@@ -62,7 +62,7 @@ export function HintPanel({ problem }: { problem: Problem }) {
       )}
       {isSupabaseConfigured && !unlocked && hints.length === 0 && (
         <p className="text-xs text-zinc-600">
-          Keep trying — a hint unlocks after you’ve been stuck a little while.
+          Keep trying - a hint unlocks after you’ve been stuck a little while.
         </p>
       )}
 
