@@ -109,6 +109,10 @@ one feels just like the real thing and it gives you options to change the format
 - Your data + sessions and custom problems is **private to your account** and isn't
   visible to other users.
 - You can delete any saved session at any time.
+- You can delete your own account and this erases all connected data
+
+- You can also contact enquiries@codinginterviewpractice.dev for any other concerns/requests
+
 
 For full details on what's stored and how, see the in-app privacy notice.
 
