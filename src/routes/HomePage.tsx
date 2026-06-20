@@ -43,6 +43,11 @@ export function HomePage() {
             <Link to="/revise" className="text-xs font-bold text-emerald-400 hover:text-emerald-300">
               Revise
             </Link>
+            {user && (
+              <Link to="/progress" className="text-xs text-zinc-400 hover:text-zinc-100">
+                Progress
+              </Link>
+            )}
             <Link to="/about" className="text-xs text-zinc-400 hover:text-zinc-100">
               Why did I build this?
             </Link>

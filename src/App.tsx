@@ -6,6 +6,7 @@ import { SessionPage } from './routes/SessionPage';
 import { ReplayPage } from './routes/ReplayPage';
 import { AboutPage } from './routes/AboutPage';
 import { RevisePage } from './routes/RevisePage';
+import { ProgressPage } from './routes/ProgressPage';
 import { PrivacyPage } from './routes/PrivacyPage';
 import { NotFoundPage } from './routes/NotFoundPage';
 import { AuthPage } from './features/auth/AuthPage';
@@ -30,6 +31,7 @@ export function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/revise" element={<RevisePage />} />
+          <Route path="/progress" element={<ProgressPage />} />
           <Route path="/auth" element={<AuthPage />} />
           <Route path="/session/:problemId" element={<SessionPage />} />
           <Route path="/replay/:sessionId" element={<ReplayPage />} />
