@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { listSessions, deleteSession } from './sessions.api';
+import { listSessions, deleteSession, setSessionPublic } from './sessions.api';
 import { problems } from '../problems/problems.data';
 import { useProblemsStore } from '../../stores/useProblemsStore';
 import type { SessionRecord } from '../../types/session';
@@ -15,6 +15,8 @@ export function SessionHistory() {
   const [sessions, setSessions] = useState<SessionRecord[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [sharingId, setSharingId] = useState<string | null>(null);
+  const [copiedId, setCopiedId] = useState<string | null>(null);
   const custom = useProblemsStore((s) => s.custom);
 
   useEffect(() => {
@@ -33,6 +35,34 @@ export function SessionHistory() {
       setError(err instanceof Error ? err.message : String(err));
     } finally {
       setDeletingId(null);
+    }
+  }
+
+  async function handleToggleShare(id: string, next: boolean) {
+    setSharingId(id);
+    try {
+      await setSessionPublic(id, next);
+      setSessions((prev) =>
+        prev?.map((s) => (s.id === id ? { ...s, isPublic: next } : s)) ?? prev,
+      );
+      if (next) await copyLink(id);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : String(err));
+    } finally {
+      setSharingId(null);
+    }
+  }
+
+  async function copyLink(id: string) {
+    const url = `${window.location.origin}/replay/${id}`;
+    try {
+      await navigator.clipboard.writeText(url);
+      setCopiedId(id);
+      window.setTimeout(() => setCopiedId((c) => (c === id ? null : c)), 2000);
+    } catch {
+      // Clipboard can be blocked (insecure context / permissions) — show the URL so the
+      // user can copy it manually rather than failing silently.
+      window.prompt('Copy this replay link:', url);
     }
   }
 
@@ -71,6 +101,9 @@ export function SessionHistory() {
             <div>
               <span className="font-medium">{titleFor(s.problemId)}</span>
               <span className="ml-2 text-xs text-zinc-500">{when}</span>
+              {s.isPublic && (
+                <span className="ml-2 text-xs text-blue-400">• shared</span>
+              )}
             </div>
             <div className="flex items-center gap-3">
               <span className={`text-xs uppercase ${statusColor[s.status] ?? 'text-zinc-400'}`}>
@@ -86,6 +119,25 @@ export function SessionHistory() {
                 <Link to={`/replay/${s.id}`} className="text-xs text-blue-400 hover:underline">
                   Replay
                 </Link>
+              )}
+              {replayable && s.isPublic && (
+                <button
+                  type="button"
+                  onClick={() => copyLink(s.id)}
+                  className="text-xs text-blue-400 hover:underline"
+                >
+                  {copiedId === s.id ? 'Copied!' : 'Copy link'}
+                </button>
+              )}
+              {replayable && (
+                <button
+                  type="button"
+                  onClick={() => handleToggleShare(s.id, !s.isPublic)}
+                  disabled={sharingId === s.id}
+                  className="text-xs text-zinc-300 hover:underline disabled:opacity-50"
+                >
+                  {sharingId === s.id ? '…' : s.isPublic ? 'Unshare' : 'Share'}
+                </button>
               )}
               <button
                 type="button"

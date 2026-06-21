@@ -1,14 +1,22 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { getSession } from '../features/sessions/sessions.api';
+import { getSession, getSharedReplay } from '../features/sessions/sessions.api';
 import { problems } from '../features/problems/problems.data';
 import { ReplayPlayer } from '../features/keystrokes/ReplayPlayer';
 import { useProblemsStore } from '../stores/useProblemsStore';
-import type { SessionRecord } from '../types/session';
+import type { Language } from '../types/problem';
+import type { KeystrokeEvent } from '../types/session';
+
+/** Minimal shape ReplayPage needs — shared by a public SharedReplay and an owned SessionRecord. */
+interface ReplayData {
+  problemId: string;
+  language: Language;
+  keystrokes: KeystrokeEvent[];
+}
 
 export function ReplayPage() {
   const { sessionId } = useParams();
-  const [session, setSession] = useState<SessionRecord | null>(null);
+  const [session, setSession] = useState<ReplayData | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -21,10 +29,24 @@ export function ReplayPage() {
 
   useEffect(() => {
     if (!sessionId) return;
-    getSession(sessionId)
-      .then(setSession)
-      .catch((err) => setError(err instanceof Error ? err.message : String(err)))
-      .finally(() => setLoading(false));
+    // Try the public path first — it works for anonymous link-holders and for the owner
+    // viewing a shared session. Fall back to the owner-only path for the owner's own
+    // private (un-shared) sessions, which the public path can't see.
+    (async () => {
+      try {
+        const shared = await getSharedReplay(sessionId);
+        if (shared) {
+          setSession(shared);
+          return;
+        }
+        const own = await getSession(sessionId);
+        setSession(own);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : String(err));
+      } finally {
+        setLoading(false);
+      }
+    })();
   }, [sessionId]);
 
   const problem = session

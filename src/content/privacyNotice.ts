@@ -33,6 +33,11 @@ cookies. We do not use advertising or third-party analytics trackers.
 > the timing of your keystrokes **within the code editor only**. It is not keylogging
 > outside the editor and is never used to identify you beyond your own account.
 
+> **Note on sharing:** your sessions are private by default. If you choose to **Share** a
+> session, anyone with its link can view that attempt's code and keystroke replay (but not
+> your account details) until you **Unshare** it. Sharing is entirely optional and off
+> unless you turn it on.
+
 ## 2. Why we use it (lawful basis)
 
 - **To provide the Service** (create your account, save and show your sessions and custom

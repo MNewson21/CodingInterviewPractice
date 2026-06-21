@@ -28,4 +28,21 @@ export interface SessionRecord {
   keystrokes: KeystrokeEvent[];
   aiReview: unknown | null;
   createdAt: string;
+  /** When true, anyone with the /replay/:id link can view this session. */
+  isPublic: boolean;
+}
+
+/**
+ * The subset of a session readable by a link-holder who is not the owner. Mirrors the
+ * column-level grant in migration 0004 — deliberately omits userId and aiReview.
+ */
+export interface SharedReplay {
+  id: string;
+  problemId: string;
+  language: Language;
+  code: string | null;
+  status: SessionStatus;
+  durationMs: number | null;
+  keystrokes: KeystrokeEvent[];
+  createdAt: string;
 }

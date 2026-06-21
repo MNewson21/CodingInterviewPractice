@@ -85,10 +85,15 @@ can:
 
 - **Edit** - reopen a saved attempt to keep working on it.
 - **Replay** - watch the keystroke replay of that attempt.
+- **Share** - make that attempt's replay viewable by **anyone with the link**, then
+  **Copy link** to share it. Press **Unshare** at any time to make it private again.
 - **Delete** - permanently remove an attempt you no longer want (you'll be asked to
   confirm and this can't be undone).
 
-You can only ever see and manage your own sessions - they're private to your account.
+Your sessions are **private to your account by default** - nobody else can see or manage
+them. The only exception is a session you explicitly **Share**: while shared, anyone with
+its link can view that solution's code and keystroke replay (but not your account
+details). Unsharing revokes that access immediately.
 
 ## 7. Custom problems
 

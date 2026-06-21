@@ -1,6 +1,11 @@
 import { supabase } from '../../lib/supabaseClient';
 import type { Language } from '../../types/problem';
-import type { KeystrokeEvent, SessionRecord, SessionStatus } from '../../types/session';
+import type {
+  KeystrokeEvent,
+  SessionRecord,
+  SessionStatus,
+  SharedReplay,
+} from '../../types/session';
 
 // DB rows are snake_case; the app uses camelCase. Map at this boundary.
 interface SessionRow {
@@ -14,6 +19,7 @@ interface SessionRow {
   keystrokes: KeystrokeEvent[] | null;
   ai_review: unknown | null;
   created_at: string;
+  is_public: boolean;
 }
 
 function fromRow(r: SessionRow): SessionRecord {
@@ -28,6 +34,7 @@ function fromRow(r: SessionRow): SessionRecord {
     keystrokes: r.keystrokes ?? [],
     aiReview: r.ai_review,
     createdAt: r.created_at,
+    isPublic: r.is_public ?? false,
   };
 }
 
@@ -150,4 +157,50 @@ export async function getSession(id: string): Promise<SessionRecord | null> {
 
   if (error) throw new Error(error.message);
   return data ? fromRow(data as SessionRow) : null;
+}
+
+/**
+ * Toggle whether a session is publicly shareable. Owner-only: RLS scopes the UPDATE to
+ * the caller's rows, but we guard auth explicitly so a signed-out caller gets a clear
+ * error instead of a silent zero-row no-op.
+ */
+export async function setSessionPublic(id: string, isPublic: boolean): Promise<void> {
+  await requireUserId();
+
+  const { error } = await supabase
+    .from('sessions')
+    .update({ is_public: isPublic })
+    .eq('id', id);
+
+  if (error) throw new Error(error.message);
+}
+
+/**
+ * Fetch the public, read-only view of a shared session — readable by anyone with the
+ * link (including signed-out visitors). Only the columns granted to `anon` in migration
+ * 0004 are selected; user_id and ai_review are never exposed. Returns null when the id
+ * doesn't exist or hasn't been shared.
+ */
+export async function getSharedReplay(id: string): Promise<SharedReplay | null> {
+  const { data, error } = await supabase
+    .from('sessions')
+    .select('id, problem_id, language, code, status, duration_ms, keystrokes, created_at')
+    .eq('id', id)
+    .eq('is_public', true)
+    .maybeSingle();
+
+  if (error) throw new Error(error.message);
+  if (!data) return null;
+
+  const r = data as Omit<SessionRow, 'user_id' | 'ai_review' | 'is_public'>;
+  return {
+    id: r.id,
+    problemId: r.problem_id,
+    language: r.language as Language,
+    code: r.code,
+    status: r.status,
+    durationMs: r.duration_ms,
+    keystrokes: r.keystrokes ?? [],
+    createdAt: r.created_at,
+  };
 }
