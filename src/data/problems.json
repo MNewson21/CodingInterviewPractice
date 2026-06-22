@@ -2656,5 +2656,451 @@
         "expectedStdout": "[3,3,2,5]"
       }
     ]
+  },
+  {
+    "id": "valid-palindrome",
+    "title": "Valid Palindrome",
+    "difficulty": "easy",
+    "tags": [
+      "string",
+      "two-pointers"
+    ],
+    "description": "Given a string s, return true if it is a palindrome after converting all uppercase letters to lowercase and removing all non-alphanumeric characters, and false otherwise.\n\nInput: a single line containing the string s (it may contain spaces and punctuation).\nOutput: 'true' or 'false'.",
+    "examples": [
+      {
+        "input": "s = \"A man, a plan, a canal: Panama\"",
+        "output": "true",
+        "explanation": "After cleaning, \"amanaplanacanalpanama\" reads the same both ways."
+      },
+      {
+        "input": "s = \"race a car\"",
+        "output": "false",
+        "explanation": "\"raceacar\" is not a palindrome."
+      }
+    ],
+    "constraints": [
+      "1 <= s.length <= 2 * 10^5",
+      "s consists of printable ASCII characters."
+    ],
+    "starterCode": {
+      "javascript": "function isPalindrome(s) {\n  // your code here\n}\n",
+      "typescript": "function isPalindrome(s: string): boolean {\n  // your code here\n  return false;\n}\n",
+      "python": "def is_palindrome(s):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    boolean isPalindrome(String s) {\n        // your code here (java.util.* is already imported)\n        return false;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nbool isPalindrome(string s) {\n    // your code here\n    return false;\n}\n"
+    },
+    "harness": {
+      "javascript": "const __s = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0];\nconsole.log(isPalindrome(__s));\n",
+      "typescript": "const __s = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0];\nconsole.log(isPalindrome(__s));\n",
+      "python": "import sys\n__lines = sys.stdin.read().splitlines()\n__s = __lines[0] if __lines else \"\"\nprint(\"true\" if is_palindrome(__s) else \"false\")\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.isPalindrome(x[0]));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nint main(){\n    vector<string> x = RL();\n    cout << (isPalindrome(x[0]) ? \"true\" : \"false\") << \"\\n\";\n    return 0;\n}\n"
+    },
+    "params": [
+      {
+        "name": "s",
+        "quote": true
+      }
+    ],
+    "testCases": [
+      {
+        "name": "classic",
+        "stdin": "A man, a plan, a canal: Panama\n",
+        "expectedStdout": "true"
+      },
+      {
+        "name": "not palindrome",
+        "stdin": "race a car\n",
+        "expectedStdout": "false"
+      },
+      {
+        "name": "question",
+        "stdin": "Was it a car or a cat I saw?\n",
+        "expectedStdout": "true"
+      },
+      {
+        "name": "plain word",
+        "stdin": "hello\n",
+        "expectedStdout": "false"
+      },
+      {
+        "name": "no lemon",
+        "stdin": "No lemon, no melon\n",
+        "expectedStdout": "true"
+      }
+    ]
+  },
+  {
+    "id": "plus-one",
+    "title": "Plus One",
+    "difficulty": "easy",
+    "tags": [
+      "array",
+      "math"
+    ],
+    "description": "You are given a large integer represented as an integer array digits, where each digits[i] is the ith digit of the number, ordered most-significant first. Increment the integer by one and return the resulting array of digits.\n\nThe number contains no leading zeros except for the number 0 itself.\n\nInput: a single line containing the digits array, e.g. [1,2,3].\nOutput: the incremented digits array, e.g. [1,2,4].",
+    "examples": [
+      {
+        "input": "digits = [1,2,3]",
+        "output": "[1,2,4]",
+        "explanation": "The array represents 123, and 123 + 1 = 124."
+      },
+      {
+        "input": "digits = [9]",
+        "output": "[1,0]",
+        "explanation": "9 + 1 = 10."
+      }
+    ],
+    "constraints": [
+      "1 <= digits.length <= 100",
+      "0 <= digits[i] <= 9",
+      "digits has no leading zeros except for 0 itself."
+    ],
+    "starterCode": {
+      "javascript": "function plusOne(digits) {\n  // your code here\n}\n",
+      "typescript": "function plusOne(digits: number[]): number[] {\n  // your code here\n  return [];\n}\n",
+      "python": "def plus_one(digits):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int[] plusOne(int[] digits) {\n        // your code here (java.util.* is already imported)\n        return new int[]{};\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nvector<int> plusOne(vector<int>& digits) {\n    // your code here\n    return {};\n}\n"
+    },
+    "harness": {
+      "javascript": "const __lines = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nconsole.log(JSON.stringify(plusOne(JSON.parse(__lines[0]))));\n",
+      "typescript": "const __lines = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nconsole.log(JSON.stringify(plusOne(JSON.parse(__lines[0]))));\n",
+      "python": "import sys, json\n__lines = sys.stdin.read().splitlines()\nprint(json.dumps(plus_one(json.loads(__lines[0])), separators=(\",\", \":\")))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    static int[] pi(String s) {\n        int a = s.indexOf('['), b = s.lastIndexOf(']');\n        if (a >= 0 && b >= 0) s = s.substring(a + 1, b);\n        s = s.trim();\n        if (s.isEmpty()) return new int[0];\n        String[] p = s.split(\",\");\n        int[] r = new int[p.length];\n        for (int i = 0; i < p.length; i++) r[i] = Integer.parseInt(p[i].trim());\n        return r;\n    }\n    static String ia(int[] a) {\n        StringBuilder b = new StringBuilder(\"[\");\n        for (int i = 0; i < a.length; i++) { if (i > 0) b.append(','); b.append(a[i]); }\n        return b.append(']').toString();\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(ia(sol.plusOne(pi(x[0]))));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nstatic vector<int> PI(const string& s){string t;for(char c:s)t+=(c=='['||c==']'||c==',')?' ':c;vector<int> r;stringstream ss(t);int x;while(ss>>x)r.push_back(x);return r;}\nstatic string IA(const vector<int>& a){string o=\"[\";for(size_t i=0;i<a.size();i++){if(i)o+=\",\";o+=to_string(a[i]);}return o+\"]\";}\nint main(){\n    vector<string> x = RL();\n    auto a0=PI(x[0]);\n    cout << IA(plusOne(a0)) << \"\\n\";\n    return 0;\n}\n"
+    },
+    "params": [
+      {
+        "name": "digits"
+      }
+    ],
+    "testCases": [
+      {
+        "name": "simple",
+        "stdin": "[1,2,3]\n",
+        "expectedStdout": "[1,2,4]"
+      },
+      {
+        "name": "longer",
+        "stdin": "[4,3,2,1]\n",
+        "expectedStdout": "[4,3,2,2]"
+      },
+      {
+        "name": "single carry",
+        "stdin": "[9]\n",
+        "expectedStdout": "[1,0]"
+      },
+      {
+        "name": "all nines",
+        "stdin": "[9,9]\n",
+        "expectedStdout": "[1,0,0]"
+      },
+      {
+        "name": "partial carry",
+        "stdin": "[1,9,9]\n",
+        "expectedStdout": "[2,0,0]"
+      }
+    ]
+  },
+  {
+    "id": "unique-paths",
+    "title": "Unique Paths",
+    "difficulty": "medium",
+    "tags": [
+      "math",
+      "dynamic-programming",
+      "combinatorics"
+    ],
+    "description": "A robot is located at the top-left corner of an m x n grid. It can only move either down or right at any point in time, and is trying to reach the bottom-right corner.\n\nReturn the number of distinct paths the robot can take.\n\nInput: line 1 is m (the number of rows); line 2 is n (the number of columns).\nOutput: the number of distinct paths as a single integer.",
+    "examples": [
+      {
+        "input": "m = 3, n = 7",
+        "output": "28"
+      },
+      {
+        "input": "m = 3, n = 2",
+        "output": "3",
+        "explanation": "From the top-left there are 3 ways to reach the bottom-right."
+      }
+    ],
+    "constraints": [
+      "1 <= m, n <= 100",
+      "The answer is guaranteed to be at most 2 * 10^9."
+    ],
+    "starterCode": {
+      "javascript": "function uniquePaths(m, n) {\n  // your code here\n}\n",
+      "typescript": "function uniquePaths(m: number, n: number): number {\n  // your code here\n  return 0;\n}\n",
+      "python": "def unique_paths(m, n):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int uniquePaths(int m, int n) {\n        // your code here (java.util.* is already imported)\n        return 0;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint uniquePaths(int m, int n) {\n    // your code here\n    return 0;\n}\n"
+    },
+    "harness": {
+      "javascript": "const __lines = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nconsole.log(uniquePaths(parseInt(__lines[0], 10), parseInt(__lines[1], 10)));\n",
+      "typescript": "const __lines = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nconsole.log(uniquePaths(parseInt(__lines[0], 10), parseInt(__lines[1], 10)));\n",
+      "python": "import sys\n__lines = sys.stdin.read().splitlines()\nprint(unique_paths(int(__lines[0]), int(__lines[1])))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.uniquePaths(Integer.parseInt(x[0].trim()), Integer.parseInt(x[1].trim())));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nint main(){\n    vector<string> x = RL();\n    cout << uniquePaths(stoi(x[0]), stoi(x[1])) << \"\\n\";\n    return 0;\n}\n"
+    },
+    "params": [
+      {
+        "name": "m"
+      },
+      {
+        "name": "n"
+      }
+    ],
+    "testCases": [
+      {
+        "name": "example 1",
+        "stdin": "3\n7\n",
+        "expectedStdout": "28"
+      },
+      {
+        "name": "example 2",
+        "stdin": "3\n2\n",
+        "expectedStdout": "3"
+      },
+      {
+        "name": "single cell",
+        "stdin": "1\n1\n",
+        "expectedStdout": "1"
+      },
+      {
+        "name": "square",
+        "stdin": "3\n3\n",
+        "expectedStdout": "6"
+      },
+      {
+        "name": "large",
+        "stdin": "10\n10\n",
+        "expectedStdout": "48620"
+      }
+    ]
+  },
+  {
+    "id": "kth-largest-element",
+    "title": "Kth Largest Element in an Array",
+    "difficulty": "medium",
+    "tags": [
+      "array",
+      "heap",
+      "sorting",
+      "quickselect"
+    ],
+    "description": "Given an integer array nums and an integer k, return the kth largest element in the array. Note that it is the kth largest element in sorted order, not the kth distinct element.\n\nInput: line 1 is the array, e.g. [3,2,1,5,6,4]; line 2 is k.\nOutput: the kth largest element as a single integer.",
+    "examples": [
+      {
+        "input": "nums = [3,2,1,5,6,4], k = 2",
+        "output": "5"
+      },
+      {
+        "input": "nums = [3,2,3,1,2,4,5,5,6], k = 4",
+        "output": "4"
+      }
+    ],
+    "constraints": [
+      "1 <= k <= nums.length <= 10^4",
+      "-10^4 <= nums[i] <= 10^4"
+    ],
+    "starterCode": {
+      "javascript": "function findKthLargest(nums, k) {\n  // your code here\n}\n",
+      "typescript": "function findKthLargest(nums: number[], k: number): number {\n  // your code here\n  return 0;\n}\n",
+      "python": "def find_kth_largest(nums, k):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int findKthLargest(int[] nums, int k) {\n        // your code here (java.util.* is already imported)\n        return 0;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint findKthLargest(vector<int>& nums, int k) {\n    // your code here\n    return 0;\n}\n"
+    },
+    "harness": {
+      "javascript": "const __lines = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nconsole.log(findKthLargest(JSON.parse(__lines[0]), parseInt(__lines[1], 10)));\n",
+      "typescript": "const __lines = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nconsole.log(findKthLargest(JSON.parse(__lines[0]), parseInt(__lines[1], 10)));\n",
+      "python": "import sys, json\n__lines = sys.stdin.read().splitlines()\nprint(find_kth_largest(json.loads(__lines[0]), int(__lines[1])))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    static int[] pi(String s) {\n        int a = s.indexOf('['), b = s.lastIndexOf(']');\n        if (a >= 0 && b >= 0) s = s.substring(a + 1, b);\n        s = s.trim();\n        if (s.isEmpty()) return new int[0];\n        String[] p = s.split(\",\");\n        int[] r = new int[p.length];\n        for (int i = 0; i < p.length; i++) r[i] = Integer.parseInt(p[i].trim());\n        return r;\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.findKthLargest(pi(x[0]), Integer.parseInt(x[1].trim())));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nstatic vector<int> PI(const string& s){string t;for(char c:s)t+=(c=='['||c==']'||c==',')?' ':c;vector<int> r;stringstream ss(t);int x;while(ss>>x)r.push_back(x);return r;}\nint main(){\n    vector<string> x = RL();\n    auto a0=PI(x[0]);int a1=stoi(x[1]);\n    cout << findKthLargest(a0, a1) << \"\\n\";\n    return 0;\n}\n"
+    },
+    "params": [
+      {
+        "name": "nums"
+      },
+      {
+        "name": "k"
+      }
+    ],
+    "testCases": [
+      {
+        "name": "example 1",
+        "stdin": "[3,2,1,5,6,4]\n2\n",
+        "expectedStdout": "5"
+      },
+      {
+        "name": "example 2",
+        "stdin": "[3,2,3,1,2,4,5,5,6]\n4\n",
+        "expectedStdout": "4"
+      },
+      {
+        "name": "single element",
+        "stdin": "[1]\n1\n",
+        "expectedStdout": "1"
+      },
+      {
+        "name": "descending",
+        "stdin": "[7,6,5,4,3,2,1]\n3\n",
+        "expectedStdout": "5"
+      },
+      {
+        "name": "smallest",
+        "stdin": "[2,1]\n2\n",
+        "expectedStdout": "1"
+      }
+    ]
+  },
+  {
+    "id": "n-queens",
+    "title": "N-Queens (Count Solutions)",
+    "difficulty": "hard",
+    "tags": [
+      "backtracking",
+      "recursion"
+    ],
+    "description": "The n-queens puzzle is the problem of placing n queens on an n x n chessboard so that no two queens attack each other (no two share a row, column, or diagonal).\n\nGiven an integer n, return the number of distinct solutions to the n-queens puzzle.\n\nInput: a single line containing the integer n.\nOutput: the number of distinct solutions as a single integer.",
+    "examples": [
+      {
+        "input": "n = 4",
+        "output": "2",
+        "explanation": "There are two distinct solutions to the 4-queens puzzle."
+      },
+      {
+        "input": "n = 1",
+        "output": "1"
+      }
+    ],
+    "constraints": [
+      "1 <= n <= 9"
+    ],
+    "starterCode": {
+      "javascript": "function totalNQueens(n) {\n  // your code here\n}\n",
+      "typescript": "function totalNQueens(n: number): number {\n  // your code here\n  return 0;\n}\n",
+      "python": "def total_n_queens(n):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int totalNQueens(int n) {\n        // your code here (java.util.* is already imported)\n        return 0;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint totalNQueens(int n) {\n    // your code here\n    return 0;\n}\n"
+    },
+    "harness": {
+      "javascript": "const __n = parseInt(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0], 10);\nconsole.log(totalNQueens(__n));\n",
+      "typescript": "const __n = parseInt(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0], 10);\nconsole.log(totalNQueens(__n));\n",
+      "python": "import sys\n__n = int(sys.stdin.read().splitlines()[0])\nprint(total_n_queens(__n))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.totalNQueens(Integer.parseInt(x[0].trim())));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nint main(){\n    vector<string> x = RL();\n    int a0=stoi(x[0]);\n    cout << totalNQueens(a0) << \"\\n\";\n    return 0;\n}\n"
+    },
+    "params": [
+      {
+        "name": "n"
+      }
+    ],
+    "testCases": [
+      {
+        "name": "n=1",
+        "stdin": "1\n",
+        "expectedStdout": "1"
+      },
+      {
+        "name": "n=4",
+        "stdin": "4\n",
+        "expectedStdout": "2"
+      },
+      {
+        "name": "n=5",
+        "stdin": "5\n",
+        "expectedStdout": "10"
+      },
+      {
+        "name": "n=6",
+        "stdin": "6\n",
+        "expectedStdout": "4"
+      },
+      {
+        "name": "n=8",
+        "stdin": "8\n",
+        "expectedStdout": "92"
+      }
+    ]
+  },
+  {
+    "id": "regular-expression-matching",
+    "title": "Regular Expression Matching",
+    "difficulty": "hard",
+    "tags": [
+      "string",
+      "dynamic-programming",
+      "recursion"
+    ],
+    "description": "Given an input string s and a pattern p, implement regular expression matching with support for '.' and '*' where:\n\n- '.' matches any single character.\n- '*' matches zero or more of the preceding element.\n\nThe match must cover the entire input string (not partial).\n\nInput: line 1 is s; line 2 is the pattern p.\nOutput: 'true' or 'false'.",
+    "examples": [
+      {
+        "input": "s = \"aa\", p = \"a*\"",
+        "output": "true",
+        "explanation": "'a*' matches zero or more 'a', so it matches \"aa\"."
+      },
+      {
+        "input": "s = \"mississippi\", p = \"mis*is*p*.\"",
+        "output": "false"
+      }
+    ],
+    "constraints": [
+      "1 <= s.length <= 20",
+      "1 <= p.length <= 20",
+      "s contains only lowercase English letters.",
+      "p contains only lowercase English letters, '.', and '*'.",
+      "It is guaranteed that for each '*' there is a previous valid character to match."
+    ],
+    "starterCode": {
+      "javascript": "function isMatch(s, p) {\n  // your code here\n}\n",
+      "typescript": "function isMatch(s: string, p: string): boolean {\n  // your code here\n  return false;\n}\n",
+      "python": "def is_match(s, p):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    boolean isMatch(String s, String p) {\n        // your code here (java.util.* is already imported)\n        return false;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nbool isMatch(string s, string p) {\n    // your code here\n    return false;\n}\n"
+    },
+    "harness": {
+      "javascript": "const __lines = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nconsole.log(isMatch(__lines[0], __lines[1]));\n",
+      "typescript": "const __lines = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nconsole.log(isMatch(__lines[0], __lines[1]));\n",
+      "python": "import sys\n__lines = sys.stdin.read().splitlines()\nprint(\"true\" if is_match(__lines[0], __lines[1]) else \"false\")\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.isMatch(x[0], x[1]));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nint main(){\n    vector<string> x = RL();\n    cout << (isMatch(x[0], x[1]) ? \"true\" : \"false\") << \"\\n\";\n    return 0;\n}\n"
+    },
+    "params": [
+      {
+        "name": "s",
+        "quote": true
+      },
+      {
+        "name": "p",
+        "quote": true
+      }
+    ],
+    "testCases": [
+      {
+        "name": "no star",
+        "stdin": "aa\na\n",
+        "expectedStdout": "false"
+      },
+      {
+        "name": "star repeats",
+        "stdin": "aa\na*\n",
+        "expectedStdout": "true"
+      },
+      {
+        "name": "dot star",
+        "stdin": "ab\n.*\n",
+        "expectedStdout": "true"
+      },
+      {
+        "name": "multi group",
+        "stdin": "aab\nc*a*b\n",
+        "expectedStdout": "true"
+      },
+      {
+        "name": "mismatch",
+        "stdin": "mississippi\nmis*is*p*.\n",
+        "expectedStdout": "false"
+      }
+    ]
   }
 ]
