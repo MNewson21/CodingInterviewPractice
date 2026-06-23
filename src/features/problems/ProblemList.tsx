@@ -12,17 +12,24 @@ const difficultyColor: Record<string, string> = {
 
 const DIFFICULTIES: Array<Difficulty | 'all'> = ['all', 'easy', 'medium', 'hard'];
 
+type Status = 'all' | 'unsolved' | 'solved';
+const STATUSES: Status[] = ['all', 'unsolved', 'solved'];
+
 /**
- * The built-in problem catalog with search, difficulty filter, and per-problem
- * solved state. Solved state is derived from the signed-in user's sessions (a
- * problem is "solved" if any of their sessions for it is marked solved); guests
- * see the list without checkmarks.
+ * The built-in problem catalog with search, difficulty filter, tag filter,
+ * solved-status filter, and per-problem solved state. Solved state is derived
+ * from the signed-in user's sessions (a problem is "solved" if any of their
+ * sessions for it is marked solved); guests see the list without checkmarks
+ * and without the status filter.
  */
 export function ProblemList({ problems }: { problems: Problem[] }) {
   const { user } = useAuth();
   const [solvedIds, setSolvedIds] = useState<Set<string>>(new Set());
   const [query, setQuery] = useState('');
   const [difficulty, setDifficulty] = useState<Difficulty | 'all'>('all');
+  const [selectedTags, setSelectedTags] = useState<Set<string>>(new Set());
+  const [showTags, setShowTags] = useState(false);
+  const [status, setStatus] = useState<Status>('all');
 
   useEffect(() => {
     if (!user) {
@@ -46,22 +53,51 @@ export function ProblemList({ problems }: { problems: Problem[] }) {
     };
   }, [user]);
 
+  const allTags = useMemo(() => {
+    const tags = new Set<string>();
+    for (const p of problems) for (const t of p.tags) tags.add(t);
+    return [...tags].sort();
+  }, [problems]);
+
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return problems.filter((p) => {
       if (difficulty !== 'all' && p.difficulty !== difficulty) return false;
+      if (status === 'solved' && !solvedIds.has(p.id)) return false;
+      if (status === 'unsolved' && solvedIds.has(p.id)) return false;
+      // Tag filter is AND: a problem must carry every selected tag.
+      if (selectedTags.size > 0 && ![...selectedTags].every((t) => p.tags.includes(t)))
+        return false;
       if (!q) return true;
       return (
         p.title.toLowerCase().includes(q) ||
         p.tags.some((t) => t.toLowerCase().includes(q))
       );
     });
-  }, [problems, query, difficulty]);
+  }, [problems, query, difficulty, status, selectedTags, solvedIds]);
 
   const solvedCount = useMemo(
     () => problems.filter((p) => solvedIds.has(p.id)).length,
     [problems, solvedIds],
   );
+
+  const toggleTag = (tag: string) =>
+    setSelectedTags((prev) => {
+      const next = new Set(prev);
+      if (next.has(tag)) next.delete(tag);
+      else next.add(tag);
+      return next;
+    });
+
+  const hasActiveFilters =
+    query.trim() !== '' || difficulty !== 'all' || status !== 'all' || selectedTags.size > 0;
+
+  const clearFilters = () => {
+    setQuery('');
+    setDifficulty('all');
+    setStatus('all');
+    setSelectedTags(new Set());
+  };
 
   return (
     <div>
@@ -89,13 +125,77 @@ export function ProblemList({ problems }: { problems: Problem[] }) {
             </button>
           ))}
         </div>
+        <button
+          type="button"
+          onClick={() => setShowTags((s) => !s)}
+          className={`rounded-md px-2.5 py-1.5 text-xs ${
+            selectedTags.size > 0
+              ? 'bg-zinc-700 text-zinc-100'
+              : 'bg-zinc-900 text-zinc-400 hover:text-zinc-200'
+          }`}
+          aria-expanded={showTags}
+        >
+          Tags{selectedTags.size > 0 ? ` (${selectedTags.size})` : ''} {showTags ? '▾' : '▸'}
+        </button>
       </div>
 
       {user && (
-        <p className="mb-2 text-xs text-zinc-500">
-          {solvedCount} of {problems.length} solved
-        </p>
+        <div className="mb-2 flex items-center gap-1">
+          {STATUSES.map((s) => (
+            <button
+              key={s}
+              type="button"
+              onClick={() => setStatus(s)}
+              className={`rounded-md px-2.5 py-1.5 text-xs capitalize ${
+                status === s
+                  ? 'bg-zinc-700 text-zinc-100'
+                  : 'bg-zinc-900 text-zinc-400 hover:text-zinc-200'
+              }`}
+            >
+              {s}
+            </button>
+          ))}
+        </div>
       )}
+
+      {showTags && (
+        <div className="mb-3 flex flex-wrap gap-1.5 rounded-lg border border-zinc-800 p-2">
+          {allTags.map((t) => {
+            const active = selectedTags.has(t);
+            return (
+              <button
+                key={t}
+                type="button"
+                onClick={() => toggleTag(t)}
+                aria-pressed={active}
+                className={`rounded px-2 py-0.5 text-xs ${
+                  active
+                    ? 'bg-blue-600 text-white'
+                    : 'bg-zinc-800 text-zinc-400 hover:text-zinc-200'
+                }`}
+              >
+                {t}
+              </button>
+            );
+          })}
+        </div>
+      )}
+
+      <div className="mb-2 flex items-center gap-3 text-xs text-zinc-500">
+        <span>
+          Showing {filtered.length} of {problems.length}
+          {user ? ` · ${solvedCount} solved` : ''}
+        </span>
+        {hasActiveFilters && (
+          <button
+            type="button"
+            onClick={clearFilters}
+            className="text-zinc-400 underline-offset-2 hover:text-zinc-200 hover:underline"
+          >
+            Clear filters
+          </button>
+        )}
+      </div>
 
       {filtered.length === 0 ? (
         <p className="rounded-lg border border-zinc-800 px-4 py-6 text-center text-sm text-zinc-500">
