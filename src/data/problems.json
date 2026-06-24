@@ -3102,5 +3102,387 @@
         "expectedStdout": "false"
       }
     ]
+  },
+  {
+    "id": "reverse-linked-list",
+    "title": "Reverse Linked List",
+    "difficulty": "easy",
+    "tags": [
+      "linked-list",
+      "recursion"
+    ],
+    "description": "Given the head of a singly linked list, reverse the list and return the new head.\n\nInput: a single line with the list as an array, e.g. [1,2,3,4,5]. An empty list is [].\nOutput: the reversed list as an array.",
+    "examples": [
+      {
+        "input": "head = [1,2,3,4,5]",
+        "output": "[5,4,3,2,1]"
+      },
+      {
+        "input": "head = [1,2]",
+        "output": "[2,1]"
+      },
+      {
+        "input": "head = []",
+        "output": "[]"
+      }
+    ],
+    "constraints": [
+      "0 <= number of nodes <= 5000",
+      "-5000 <= Node.val <= 5000"
+    ],
+    "starterCode": {
+      "javascript": "// Each node is { val, next }. Return the new head.\nfunction reverseList(head) {\n  // your code here\n}\n",
+      "typescript": "// ListNode: { val: number; next: ListNode | null }\nfunction reverseList(head) {\n  // your code here\n  return head;\n}\n",
+      "python": "# Each node has .val and .next (ListNode). Return the new head.\ndef reverse_list(head):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    ListNode reverseList(ListNode head) {\n        // your code here (java.util.* is already imported)\n        return null;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nstruct ListNode {\n    int val;\n    ListNode *next;\n    ListNode(int x) : val(x), next(nullptr) {}\n};\n\nListNode* reverseList(ListNode* head) {\n    // your code here\n    return nullptr;\n}\n"
+    },
+    "harness": {
+      "javascript": "const __a = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nfunction __bl(a){let d={val:0,next:null},c=d;for(const x of a){c.next={val:x,next:null};c=c.next;}return d.next;}\nfunction __sl(h){const o=[];while(h){o.push(h.val);h=h.next;}return JSON.stringify(o);}\nconsole.log(__sl(reverseList(__bl(__a))));\n",
+      "typescript": "const __a = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nfunction __bl(a){let d={val:0,next:null},c=d;for(const x of a){c.next={val:x,next:null};c=c.next;}return d.next;}\nfunction __sl(h){const o=[];while(h){o.push(h.val);h=h.next;}return JSON.stringify(o);}\nconsole.log(__sl(reverseList(__bl(__a))));\n",
+      "python": "import sys, json\nclass ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val; self.next = next\ndef __bl(a):\n    d = ListNode(); c = d\n    for x in a:\n        c.next = ListNode(x); c = c.next\n    return d.next\ndef __sl(h):\n    o = []\n    while h:\n        o.append(h.val); h = h.next\n    return json.dumps(o, separators=(\",\", \":\"))\n__a = json.loads(sys.stdin.read().splitlines()[0])\nprint(__sl(reverse_list(__bl(__a))))\n",
+      "java": "import java.util.*;\n\nclass ListNode {\n    int val;\n    ListNode next;\n    ListNode(int x) { val = x; }\n}\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    static int[] pi(String s) {\n        int a = s.indexOf('['), b = s.lastIndexOf(']');\n        if (a >= 0 && b >= 0) s = s.substring(a + 1, b);\n        s = s.trim();\n        if (s.isEmpty()) return new int[0];\n        String[] p = s.split(\",\");\n        int[] r = new int[p.length];\n        for (int i = 0; i < p.length; i++) r[i] = Integer.parseInt(p[i].trim());\n        return r;\n    }\n    static ListNode bl(int[] a) {\n        ListNode d = new ListNode(0), c = d;\n        for (int x : a) { c.next = new ListNode(x); c = c.next; }\n        return d.next;\n    }\n    static String sl(ListNode h) {\n        StringBuilder b = new StringBuilder(\"[\");\n        boolean f = true;\n        while (h != null) { if (!f) b.append(','); b.append(h.val); f = false; h = h.next; }\n        return b.append(']').toString();\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sl(sol.reverseList(bl(pi(x[0])))));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nstatic vector<int> PI(const string& s){string t;for(char c:s)t+=(c=='['||c==']'||c==',')?' ':c;vector<int> r;stringstream ss(t);int x;while(ss>>x)r.push_back(x);return r;}\nstatic ListNode* BL(const vector<int>& a){ListNode d(0);ListNode* c=&d;for(int x:a){c->next=new ListNode(x);c=c->next;}return d.next;}\nstatic string SL(ListNode* h){string o=\"[\";bool f=true;while(h){if(!f)o+=\",\";o+=to_string(h->val);f=false;h=h->next;}return o+\"]\";}\nint main(){\n    vector<string> x = RL();\n    auto a0 = PI(x[0]);\n    cout << SL(reverseList(BL(a0))) << \"\\n\";\n    return 0;\n}\n"
+    },
+    "params": [
+      {
+        "name": "head"
+      }
+    ],
+    "testCases": [
+      {
+        "name": "five",
+        "stdin": "[1,2,3,4,5]\n",
+        "expectedStdout": "[5,4,3,2,1]"
+      },
+      {
+        "name": "two",
+        "stdin": "[1,2]\n",
+        "expectedStdout": "[2,1]"
+      },
+      {
+        "name": "empty",
+        "stdin": "[]\n",
+        "expectedStdout": "[]"
+      },
+      {
+        "name": "single",
+        "stdin": "[7]\n",
+        "expectedStdout": "[7]"
+      },
+      {
+        "name": "negatives",
+        "stdin": "[-3,0,5,-9]\n",
+        "expectedStdout": "[-9,5,0,-3]"
+      }
+    ]
+  },
+  {
+    "id": "merge-two-sorted-lists",
+    "title": "Merge Two Sorted Lists",
+    "difficulty": "easy",
+    "tags": [
+      "linked-list",
+      "recursion",
+      "two-pointers"
+    ],
+    "description": "You are given the heads of two sorted singly linked lists list1 and list2. Splice them together into one sorted list and return its head.\n\nInput: line 1 is list1, line 2 is list2, each an array, e.g. [1,2,4]. An empty list is [].\nOutput: the merged sorted list as an array.",
+    "examples": [
+      {
+        "input": "list1 = [1,2,4], list2 = [1,3,4]",
+        "output": "[1,1,2,3,4,4]"
+      },
+      {
+        "input": "list1 = [], list2 = []",
+        "output": "[]"
+      },
+      {
+        "input": "list1 = [], list2 = [0]",
+        "output": "[0]"
+      }
+    ],
+    "constraints": [
+      "0 <= number of nodes in each list <= 50",
+      "-100 <= Node.val <= 100",
+      "Both lists are sorted in non-decreasing order."
+    ],
+    "starterCode": {
+      "javascript": "// Each node is { val, next }. Return the merged head.\nfunction mergeTwoLists(list1, list2) {\n  // your code here\n}\n",
+      "typescript": "// ListNode: { val: number; next: ListNode | null }\nfunction mergeTwoLists(list1, list2) {\n  // your code here\n  return list1;\n}\n",
+      "python": "# Each node has .val and .next (ListNode). Return the merged head.\ndef merge_two_lists(list1, list2):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    ListNode mergeTwoLists(ListNode list1, ListNode list2) {\n        // your code here (java.util.* is already imported)\n        return null;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nstruct ListNode {\n    int val;\n    ListNode *next;\n    ListNode(int x) : val(x), next(nullptr) {}\n};\n\nListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {\n    // your code here\n    return nullptr;\n}\n"
+    },
+    "harness": {
+      "javascript": "const __ln = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nfunction __bl(a){let d={val:0,next:null},c=d;for(const x of a){c.next={val:x,next:null};c=c.next;}return d.next;}\nfunction __sl(h){const o=[];while(h){o.push(h.val);h=h.next;}return JSON.stringify(o);}\nconsole.log(__sl(mergeTwoLists(__bl(JSON.parse(__ln[0])), __bl(JSON.parse(__ln[1])))));\n",
+      "typescript": "const __ln = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nfunction __bl(a){let d={val:0,next:null},c=d;for(const x of a){c.next={val:x,next:null};c=c.next;}return d.next;}\nfunction __sl(h){const o=[];while(h){o.push(h.val);h=h.next;}return JSON.stringify(o);}\nconsole.log(__sl(mergeTwoLists(__bl(JSON.parse(__ln[0])), __bl(JSON.parse(__ln[1])))));\n",
+      "python": "import sys, json\nclass ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val; self.next = next\ndef __bl(a):\n    d = ListNode(); c = d\n    for x in a:\n        c.next = ListNode(x); c = c.next\n    return d.next\ndef __sl(h):\n    o = []\n    while h:\n        o.append(h.val); h = h.next\n    return json.dumps(o, separators=(\",\", \":\"))\n__ln = sys.stdin.read().splitlines()\nprint(__sl(merge_two_lists(__bl(json.loads(__ln[0])), __bl(json.loads(__ln[1])))))\n",
+      "java": "import java.util.*;\n\nclass ListNode {\n    int val;\n    ListNode next;\n    ListNode(int x) { val = x; }\n}\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    static int[] pi(String s) {\n        int a = s.indexOf('['), b = s.lastIndexOf(']');\n        if (a >= 0 && b >= 0) s = s.substring(a + 1, b);\n        s = s.trim();\n        if (s.isEmpty()) return new int[0];\n        String[] p = s.split(\",\");\n        int[] r = new int[p.length];\n        for (int i = 0; i < p.length; i++) r[i] = Integer.parseInt(p[i].trim());\n        return r;\n    }\n    static ListNode bl(int[] a) {\n        ListNode d = new ListNode(0), c = d;\n        for (int x : a) { c.next = new ListNode(x); c = c.next; }\n        return d.next;\n    }\n    static String sl(ListNode h) {\n        StringBuilder b = new StringBuilder(\"[\");\n        boolean f = true;\n        while (h != null) { if (!f) b.append(','); b.append(h.val); f = false; h = h.next; }\n        return b.append(']').toString();\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sl(sol.mergeTwoLists(bl(pi(x[0])), bl(pi(x[1])))));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nstatic vector<int> PI(const string& s){string t;for(char c:s)t+=(c=='['||c==']'||c==',')?' ':c;vector<int> r;stringstream ss(t);int x;while(ss>>x)r.push_back(x);return r;}\nstatic ListNode* BL(const vector<int>& a){ListNode d(0);ListNode* c=&d;for(int x:a){c->next=new ListNode(x);c=c->next;}return d.next;}\nstatic string SL(ListNode* h){string o=\"[\";bool f=true;while(h){if(!f)o+=\",\";o+=to_string(h->val);f=false;h=h->next;}return o+\"]\";}\nint main(){\n    vector<string> x = RL();\n    auto a0 = PI(x[0]);\n    auto a1 = PI(x[1]);\n    cout << SL(mergeTwoLists(BL(a0), BL(a1))) << \"\\n\";\n    return 0;\n}\n"
+    },
+    "params": [
+      {
+        "name": "list1"
+      },
+      {
+        "name": "list2"
+      }
+    ],
+    "testCases": [
+      {
+        "name": "classic",
+        "stdin": "[1,2,4]\n[1,3,4]\n",
+        "expectedStdout": "[1,1,2,3,4,4]"
+      },
+      {
+        "name": "both empty",
+        "stdin": "[]\n[]\n",
+        "expectedStdout": "[]"
+      },
+      {
+        "name": "one empty",
+        "stdin": "[]\n[0]\n",
+        "expectedStdout": "[0]"
+      },
+      {
+        "name": "interleave",
+        "stdin": "[1,3,5,7]\n[2,4,6]\n",
+        "expectedStdout": "[1,2,3,4,5,6,7]"
+      },
+      {
+        "name": "disjoint",
+        "stdin": "[1,2,3]\n[10,11]\n",
+        "expectedStdout": "[1,2,3,10,11]"
+      }
+    ]
+  },
+  {
+    "id": "max-depth-binary-tree",
+    "title": "Maximum Depth of Binary Tree",
+    "difficulty": "easy",
+    "tags": [
+      "tree",
+      "depth-first-search",
+      "breadth-first-search",
+      "binary-tree"
+    ],
+    "description": "Given the root of a binary tree, return its maximum depth: the number of nodes along the longest path from the root down to the farthest leaf.\n\nInput: a single line with the tree in level-order (BFS) form using null for missing children, e.g. [3,9,20,null,null,15,7]. An empty tree is [].\nOutput: the maximum depth as a single integer.",
+    "examples": [
+      {
+        "input": "root = [3,9,20,null,null,15,7]",
+        "output": "3"
+      },
+      {
+        "input": "root = [1,null,2]",
+        "output": "2"
+      },
+      {
+        "input": "root = []",
+        "output": "0"
+      }
+    ],
+    "constraints": [
+      "0 <= number of nodes <= 10000",
+      "-100 <= Node.val <= 100"
+    ],
+    "starterCode": {
+      "javascript": "// Each node is { val, left, right }. Return the depth as a number.\nfunction maxDepth(root) {\n  // your code here\n}\n",
+      "typescript": "// TreeNode: { val: number; left: TreeNode | null; right: TreeNode | null }\nfunction maxDepth(root) {\n  // your code here\n  return 0;\n}\n",
+      "python": "# Each node has .val, .left, .right (TreeNode). Return the depth.\ndef max_depth(root):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int maxDepth(TreeNode root) {\n        // your code here (java.util.* is already imported)\n        return 0;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nstruct TreeNode {\n    int val;\n    TreeNode *left, *right;\n    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}\n};\n\nint maxDepth(TreeNode* root) {\n    // your code here\n    return 0;\n}\n"
+    },
+    "harness": {
+      "javascript": "const __a = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nfunction __bt(a){if(!a.length)return null;const r={val:a[0],left:null,right:null};const q=[r];let i=1;while(i<a.length){const n=q.shift();if(i<a.length){const v=a[i++];if(v!==null){n.left={val:v,left:null,right:null};q.push(n.left);}}if(i<a.length){const v=a[i++];if(v!==null){n.right={val:v,left:null,right:null};q.push(n.right);}}}return r;}\nfunction __st(r){if(!r)return \"[]\";const o=[];const q=[r];while(q.length){const n=q.shift();if(n===null)o.push(null);else{o.push(n.val);q.push(n.left);q.push(n.right);}}while(o.length&&o[o.length-1]===null)o.pop();return JSON.stringify(o);}\nconsole.log(maxDepth(__bt(__a)));\n",
+      "typescript": "const __a = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nfunction __bt(a){if(!a.length)return null;const r={val:a[0],left:null,right:null};const q=[r];let i=1;while(i<a.length){const n=q.shift();if(i<a.length){const v=a[i++];if(v!==null){n.left={val:v,left:null,right:null};q.push(n.left);}}if(i<a.length){const v=a[i++];if(v!==null){n.right={val:v,left:null,right:null};q.push(n.right);}}}return r;}\nfunction __st(r){if(!r)return \"[]\";const o=[];const q=[r];while(q.length){const n=q.shift();if(n===null)o.push(null);else{o.push(n.val);q.push(n.left);q.push(n.right);}}while(o.length&&o[o.length-1]===null)o.pop();return JSON.stringify(o);}\nconsole.log(maxDepth(__bt(__a)));\n",
+      "python": "import sys, json\nclass TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val; self.left = left; self.right = right\ndef __bt(a):\n    if not a:\n        return None\n    import collections\n    root = TreeNode(a[0]); q = collections.deque([root]); i = 1\n    while i < len(a):\n        n = q.popleft()\n        if i < len(a):\n            if a[i] is not None:\n                n.left = TreeNode(a[i]); q.append(n.left)\n            i += 1\n        if i < len(a):\n            if a[i] is not None:\n                n.right = TreeNode(a[i]); q.append(n.right)\n            i += 1\n    return root\ndef __st(root):\n    import collections, json as __j\n    if not root:\n        return \"[]\"\n    out = []; q = collections.deque([root])\n    while q:\n        n = q.popleft()\n        if n is None:\n            out.append(None)\n        else:\n            out.append(n.val); q.append(n.left); q.append(n.right)\n    while out and out[-1] is None:\n        out.pop()\n    return __j.dumps(out, separators=(\",\", \":\"))\n__a = json.loads(sys.stdin.read().splitlines()[0])\nprint(max_depth(__bt(__a)))\n",
+      "java": "import java.util.*;\n\nclass TreeNode {\n    int val;\n    TreeNode left, right;\n    TreeNode(int x) { val = x; }\n}\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    static String[] pt(String s) {\n        int a = s.indexOf('['), b = s.lastIndexOf(']');\n        if (a >= 0 && b >= 0) s = s.substring(a + 1, b);\n        s = s.trim();\n        if (s.isEmpty()) return new String[0];\n        String[] p = s.split(\",\");\n        for (int i = 0; i < p.length; i++) p[i] = p[i].trim();\n        return p;\n    }\n    static TreeNode bt(String[] t) {\n        if (t.length == 0 || t[0].equals(\"null\")) return null;\n        TreeNode root = new TreeNode(Integer.parseInt(t[0]));\n        Queue<TreeNode> q = new LinkedList<>(); q.add(root); int i = 1;\n        while (i < t.length) {\n            TreeNode n = q.poll();\n            if (i < t.length) { if (!t[i].equals(\"null\")) { n.left = new TreeNode(Integer.parseInt(t[i])); q.add(n.left); } i++; }\n            if (i < t.length) { if (!t[i].equals(\"null\")) { n.right = new TreeNode(Integer.parseInt(t[i])); q.add(n.right); } i++; }\n        }\n        return root;\n    }\n    static String st(TreeNode root) {\n        if (root == null) return \"[]\";\n        List<String> out = new ArrayList<>();\n        Queue<TreeNode> q = new LinkedList<>(); q.add(root);\n        while (!q.isEmpty()) {\n            TreeNode n = q.poll();\n            if (n == null) out.add(\"null\");\n            else { out.add(String.valueOf(n.val)); q.add(n.left); q.add(n.right); }\n        }\n        while (!out.isEmpty() && out.get(out.size() - 1).equals(\"null\")) out.remove(out.size() - 1);\n        StringBuilder b = new StringBuilder(\"[\");\n        for (int i = 0; i < out.size(); i++) { if (i > 0) b.append(','); b.append(out.get(i)); }\n        return b.append(']').toString();\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.maxDepth(bt(pt(x[0]))));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nstatic vector<string> PT(const string& s){string t;for(char c:s){if(c=='['||c==']'||c==' ')continue;t+=c;}vector<string> r;if(t.empty())return r;string c;for(char ch:t){if(ch==','){r.push_back(c);c.clear();}else c+=ch;}r.push_back(c);return r;}\nstatic TreeNode* BT(const vector<string>& t){if(t.empty()||t[0]==\"null\")return nullptr;TreeNode* root=new TreeNode(stoi(t[0]));queue<TreeNode*> q;q.push(root);size_t i=1;while(i<t.size()){TreeNode* n=q.front();q.pop();if(i<t.size()){if(t[i]!=\"null\"){n->left=new TreeNode(stoi(t[i]));q.push(n->left);}i++;}if(i<t.size()){if(t[i]!=\"null\"){n->right=new TreeNode(stoi(t[i]));q.push(n->right);}i++;}}return root;}\nstatic string ST(TreeNode* root){if(!root)return \"[]\";vector<string> out;queue<TreeNode*> q;q.push(root);while(!q.empty()){TreeNode* n=q.front();q.pop();if(!n)out.push_back(\"null\");else{out.push_back(to_string(n->val));q.push(n->left);q.push(n->right);}}while(!out.empty()&&out.back()==\"null\")out.pop_back();string o=\"[\";for(size_t i=0;i<out.size();i++){if(i)o+=\",\";o+=out[i];}return o+\"]\";}\nint main(){\n    vector<string> x = RL();\n    auto t0 = PT(x[0]);\n    cout << maxDepth(BT(t0)) << \"\\n\";\n    return 0;\n}\n"
+    },
+    "params": [
+      {
+        "name": "root"
+      }
+    ],
+    "testCases": [
+      {
+        "name": "balanced",
+        "stdin": "[3,9,20,null,null,15,7]\n",
+        "expectedStdout": "3"
+      },
+      {
+        "name": "right lean",
+        "stdin": "[1,null,2]\n",
+        "expectedStdout": "2"
+      },
+      {
+        "name": "empty",
+        "stdin": "[]\n",
+        "expectedStdout": "0"
+      },
+      {
+        "name": "single",
+        "stdin": "[0]\n",
+        "expectedStdout": "1"
+      },
+      {
+        "name": "left chain",
+        "stdin": "[1,2,null,3,null,4]\n",
+        "expectedStdout": "4"
+      }
+    ]
+  },
+  {
+    "id": "invert-binary-tree",
+    "title": "Invert Binary Tree",
+    "difficulty": "easy",
+    "tags": [
+      "tree",
+      "depth-first-search",
+      "breadth-first-search",
+      "binary-tree"
+    ],
+    "description": "Given the root of a binary tree, invert it (swap the left and right child of every node) and return the root.\n\nInput: a single line with the tree in level-order (BFS) form using null for missing children, e.g. [4,2,7,1,3,6,9]. An empty tree is [].\nOutput: the inverted tree in the same level-order array form (trailing nulls trimmed).",
+    "examples": [
+      {
+        "input": "root = [4,2,7,1,3,6,9]",
+        "output": "[4,7,2,9,6,3,1]"
+      },
+      {
+        "input": "root = [2,1,3]",
+        "output": "[2,3,1]"
+      },
+      {
+        "input": "root = []",
+        "output": "[]"
+      }
+    ],
+    "constraints": [
+      "0 <= number of nodes <= 100",
+      "-100 <= Node.val <= 100"
+    ],
+    "starterCode": {
+      "javascript": "// Each node is { val, left, right }. Return the (inverted) root.\nfunction invertTree(root) {\n  // your code here\n}\n",
+      "typescript": "// TreeNode: { val: number; left: TreeNode | null; right: TreeNode | null }\nfunction invertTree(root) {\n  // your code here\n  return root;\n}\n",
+      "python": "# Each node has .val, .left, .right (TreeNode). Return the inverted root.\ndef invert_tree(root):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    TreeNode invertTree(TreeNode root) {\n        // your code here (java.util.* is already imported)\n        return root;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nstruct TreeNode {\n    int val;\n    TreeNode *left, *right;\n    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}\n};\n\nTreeNode* invertTree(TreeNode* root) {\n    // your code here\n    return root;\n}\n"
+    },
+    "harness": {
+      "javascript": "const __a = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nfunction __bt(a){if(!a.length)return null;const r={val:a[0],left:null,right:null};const q=[r];let i=1;while(i<a.length){const n=q.shift();if(i<a.length){const v=a[i++];if(v!==null){n.left={val:v,left:null,right:null};q.push(n.left);}}if(i<a.length){const v=a[i++];if(v!==null){n.right={val:v,left:null,right:null};q.push(n.right);}}}return r;}\nfunction __st(r){if(!r)return \"[]\";const o=[];const q=[r];while(q.length){const n=q.shift();if(n===null)o.push(null);else{o.push(n.val);q.push(n.left);q.push(n.right);}}while(o.length&&o[o.length-1]===null)o.pop();return JSON.stringify(o);}\nconsole.log(__st(invertTree(__bt(__a))));\n",
+      "typescript": "const __a = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nfunction __bt(a){if(!a.length)return null;const r={val:a[0],left:null,right:null};const q=[r];let i=1;while(i<a.length){const n=q.shift();if(i<a.length){const v=a[i++];if(v!==null){n.left={val:v,left:null,right:null};q.push(n.left);}}if(i<a.length){const v=a[i++];if(v!==null){n.right={val:v,left:null,right:null};q.push(n.right);}}}return r;}\nfunction __st(r){if(!r)return \"[]\";const o=[];const q=[r];while(q.length){const n=q.shift();if(n===null)o.push(null);else{o.push(n.val);q.push(n.left);q.push(n.right);}}while(o.length&&o[o.length-1]===null)o.pop();return JSON.stringify(o);}\nconsole.log(__st(invertTree(__bt(__a))));\n",
+      "python": "import sys, json\nclass TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val; self.left = left; self.right = right\ndef __bt(a):\n    if not a:\n        return None\n    import collections\n    root = TreeNode(a[0]); q = collections.deque([root]); i = 1\n    while i < len(a):\n        n = q.popleft()\n        if i < len(a):\n            if a[i] is not None:\n                n.left = TreeNode(a[i]); q.append(n.left)\n            i += 1\n        if i < len(a):\n            if a[i] is not None:\n                n.right = TreeNode(a[i]); q.append(n.right)\n            i += 1\n    return root\ndef __st(root):\n    import collections, json as __j\n    if not root:\n        return \"[]\"\n    out = []; q = collections.deque([root])\n    while q:\n        n = q.popleft()\n        if n is None:\n            out.append(None)\n        else:\n            out.append(n.val); q.append(n.left); q.append(n.right)\n    while out and out[-1] is None:\n        out.pop()\n    return __j.dumps(out, separators=(\",\", \":\"))\n__a = json.loads(sys.stdin.read().splitlines()[0])\nprint(__st(invert_tree(__bt(__a))))\n",
+      "java": "import java.util.*;\n\nclass TreeNode {\n    int val;\n    TreeNode left, right;\n    TreeNode(int x) { val = x; }\n}\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    static String[] pt(String s) {\n        int a = s.indexOf('['), b = s.lastIndexOf(']');\n        if (a >= 0 && b >= 0) s = s.substring(a + 1, b);\n        s = s.trim();\n        if (s.isEmpty()) return new String[0];\n        String[] p = s.split(\",\");\n        for (int i = 0; i < p.length; i++) p[i] = p[i].trim();\n        return p;\n    }\n    static TreeNode bt(String[] t) {\n        if (t.length == 0 || t[0].equals(\"null\")) return null;\n        TreeNode root = new TreeNode(Integer.parseInt(t[0]));\n        Queue<TreeNode> q = new LinkedList<>(); q.add(root); int i = 1;\n        while (i < t.length) {\n            TreeNode n = q.poll();\n            if (i < t.length) { if (!t[i].equals(\"null\")) { n.left = new TreeNode(Integer.parseInt(t[i])); q.add(n.left); } i++; }\n            if (i < t.length) { if (!t[i].equals(\"null\")) { n.right = new TreeNode(Integer.parseInt(t[i])); q.add(n.right); } i++; }\n        }\n        return root;\n    }\n    static String st(TreeNode root) {\n        if (root == null) return \"[]\";\n        List<String> out = new ArrayList<>();\n        Queue<TreeNode> q = new LinkedList<>(); q.add(root);\n        while (!q.isEmpty()) {\n            TreeNode n = q.poll();\n            if (n == null) out.add(\"null\");\n            else { out.add(String.valueOf(n.val)); q.add(n.left); q.add(n.right); }\n        }\n        while (!out.isEmpty() && out.get(out.size() - 1).equals(\"null\")) out.remove(out.size() - 1);\n        StringBuilder b = new StringBuilder(\"[\");\n        for (int i = 0; i < out.size(); i++) { if (i > 0) b.append(','); b.append(out.get(i)); }\n        return b.append(']').toString();\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(st(sol.invertTree(bt(pt(x[0])))));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nstatic vector<string> PT(const string& s){string t;for(char c:s){if(c=='['||c==']'||c==' ')continue;t+=c;}vector<string> r;if(t.empty())return r;string c;for(char ch:t){if(ch==','){r.push_back(c);c.clear();}else c+=ch;}r.push_back(c);return r;}\nstatic TreeNode* BT(const vector<string>& t){if(t.empty()||t[0]==\"null\")return nullptr;TreeNode* root=new TreeNode(stoi(t[0]));queue<TreeNode*> q;q.push(root);size_t i=1;while(i<t.size()){TreeNode* n=q.front();q.pop();if(i<t.size()){if(t[i]!=\"null\"){n->left=new TreeNode(stoi(t[i]));q.push(n->left);}i++;}if(i<t.size()){if(t[i]!=\"null\"){n->right=new TreeNode(stoi(t[i]));q.push(n->right);}i++;}}return root;}\nstatic string ST(TreeNode* root){if(!root)return \"[]\";vector<string> out;queue<TreeNode*> q;q.push(root);while(!q.empty()){TreeNode* n=q.front();q.pop();if(!n)out.push_back(\"null\");else{out.push_back(to_string(n->val));q.push(n->left);q.push(n->right);}}while(!out.empty()&&out.back()==\"null\")out.pop_back();string o=\"[\";for(size_t i=0;i<out.size();i++){if(i)o+=\",\";o+=out[i];}return o+\"]\";}\nint main(){\n    vector<string> x = RL();\n    auto t0 = PT(x[0]);\n    cout << ST(invertTree(BT(t0))) << \"\\n\";\n    return 0;\n}\n"
+    },
+    "params": [
+      {
+        "name": "root"
+      }
+    ],
+    "testCases": [
+      {
+        "name": "seven",
+        "stdin": "[4,2,7,1,3,6,9]\n",
+        "expectedStdout": "[4,7,2,9,6,3,1]"
+      },
+      {
+        "name": "three",
+        "stdin": "[2,1,3]\n",
+        "expectedStdout": "[2,3,1]"
+      },
+      {
+        "name": "empty",
+        "stdin": "[]\n",
+        "expectedStdout": "[]"
+      },
+      {
+        "name": "single",
+        "stdin": "[1]\n",
+        "expectedStdout": "[1]"
+      },
+      {
+        "name": "ragged",
+        "stdin": "[1,2,3,null,4]\n",
+        "expectedStdout": "[1,3,2,null,null,4]"
+      }
+    ]
+  },
+  {
+    "id": "validate-bst",
+    "title": "Validate Binary Search Tree",
+    "difficulty": "medium",
+    "tags": [
+      "tree",
+      "depth-first-search",
+      "binary-search-tree",
+      "binary-tree"
+    ],
+    "description": "Given the root of a binary tree, determine whether it is a valid binary search tree (BST). A valid BST requires every node in the left subtree to be strictly less than the node, every node in the right subtree to be strictly greater, and both subtrees to also be valid BSTs.\n\nInput: a single line with the tree in level-order (BFS) form using null for missing children, e.g. [2,1,3]. An empty tree is [].\nOutput: true or false.",
+    "examples": [
+      {
+        "input": "root = [2,1,3]",
+        "output": "true"
+      },
+      {
+        "input": "root = [5,1,4,null,null,3,6]",
+        "output": "false",
+        "explanation": "The root's right child 4 is less than the root 5."
+      },
+      {
+        "input": "root = []",
+        "output": "true"
+      }
+    ],
+    "constraints": [
+      "0 <= number of nodes <= 10000",
+      "-2^31 <= Node.val <= 2^31 - 1"
+    ],
+    "starterCode": {
+      "javascript": "// Each node is { val, left, right }. Return true or false.\nfunction isValidBST(root) {\n  // your code here\n}\n",
+      "typescript": "// TreeNode: { val: number; left: TreeNode | null; right: TreeNode | null }\nfunction isValidBST(root) {\n  // your code here\n  return false;\n}\n",
+      "python": "# Each node has .val, .left, .right (TreeNode). Return True or False.\ndef is_valid_bst(root):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    boolean isValidBST(TreeNode root) {\n        // your code here (java.util.* is already imported)\n        return false;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nstruct TreeNode {\n    int val;\n    TreeNode *left, *right;\n    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}\n};\n\nbool isValidBST(TreeNode* root) {\n    // your code here\n    return false;\n}\n"
+    },
+    "harness": {
+      "javascript": "const __a = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nfunction __bt(a){if(!a.length)return null;const r={val:a[0],left:null,right:null};const q=[r];let i=1;while(i<a.length){const n=q.shift();if(i<a.length){const v=a[i++];if(v!==null){n.left={val:v,left:null,right:null};q.push(n.left);}}if(i<a.length){const v=a[i++];if(v!==null){n.right={val:v,left:null,right:null};q.push(n.right);}}}return r;}\nfunction __st(r){if(!r)return \"[]\";const o=[];const q=[r];while(q.length){const n=q.shift();if(n===null)o.push(null);else{o.push(n.val);q.push(n.left);q.push(n.right);}}while(o.length&&o[o.length-1]===null)o.pop();return JSON.stringify(o);}\nconsole.log(isValidBST(__bt(__a)));\n",
+      "typescript": "const __a = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nfunction __bt(a){if(!a.length)return null;const r={val:a[0],left:null,right:null};const q=[r];let i=1;while(i<a.length){const n=q.shift();if(i<a.length){const v=a[i++];if(v!==null){n.left={val:v,left:null,right:null};q.push(n.left);}}if(i<a.length){const v=a[i++];if(v!==null){n.right={val:v,left:null,right:null};q.push(n.right);}}}return r;}\nfunction __st(r){if(!r)return \"[]\";const o=[];const q=[r];while(q.length){const n=q.shift();if(n===null)o.push(null);else{o.push(n.val);q.push(n.left);q.push(n.right);}}while(o.length&&o[o.length-1]===null)o.pop();return JSON.stringify(o);}\nconsole.log(isValidBST(__bt(__a)));\n",
+      "python": "import sys, json\nclass TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val; self.left = left; self.right = right\ndef __bt(a):\n    if not a:\n        return None\n    import collections\n    root = TreeNode(a[0]); q = collections.deque([root]); i = 1\n    while i < len(a):\n        n = q.popleft()\n        if i < len(a):\n            if a[i] is not None:\n                n.left = TreeNode(a[i]); q.append(n.left)\n            i += 1\n        if i < len(a):\n            if a[i] is not None:\n                n.right = TreeNode(a[i]); q.append(n.right)\n            i += 1\n    return root\ndef __st(root):\n    import collections, json as __j\n    if not root:\n        return \"[]\"\n    out = []; q = collections.deque([root])\n    while q:\n        n = q.popleft()\n        if n is None:\n            out.append(None)\n        else:\n            out.append(n.val); q.append(n.left); q.append(n.right)\n    while out and out[-1] is None:\n        out.pop()\n    return __j.dumps(out, separators=(\",\", \":\"))\n__a = json.loads(sys.stdin.read().splitlines()[0])\nprint(\"true\" if is_valid_bst(__bt(__a)) else \"false\")\n",
+      "java": "import java.util.*;\n\nclass TreeNode {\n    int val;\n    TreeNode left, right;\n    TreeNode(int x) { val = x; }\n}\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    static String[] pt(String s) {\n        int a = s.indexOf('['), b = s.lastIndexOf(']');\n        if (a >= 0 && b >= 0) s = s.substring(a + 1, b);\n        s = s.trim();\n        if (s.isEmpty()) return new String[0];\n        String[] p = s.split(\",\");\n        for (int i = 0; i < p.length; i++) p[i] = p[i].trim();\n        return p;\n    }\n    static TreeNode bt(String[] t) {\n        if (t.length == 0 || t[0].equals(\"null\")) return null;\n        TreeNode root = new TreeNode(Integer.parseInt(t[0]));\n        Queue<TreeNode> q = new LinkedList<>(); q.add(root); int i = 1;\n        while (i < t.length) {\n            TreeNode n = q.poll();\n            if (i < t.length) { if (!t[i].equals(\"null\")) { n.left = new TreeNode(Integer.parseInt(t[i])); q.add(n.left); } i++; }\n            if (i < t.length) { if (!t[i].equals(\"null\")) { n.right = new TreeNode(Integer.parseInt(t[i])); q.add(n.right); } i++; }\n        }\n        return root;\n    }\n    static String st(TreeNode root) {\n        if (root == null) return \"[]\";\n        List<String> out = new ArrayList<>();\n        Queue<TreeNode> q = new LinkedList<>(); q.add(root);\n        while (!q.isEmpty()) {\n            TreeNode n = q.poll();\n            if (n == null) out.add(\"null\");\n            else { out.add(String.valueOf(n.val)); q.add(n.left); q.add(n.right); }\n        }\n        while (!out.isEmpty() && out.get(out.size() - 1).equals(\"null\")) out.remove(out.size() - 1);\n        StringBuilder b = new StringBuilder(\"[\");\n        for (int i = 0; i < out.size(); i++) { if (i > 0) b.append(','); b.append(out.get(i)); }\n        return b.append(']').toString();\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.isValidBST(bt(pt(x[0]))));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nstatic vector<string> PT(const string& s){string t;for(char c:s){if(c=='['||c==']'||c==' ')continue;t+=c;}vector<string> r;if(t.empty())return r;string c;for(char ch:t){if(ch==','){r.push_back(c);c.clear();}else c+=ch;}r.push_back(c);return r;}\nstatic TreeNode* BT(const vector<string>& t){if(t.empty()||t[0]==\"null\")return nullptr;TreeNode* root=new TreeNode(stoi(t[0]));queue<TreeNode*> q;q.push(root);size_t i=1;while(i<t.size()){TreeNode* n=q.front();q.pop();if(i<t.size()){if(t[i]!=\"null\"){n->left=new TreeNode(stoi(t[i]));q.push(n->left);}i++;}if(i<t.size()){if(t[i]!=\"null\"){n->right=new TreeNode(stoi(t[i]));q.push(n->right);}i++;}}return root;}\nstatic string ST(TreeNode* root){if(!root)return \"[]\";vector<string> out;queue<TreeNode*> q;q.push(root);while(!q.empty()){TreeNode* n=q.front();q.pop();if(!n)out.push_back(\"null\");else{out.push_back(to_string(n->val));q.push(n->left);q.push(n->right);}}while(!out.empty()&&out.back()==\"null\")out.pop_back();string o=\"[\";for(size_t i=0;i<out.size();i++){if(i)o+=\",\";o+=out[i];}return o+\"]\";}\nint main(){\n    vector<string> x = RL();\n    auto t0 = PT(x[0]);\n    cout << (isValidBST(BT(t0)) ? \"true\" : \"false\") << \"\\n\";\n    return 0;\n}\n"
+    },
+    "params": [
+      {
+        "name": "root"
+      }
+    ],
+    "testCases": [
+      {
+        "name": "valid",
+        "stdin": "[2,1,3]\n",
+        "expectedStdout": "true"
+      },
+      {
+        "name": "invalid right",
+        "stdin": "[5,1,4,null,null,3,6]\n",
+        "expectedStdout": "false"
+      },
+      {
+        "name": "empty",
+        "stdin": "[]\n",
+        "expectedStdout": "true"
+      },
+      {
+        "name": "equal not allowed",
+        "stdin": "[2,2,2]\n",
+        "expectedStdout": "false"
+      },
+      {
+        "name": "deep valid",
+        "stdin": "[8,3,10,1,6,null,14,null,null,4,7]\n",
+        "expectedStdout": "true"
+      }
+    ]
   }
 ]
