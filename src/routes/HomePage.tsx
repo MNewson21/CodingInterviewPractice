@@ -43,6 +43,9 @@ export function HomePage() {
             <Link to="/revise" className="text-xs font-bold text-emerald-400 hover:text-emerald-300">
               Revise
             </Link>
+            <Link to="/tracks" className="text-xs text-zinc-400 hover:text-zinc-100">
+              Tracks
+            </Link>
             {user && (
               <Link to="/progress" className="text-xs text-zinc-400 hover:text-zinc-100">
                 Progress

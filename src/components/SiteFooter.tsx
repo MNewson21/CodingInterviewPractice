@@ -2,8 +2,8 @@ import { Link } from 'react-router-dom';
 import { SITE } from '../config/site';
 
 /**
- * Shared site footer: attribution, source link, and links to the Revise, About and
- * Privacy pages. Rendered at the bottom of the main public pages to add legitimacy and
+ * Shared site footer: attribution, source link, and links to the Tracks, Revise, About
+ * and Privacy pages. Rendered at the bottom of the main public pages to add legitimacy and
  * tie the project to a real person.
  */
 export function SiteFooter() {
@@ -17,6 +17,9 @@ export function SiteFooter() {
         <a href={SITE.github} target="_blank" rel="noreferrer" className="hover:text-zinc-200">
           GitHub
         </a>
+        <Link to="/tracks" className="hover:text-zinc-200">
+          Tracks
+        </Link>
         <Link to="/revise" className="hover:text-zinc-200">
           Revise
         </Link>
