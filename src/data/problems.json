@@ -3776,5 +3776,306 @@
         "expectedStdout": "[[1]]"
       }
     ]
+  },
+  {
+    "id": "merge-intervals",
+    "title": "Merge Intervals",
+    "difficulty": "medium",
+    "tags": [
+      "intervals",
+      "array",
+      "sorting"
+    ],
+    "description": "Given an array of intervals where intervals[i] = [start_i, end_i], merge all overlapping intervals and return an array of the non-overlapping intervals that cover all the intervals in the input. Intervals that only touch at an endpoint (e.g. [1,4] and [4,5]) are considered overlapping.\n\nInput: line 1 is the intervals as a JSON array of pairs, e.g. [[1,3],[2,6],[8,10],[15,18]].\nOutput: the merged intervals sorted by start, e.g. [[1,6],[8,10],[15,18]].",
+    "examples": [
+      {
+        "input": "intervals = [[1,3],[2,6],[8,10],[15,18]]",
+        "output": "[[1,6],[8,10],[15,18]]",
+        "explanation": "[1,3] and [2,6] overlap, so they merge into [1,6]."
+      },
+      {
+        "input": "intervals = [[1,4],[4,5]]",
+        "output": "[[1,5]]",
+        "explanation": "[1,4] and [4,5] touch at 4 and are considered overlapping."
+      }
+    ],
+    "constraints": [
+      "1 <= intervals.length <= 10^4",
+      "intervals[i].length == 2",
+      "0 <= start_i <= end_i <= 10^4"
+    ],
+    "starterCode": {
+      "javascript": "function merge(intervals) {\n  // return the merged, non-overlapping intervals\n  // your code here\n}\n",
+      "typescript": "function merge(intervals: number[][]): number[][] {\n  // return the merged, non-overlapping intervals\n  // your code here\n  return [];\n}\n",
+      "python": "def merge(intervals):\n    # return the merged, non-overlapping intervals\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int[][] merge(int[][] intervals) {\n        // your code here (java.util.* is already imported)\n        return new int[0][];\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nvector<vector<int>> merge(vector<vector<int>>& intervals) {\n    // your code here\n    return {};\n}\n"
+    },
+    "harness": {
+      "javascript": "const __m = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(JSON.stringify(merge(__m)));\n",
+      "typescript": "const __m = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(JSON.stringify(merge(__m)));\n",
+      "python": "import sys, json\n__m = json.loads(sys.stdin.read().splitlines()[0])\nprint(json.dumps(merge(__m), separators=(\",\", \":\")))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    static int[] pi(String s) {\n        int a = s.indexOf('['), b = s.lastIndexOf(']');\n        if (a >= 0 && b >= 0) s = s.substring(a + 1, b);\n        s = s.trim();\n        if (s.isEmpty()) return new int[0];\n        String[] p = s.split(\",\");\n        int[] r = new int[p.length];\n        for (int i = 0; i < p.length; i++) r[i] = Integer.parseInt(p[i].trim());\n        return r;\n    }\n    static int[][] pm(String s) {\n        s = s.trim();\n        int a = s.indexOf('['), b = s.lastIndexOf(']');\n        if (a >= 0 && b >= 0) s = s.substring(a + 1, b);\n        java.util.List<int[]> rows = new java.util.ArrayList<>();\n        int i = 0;\n        while (i < s.length()) {\n            if (s.charAt(i) == '[') {\n                int j = s.indexOf(']', i);\n                String inner = s.substring(i + 1, j).trim();\n                if (inner.isEmpty()) rows.add(new int[0]);\n                else {\n                    String[] p = inner.split(\",\");\n                    int[] r = new int[p.length];\n                    for (int k = 0; k < p.length; k++) r[k] = Integer.parseInt(p[k].trim());\n                    rows.add(r);\n                }\n                i = j + 1;\n            } else i++;\n        }\n        return rows.toArray(new int[0][]);\n    }\n    static String ia(int[] a) {\n        StringBuilder b = new StringBuilder(\"[\");\n        for (int i = 0; i < a.length; i++) { if (i > 0) b.append(','); b.append(a[i]); }\n        return b.append(']').toString();\n    }\n    static String im(int[][] m) {\n        StringBuilder b = new StringBuilder(\"[\");\n        for (int i = 0; i < m.length; i++) {\n            if (i > 0) b.append(',');\n            b.append('[');\n            for (int j = 0; j < m[i].length; j++) { if (j > 0) b.append(','); b.append(m[i][j]); }\n            b.append(']');\n        }\n        return b.append(']').toString();\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(im(sol.merge(pm(x[0]))));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nstatic vector<int> PI(const string& s){string t;for(char c:s)t+=(c=='['||c==']'||c==',')?' ':c;vector<int> r;stringstream ss(t);int x;while(ss>>x)r.push_back(x);return r;}\nstatic vector<vector<int>> PM(const string& s){vector<vector<int>> r;vector<int> cur;bool in=false;string num;int depth=0;auto flush=[&](){if(!num.empty()){cur.push_back(stoi(num));num.clear();}};for(char c:s){if(c=='['){depth++;if(depth==2){in=true;cur.clear();}}else if(c==']'){if(depth==2){flush();r.push_back(cur);in=false;}depth--;}else if(in){if(c==',')flush();else if(c==' '||c=='\\t'){}else num+=c;}}return r;}\nstatic string IA(const vector<int>& a){string o=\"[\";for(size_t i=0;i<a.size();i++){if(i)o+=\",\";o+=to_string(a[i]);}return o+\"]\";}\nstatic string IM(const vector<vector<int>>& m){string o=\"[\";for(size_t i=0;i<m.size();i++){if(i)o+=\",\";o+=\"[\";for(size_t j=0;j<m[i].size();j++){if(j)o+=\",\";o+=to_string(m[i][j]);}o+=\"]\";}return o+\"]\";}\nint main(){\n    vector<string> x = RL();\n    auto a0 = PM(x[0]);\n    cout << IM(merge(a0)) << \"\\n\";\n    return 0;\n}\n"
+    },
+    "params": [
+      {
+        "name": "intervals"
+      }
+    ],
+    "testCases": [
+      {
+        "name": "overlapping",
+        "stdin": "[[1,3],[2,6],[8,10],[15,18]]\n",
+        "expectedStdout": "[[1,6],[8,10],[15,18]]"
+      },
+      {
+        "name": "touching endpoints",
+        "stdin": "[[1,4],[4,5]]\n",
+        "expectedStdout": "[[1,5]]"
+      },
+      {
+        "name": "nested",
+        "stdin": "[[1,4],[2,3]]\n",
+        "expectedStdout": "[[1,4]]"
+      },
+      {
+        "name": "single interval",
+        "stdin": "[[1,4]]\n",
+        "expectedStdout": "[[1,4]]"
+      },
+      {
+        "name": "unsorted input",
+        "stdin": "[[1,4],[0,4]]\n",
+        "expectedStdout": "[[0,4]]"
+      }
+    ]
+  },
+  {
+    "id": "insert-interval",
+    "title": "Insert Interval",
+    "difficulty": "medium",
+    "tags": [
+      "intervals",
+      "array"
+    ],
+    "description": "You are given a sorted array of non-overlapping intervals (by start) and a new interval. Insert the new interval, merging with any overlapping intervals, and return the resulting sorted array of non-overlapping intervals.\n\nInput: line 1 is the existing intervals as a JSON array of pairs, e.g. [[1,3],[6,9]]. Line 2 is the new interval as a JSON pair, e.g. [2,5].\nOutput: the intervals after insertion, e.g. [[1,5],[6,9]].",
+    "examples": [
+      {
+        "input": "intervals = [[1,3],[6,9]], newInterval = [2,5]",
+        "output": "[[1,5],[6,9]]",
+        "explanation": "[2,5] overlaps [1,3], merging to [1,5]."
+      },
+      {
+        "input": "intervals = [[1,2],[3,5],[6,7],[8,10],[12,16]], newInterval = [4,8]",
+        "output": "[[1,2],[3,10],[12,16]]",
+        "explanation": "[4,8] overlaps [3,5],[6,7],[8,10]."
+      }
+    ],
+    "constraints": [
+      "0 <= intervals.length <= 10^4",
+      "intervals[i].length == 2",
+      "0 <= start_i <= end_i <= 10^5",
+      "intervals is sorted by start_i and has no overlaps"
+    ],
+    "starterCode": {
+      "javascript": "function insert(intervals, newInterval) {\n  // insert newInterval and merge overlaps; return the result\n  // your code here\n}\n",
+      "typescript": "function insert(intervals: number[][], newInterval: number[]): number[][] {\n  // insert newInterval and merge overlaps; return the result\n  // your code here\n  return [];\n}\n",
+      "python": "def insert(intervals, new_interval):\n    # insert new_interval and merge overlaps; return the result\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int[][] insert(int[][] intervals, int[] newInterval) {\n        // your code here (java.util.* is already imported)\n        return new int[0][];\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nvector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInterval) {\n    // your code here\n    return {};\n}\n"
+    },
+    "harness": {
+      "javascript": "const __l = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nconsole.log(JSON.stringify(insert(JSON.parse(__l[0]), JSON.parse(__l[1]))));\n",
+      "typescript": "const __l = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nconsole.log(JSON.stringify(insert(JSON.parse(__l[0]), JSON.parse(__l[1]))));\n",
+      "python": "import sys, json\n__l = sys.stdin.read().splitlines()\nprint(json.dumps(insert(json.loads(__l[0]), json.loads(__l[1])), separators=(\",\", \":\")))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    static int[] pi(String s) {\n        int a = s.indexOf('['), b = s.lastIndexOf(']');\n        if (a >= 0 && b >= 0) s = s.substring(a + 1, b);\n        s = s.trim();\n        if (s.isEmpty()) return new int[0];\n        String[] p = s.split(\",\");\n        int[] r = new int[p.length];\n        for (int i = 0; i < p.length; i++) r[i] = Integer.parseInt(p[i].trim());\n        return r;\n    }\n    static int[][] pm(String s) {\n        s = s.trim();\n        int a = s.indexOf('['), b = s.lastIndexOf(']');\n        if (a >= 0 && b >= 0) s = s.substring(a + 1, b);\n        java.util.List<int[]> rows = new java.util.ArrayList<>();\n        int i = 0;\n        while (i < s.length()) {\n            if (s.charAt(i) == '[') {\n                int j = s.indexOf(']', i);\n                String inner = s.substring(i + 1, j).trim();\n                if (inner.isEmpty()) rows.add(new int[0]);\n                else {\n                    String[] p = inner.split(\",\");\n                    int[] r = new int[p.length];\n                    for (int k = 0; k < p.length; k++) r[k] = Integer.parseInt(p[k].trim());\n                    rows.add(r);\n                }\n                i = j + 1;\n            } else i++;\n        }\n        return rows.toArray(new int[0][]);\n    }\n    static String ia(int[] a) {\n        StringBuilder b = new StringBuilder(\"[\");\n        for (int i = 0; i < a.length; i++) { if (i > 0) b.append(','); b.append(a[i]); }\n        return b.append(']').toString();\n    }\n    static String im(int[][] m) {\n        StringBuilder b = new StringBuilder(\"[\");\n        for (int i = 0; i < m.length; i++) {\n            if (i > 0) b.append(',');\n            b.append('[');\n            for (int j = 0; j < m[i].length; j++) { if (j > 0) b.append(','); b.append(m[i][j]); }\n            b.append(']');\n        }\n        return b.append(']').toString();\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(im(sol.insert(pm(x[0]), pi(x[1]))));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nstatic vector<int> PI(const string& s){string t;for(char c:s)t+=(c=='['||c==']'||c==',')?' ':c;vector<int> r;stringstream ss(t);int x;while(ss>>x)r.push_back(x);return r;}\nstatic vector<vector<int>> PM(const string& s){vector<vector<int>> r;vector<int> cur;bool in=false;string num;int depth=0;auto flush=[&](){if(!num.empty()){cur.push_back(stoi(num));num.clear();}};for(char c:s){if(c=='['){depth++;if(depth==2){in=true;cur.clear();}}else if(c==']'){if(depth==2){flush();r.push_back(cur);in=false;}depth--;}else if(in){if(c==',')flush();else if(c==' '||c=='\\t'){}else num+=c;}}return r;}\nstatic string IA(const vector<int>& a){string o=\"[\";for(size_t i=0;i<a.size();i++){if(i)o+=\",\";o+=to_string(a[i]);}return o+\"]\";}\nstatic string IM(const vector<vector<int>>& m){string o=\"[\";for(size_t i=0;i<m.size();i++){if(i)o+=\",\";o+=\"[\";for(size_t j=0;j<m[i].size();j++){if(j)o+=\",\";o+=to_string(m[i][j]);}o+=\"]\";}return o+\"]\";}\nint main(){\n    vector<string> x = RL();\n    auto a0 = PM(x[0]);\n    auto a1 = PI(x[1]);\n    cout << IM(insert(a0, a1)) << \"\\n\";\n    return 0;\n}\n"
+    },
+    "params": [
+      {
+        "name": "intervals"
+      },
+      {
+        "name": "newInterval"
+      }
+    ],
+    "testCases": [
+      {
+        "name": "overlap right",
+        "stdin": "[[1,3],[6,9]]\n[2,5]\n",
+        "expectedStdout": "[[1,5],[6,9]]"
+      },
+      {
+        "name": "multi merge",
+        "stdin": "[[1,2],[3,5],[6,7],[8,10],[12,16]]\n[4,8]\n",
+        "expectedStdout": "[[1,2],[3,10],[12,16]]"
+      },
+      {
+        "name": "empty list",
+        "stdin": "[]\n[5,7]\n",
+        "expectedStdout": "[[5,7]]"
+      },
+      {
+        "name": "contained",
+        "stdin": "[[1,5]]\n[2,3]\n",
+        "expectedStdout": "[[1,5]]"
+      },
+      {
+        "name": "append after",
+        "stdin": "[[1,5]]\n[6,8]\n",
+        "expectedStdout": "[[1,5],[6,8]]"
+      }
+    ]
+  },
+  {
+    "id": "meeting-rooms",
+    "title": "Meeting Rooms",
+    "difficulty": "easy",
+    "tags": [
+      "intervals",
+      "array",
+      "sorting"
+    ],
+    "description": "Given an array of meeting time intervals where intervals[i] = [start_i, end_i], determine if a person could attend all meetings (i.e. no two meetings overlap). Meetings that only touch at an endpoint (e.g. [1,2] and [2,3]) do NOT conflict.\n\nInput: line 1 is the intervals as a JSON array of pairs, e.g. [[0,30],[5,10],[15,20]].\nOutput: the boolean true or false.",
+    "examples": [
+      {
+        "input": "intervals = [[0,30],[5,10],[15,20]]",
+        "output": "false",
+        "explanation": "[0,30] overlaps [5,10], so not all meetings can be attended."
+      },
+      {
+        "input": "intervals = [[7,10],[2,4]]",
+        "output": "true",
+        "explanation": "The two meetings do not overlap."
+      }
+    ],
+    "constraints": [
+      "0 <= intervals.length <= 10^4",
+      "intervals[i].length == 2",
+      "0 <= start_i <= end_i <= 10^6"
+    ],
+    "starterCode": {
+      "javascript": "function canAttendMeetings(intervals) {\n  // return true if no two meetings overlap\n  // your code here\n}\n",
+      "typescript": "function canAttendMeetings(intervals: number[][]): boolean {\n  // return true if no two meetings overlap\n  // your code here\n  return false;\n}\n",
+      "python": "def can_attend_meetings(intervals):\n    # return True if no two meetings overlap\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    boolean canAttendMeetings(int[][] intervals) {\n        // your code here (java.util.* is already imported)\n        return false;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nbool canAttendMeetings(vector<vector<int>>& intervals) {\n    // your code here\n    return false;\n}\n"
+    },
+    "harness": {
+      "javascript": "const __m = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(canAttendMeetings(__m) ? \"true\" : \"false\");\n",
+      "typescript": "const __m = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(canAttendMeetings(__m) ? \"true\" : \"false\");\n",
+      "python": "import sys, json\n__m = json.loads(sys.stdin.read().splitlines()[0])\nprint(\"true\" if can_attend_meetings(__m) else \"false\")\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    static int[] pi(String s) {\n        int a = s.indexOf('['), b = s.lastIndexOf(']');\n        if (a >= 0 && b >= 0) s = s.substring(a + 1, b);\n        s = s.trim();\n        if (s.isEmpty()) return new int[0];\n        String[] p = s.split(\",\");\n        int[] r = new int[p.length];\n        for (int i = 0; i < p.length; i++) r[i] = Integer.parseInt(p[i].trim());\n        return r;\n    }\n    static int[][] pm(String s) {\n        s = s.trim();\n        int a = s.indexOf('['), b = s.lastIndexOf(']');\n        if (a >= 0 && b >= 0) s = s.substring(a + 1, b);\n        java.util.List<int[]> rows = new java.util.ArrayList<>();\n        int i = 0;\n        while (i < s.length()) {\n            if (s.charAt(i) == '[') {\n                int j = s.indexOf(']', i);\n                String inner = s.substring(i + 1, j).trim();\n                if (inner.isEmpty()) rows.add(new int[0]);\n                else {\n                    String[] p = inner.split(\",\");\n                    int[] r = new int[p.length];\n                    for (int k = 0; k < p.length; k++) r[k] = Integer.parseInt(p[k].trim());\n                    rows.add(r);\n                }\n                i = j + 1;\n            } else i++;\n        }\n        return rows.toArray(new int[0][]);\n    }\n    static String ia(int[] a) {\n        StringBuilder b = new StringBuilder(\"[\");\n        for (int i = 0; i < a.length; i++) { if (i > 0) b.append(','); b.append(a[i]); }\n        return b.append(']').toString();\n    }\n    static String im(int[][] m) {\n        StringBuilder b = new StringBuilder(\"[\");\n        for (int i = 0; i < m.length; i++) {\n            if (i > 0) b.append(',');\n            b.append('[');\n            for (int j = 0; j < m[i].length; j++) { if (j > 0) b.append(','); b.append(m[i][j]); }\n            b.append(']');\n        }\n        return b.append(']').toString();\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.canAttendMeetings(pm(x[0])));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nstatic vector<int> PI(const string& s){string t;for(char c:s)t+=(c=='['||c==']'||c==',')?' ':c;vector<int> r;stringstream ss(t);int x;while(ss>>x)r.push_back(x);return r;}\nstatic vector<vector<int>> PM(const string& s){vector<vector<int>> r;vector<int> cur;bool in=false;string num;int depth=0;auto flush=[&](){if(!num.empty()){cur.push_back(stoi(num));num.clear();}};for(char c:s){if(c=='['){depth++;if(depth==2){in=true;cur.clear();}}else if(c==']'){if(depth==2){flush();r.push_back(cur);in=false;}depth--;}else if(in){if(c==',')flush();else if(c==' '||c=='\\t'){}else num+=c;}}return r;}\nstatic string IA(const vector<int>& a){string o=\"[\";for(size_t i=0;i<a.size();i++){if(i)o+=\",\";o+=to_string(a[i]);}return o+\"]\";}\nstatic string IM(const vector<vector<int>>& m){string o=\"[\";for(size_t i=0;i<m.size();i++){if(i)o+=\",\";o+=\"[\";for(size_t j=0;j<m[i].size();j++){if(j)o+=\",\";o+=to_string(m[i][j]);}o+=\"]\";}return o+\"]\";}\nint main(){\n    vector<string> x = RL();\n    auto a0 = PM(x[0]);\n    cout << (canAttendMeetings(a0) ? \"true\" : \"false\") << \"\\n\";\n    return 0;\n}\n"
+    },
+    "params": [
+      {
+        "name": "intervals"
+      }
+    ],
+    "testCases": [
+      {
+        "name": "overlap",
+        "stdin": "[[0,30],[5,10],[15,20]]\n",
+        "expectedStdout": "false"
+      },
+      {
+        "name": "no overlap unsorted",
+        "stdin": "[[7,10],[2,4]]\n",
+        "expectedStdout": "true"
+      },
+      {
+        "name": "touching only",
+        "stdin": "[[1,2],[2,3],[3,4]]\n",
+        "expectedStdout": "true"
+      },
+      {
+        "name": "overlap pair",
+        "stdin": "[[5,8],[6,8]]\n",
+        "expectedStdout": "false"
+      },
+      {
+        "name": "single meeting",
+        "stdin": "[[1,5]]\n",
+        "expectedStdout": "true"
+      }
+    ]
+  },
+  {
+    "id": "non-overlapping-intervals",
+    "title": "Non-overlapping Intervals",
+    "difficulty": "medium",
+    "tags": [
+      "intervals",
+      "array",
+      "greedy",
+      "dynamic-programming",
+      "sorting"
+    ],
+    "description": "Given an array of intervals where intervals[i] = [start_i, end_i], return the minimum number of intervals you need to remove to make the rest non-overlapping. Intervals that only touch at an endpoint (e.g. [1,2] and [2,3]) are NOT considered overlapping.\n\nInput: line 1 is the intervals as a JSON array of pairs, e.g. [[1,2],[2,3],[3,4],[1,3]].\nOutput: the minimum count as an integer, e.g. 1.",
+    "examples": [
+      {
+        "input": "intervals = [[1,2],[2,3],[3,4],[1,3]]",
+        "output": "1",
+        "explanation": "Remove [1,3] and the rest are non-overlapping."
+      },
+      {
+        "input": "intervals = [[1,2],[1,2],[1,2]]",
+        "output": "2",
+        "explanation": "Keep one [1,2] and remove the other two."
+      }
+    ],
+    "constraints": [
+      "1 <= intervals.length <= 10^5",
+      "intervals[i].length == 2",
+      "-5*10^4 <= start_i < end_i <= 5*10^4"
+    ],
+    "starterCode": {
+      "javascript": "function eraseOverlapIntervals(intervals) {\n  // return the min number of intervals to remove\n  // your code here\n}\n",
+      "typescript": "function eraseOverlapIntervals(intervals: number[][]): number {\n  // return the min number of intervals to remove\n  // your code here\n  return 0;\n}\n",
+      "python": "def erase_overlap_intervals(intervals):\n    # return the min number of intervals to remove\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int eraseOverlapIntervals(int[][] intervals) {\n        // your code here (java.util.* is already imported)\n        return 0;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint eraseOverlapIntervals(vector<vector<int>>& intervals) {\n    // your code here\n    return 0;\n}\n"
+    },
+    "harness": {
+      "javascript": "const __m = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(eraseOverlapIntervals(__m));\n",
+      "typescript": "const __m = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(eraseOverlapIntervals(__m));\n",
+      "python": "import sys, json\n__m = json.loads(sys.stdin.read().splitlines()[0])\nprint(erase_overlap_intervals(__m))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    static int[] pi(String s) {\n        int a = s.indexOf('['), b = s.lastIndexOf(']');\n        if (a >= 0 && b >= 0) s = s.substring(a + 1, b);\n        s = s.trim();\n        if (s.isEmpty()) return new int[0];\n        String[] p = s.split(\",\");\n        int[] r = new int[p.length];\n        for (int i = 0; i < p.length; i++) r[i] = Integer.parseInt(p[i].trim());\n        return r;\n    }\n    static int[][] pm(String s) {\n        s = s.trim();\n        int a = s.indexOf('['), b = s.lastIndexOf(']');\n        if (a >= 0 && b >= 0) s = s.substring(a + 1, b);\n        java.util.List<int[]> rows = new java.util.ArrayList<>();\n        int i = 0;\n        while (i < s.length()) {\n            if (s.charAt(i) == '[') {\n                int j = s.indexOf(']', i);\n                String inner = s.substring(i + 1, j).trim();\n                if (inner.isEmpty()) rows.add(new int[0]);\n                else {\n                    String[] p = inner.split(\",\");\n                    int[] r = new int[p.length];\n                    for (int k = 0; k < p.length; k++) r[k] = Integer.parseInt(p[k].trim());\n                    rows.add(r);\n                }\n                i = j + 1;\n            } else i++;\n        }\n        return rows.toArray(new int[0][]);\n    }\n    static String ia(int[] a) {\n        StringBuilder b = new StringBuilder(\"[\");\n        for (int i = 0; i < a.length; i++) { if (i > 0) b.append(','); b.append(a[i]); }\n        return b.append(']').toString();\n    }\n    static String im(int[][] m) {\n        StringBuilder b = new StringBuilder(\"[\");\n        for (int i = 0; i < m.length; i++) {\n            if (i > 0) b.append(',');\n            b.append('[');\n            for (int j = 0; j < m[i].length; j++) { if (j > 0) b.append(','); b.append(m[i][j]); }\n            b.append(']');\n        }\n        return b.append(']').toString();\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.eraseOverlapIntervals(pm(x[0])));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nstatic vector<int> PI(const string& s){string t;for(char c:s)t+=(c=='['||c==']'||c==',')?' ':c;vector<int> r;stringstream ss(t);int x;while(ss>>x)r.push_back(x);return r;}\nstatic vector<vector<int>> PM(const string& s){vector<vector<int>> r;vector<int> cur;bool in=false;string num;int depth=0;auto flush=[&](){if(!num.empty()){cur.push_back(stoi(num));num.clear();}};for(char c:s){if(c=='['){depth++;if(depth==2){in=true;cur.clear();}}else if(c==']'){if(depth==2){flush();r.push_back(cur);in=false;}depth--;}else if(in){if(c==',')flush();else if(c==' '||c=='\\t'){}else num+=c;}}return r;}\nstatic string IA(const vector<int>& a){string o=\"[\";for(size_t i=0;i<a.size();i++){if(i)o+=\",\";o+=to_string(a[i]);}return o+\"]\";}\nstatic string IM(const vector<vector<int>>& m){string o=\"[\";for(size_t i=0;i<m.size();i++){if(i)o+=\",\";o+=\"[\";for(size_t j=0;j<m[i].size();j++){if(j)o+=\",\";o+=to_string(m[i][j]);}o+=\"]\";}return o+\"]\";}\nint main(){\n    vector<string> x = RL();\n    auto a0 = PM(x[0]);\n    cout << eraseOverlapIntervals(a0) << \"\\n\";\n    return 0;\n}\n"
+    },
+    "params": [
+      {
+        "name": "intervals"
+      }
+    ],
+    "testCases": [
+      {
+        "name": "one to remove",
+        "stdin": "[[1,2],[2,3],[3,4],[1,3]]\n",
+        "expectedStdout": "1"
+      },
+      {
+        "name": "duplicates",
+        "stdin": "[[1,2],[1,2],[1,2]]\n",
+        "expectedStdout": "2"
+      },
+      {
+        "name": "touching kept",
+        "stdin": "[[1,2],[2,3]]\n",
+        "expectedStdout": "0"
+      },
+      {
+        "name": "many overlap",
+        "stdin": "[[1,100],[11,22],[1,11],[2,12]]\n",
+        "expectedStdout": "2"
+      },
+      {
+        "name": "single interval",
+        "stdin": "[[1,2]]\n",
+        "expectedStdout": "0"
+      }
+    ]
   }
 ]
