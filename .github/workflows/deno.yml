@@ -1,0 +1,45 @@
+name: Deno (edge functions)
+
+# Runs Deno's fmt/lint/type-check/test against the Supabase edge functions only.
+# Scoped to supabase/functions via `working-directory` + path filters so it never
+# touches the Vite/React app under src/ (which follows different formatting rules).
+
+on:
+  push:
+    branches: ["main"]
+    paths: ["supabase/functions/**", ".github/workflows/deno.yml"]
+  pull_request:
+    branches: ["main"]
+    paths: ["supabase/functions/**", ".github/workflows/deno.yml"]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: supabase/functions
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+
+      # Formatting check is intentionally omitted: the functions are hand-formatted,
+      # not run through `deno fmt`. To adopt it later, run once locally
+      #   (cd supabase/functions && deno fmt)
+      # commit the result, then add a `- run: deno fmt --check` step here.
+      - name: Lint
+        run: deno lint
+
+      # Type-check every function (resolves the https:// imports in CI).
+      - name: Type-check
+        run: deno check **/*.ts
+
+      - name: Run tests
+        run: deno test --allow-env
