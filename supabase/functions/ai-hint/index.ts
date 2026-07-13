@@ -42,6 +42,7 @@ Deno.serve(async (req) => {
 
     return json({ level, hint });
   } catch (err) {
-    return json({ error: err instanceof Error ? err.message : String(err) }, 500);
+    console.error('ai-hint failed:', err);
+    return json({ error: 'Internal server error' }, 500);
   }
 });
