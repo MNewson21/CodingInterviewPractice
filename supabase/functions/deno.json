@@ -1,0 +1,14 @@
+{
+  "fmt": {
+    "singleQuote": true
+  },
+  "lint": {
+    "rules": {
+      "tags": ["recommended"]
+    }
+  },
+  "tasks": {
+    "check": "deno check **/*.ts",
+    "test": "deno test --allow-env"
+  }
+}
