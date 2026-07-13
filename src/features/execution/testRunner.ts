@@ -25,7 +25,7 @@ export interface TestResult {
  * 
  * This is to test the code btw
  */
-function buildSource(
+export function buildSource(
   language: Language,
   code: string,
   harness: string | undefined,
@@ -37,7 +37,7 @@ function buildSource(
 }
 
 /** Tolerant comparison: normalise newlines and trailing whitespace. */
-function normalize(s: string): string {
+export function normalize(s: string): string {
   return s
     .replace(/\r\n/g, '\n')
     .split('\n')
@@ -46,7 +46,7 @@ function normalize(s: string): string {
     .replace(/\n+$/, '');
 }
 
-function evaluate(
+export function evaluate(
   response: PistonResponse,
   expected: string,
 ): { verdict: Verdict; actual: string; stderr: string } {

@@ -60,7 +60,7 @@ export function SessionHistory() {
       setCopiedId(id);
       window.setTimeout(() => setCopiedId((c) => (c === id ? null : c)), 2000);
     } catch {
-      // Clipboard can be blocked (insecure context / permissions) — show the URL so the
+      // Clipboard can be blocked (insecure context / permissions) - show the URL so the
       // user can copy it manually rather than failing silently.
       window.prompt('Copy this replay link:', url);
     }

@@ -51,7 +51,7 @@ export interface SaveSessionInput {
  * Above this serialized size we drop the keystroke log from a save so the row still
  * persists. Replay is the expendable part of a session; the code/progress is not.
  * Postgres handles large jsonb, but multi-MB payloads get slow and can hit request
- * limits — a long pair-programming-length session can accrue tens of thousands of events.
+ * limits - a long pair-programming-length session can accrue tens of thousands of events.
  */
 export const MAX_KEYSTROKES_BYTES = 3_000_000; // ~3 MB
 
@@ -176,7 +176,7 @@ export async function setSessionPublic(id: string, isPublic: boolean): Promise<v
 }
 
 /**
- * Fetch the public, read-only view of a shared session — readable by anyone with the
+ * Fetch the public, read-only view of a shared session - readable by anyone with the
  * link (including signed-out visitors). Only the columns granted to `anon` in migration
  * 0004 are selected; user_id and ai_review are never exposed. Returns null when the id
  * doesn't exist or hasn't been shared.

@@ -7,7 +7,7 @@ import { useProblemsStore } from '../stores/useProblemsStore';
 import type { Language } from '../types/problem';
 import type { KeystrokeEvent } from '../types/session';
 
-/** Minimal shape ReplayPage needs — shared by a public SharedReplay and an owned SessionRecord. */
+/** Minimal shape ReplayPage needs - shared by a public SharedReplay and an owned SessionRecord. */
 interface ReplayData {
   problemId: string;
   language: Language;
@@ -29,7 +29,7 @@ export function ReplayPage() {
 
   useEffect(() => {
     if (!sessionId) return;
-    // Try the public path first — it works for anonymous link-holders and for the owner
+    // Try the public path first - it works for anonymous link-holders and for the owner
     // viewing a shared session. Fall back to the owner-only path for the owner's own
     // private (un-shared) sessions, which the public path can't see.
     (async () => {
