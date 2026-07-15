@@ -36,7 +36,7 @@ I also wanted to build this project, so that I can solve these current problems 
 - **Author custom problems** via a form or by dragging in a `.json` file, edit them in
   place, and export any problem to share and challenge others
 - **Sign in to save sessions**, then resume or replay them later - and delete the ones you
-  no longer want/need.
+  no longer want/need. You can either sign up with Google or email currently.
 
 > New here? The [**User Guide**](./docs/USER-GUIDE.md) walks through every feature.
 
