@@ -60,3 +60,21 @@ export async function deleteAccount(): Promise<void> {
   if (data?.error) throw new Error(data.error);
   await supabase.auth.signOut();
 }
+
+
+/**
+ * Starts an OAuth sign-in flow. Supabase redirects the browser to the provider,
+ * then back to `redirectTo` once the session is established. `useAuth()` picks up
+ * the resulting session automatically via `onAuthStateChange`.
+ */
+export async function signInWithProvider(provider: 'google' | 'github'): Promise<void> {
+  const { error } = await supabase.auth.signInWithOAuth({
+    provider,
+    options: { redirectTo: window.location.origin },
+  });
+  if (error) throw new Error(error.message);
+}
+
+export function signInWithGoogle(): Promise<void> {
+  return signInWithProvider('google');
+}
