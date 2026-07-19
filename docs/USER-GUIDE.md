@@ -140,4 +140,5 @@ Hints are initially gated and they unlock after you've spent some time on the pr
 so they help when you're genuinely stuck rather than letting you skip the thinking.
 
 **Can other people see my attempts?**
-No. Saved sessions and custom problems are private to your account.
+Your attempts are set to private by default meaning no one else can see them. However,
+if you choose to click share, then another person can view your replay if given the shared link.
