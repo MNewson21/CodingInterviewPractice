@@ -78,3 +78,7 @@ export async function signInWithProvider(provider: 'google' | 'github'): Promise
 export function signInWithGoogle(): Promise<void> {
   return signInWithProvider('google');
 }
+
+export function signInWithGitHub(): Promise<void> {
+  return signInWithProvider('github');
+}
