@@ -209,7 +209,7 @@ export function ProblemList({ problems }: { problems: Problem[] }) {
               <li key={p.id}>
                 <Link
                   to={`/session/${p.id}`}
-                  className="flex items-center justify-between px-4 py-3 hover:bg-zinc-900"
+                  className={`flex items-center justify-between px-4 py-3 hover:bg-zinc-900 ${solved ? 'bg-emerald-500/10' : ''}`}
                 >
                   <span className="flex items-center gap-2">
                     <span
