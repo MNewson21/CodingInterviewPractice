@@ -99,7 +99,7 @@ export function ProgressPage() {
           </div>
           <div className="flex flex-col items-end gap-2">
             <Link to="/" className="text-sm text-blue-400 hover:underline">
-              &larr; Back to problems
+              Back to problems
             </Link>
             <ThemeSwitcher />
           </div>

@@ -262,7 +262,7 @@ export function SessionPage() {
           <div className="text-center">
             <p>Problem not found.</p>
             <Link to="/" className="mt-2 inline-block text-sm text-blue-400 hover:underline">
-              &larr; Back to problems
+              Back to problems
             </Link>
           </div>
         )}
@@ -273,8 +273,8 @@ export function SessionPage() {
   return (
     <div className="flex h-full flex-col bg-zinc-950 text-zinc-100">
       <header className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-b border-zinc-800 px-4 py-2">
-        <Link to="/" className="shrink-0 text-sm text-zinc-400 hover:text-zinc-100">
-          &larr; Problems
+        <Link to="/" className="shrink-0 text-sm text-zinc-400 hover:text-zinc-100 hover:underline">
+          Problems
         </Link>
         <h1 className="truncate text-sm font-semibold">{problem.title}</h1>
         <div className="flex shrink-0 items-center gap-4">

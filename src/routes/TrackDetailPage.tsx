@@ -52,8 +52,8 @@ export function TrackDetailPage() {
             <h1 className={`text-2xl font-bold ${track.accent}`}>{track.title}</h1>
             <p className="mt-1 text-sm text-zinc-400">{track.blurb}</p>
           </div>
-          <Link to="/tracks" className="text-xs text-zinc-400 hover:text-zinc-100">
-            ← All tracks
+          <Link to="/tracks" className="text-xs text-zinc-400 hover:text-zinc-100 hover:underline">
+            All tracks
           </Link>
         </div>
 
