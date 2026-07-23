@@ -68,8 +68,8 @@ export function TracksPage() {
               Curated problem sets to follow a path instead of picking at random.
             </p>
           </div>
-          <Link to="/" className="text-xs text-zinc-400 hover:text-zinc-100">
-            ← All problems
+          <Link to="/" className="text-xs text-zinc-400 hover:text-zinc-100 hover:underline">
+            All problems
           </Link>
         </div>
 

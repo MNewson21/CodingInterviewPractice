@@ -59,8 +59,8 @@ export function ReplayPage() {
   return (
     <div className="flex h-full flex-col bg-zinc-950 text-zinc-100">
       <header className="flex items-center justify-between border-b border-zinc-800 px-4 py-2">
-        <Link to="/" className="text-sm text-zinc-400 hover:text-zinc-100">
-          &larr; Home
+        <Link to="/" className="text-sm text-zinc-400 hover:text-zinc-100 hover:underline">
+          Home
         </Link>
         <h1 className="text-sm font-semibold">{title ? `Replay - ${title}` : 'Replay'}</h1>
         <span className="w-12" />

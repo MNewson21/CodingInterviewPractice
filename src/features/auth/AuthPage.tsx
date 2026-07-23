@@ -65,8 +65,8 @@ export function AuthPage() {
   return (
     <div className="flex min-h-full items-center justify-center bg-zinc-950 px-4 text-zinc-100">
       <div className="w-full max-w-sm">
-        <Link to="/" className="text-sm text-zinc-400 hover:text-zinc-100">
-          &larr; Back
+        <Link to="/" className="text-sm text-zinc-400 hover:text-zinc-100 hover:underline">
+          Back
         </Link>
         <h1 className="mt-4 text-xl font-bold">
           {mode === 'signin' ? 'Sign in' : 'Create account'}

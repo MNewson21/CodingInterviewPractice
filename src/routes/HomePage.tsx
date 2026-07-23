@@ -31,47 +31,67 @@ export function HomePage() {
 
   return (
     <div className="min-h-full bg-zinc-950 text-zinc-100">
-      <div className="mx-auto max-w-3xl px-6 py-10">
-        <div className="flex items-start justify-between">
+      <div className="mx-auto max-w-5xl px-6 py-10">
+        <header className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
             <h1 className="text-2xl font-bold">CodingInterviewPractice</h1>
             {user && (
               <p className="mt-1 text-sm text-zinc-400">Welcome back - pick a problem to continue.</p>
             )}
-          </div>
-          <div className="flex flex-col items-end gap-1 text-right text-sm">
-            <Link to="/revise" className="text-xs font-bold text-emerald-400 hover:text-emerald-300">
-              Revise
-            </Link>
-            <Link to="/tracks" className="text-xs text-zinc-400 hover:text-zinc-100">
-              Tracks
-            </Link>
-            {user && (
-              <Link to="/progress" className="text-xs text-zinc-400 hover:text-zinc-100">
-                Progress
-              </Link>
-            )}
-            <Link to="/about" className="text-xs text-zinc-400 hover:text-zinc-100">
-              Why did I build this?
-            </Link>
-            {loading ? null : user ? (
-              <div className="flex flex-col items-end gap-1">
+            {!loading && user && (
+              <div className="mt-2 flex flex-wrap items-center gap-3">
                 <span className="text-xs text-zinc-400">{user.email}</span>
-                <button type="button" onClick={() => signOut()} className="text-xs text-zinc-400 hover:text-zinc-100">
+                <button
+                  type="button"
+                  onClick={() => signOut()}
+                  className="text-xs text-zinc-400 hover:text-zinc-100"
+                >
                   Sign out
                 </button>
               </div>
-            ) : (
-              <Link to="/auth" className="text-sm text-blue-400 hover:underline">
-                Sign in
-              </Link>
             )}
           </div>
-        </div>
 
-        <div className="mt-3 flex justify-end">
-          <ThemeSwitcher />
-        </div>
+          <div className="flex flex-col gap-3 sm:items-end">
+            <nav aria-label="Primary" className="flex flex-wrap items-center gap-2 sm:justify-end">
+              <Link
+                to="/revise"
+                className="rounded-lg border border-emerald-500/40 bg-emerald-500/10 px-3 py-1.5 text-sm font-semibold text-emerald-300 hover:bg-emerald-500/20"
+              >
+                Revise
+              </Link>
+              <Link
+                to="/tracks"
+                className="rounded-lg border border-zinc-800 bg-zinc-900 px-3 py-1.5 text-sm text-zinc-300 hover:bg-zinc-800 hover:text-zinc-100"
+              >
+                Tracks
+              </Link>
+              {user && (
+                <Link
+                  to="/progress"
+                  className="rounded-lg border border-zinc-800 bg-zinc-900 px-3 py-1.5 text-sm text-zinc-300 hover:bg-zinc-800 hover:text-zinc-100"
+                >
+                  Progress
+                </Link>
+              )}
+              <Link
+                to="/about"
+                className="rounded-lg border border-zinc-800 bg-zinc-900 px-3 py-1.5 text-sm text-zinc-300 hover:bg-zinc-800 hover:text-zinc-100"
+              >
+                Why did I build this?
+              </Link>
+            </nav>
+
+            <div className="flex flex-wrap items-center gap-3 sm:justify-end">
+              <ThemeSwitcher />
+              {!loading && !user && (
+                <Link to="/auth" className="text-sm text-blue-400 hover:underline">
+                  Sign in
+                </Link>
+              )}
+            </div>
+          </div>
+        </header>
 
         {!loading && !user && <LandingHero onTryProblem={scrollToList} />}
 

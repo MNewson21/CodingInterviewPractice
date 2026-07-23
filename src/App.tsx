@@ -13,18 +13,32 @@ import { PrivacyPage } from './routes/PrivacyPage';
 import { NotFoundPage } from './routes/NotFoundPage';
 import { AuthPage } from './features/auth/AuthPage';
 import { useThemeStore } from './stores/useThemeStore';
+import { CUSTOM_THEME_ID, buildZincRamp, ZINC_VAR_NAMES } from './features/editor/themes';
 
 export function App() {
   const editorTheme = useThemeStore((s) => s.editorTheme);
+  const customColor = useThemeStore((s) => s.customColor);
   const scope = useThemeStore((s) => s.scope);
 
-  // When scope is 'page', expose the theme on <html> so the CSS zinc-scale overrides
-  // re-tint the whole app. 'editor' scope leaves the default palette in place.
+  // When scope is 'page', re-tint the whole app. Built-in modes use a CSS
+  // `[data-app-theme]` ramp; a custom colour is applied as inline `--color-zinc-*`
+  // variables generated from that colour. 'editor' scope leaves the default palette.
   useEffect(() => {
     const root = document.documentElement;
-    if (scope === 'page') root.dataset.appTheme = editorTheme;
-    else delete root.dataset.appTheme;
-  }, [editorTheme, scope]);
+    const clearRamp = () => ZINC_VAR_NAMES.forEach((name) => root.style.removeProperty(name));
+
+    if (scope === 'page' && editorTheme === CUSTOM_THEME_ID) {
+      delete root.dataset.appTheme;
+      const ramp = buildZincRamp(customColor);
+      for (const [name, value] of Object.entries(ramp)) root.style.setProperty(name, value);
+    } else if (scope === 'page') {
+      clearRamp();
+      root.dataset.appTheme = editorTheme;
+    } else {
+      clearRamp();
+      delete root.dataset.appTheme;
+    }
+  }, [editorTheme, customColor, scope]);
 
   return (
     <ErrorBoundary>

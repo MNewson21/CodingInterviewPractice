@@ -40,7 +40,7 @@ export function AboutPage() {
         <div className="flex items-start justify-between">
           <h1 className="text-2xl font-bold">Why did I build this ?</h1>
           <Link to="/" className="text-sm text-blue-400 hover:underline">
-            &larr; Back to problems
+            Back to problems
           </Link>
         </div>
 
