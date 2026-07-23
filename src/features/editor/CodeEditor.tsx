@@ -1,8 +1,9 @@
-import Editor, { type BeforeMount, type OnMount } from '@monaco-editor/react';
+import Editor, { type BeforeMount, type Monaco, type OnMount } from '@monaco-editor/react';
+import { useEffect, useRef } from 'react';
 import { useEditorStore } from '../../stores/useEditorStore';
 import { useKeystrokeStore } from '../../stores/useKeystrokeStore';
 import { useThemeStore } from '../../stores/useThemeStore';
-import { registerEditorThemes } from './themes';
+import { CUSTOM_THEME_ID, defineCustomEditorTheme } from './themes';
 import { registerCompletions } from './completions';
 import { changesToEvents } from '../keystrokes/recorder';
 import type { Language } from '../../types/problem';
@@ -20,14 +21,25 @@ export function CodeEditor() {
   const language = useEditorStore((s) => s.language);
   const setCode = useEditorStore((s) => s.setCode);
   const editorTheme = useThemeStore((s) => s.editorTheme);
+  const customColor = useThemeStore((s) => s.customColor);
+  const monacoRef = useRef<Monaco | null>(null);
 
-  // Register custom themes + curated completions before Monaco's first render.
+  // Define the custom theme (if selected) + curated completions before Monaco renders.
   const handleBeforeMount: BeforeMount = (monaco) => {
-    registerEditorThemes(monaco);
+    if (editorTheme === CUSTOM_THEME_ID) defineCustomEditorTheme(monaco, customColor);
     registerCompletions(monaco);
   };
 
-  const handleMount: OnMount = (editor) => {
+  // Repaint the editor live when the custom colour changes while mounted.
+  useEffect(() => {
+    const monaco = monacoRef.current;
+    if (!monaco || editorTheme !== CUSTOM_THEME_ID) return;
+    defineCustomEditorTheme(monaco, customColor);
+    monaco.editor.setTheme(CUSTOM_THEME_ID);
+  }, [editorTheme, customColor]);
+
+  const handleMount: OnMount = (editor, monaco) => {
+    monacoRef.current = monaco;
     editor.onDidChangeModelContent((e) => {
       // Ignore programmatic full replacements (starter-code seeding, replay).
       if (e.isFlush) return;

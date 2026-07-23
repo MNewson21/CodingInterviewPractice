@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import Editor, { type OnMount } from '@monaco-editor/react';
+import Editor, { type BeforeMount, type OnMount } from '@monaco-editor/react';
 import { useThemeStore } from '../../stores/useThemeStore';
-import { registerEditorThemes } from '../editor/themes';
+import { CUSTOM_THEME_ID, defineCustomEditorTheme } from '../editor/themes';
 import type { KeystrokeEvent } from '../../types/session';
 
 type EditorInstance = Parameters<OnMount>[0];
@@ -36,11 +36,24 @@ export function ReplayPlayer({
   const [playing, setPlaying] = useState(false);
   const [speed, setSpeed] = useState(1);
   const editorTheme = useThemeStore((s) => s.editorTheme);
+  const customColor = useThemeStore((s) => s.customColor);
+
+  // Define the custom theme (if selected) before Monaco's first render.
+  const handleBeforeMount: BeforeMount = (monaco) => {
+    if (editorTheme === CUSTOM_THEME_ID) defineCustomEditorTheme(monaco, customColor);
+  };
+
+  // Repaint live when the custom colour changes while mounted.
+  useEffect(() => {
+    const monaco = monacoRef.current;
+    if (!monaco || editorTheme !== CUSTOM_THEME_ID) return;
+    defineCustomEditorTheme(monaco, customColor);
+    monaco.editor.setTheme(CUSTOM_THEME_ID);
+  }, [editorTheme, customColor]);
 
   const handleMount: OnMount = (editor, monaco) => {
     editorRef.current = editor;
     monacoRef.current = monaco;
-    registerEditorThemes(monaco);
     // Start from the starter code, not an empty buffer, so the function lines show
     // and the recorded edit positions line up.
     editor.getModel()?.setValue(initialCode);
@@ -115,6 +128,7 @@ export function ReplayPlayer({
           theme={editorTheme}
           defaultValue={initialCode}
           language={language}
+          beforeMount={handleBeforeMount}
           onMount={handleMount}
           options={{
             readOnly: true,

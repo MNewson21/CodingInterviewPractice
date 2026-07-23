@@ -101,100 +101,114 @@ export function ProblemList({ problems }: { problems: Problem[] }) {
 
   return (
     <div>
-      <div className="mb-3 flex flex-wrap items-center gap-2">
-        <input
-          type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search by title or tag…"
-          className="min-w-0 flex-1 rounded-lg border border-zinc-800 bg-zinc-900 px-3 py-1.5 text-sm text-zinc-100 placeholder:text-zinc-500 focus:border-zinc-600 focus:outline-none"
-        />
-        <div className="flex items-center gap-1">
-          {DIFFICULTIES.map((d) => (
-            <button
-              key={d}
-              type="button"
-              onClick={() => setDifficulty(d)}
-              className={`rounded-md px-2.5 py-1.5 text-xs capitalize ${
-                difficulty === d
-                  ? 'bg-zinc-700 text-zinc-100'
-                  : 'bg-zinc-900 text-zinc-400 hover:text-zinc-200'
-              }`}
-            >
-              {d}
-            </button>
-          ))}
-        </div>
-        <button
-          type="button"
-          onClick={() => setShowTags((s) => !s)}
-          className={`rounded-md px-2.5 py-1.5 text-xs ${
-            selectedTags.size > 0
-              ? 'bg-zinc-700 text-zinc-100'
-              : 'bg-zinc-900 text-zinc-400 hover:text-zinc-200'
-          }`}
-          aria-expanded={showTags}
-        >
-          Tags{selectedTags.size > 0 ? ` (${selectedTags.size})` : ''} {showTags ? '▾' : '▸'}
-        </button>
-      </div>
-
-      {user && (
-        <div className="mb-2 flex items-center gap-1">
-          {STATUSES.map((s) => (
-            <button
-              key={s}
-              type="button"
-              onClick={() => setStatus(s)}
-              className={`rounded-md px-2.5 py-1.5 text-xs capitalize ${
-                status === s
-                  ? 'bg-zinc-700 text-zinc-100'
-                  : 'bg-zinc-900 text-zinc-400 hover:text-zinc-200'
-              }`}
-            >
-              {s}
-            </button>
-          ))}
-        </div>
-      )}
-
-      {showTags && (
-        <div className="mb-3 flex flex-wrap gap-1.5 rounded-lg border border-zinc-800 p-2">
-          {allTags.map((t) => {
-            const active = selectedTags.has(t);
-            return (
+      <div className="mb-4 rounded-xl border border-zinc-800 bg-zinc-900/40 p-3">
+        <div className="flex flex-wrap items-center gap-2">
+          <input
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search by title or tag…"
+            aria-label="Search problems by title or tag"
+            className="min-w-40 flex-1 rounded-lg border border-zinc-800 bg-zinc-900 px-3 py-2 text-sm text-zinc-100 placeholder:text-zinc-500 focus:border-zinc-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
+          />
+          <div className="flex items-center gap-1" role="group" aria-label="Filter by difficulty">
+            {DIFFICULTIES.map((d) => (
               <button
-                key={t}
+                key={d}
                 type="button"
-                onClick={() => toggleTag(t)}
-                aria-pressed={active}
-                className={`rounded px-2 py-0.5 text-xs ${
-                  active
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-zinc-800 text-zinc-400 hover:text-zinc-200'
+                onClick={() => setDifficulty(d)}
+                aria-pressed={difficulty === d}
+                className={`rounded-md px-3 py-2 text-xs capitalize ${
+                  difficulty === d
+                    ? 'bg-zinc-700 text-zinc-100'
+                    : 'bg-zinc-900 text-zinc-300 hover:text-zinc-100'
                 }`}
               >
-                {t}
+                {d}
               </button>
-            );
-          })}
-        </div>
-      )}
-
-      <div className="mb-2 flex items-center gap-3 text-xs text-zinc-500">
-        <span>
-          Showing {filtered.length} of {problems.length}
-          {user ? ` · ${solvedCount} solved` : ''}
-        </span>
-        {hasActiveFilters && (
+            ))}
+          </div>
           <button
             type="button"
-            onClick={clearFilters}
-            className="text-zinc-400 underline-offset-2 hover:text-zinc-200 hover:underline"
+            onClick={() => setShowTags((s) => !s)}
+            className={`rounded-md px-3 py-2 text-xs ${
+              selectedTags.size > 0
+                ? 'bg-zinc-700 text-zinc-100'
+                : 'bg-zinc-900 text-zinc-300 hover:text-zinc-100'
+            }`}
+            aria-expanded={showTags}
+            aria-controls="tag-filter-panel"
           >
-            Clear filters
+            Tags{selectedTags.size > 0 ? ` (${selectedTags.size})` : ''} {showTags ? '▾' : '▸'}
           </button>
+        </div>
+
+        {showTags && (
+          <div
+            id="tag-filter-panel"
+            role="group"
+            aria-label="Filter by tag"
+            className="mt-2 flex flex-wrap gap-1.5 rounded-lg border border-zinc-800 p-2"
+          >
+            {allTags.map((t) => {
+              const active = selectedTags.has(t);
+              return (
+                <button
+                  key={t}
+                  type="button"
+                  onClick={() => toggleTag(t)}
+                  aria-pressed={active}
+                  className={`rounded px-2 py-0.5 text-xs ${
+                    active
+                      ? 'bg-blue-600 text-white'
+                      : 'bg-zinc-800 text-zinc-300 hover:text-zinc-100'
+                  }`}
+                >
+                  {t}
+                </button>
+              );
+            })}
+          </div>
         )}
+
+        <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
+          {user ? (
+            <div className="flex items-center gap-1" role="group" aria-label="Filter by status">
+              {STATUSES.map((s) => (
+                <button
+                  key={s}
+                  type="button"
+                  onClick={() => setStatus(s)}
+                  aria-pressed={status === s}
+                  className={`rounded-md px-3 py-1.5 text-xs capitalize ${
+                    status === s
+                      ? 'bg-zinc-700 text-zinc-100'
+                      : 'bg-zinc-900 text-zinc-300 hover:text-zinc-100'
+                  }`}
+                >
+                  {s}
+                </button>
+              ))}
+            </div>
+          ) : (
+            <span />
+          )}
+          <div className="flex items-center gap-3 text-xs text-zinc-500">
+            <span>
+              Showing {filtered.length} of {problems.length}
+              {user ? ` · ${solvedCount} solved` : ''}
+            </span>
+            {hasActiveFilters && (
+              <button
+                type="button"
+                onClick={clearFilters}
+                className="text-zinc-400 underline-offset-2 hover:text-zinc-200 hover:underline"
+              >
+                Clear filters
+              </button>
+            )}
+          </div>
+        </div>
       </div>
 
       {filtered.length === 0 ? (

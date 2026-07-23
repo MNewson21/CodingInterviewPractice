@@ -8,6 +8,18 @@ body,
 }
 
 /*
+ * Baseline keyboard-focus indicator. The UI is dark-first, so give every
+ * keyboard-focused control a high-contrast blue ring (mouse clicks, which
+ * don't match :focus-visible, stay ring-free). Components can still opt into
+ * their own focus styling on top of this.
+ */
+:focus-visible {
+  outline: 2px solid var(--color-blue-400, #60a5fa);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+/*
  * Whole-page theming.
  *
  * Tailwind v4 compiles colour utilities (bg-zinc-800, text-zinc-100, …) to
@@ -46,72 +58,3 @@ body,
   --color-zinc-950: #ffffff;
 }
 
-:root[data-app-theme="hc-black"] {
-  --color-zinc-50: #ffffff;
-  --color-zinc-100: #f2f2f2;
-  --color-zinc-200: #e6e6e6;
-  --color-zinc-300: #cccccc;
-  --color-zinc-400: #a6a6a6;
-  --color-zinc-500: #7a7a7a;
-  --color-zinc-600: #4d4d4d;
-  --color-zinc-700: #2a2a2a;
-  --color-zinc-800: #1a1a1a;
-  --color-zinc-900: #0a0a0a;
-  --color-zinc-950: #000000;
-}
-
-:root[data-app-theme="monokai"] {
-  --color-zinc-50: #fefef9;
-  --color-zinc-100: #f8f8f2;
-  --color-zinc-200: #e3e1d3;
-  --color-zinc-300: #cfccb8;
-  --color-zinc-400: #b5b29a;
-  --color-zinc-500: #908d78;
-  --color-zinc-600: #75715e;
-  --color-zinc-700: #49483e;
-  --color-zinc-800: #34352f;
-  --color-zinc-900: #272822;
-  --color-zinc-950: #1e1f1c;
-}
-
-:root[data-app-theme="solarized-dark"] {
-  --color-zinc-50: #fdf6e3;
-  --color-zinc-100: #eee8d5;
-  --color-zinc-200: #b3bcbc;
-  --color-zinc-300: #93a1a1;
-  --color-zinc-400: #839496;
-  --color-zinc-500: #657b83;
-  --color-zinc-600: #586e75;
-  --color-zinc-700: #0a4250;
-  --color-zinc-800: #073642;
-  --color-zinc-900: #002b36;
-  --color-zinc-950: #002028;
-}
-
-:root[data-app-theme="github-dark"] {
-  --color-zinc-50: #f0f6fc;
-  --color-zinc-100: #e6edf3;
-  --color-zinc-200: #c9d1d9;
-  --color-zinc-300: #b1bac4;
-  --color-zinc-400: #8b949e;
-  --color-zinc-500: #6e7681;
-  --color-zinc-600: #484f58;
-  --color-zinc-700: #30363d;
-  --color-zinc-800: #21262d;
-  --color-zinc-900: #161b22;
-  --color-zinc-950: #0d1117;
-}
-
-:root[data-app-theme="night-light"] {
-  --color-zinc-50: #fbf3dc;
-  --color-zinc-100: #f3e6c4;
-  --color-zinc-200: #e6d4a6;
-  --color-zinc-300: #d4bd83;
-  --color-zinc-400: #bfa264;
-  --color-zinc-500: #9c8147;
-  --color-zinc-600: #7a6436;
-  --color-zinc-700: #574826;
-  --color-zinc-800: #3a301a;
-  --color-zinc-900: #2f2718;
-  --color-zinc-950: #251f12;
-}
