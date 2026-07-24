@@ -51,8 +51,7 @@ I also wanted to build this project, so that I can solve these current problems 
 | Auth + database  | Supabase (Postgres + Row Level Security)          |
 | AI proxy         | Supabase Edge Functions (Deno), provider-agnostic |
 | Code execution   | Self-hosted [Piston](https://github.com/engineer-man/piston) sandbox |
-
+| Testing          | Using Vitest and CI/CD pipeline / GitHub Actions |
 
 ## License
-
 [MIT](./LICENSE)
