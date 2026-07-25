@@ -49,6 +49,23 @@ function PatternCard({ pattern }: { pattern: RevisionPattern }) {
         </pre>
       </div>
 
+      {pattern.detailedCode && (
+        <details className="group mt-3 rounded-lg border border-zinc-800 bg-zinc-950">
+          <summary className="flex cursor-pointer select-none items-center gap-2 px-4 py-2.5 text-xs font-semibold uppercase tracking-wide text-zinc-400 hover:text-zinc-200">
+            <span aria-hidden className="text-emerald-500 transition-transform group-open:rotate-90">›</span>
+            Full implementation
+          </summary>
+          <div className="relative border-t border-zinc-800">
+            <span className="absolute right-2 top-2 rounded bg-zinc-800 px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide text-zinc-400">
+              {pattern.language ?? 'Python'}
+            </span>
+            <pre className="overflow-x-auto p-4 pt-7 text-xs leading-relaxed text-zinc-300">
+              <code>{pattern.detailedCode}</code>
+            </pre>
+          </div>
+        </details>
+      )}
+
       <div className="mt-4 border-t border-zinc-800 pt-4">
         <h4 className="text-xs font-semibold uppercase tracking-wide text-zinc-400">Practice problems</h4>
         <ul className="mt-2 space-y-2">
