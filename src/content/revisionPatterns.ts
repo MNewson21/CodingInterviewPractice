@@ -36,6 +36,11 @@ export interface RevisionPattern {
   sketch: string;
   /** Language the sketch is written in, shown as a badge. Defaults to Python. */
   language?: string;
+  /**
+   * A fuller, commented implementation shown in a collapsible "Full implementation"
+   * block under the sketch. Usually a complete solution to one of the example problems.
+   */
+  detailedCode?: string;
   examples: PatternExample[];
 }
 
@@ -66,6 +71,22 @@ while l < r:
         l += 1
     else:
         r -= 1`,
+    detailedCode: `# Container With Most Water - opposite-ends two pointers.
+# Between two walls, the area is (width) x (shorter wall). Width only
+# shrinks as we move inward, so the only way to possibly do better is
+# to move the shorter wall and hope for a taller one.
+def max_area(height):
+    l, r = 0, len(height) - 1
+    best = 0
+    while l < r:
+        area = (r - l) * min(height[l], height[r])
+        best = max(best, area)
+        # Move the shorter wall inward; moving the taller one can never help.
+        if height[l] < height[r]:
+            l += 1
+        else:
+            r -= 1
+    return best`,
     examples: [
       { problemId: 'reverse-string', title: 'Reverse String', note: 'Swap ends inward - the textbook opposite-ends pair.' },
       { problemId: 'move-zeroes', title: 'Move Zeroes', note: 'Slow/fast pair partitions non-zeros in place.' },
@@ -95,6 +116,21 @@ for right in range(n):
     while window_invalid():
         remove(a[left]); left += 1
     best = better(best, right - left + 1)`,
+    detailedCode: `# Longest Substring Without Repeating Characters.
+# Keep a window [left, right] of distinct characters. When we hit a
+# repeat, jump 'left' to just past the previous copy so the window is
+# valid again - never scanning backwards.
+def length_of_longest_substring(s):
+    last_seen = {}          # char -> most recent index
+    left = 0
+    best = 0
+    for right, ch in enumerate(s):
+        # Only jump if the previous copy is inside the current window.
+        if ch in last_seen and last_seen[ch] >= left:
+            left = last_seen[ch] + 1
+        last_seen[ch] = right
+        best = max(best, right - left + 1)
+    return best`,
     examples: [
       { problemId: 'longest-substring-no-repeat', title: 'Longest Substring Without Repeating Characters', note: 'Grow/shrink a window of distinct chars.' },
       { problemId: 'best-time-to-buy-sell-stock', title: 'Best Time to Buy and Sell Stock', note: 'One pass tracking the lowest price so far.' },
@@ -123,6 +159,19 @@ while lo <= hi:
     if a[mid] == target: return mid
     if a[mid] < target: lo = mid + 1
     else: hi = mid - 1`,
+    detailedCode: `# Classic binary search over a sorted array. Returns the index of
+# target, or -1 if absent.
+def binary_search(a, target):
+    lo, hi = 0, len(a) - 1
+    while lo <= hi:                     # inclusive range [lo, hi]
+        mid = lo + (hi - lo) // 2       # avoids overflow in fixed-width languages
+        if a[mid] == target:
+            return mid
+        if a[mid] < target:
+            lo = mid + 1                # target must be in the right half
+        else:
+            hi = mid - 1                # target must be in the left half
+    return -1                          # range collapsed - not found`,
     examples: [
       { problemId: 'binary-search', title: 'Binary Search', note: 'The canonical sorted-array search.' },
       { problemId: 'search-rotated-array', title: 'Search in Rotated Sorted Array', note: 'Decide which half is sorted, then recurse into it.' },
@@ -149,6 +198,29 @@ while lo <= hi:
     visited[r][c] = True
     for dr, dc in [(1,0),(-1,0),(0,1),(0,-1)]:
         dfs(r+dr, c+dc)`,
+    detailedCode: `# Number of Islands - flood fill with DFS.
+# Every time we find un-sunk land we've found a new island; the DFS
+# then sinks the whole connected region so we don't count it twice.
+def num_islands(grid):
+    if not grid:
+        return 0
+    rows, cols = len(grid), len(grid[0])
+
+    def sink(r, c):
+        # Stop at the border or on anything that isn't land.
+        if r < 0 or r >= rows or c < 0 or c >= cols or grid[r][c] != '1':
+            return
+        grid[r][c] = '0'               # mark visited by sinking it
+        sink(r + 1, c); sink(r - 1, c)
+        sink(r, c + 1); sink(r, c - 1)
+
+    count = 0
+    for r in range(rows):
+        for c in range(cols):
+            if grid[r][c] == '1':      # start of a fresh island
+                count += 1
+                sink(r, c)
+    return count`,
     examples: [
       { problemId: 'number-of-islands', title: 'Number of Islands', note: 'Flood-fill each unvisited land cell; count the floods.' },
     ],
@@ -173,6 +245,17 @@ while lo <= hi:
 for i in range(1, n + 1):
     dp[i] = best_over_choices(dp[i - 1], dp[i - 2], ...)
 return dp[n]`,
+    detailedCode: `# Coin Change - fewest coins to make 'amount' (bottom-up DP).
+# State: dp[a] = fewest coins summing to a. Transition: for each coin c,
+# making 'a' costs one more coin than making 'a - c'.
+def coin_change(coins, amount):
+    INF = float('inf')
+    dp = [0] + [INF] * amount          # dp[0] = 0; the rest start unreachable
+    for a in range(1, amount + 1):
+        for c in coins:
+            if c <= a and dp[a - c] + 1 < dp[a]:
+                dp[a] = dp[a - c] + 1
+    return dp[amount] if dp[amount] != INF else -1   # -1 = cannot be made`,
     examples: [
       { problemId: 'climbing-stairs', title: 'Climbing Stairs', note: 'dp[i] = dp[i-1] + dp[i-2] - Fibonacci in disguise.' },
       { problemId: 'house-robber', title: 'House Robber', note: 'Take-or-skip choice at each house.' },
@@ -200,6 +283,18 @@ for i in range(n):
     if i > reach: return False   # cannot get here
     reach = max(reach, i + a[i])
 return True`,
+    detailedCode: `# Jump Game - can we reach the last index?
+# Greedily track the furthest index reachable so far. If our current
+# index ever overtakes that frontier, there's an unjumpable gap.
+def can_jump(nums):
+    reach = 0                          # furthest index reachable so far
+    for i, jump in enumerate(nums):
+        if i > reach:                  # stuck before this index
+            return False
+        reach = max(reach, i + jump)   # extend the frontier
+        if reach >= len(nums) - 1:     # last index already reachable
+            return True
+    return True`,
     examples: [
       { problemId: 'jump-game', title: 'Jump Game', note: 'Track the furthest reachable index in one pass.' },
       { problemId: 'maximum-subarray', title: 'Maximum Subarray', note: "Kadane's: drop the running sum the moment it goes negative." },
@@ -225,6 +320,18 @@ for x in a:
     running += x
     count += seen.get(running - k, 0)
     seen[running] = seen.get(running, 0) + 1`,
+    detailedCode: `# Subarray Sum Equals K - count subarrays summing to k.
+# If prefix[j] - prefix[i] == k, the slice (i, j] sums to k. So at each
+# step we ask: how many earlier prefix sums equal (running - k)?
+def subarray_sum(nums, k):
+    seen = {0: 1}                      # prefix sum -> times seen (0 seen once, empty prefix)
+    running = 0
+    count = 0
+    for x in nums:
+        running += x
+        count += seen.get(running - k, 0)          # matching earlier prefixes
+        seen[running] = seen.get(running, 0) + 1
+    return count`,
     examples: [
       { problemId: 'subarray-sum-k', title: 'Subarray Sum Equals K', note: 'Hash map of prefix sums counts windows in O(n).' },
       { problemId: 'product-except-self', title: 'Product of Array Except Self', note: 'Prefix and suffix products instead of division.' },
@@ -249,6 +356,22 @@ for x in a:
 for x in a:
     result ^= x   # pairs cancel, the lone value survives
 return result`,
+    detailedCode: `# Two XOR classics. XOR is associative and self-inverse (x ^ x == 0),
+# so any value appearing an even number of times cancels to 0.
+
+# Single Number - every value appears twice except one.
+def single_number(nums):
+    result = 0
+    for x in nums:
+        result ^= x                    # the lone value is all that's left
+    return result
+
+# Missing Number - nums holds 0..n with exactly one gap.
+def missing_number(nums):
+    missing = len(nums)                # start with n (the largest index)
+    for i, x in enumerate(nums):
+        missing ^= i ^ x               # indices cancel present values; the gap remains
+    return missing`,
     examples: [
       { problemId: 'single-number', title: 'Single Number', note: 'XOR the whole array; duplicates cancel out.' },
       { problemId: 'missing-number', title: 'Missing Number', note: 'XOR indices against values to find the gap.' },
@@ -276,6 +399,17 @@ for i, x in enumerate(a):
     if target - x in seen:
         return [seen[target - x], i]
     seen[x] = i`,
+    detailedCode: `# Two Sum - indices of the pair adding to target, in one pass.
+# For each number, check whether its complement was already seen. The
+# map turns the inner "have I seen it?" search from O(n) into O(1).
+def two_sum(nums, target):
+    seen = {}                          # value -> index it was seen at
+    for i, x in enumerate(nums):
+        need = target - x
+        if need in seen:
+            return [seen[need], i]     # complement found earlier -> answer
+        seen[x] = i
+    return []                          # no pair sums to target`,
     examples: [
       { problemId: 'two-sum', title: 'Two Sum', note: 'Store complements; find the pair in one pass.' },
       { problemId: 'contains-duplicate', title: 'Contains Duplicate', note: 'A set answers "seen before?" instantly.' },
@@ -304,6 +438,19 @@ for token in tokens:
     elif not stack or not matches(stack.pop(), token):
         return False
 return not stack`,
+    detailedCode: `# Valid Parentheses - do all brackets match and nest correctly?
+# Push every opener; on a closer, the top of the stack must be its
+# matching opener. A leftover stack at the end means something's unclosed.
+def is_valid(s):
+    closer_to_opener = {')': '(', ']': '[', '}': '{'}
+    stack = []
+    for ch in s:
+        if ch in closer_to_opener:                 # a closing bracket
+            if not stack or stack.pop() != closer_to_opener[ch]:
+                return False                       # nothing to match, or mismatch
+        else:                                      # an opening bracket
+            stack.append(ch)
+    return not stack                               # empty == every opener was closed`,
     examples: [
       { problemId: 'valid-parentheses', title: 'Valid Parentheses', note: 'Push openers, pop on matching closers.' },
       { problemId: 'largest-rectangle-histogram', title: 'Largest Rectangle in Histogram', note: 'Monotonic stack of increasing bar heights.' },
@@ -330,6 +477,25 @@ for i, x in enumerate(a):
     dq.append(i)
     if dq[0] <= i - k: dq.popleft()
     if i >= k - 1: out.append(a[dq[0]])`,
+    detailedCode: `from collections import deque
+
+# Sliding Window Maximum - max of every window of size k.
+# The deque holds indices whose values are strictly decreasing, so the
+# front is always the current window's max. Each index is pushed and
+# popped at most once -> O(n) overall.
+def max_sliding_window(nums, k):
+    dq = deque()                       # indices; nums[dq] decreasing front -> back
+    out = []
+    for i, x in enumerate(nums):
+        # Smaller values can never be the max while x is in the window.
+        while dq and nums[dq[-1]] <= x:
+            dq.pop()
+        dq.append(i)
+        if dq[0] <= i - k:             # front index has slid out of the window
+            dq.popleft()
+        if i >= k - 1:                 # first full window reached
+            out.append(nums[dq[0]])
+    return out`,
     examples: [
       { problemId: 'sliding-window-maximum', title: 'Sliding Window Maximum', note: 'Monotonic deque yields each window max in O(1).' },
       { problemId: 'number-of-islands', title: 'Number of Islands', note: 'Swap the DFS stack for a queue to flood with BFS.' },
@@ -355,6 +521,21 @@ for x in a:
     heappush(heap, x)
     if len(heap) > k: heappop(heap)
 return heap                    # the k largest`,
+    detailedCode: `import heapq
+from collections import Counter
+
+# Top K Frequent Elements.
+# Count frequencies, then keep a min-heap of size k keyed on frequency.
+# Whenever it overflows we drop the least frequent, so the k most
+# frequent survive - O(n log k), better than sorting everything.
+def top_k_frequent(nums, k):
+    counts = Counter(nums)             # value -> frequency
+    heap = []                          # min-heap of (freq, value)
+    for value, freq in counts.items():
+        heapq.heappush(heap, (freq, value))
+        if len(heap) > k:
+            heapq.heappop(heap)        # evict the current least frequent
+    return [value for _freq, value in heap]`,
     examples: [
       { problemId: 'top-k-frequent', title: 'Top K Frequent Elements', note: 'Count, then keep a size-k heap of frequencies.' },
     ],
@@ -369,6 +550,37 @@ return heap                    # the k largest`,
     whyItWorks: 'All algorithms have a spatial complexity and a time complexity, so this enables comparisons of different algorithms given the same input',
     complexity: 'O(1) - Constant time, O(log n) - Logarithmic time, O(n) - Linear time, O(n log n) - Log Linear time, O(n^2) - Quadratic time, O(2^n) - Exponential time, O(n!) - Factorial time',
     sketch: `O(1) - Constant time \nO(log n) - Logarithmic time\nO(n) - Linear time\nO(n log n) - Log Linear time\nO(n^2) - Quadratic time\nO(2^n) - Exponential time\nO(n!) - Factorial time`,
+    detailedCode: `# One tiny function per complexity class, so you can feel how the work
+# grows as n grows.
+
+# O(1) - constant: work independent of n.
+def first(a):
+    return a[0]
+
+# O(log n) - halve the search space each step (binary search).
+def bsearch(a, target):
+    lo, hi = 0, len(a) - 1
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        if a[mid] == target:
+            return mid
+        lo, hi = (mid + 1, hi) if a[mid] < target else (lo, mid - 1)
+    return -1
+
+# O(n) - one pass over the input.
+def total(a):
+    s = 0
+    for x in a:
+        s += x
+    return s
+
+# O(n^2) - every pair; nested loops over the same data.
+def has_duplicate_pair(a):
+    for i in range(len(a)):
+        for j in range(i + 1, len(a)):
+            if a[i] == a[j]:
+                return True
+    return False`,
     examples: [{problemId: 'top-k-frequent', title: 'Top K Frequent Elements', note: 'Count, then keep a size-k heap of frequencies.'}
     ],
   },
@@ -381,6 +593,29 @@ return heap                    # the k largest`,
     whyItWorks: 'Makes it so you do not need to recheck every index again - making it more efficient in the long term',
     complexity: 'MergeSort - O(nlogn), Selection Sort - O(n^2), Insertion Sort - O(n^2), Bubble Sort - O(n^2) - average case ',
     sketch: 'MergeSort - Stable, Not Adaptive\nSelection Sort - Not Stable, Not Adaptive\nInsertion Sort - Stable, Adaptive\nBubble Sort - Stable, Not naturally Adaptive but can be altered to be',
+    detailedCode: `# Merge Sort - the divide-and-conquer O(n log n) sort.
+# Split in half, sort each half recursively, then merge the two sorted
+# halves back together. Merging with '<=' keeps equal elements in their
+# original order, which is what makes merge sort stable.
+def merge_sort(a):
+    if len(a) <= 1:                    # base case: 0 or 1 element is sorted
+        return a
+    mid = len(a) // 2
+    left = merge_sort(a[:mid])
+    right = merge_sort(a[mid:])
+    return merge(left, right)
+
+def merge(left, right):
+    out = []
+    i = j = 0
+    while i < len(left) and j < len(right):
+        if left[i] <= right[j]:        # '<=' -> stable
+            out.append(left[i]); i += 1
+        else:
+            out.append(right[j]); j += 1
+    out.extend(left[i:])               # whichever side has leftovers
+    out.extend(right[j:])
+    return out`,
     examples: [{ problemId: 'search-rotated-array', title: 'Search in Rotated Sorted Array', note: 'Decide which half is sorted, then recurse into it.' }],
   }
       
