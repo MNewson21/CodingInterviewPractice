@@ -6,6 +6,8 @@ solution in a VS Code-grade editor, run it against different test cases. Then **
 🔗 **Live:** [codinginterviewpractice.dev](https://codinginterviewpractice.dev)
 
 ---
+https://github.com/user-attachments/assets/2809ad8b-c0d5-44ec-bec7-9cfa49908753
+
 
 ## Why this exists
 I have tried using many other sites to practice coding problems and to improve my abilities at coding. However, when using other websites, sometimes I may get stuck and the way to understand how to do it is to see the answer through already solved questions. I wanted to create something where if I got stuck, it woulnt show me the concrete implementation of it but rather steer me towards it through hinting at data structures to use and time complexities. 
@@ -14,6 +16,10 @@ There are also some other features which I wanted to use aswell. One of my perso
 is autocomplete where it will show you some available methods and how to use them. I find this especially useful for Python since there are many methods in-built and it can be hard to remember the spelling and use of each method. So, within this project, I have included some key methods in the autocomplete so that for these practice questions, it will be easier to solve them since you can see what methods may be useful to use. 
 
 I also wanted to build this project, so that I can solve these current problems which are pretty standard across most similar coding practice sites, and I also wanted to experiment with making my own problems. This is because, you can get bored of doing a setlist of problems and so with this, you can create a problem and export it as a JSON so that you can reuse it or challenge someone else.
+
+
+
+
 
 ## Who it's for
 
