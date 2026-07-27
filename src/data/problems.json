@@ -4077,5 +4077,229 @@
         "expectedStdout": "0"
       }
     ]
+  },
+  {
+    "id": "power-of-two",
+    "title": "Power of Two",
+    "difficulty": "easy",
+    "tags": [
+      "math",
+      "bit-manipulation"
+    ],
+    "description": "Given an integer n, return true if it is a power of two, otherwise return false.\n\nAn integer is a power of two if there exists an integer x such that n == 2^x.\n\nInput: a single line containing the integer n.\nOutput: 'true' or 'false'.",
+    "examples": [
+      {
+        "input": "n = 1",
+        "output": "true",
+        "explanation": "2^0 == 1."
+      },
+      {
+        "input": "n = 16",
+        "output": "true",
+        "explanation": "2^4 == 16."
+      },
+      {
+        "input": "n = 3",
+        "output": "false"
+      }
+    ],
+    "constraints": [
+      "-2^31 <= n <= 2^31 - 1"
+    ],
+    "starterCode": {
+      "javascript": "function isPowerOfTwo(n) {\n  // your code here\n}\n",
+      "typescript": "function isPowerOfTwo(n: number): boolean {\n  // your code here\n  return false;\n}\n",
+      "python": "def is_power_of_two(n):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    boolean isPowerOfTwo(int n) {\n        // your code here (java.util.* is already imported)\n        return false;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nbool isPowerOfTwo(int n) {\n    // your code here\n    return false;\n}\n"
+    },
+    "harness": {
+      "javascript": "const __n = parseInt(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0], 10);\nconsole.log(isPowerOfTwo(__n));\n",
+      "typescript": "const __n = parseInt(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0], 10);\nconsole.log(isPowerOfTwo(__n));\n",
+      "python": "import sys\n__n = int(sys.stdin.read().splitlines()[0])\nprint(\"true\" if is_power_of_two(__n) else \"false\")\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.isPowerOfTwo(Integer.parseInt(x[0].trim())));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nint main(){\n    vector<string> x = RL();\n    int a0=stoi(x[0]);\n    cout << (isPowerOfTwo(a0) ? \"true\" : \"false\") << \"\\n\";\n    return 0;\n}\n"
+    },
+    "params": [
+      {
+        "name": "n"
+      }
+    ],
+    "testCases": [
+      {
+        "name": "one",
+        "stdin": "1\n",
+        "expectedStdout": "true"
+      },
+      {
+        "name": "sixteen",
+        "stdin": "16\n",
+        "expectedStdout": "true"
+      },
+      {
+        "name": "not power",
+        "stdin": "3\n",
+        "expectedStdout": "false"
+      },
+      {
+        "name": "zero",
+        "stdin": "0\n",
+        "expectedStdout": "false"
+      },
+      {
+        "name": "negative",
+        "stdin": "-16\n",
+        "expectedStdout": "false"
+      }
+    ]
+  },
+  {
+    "id": "fibonacci-number",
+    "title": "Fibonacci Number",
+    "difficulty": "easy",
+    "tags": [
+      "dynamic-programming",
+      "math"
+    ],
+    "description": "The Fibonacci numbers form a sequence where each number is the sum of the two preceding ones, starting from 0 and 1. That is, F(0) = 0, F(1) = 1, and F(n) = F(n-1) + F(n-2) for n > 1.\n\nGiven n, compute F(n).\n\nInput: a single line containing the integer n.\nOutput: F(n) as a single integer.",
+    "examples": [
+      {
+        "input": "n = 2",
+        "output": "1",
+        "explanation": "F(2) = F(1) + F(0) = 1 + 0 = 1."
+      },
+      {
+        "input": "n = 4",
+        "output": "3",
+        "explanation": "F(4) = F(3) + F(2) = 2 + 1 = 3."
+      }
+    ],
+    "constraints": [
+      "0 <= n <= 30"
+    ],
+    "starterCode": {
+      "javascript": "function fib(n) {\n  // your code here\n}\n",
+      "typescript": "function fib(n: number): number {\n  // your code here\n  return 0;\n}\n",
+      "python": "def fib(n):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int fib(int n) {\n        // your code here (java.util.* is already imported)\n        return 0;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint fib(int n) {\n    // your code here\n    return 0;\n}\n"
+    },
+    "harness": {
+      "javascript": "const __n = parseInt(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0], 10);\nconsole.log(fib(__n));\n",
+      "typescript": "const __n = parseInt(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0], 10);\nconsole.log(fib(__n));\n",
+      "python": "import sys\n__n = int(sys.stdin.read().splitlines()[0])\nprint(fib(__n))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.fib(Integer.parseInt(x[0].trim())));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nint main(){\n    vector<string> x = RL();\n    int a0=stoi(x[0]);\n    cout << fib(a0) << \"\\n\";\n    return 0;\n}\n"
+    },
+    "params": [
+      {
+        "name": "n"
+      }
+    ],
+    "testCases": [
+      {
+        "name": "n equals 2",
+        "stdin": "2\n",
+        "expectedStdout": "1"
+      },
+      {
+        "name": "n equals 4",
+        "stdin": "4\n",
+        "expectedStdout": "3"
+      },
+      {
+        "name": "base zero",
+        "stdin": "0\n",
+        "expectedStdout": "0"
+      },
+      {
+        "name": "base one",
+        "stdin": "1\n",
+        "expectedStdout": "1"
+      },
+      {
+        "name": "n equals 10",
+        "stdin": "10\n",
+        "expectedStdout": "55"
+      }
+    ]
+  },
+  {
+    "id": "isomorphic-strings",
+    "title": "Isomorphic Strings",
+    "difficulty": "easy",
+    "tags": [
+      "hash-map",
+      "string"
+    ],
+    "description": "Given two strings s and t, determine if they are isomorphic.\n\nTwo strings are isomorphic if the characters in s can be replaced to get t. All occurrences of a character must be replaced with another character while preserving the order of characters. No two characters may map to the same character, but a character may map to itself.\n\nInput: line 1 is s; line 2 is t.\nOutput: 'true' or 'false'.",
+    "examples": [
+      {
+        "input": "s = \"egg\", t = \"add\"",
+        "output": "true",
+        "explanation": "e -> a, g -> d."
+      },
+      {
+        "input": "s = \"foo\", t = \"bar\"",
+        "output": "false",
+        "explanation": "o would need to map to both a and r."
+      }
+    ],
+    "constraints": [
+      "1 <= s.length <= 5 * 10^4",
+      "t.length == s.length",
+      "s and t consist of any valid ASCII characters."
+    ],
+    "starterCode": {
+      "javascript": "function isIsomorphic(s, t) {\n  // your code here\n}\n",
+      "typescript": "function isIsomorphic(s: string, t: string): boolean {\n  // your code here\n  return false;\n}\n",
+      "python": "def is_isomorphic(s, t):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    boolean isIsomorphic(String s, String t) {\n        // your code here (java.util.* is already imported)\n        return false;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nbool isIsomorphic(string s, string t) {\n    // your code here\n    return false;\n}\n"
+    },
+    "harness": {
+      "javascript": "const __lines = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nconsole.log(isIsomorphic(__lines[0], __lines[1]));\n",
+      "typescript": "const __lines = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nconsole.log(isIsomorphic(__lines[0], __lines[1]));\n",
+      "python": "import sys\n__lines = sys.stdin.read().splitlines()\n__s = __lines[0] if len(__lines) > 0 else \"\"\n__t = __lines[1] if len(__lines) > 1 else \"\"\nprint(\"true\" if is_isomorphic(__s, __t) else \"false\")\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.isIsomorphic(x[0], x[1]));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nint main(){\n    vector<string> x = RL();\n    string a0 = x.size() > 0 ? x[0] : \"\";\n    string a1 = x.size() > 1 ? x[1] : \"\";\n    cout << (isIsomorphic(a0, a1) ? \"true\" : \"false\") << \"\\n\";\n    return 0;\n}\n"
+    },
+    "params": [
+      {
+        "name": "s",
+        "quote": true
+      },
+      {
+        "name": "t",
+        "quote": true
+      }
+    ],
+    "testCases": [
+      {
+        "name": "egg add",
+        "stdin": "egg\nadd\n",
+        "expectedStdout": "true"
+      },
+      {
+        "name": "foo bar",
+        "stdin": "foo\nbar\n",
+        "expectedStdout": "false"
+      },
+      {
+        "name": "paper title",
+        "stdin": "paper\ntitle\n",
+        "expectedStdout": "true"
+      },
+      {
+        "name": "collision",
+        "stdin": "badc\nbaba\n",
+        "expectedStdout": "false"
+      },
+      {
+        "name": "two to one",
+        "stdin": "ab\naa\n",
+        "expectedStdout": "false"
+      }
+    ]
   }
 ]
