@@ -35,6 +35,13 @@ const RUN_TIMEOUT_MS = 3_000;
 const COMPILE_TIMEOUT_MS = 10_000;
 const MEMORY_LIMIT_BYTES = 256 * 1024 * 1024; // 256 MB per run/compile
 
+// Client-side ceiling on how long we wait for any single Piston request. Without
+// this, a black-holed host (e.g. a stopped box whose firewall drops packets rather
+// than refusing) leaves the fetch pending indefinitely and the Run button spins
+// forever. Sits comfortably above COMPILE_TIMEOUT_MS so a legitimately slow
+// compile+run still completes before we abort.
+const REQUEST_TIMEOUT_MS = 15_000;
+
 /** Distinguishes infrastructure failures from real run/compile errors so the UI can react. */
 export type PistonErrorKind = 'unavailable' | 'rate-limited' | 'runtime';
 
@@ -47,13 +54,22 @@ export class PistonError extends Error {
   }
 }
 
-/** fetch wrapper that maps network failures and rate-limits onto typed PistonErrors. */
+/** fetch wrapper that maps network failures, timeouts, and rate-limits onto typed PistonErrors. */
 async function pistonFetch(path: string, init?: RequestInit): Promise<Response> {
   let res: Response;
   try {
-    res = await fetch(`${PISTON_URL}${path}`, init);
-  } catch {
-    // Network-level failure: container down, wrong URL, offline, or blocked by CORS.
+    res = await fetch(`${PISTON_URL}${path}`, {
+      ...init,
+      // Abort the request if the host never responds so a black-holed target
+      // surfaces as an 'unavailable' error instead of hanging the Run button.
+      signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
+    });
+  } catch (err) {
+    // Timeout (AbortSignal.timeout throws a TimeoutError) or a network-level failure:
+    // container down, wrong URL, offline, or blocked by CORS.
+    if (err instanceof DOMException && err.name === 'TimeoutError') {
+      throw new PistonError('unavailable', 'The code-execution service did not respond in time.');
+    }
     throw new PistonError('unavailable', 'Could not reach the code-execution service.');
   }
   if (res.status === 429) {
