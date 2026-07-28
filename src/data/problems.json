@@ -4301,5 +4301,374 @@
         "expectedStdout": "false"
       }
     ]
+  },
+  {
+    "id": "number-of-1-bits",
+    "title": "Number of 1 Bits",
+    "difficulty": "easy",
+    "tags": [
+      "bit-manipulation"
+    ],
+    "description": "Given a non-negative integer n, return the number of '1' bits it has in its binary representation (also known as the Hamming weight).\n\nInput: a single integer n.\nOutput: the count of set bits.",
+    "examples": [
+      {
+        "input": "n = 11",
+        "output": "3",
+        "explanation": "1011 has three set bits."
+      },
+      {
+        "input": "n = 128",
+        "output": "1",
+        "explanation": "10000000 has one set bit."
+      },
+      {
+        "input": "n = 255",
+        "output": "8",
+        "explanation": "11111111 has eight set bits."
+      }
+    ],
+    "constraints": [
+      "0 <= n <= 2^31 - 1"
+    ],
+    "starterCode": {
+      "javascript": "function hammingWeight(n) {\n  // your code here\n}\n",
+      "typescript": "function hammingWeight(n: number): number {\n  // your code here\n  return 0;\n}\n",
+      "python": "def hamming_weight(n):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int hammingWeight(int n) {\n        // your code here (java.util.* is already imported)\n        return 0;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint hammingWeight(int n) {\n    // your code here\n    return 0;\n}\n"
+    },
+    "harness": {
+      "javascript": "const __n = parseInt(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0], 10);\nconsole.log(hammingWeight(__n));\n",
+      "typescript": "const __n = parseInt(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0], 10);\nconsole.log(hammingWeight(__n));\n",
+      "python": "import sys\n__n = int(sys.stdin.read().splitlines()[0])\nprint(hamming_weight(__n))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.hammingWeight(Integer.parseInt(x[0].trim())));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nint main(){\n    vector<string> x = RL();\n    int a0=stoi(x[0]);\n    cout << hammingWeight(a0) << \"\\n\";\n    return 0;\n}\n"
+    },
+    "params": [
+      {
+        "name": "n"
+      }
+    ],
+    "testCases": [
+      {
+        "name": "eleven",
+        "stdin": "11\n",
+        "expectedStdout": "3"
+      },
+      {
+        "name": "one twenty eight",
+        "stdin": "128\n",
+        "expectedStdout": "1"
+      },
+      {
+        "name": "all ones byte",
+        "stdin": "255\n",
+        "expectedStdout": "8"
+      },
+      {
+        "name": "zero",
+        "stdin": "0\n",
+        "expectedStdout": "0"
+      },
+      {
+        "name": "one",
+        "stdin": "1\n",
+        "expectedStdout": "1"
+      }
+    ]
+  },
+  {
+    "id": "max-consecutive-ones",
+    "title": "Max Consecutive Ones",
+    "difficulty": "easy",
+    "tags": [
+      "array"
+    ],
+    "description": "Given a binary array nums, return the maximum number of consecutive 1's in the array.\n\nInput: a JSON array of 0s and 1s.\nOutput: the length of the longest run of consecutive 1's.",
+    "examples": [
+      {
+        "input": "nums = [1,1,0,1,1,1]",
+        "output": "3",
+        "explanation": "The last three elements are all 1."
+      },
+      {
+        "input": "nums = [1,0,1,1,0,1]",
+        "output": "2",
+        "explanation": "The longest run has length 2."
+      }
+    ],
+    "constraints": [
+      "1 <= nums.length <= 10^5",
+      "nums[i] is either 0 or 1."
+    ],
+    "starterCode": {
+      "javascript": "function findMaxConsecutiveOnes(nums) {\n  // your code here\n}\n",
+      "typescript": "function findMaxConsecutiveOnes(nums: number[]): number {\n  // your code here\n  return 0;\n}\n",
+      "python": "def find_max_consecutive_ones(nums):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int findMaxConsecutiveOnes(int[] nums) {\n        // your code here (java.util.* is already imported)\n        return 0;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint findMaxConsecutiveOnes(vector<int>& nums) {\n    // your code here\n    return 0;\n}\n"
+    },
+    "harness": {
+      "javascript": "const __nums = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(findMaxConsecutiveOnes(__nums));\n",
+      "typescript": "const __nums = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(findMaxConsecutiveOnes(__nums));\n",
+      "python": "import sys, json\n__nums = json.loads(sys.stdin.read().splitlines()[0])\nprint(find_max_consecutive_ones(__nums))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    static int[] pi(String s) {\n        int a = s.indexOf('['), b = s.lastIndexOf(']');\n        if (a >= 0 && b >= 0) s = s.substring(a + 1, b);\n        s = s.trim();\n        if (s.isEmpty()) return new int[0];\n        String[] p = s.split(\",\");\n        int[] r = new int[p.length];\n        for (int i = 0; i < p.length; i++) r[i] = Integer.parseInt(p[i].trim());\n        return r;\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.findMaxConsecutiveOnes(pi(x[0])));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nstatic vector<int> PI(const string& s){string t;for(char c:s)t+=(c=='['||c==']'||c==',')?' ':c;vector<int> r;stringstream ss(t);int x;while(ss>>x)r.push_back(x);return r;}\nint main(){\n    vector<string> x = RL();\n    auto a0=PI(x[0]);\n    cout << findMaxConsecutiveOnes(a0) << \"\\n\";\n    return 0;\n}\n"
+    },
+    "params": [
+      {
+        "name": "nums"
+      }
+    ],
+    "testCases": [
+      {
+        "name": "trailing run",
+        "stdin": "[1,1,0,1,1,1]\n",
+        "expectedStdout": "3"
+      },
+      {
+        "name": "split runs",
+        "stdin": "[1,0,1,1,0,1]\n",
+        "expectedStdout": "2"
+      },
+      {
+        "name": "all zeros",
+        "stdin": "[0,0,0]\n",
+        "expectedStdout": "0"
+      },
+      {
+        "name": "all ones",
+        "stdin": "[1,1,1,1]\n",
+        "expectedStdout": "4"
+      },
+      {
+        "name": "single one",
+        "stdin": "[1]\n",
+        "expectedStdout": "1"
+      }
+    ]
+  },
+  {
+    "id": "squares-of-a-sorted-array",
+    "title": "Squares of a Sorted Array",
+    "difficulty": "easy",
+    "tags": [
+      "array",
+      "two-pointers"
+    ],
+    "description": "Given an integer array nums sorted in non-decreasing order, return an array of the squares of each number sorted in non-decreasing order.\n\nInput: a JSON array of integers (already sorted ascending).\nOutput: a JSON array of the squares, sorted ascending.",
+    "examples": [
+      {
+        "input": "nums = [-4,-1,0,3,10]",
+        "output": "[0,1,9,16,100]",
+        "explanation": "Squaring gives [16,1,0,9,100], then sorted becomes [0,1,9,16,100]."
+      },
+      {
+        "input": "nums = [-7,-3,2,3,11]",
+        "output": "[4,9,9,49,121]",
+        "explanation": "Squares sorted ascending."
+      }
+    ],
+    "constraints": [
+      "1 <= nums.length <= 10^4",
+      "-10^4 <= nums[i] <= 10^4",
+      "nums is sorted in non-decreasing order."
+    ],
+    "starterCode": {
+      "javascript": "function sortedSquares(nums) {\n  // your code here\n}\n",
+      "typescript": "function sortedSquares(nums: number[]): number[] {\n  // your code here\n  return [];\n}\n",
+      "python": "def sorted_squares(nums):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int[] sortedSquares(int[] nums) {\n        // your code here (java.util.* is already imported)\n        return new int[]{};\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nvector<int> sortedSquares(vector<int>& nums) {\n    // your code here\n    return {};\n}\n"
+    },
+    "harness": {
+      "javascript": "const __nums = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(JSON.stringify(sortedSquares(__nums)));\n",
+      "typescript": "const __nums = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(JSON.stringify(sortedSquares(__nums)));\n",
+      "python": "import sys, json\n__nums = json.loads(sys.stdin.read().splitlines()[0])\nprint(json.dumps(sorted_squares(__nums), separators=(\",\", \":\")))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    static int[] pi(String s) {\n        int a = s.indexOf('['), b = s.lastIndexOf(']');\n        if (a >= 0 && b >= 0) s = s.substring(a + 1, b);\n        s = s.trim();\n        if (s.isEmpty()) return new int[0];\n        String[] p = s.split(\",\");\n        int[] r = new int[p.length];\n        for (int i = 0; i < p.length; i++) r[i] = Integer.parseInt(p[i].trim());\n        return r;\n    }\n    static String ia(int[] a) {\n        StringBuilder b = new StringBuilder(\"[\");\n        for (int i = 0; i < a.length; i++) { if (i > 0) b.append(','); b.append(a[i]); }\n        return b.append(']').toString();\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(ia(sol.sortedSquares(pi(x[0]))));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nstatic vector<int> PI(const string& s){string t;for(char c:s)t+=(c=='['||c==']'||c==',')?' ':c;vector<int> r;stringstream ss(t);int x;while(ss>>x)r.push_back(x);return r;}\nstatic string IA(const vector<int>& a){string o=\"[\";for(size_t i=0;i<a.size();i++){if(i)o+=\",\";o+=to_string(a[i]);}return o+\"]\";}\nint main(){\n    vector<string> x = RL();\n    auto a0=PI(x[0]);\n    cout << IA(sortedSquares(a0)) << \"\\n\";\n    return 0;\n}\n"
+    },
+    "params": [
+      {
+        "name": "nums"
+      }
+    ],
+    "testCases": [
+      {
+        "name": "mixed signs",
+        "stdin": "[-4,-1,0,3,10]\n",
+        "expectedStdout": "[0,1,9,16,100]"
+      },
+      {
+        "name": "duplicates",
+        "stdin": "[-7,-3,2,3,11]\n",
+        "expectedStdout": "[4,9,9,49,121]"
+      },
+      {
+        "name": "all positive",
+        "stdin": "[1,2,3]\n",
+        "expectedStdout": "[1,4,9]"
+      },
+      {
+        "name": "all negative",
+        "stdin": "[-5,-3,-1]\n",
+        "expectedStdout": "[1,9,25]"
+      },
+      {
+        "name": "single zero",
+        "stdin": "[0]\n",
+        "expectedStdout": "[0]"
+      }
+    ]
+  },
+  {
+    "id": "length-of-last-word",
+    "title": "Length of Last Word",
+    "difficulty": "easy",
+    "tags": [
+      "string"
+    ],
+    "description": "Given a string s consisting of words and spaces, return the length of the last word in the string.\n\nA word is a maximal substring consisting of non-space characters only.\n\nInput: a single line string s (may contain trailing spaces).\nOutput: the length of the last word.",
+    "examples": [
+      {
+        "input": "s = \"Hello World\"",
+        "output": "5",
+        "explanation": "The last word is \"World\", length 5."
+      },
+      {
+        "input": "s = \"   fly me   to   the moon  \"",
+        "output": "4",
+        "explanation": "The last word is \"moon\", length 4."
+      }
+    ],
+    "constraints": [
+      "1 <= s.length <= 10^4",
+      "s consists of only English letters and spaces ' '.",
+      "There is at least one word in s."
+    ],
+    "starterCode": {
+      "javascript": "function lengthOfLastWord(s) {\n  // your code here\n}\n",
+      "typescript": "function lengthOfLastWord(s: string): number {\n  // your code here\n  return 0;\n}\n",
+      "python": "def length_of_last_word(s):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int lengthOfLastWord(String s) {\n        // your code here (java.util.* is already imported)\n        return 0;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint lengthOfLastWord(string s) {\n    // your code here\n    return 0;\n}\n"
+    },
+    "harness": {
+      "javascript": "const __s = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0];\nconsole.log(lengthOfLastWord(__s));\n",
+      "typescript": "const __s = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0];\nconsole.log(lengthOfLastWord(__s));\n",
+      "python": "import sys\n__lines = sys.stdin.read().split(\"\\n\")\n__s = __lines[0] if len(__lines) > 0 else \"\"\nprint(length_of_last_word(__s))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.lengthOfLastWord(x[0]));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nint main(){\n    vector<string> x = RL();\n    string a0 = x.size() > 0 ? x[0] : \"\";\n    cout << lengthOfLastWord(a0) << \"\\n\";\n    return 0;\n}\n"
+    },
+    "params": [
+      {
+        "name": "s",
+        "quote": true
+      }
+    ],
+    "testCases": [
+      {
+        "name": "hello world",
+        "stdin": "Hello World\n",
+        "expectedStdout": "5"
+      },
+      {
+        "name": "trailing spaces",
+        "stdin": "   fly me   to   the moon  \n",
+        "expectedStdout": "4"
+      },
+      {
+        "name": "no trailing space",
+        "stdin": "luffy is still joyboy\n",
+        "expectedStdout": "6"
+      },
+      {
+        "name": "single char",
+        "stdin": "a\n",
+        "expectedStdout": "1"
+      },
+      {
+        "name": "single word",
+        "stdin": "day\n",
+        "expectedStdout": "3"
+      }
+    ]
+  },
+  {
+    "id": "find-pivot-index",
+    "title": "Find Pivot Index",
+    "difficulty": "easy",
+    "tags": [
+      "array",
+      "prefix-sum"
+    ],
+    "description": "Given an array of integers nums, calculate the pivot index of this array.\n\nThe pivot index is the index where the sum of all the numbers strictly to the left of the index is equal to the sum of all the numbers strictly to the index's right.\n\nIf the index is on the left edge of the array, the left sum is 0 because there are no elements to the left. Return the leftmost pivot index. If no such index exists, return -1.\n\nInput: a JSON array of integers.\nOutput: the pivot index, or -1.",
+    "examples": [
+      {
+        "input": "nums = [1,7,3,6,5,6]",
+        "output": "3",
+        "explanation": "Left sum = 1+7+3 = 11, right sum = 5+6 = 11."
+      },
+      {
+        "input": "nums = [1,2,3]",
+        "output": "-1",
+        "explanation": "There is no index that satisfies the condition."
+      },
+      {
+        "input": "nums = [2,1,-1]",
+        "output": "0",
+        "explanation": "Left sum = 0, right sum = 1 + -1 = 0."
+      }
+    ],
+    "constraints": [
+      "1 <= nums.length <= 10^4",
+      "-1000 <= nums[i] <= 1000"
+    ],
+    "starterCode": {
+      "javascript": "function pivotIndex(nums) {\n  // your code here\n}\n",
+      "typescript": "function pivotIndex(nums: number[]): number {\n  // your code here\n  return -1;\n}\n",
+      "python": "def pivot_index(nums):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int pivotIndex(int[] nums) {\n        // your code here (java.util.* is already imported)\n        return -1;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint pivotIndex(vector<int>& nums) {\n    // your code here\n    return -1;\n}\n"
+    },
+    "harness": {
+      "javascript": "const __nums = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(pivotIndex(__nums));\n",
+      "typescript": "const __nums = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(pivotIndex(__nums));\n",
+      "python": "import sys, json\n__nums = json.loads(sys.stdin.read().splitlines()[0])\nprint(pivot_index(__nums))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    static int[] pi(String s) {\n        int a = s.indexOf('['), b = s.lastIndexOf(']');\n        if (a >= 0 && b >= 0) s = s.substring(a + 1, b);\n        s = s.trim();\n        if (s.isEmpty()) return new int[0];\n        String[] p = s.split(\",\");\n        int[] r = new int[p.length];\n        for (int i = 0; i < p.length; i++) r[i] = Integer.parseInt(p[i].trim());\n        return r;\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.pivotIndex(pi(x[0])));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nstatic vector<int> PI(const string& s){string t;for(char c:s)t+=(c=='['||c==']'||c==',')?' ':c;vector<int> r;stringstream ss(t);int x;while(ss>>x)r.push_back(x);return r;}\nint main(){\n    vector<string> x = RL();\n    auto a0=PI(x[0]);\n    cout << pivotIndex(a0) << \"\\n\";\n    return 0;\n}\n"
+    },
+    "params": [
+      {
+        "name": "nums"
+      }
+    ],
+    "testCases": [
+      {
+        "name": "middle pivot",
+        "stdin": "[1,7,3,6,5,6]\n",
+        "expectedStdout": "3"
+      },
+      {
+        "name": "no pivot",
+        "stdin": "[1,2,3]\n",
+        "expectedStdout": "-1"
+      },
+      {
+        "name": "left edge",
+        "stdin": "[2,1,-1]\n",
+        "expectedStdout": "0"
+      },
+      {
+        "name": "single element",
+        "stdin": "[0]\n",
+        "expectedStdout": "0"
+      },
+      {
+        "name": "negatives left edge",
+        "stdin": "[-1,-1,-1,0,1,1]\n",
+        "expectedStdout": "0"
+      }
+    ]
   }
 ]
