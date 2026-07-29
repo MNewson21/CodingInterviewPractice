@@ -4670,5 +4670,440 @@
         "expectedStdout": "0"
       }
     ]
+  },
+  {
+    "id": "palindrome-number",
+    "title": "Palindrome Number",
+    "difficulty": "easy",
+    "tags": [
+      "math"
+    ],
+    "description": "Given an integer x, return true if x reads the same backward as forward.\n\nNegative numbers are never palindromes because of the leading minus sign.\n\nInput: a single integer.\nOutput: 'true' or 'false'.",
+    "examples": [
+      {
+        "input": "x = 121",
+        "output": "true"
+      },
+      {
+        "input": "x = -121",
+        "output": "false",
+        "explanation": "From left to right it reads -121; from right to left it reads 121-."
+      },
+      {
+        "input": "x = 10",
+        "output": "false"
+      }
+    ],
+    "constraints": [
+      "-2^31 <= x <= 2^31 - 1"
+    ],
+    "starterCode": {
+      "javascript": "function isPalindrome(x) {\n  // your code here\n}\n",
+      "typescript": "function isPalindrome(x: number): boolean {\n  // your code here\n  return false;\n}\n",
+      "python": "def is_palindrome(x):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    boolean isPalindrome(int x) {\n        // your code here (java.util.* is already imported)\n        return false;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nbool isPalindrome(int x) {\n    // your code here\n    return false;\n}\n"
+    },
+    "harness": {
+      "javascript": "const __x = parseInt(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0], 10);\nconsole.log(isPalindrome(__x));\n",
+      "typescript": "const __x = parseInt(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0], 10);\nconsole.log(isPalindrome(__x));\n",
+      "python": "import sys\n__x = int(sys.stdin.read().splitlines()[0])\nprint(\"true\" if is_palindrome(__x) else \"false\")\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.isPalindrome(Integer.parseInt(x[0].trim())));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nint main(){\n    vector<string> x = RL();\n    int a0=stoi(x[0]);\n    cout << (isPalindrome(a0) ? \"true\" : \"false\") << \"\\n\";\n    return 0;\n}\n"
+    },
+    "params": [
+      {
+        "name": "x"
+      }
+    ],
+    "testCases": [
+      {
+        "name": "positive palindrome",
+        "stdin": "121\n",
+        "expectedStdout": "true"
+      },
+      {
+        "name": "negative",
+        "stdin": "-121\n",
+        "expectedStdout": "false"
+      },
+      {
+        "name": "trailing zero",
+        "stdin": "10\n",
+        "expectedStdout": "false"
+      },
+      {
+        "name": "zero",
+        "stdin": "0\n",
+        "expectedStdout": "true"
+      },
+      {
+        "name": "even length",
+        "stdin": "1221\n",
+        "expectedStdout": "true"
+      }
+    ]
+  },
+  {
+    "id": "hamming-distance",
+    "title": "Hamming Distance",
+    "difficulty": "easy",
+    "tags": [
+      "bit-manipulation"
+    ],
+    "description": "The Hamming distance between two integers is the number of bit positions at which the corresponding bits are different.\n\nGiven two integers x and y, return their Hamming distance.\n\nInput: line 1 is x; line 2 is y.\nOutput: the Hamming distance.",
+    "examples": [
+      {
+        "input": "x = 1, y = 4",
+        "output": "2",
+        "explanation": "1 = 0001, 4 = 0100; they differ in two positions."
+      },
+      {
+        "input": "x = 3, y = 1",
+        "output": "1"
+      }
+    ],
+    "constraints": [
+      "0 <= x, y <= 2^31 - 1"
+    ],
+    "starterCode": {
+      "javascript": "function hammingDistance(x, y) {\n  // your code here\n}\n",
+      "typescript": "function hammingDistance(x: number, y: number): number {\n  // your code here\n  return 0;\n}\n",
+      "python": "def hamming_distance(x, y):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int hammingDistance(int x, int y) {\n        // your code here (java.util.* is already imported)\n        return 0;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint hammingDistance(int x, int y) {\n    // your code here\n    return 0;\n}\n"
+    },
+    "harness": {
+      "javascript": "const __l = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nconsole.log(hammingDistance(parseInt(__l[0], 10), parseInt(__l[1], 10)));\n",
+      "typescript": "const __l = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nconsole.log(hammingDistance(parseInt(__l[0], 10), parseInt(__l[1], 10)));\n",
+      "python": "import sys\n__l = sys.stdin.read().splitlines()\nprint(hamming_distance(int(__l[0]), int(__l[1])))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.hammingDistance(Integer.parseInt(x[0].trim()), Integer.parseInt(x[1].trim())));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nint main(){\n    vector<string> x = RL();\n    int a0=stoi(x[0]);int a1=stoi(x[1]);\n    cout << hammingDistance(a0, a1) << \"\\n\";\n    return 0;\n}\n"
+    },
+    "params": [
+      {
+        "name": "x"
+      },
+      {
+        "name": "y"
+      }
+    ],
+    "testCases": [
+      {
+        "name": "one and four",
+        "stdin": "1\n4\n",
+        "expectedStdout": "2"
+      },
+      {
+        "name": "three and one",
+        "stdin": "3\n1\n",
+        "expectedStdout": "1"
+      },
+      {
+        "name": "both zero",
+        "stdin": "0\n0\n",
+        "expectedStdout": "0"
+      },
+      {
+        "name": "four and fourteen",
+        "stdin": "4\n14\n",
+        "expectedStdout": "2"
+      },
+      {
+        "name": "seven and zero",
+        "stdin": "7\n0\n",
+        "expectedStdout": "3"
+      }
+    ]
+  },
+  {
+    "id": "excel-sheet-column-number",
+    "title": "Excel Sheet Column Number",
+    "difficulty": "easy",
+    "tags": [
+      "string",
+      "math"
+    ],
+    "description": "Given a string columnTitle that represents the column title as it appears in an Excel sheet, return its corresponding column number.\n\nFor example: A -> 1, B -> 2, ..., Z -> 26, AA -> 27, AB -> 28, and so on.\n\nInput: the column title (uppercase letters).\nOutput: the column number.",
+    "examples": [
+      {
+        "input": "columnTitle = \"A\"",
+        "output": "1"
+      },
+      {
+        "input": "columnTitle = \"AB\"",
+        "output": "28"
+      },
+      {
+        "input": "columnTitle = \"ZY\"",
+        "output": "701"
+      }
+    ],
+    "constraints": [
+      "1 <= columnTitle.length <= 7",
+      "columnTitle consists only of uppercase English letters.",
+      "columnTitle is in the range [\"A\", \"FXSHRXW\"]."
+    ],
+    "starterCode": {
+      "javascript": "function titleToNumber(columnTitle) {\n  // your code here\n}\n",
+      "typescript": "function titleToNumber(columnTitle: string): number {\n  // your code here\n  return 0;\n}\n",
+      "python": "def title_to_number(columnTitle):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int titleToNumber(String columnTitle) {\n        // your code here (java.util.* is already imported)\n        return 0;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint titleToNumber(string columnTitle) {\n    // your code here\n    return 0;\n}\n"
+    },
+    "harness": {
+      "javascript": "const __columnTitle = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0];\nconsole.log(titleToNumber(__columnTitle));\n",
+      "typescript": "const __columnTitle = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0];\nconsole.log(titleToNumber(__columnTitle));\n",
+      "python": "import sys\n__lines = sys.stdin.read().splitlines()\n__columnTitle = __lines[0] if __lines else \"\"\nprint(title_to_number(__columnTitle))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.titleToNumber(x[0]));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nint main(){\n    vector<string> x = RL();\n    string a0 = x.size() > 0 ? x[0] : \"\";\n    cout << titleToNumber(a0) << \"\\n\";\n    return 0;\n}\n"
+    },
+    "params": [
+      {
+        "name": "columnTitle",
+        "quote": true
+      }
+    ],
+    "testCases": [
+      {
+        "name": "single A",
+        "stdin": "A\n",
+        "expectedStdout": "1"
+      },
+      {
+        "name": "AB",
+        "stdin": "AB\n",
+        "expectedStdout": "28"
+      },
+      {
+        "name": "ZY",
+        "stdin": "ZY\n",
+        "expectedStdout": "701"
+      },
+      {
+        "name": "single Z",
+        "stdin": "Z\n",
+        "expectedStdout": "26"
+      },
+      {
+        "name": "AAA",
+        "stdin": "AAA\n",
+        "expectedStdout": "703"
+      }
+    ]
+  },
+  {
+    "id": "sqrtx",
+    "title": "Sqrt(x)",
+    "difficulty": "easy",
+    "tags": [
+      "math",
+      "binary-search"
+    ],
+    "description": "Given a non-negative integer x, return the square root of x rounded down to the nearest integer.\n\nYou must not use any built-in exponent function or operator (for example, do not use pow(x, 0.5) or x ** 0.5).\n\nInput: a single non-negative integer.\nOutput: floor(sqrt(x)).",
+    "examples": [
+      {
+        "input": "x = 4",
+        "output": "2"
+      },
+      {
+        "input": "x = 8",
+        "output": "2",
+        "explanation": "sqrt(8) = 2.828..., rounded down is 2."
+      }
+    ],
+    "constraints": [
+      "0 <= x <= 2^31 - 1"
+    ],
+    "starterCode": {
+      "javascript": "function mySqrt(x) {\n  // your code here\n}\n",
+      "typescript": "function mySqrt(x: number): number {\n  // your code here\n  return 0;\n}\n",
+      "python": "def my_sqrt(x):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int mySqrt(int x) {\n        // your code here (java.util.* is already imported)\n        return 0;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint mySqrt(int x) {\n    // your code here\n    return 0;\n}\n"
+    },
+    "harness": {
+      "javascript": "const __x = parseInt(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0], 10);\nconsole.log(mySqrt(__x));\n",
+      "typescript": "const __x = parseInt(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0], 10);\nconsole.log(mySqrt(__x));\n",
+      "python": "import sys\n__x = int(sys.stdin.read().splitlines()[0])\nprint(my_sqrt(__x))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.mySqrt(Integer.parseInt(x[0].trim())));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nint main(){\n    vector<string> x = RL();\n    int a0=stoi(x[0]);\n    cout << mySqrt(a0) << \"\\n\";\n    return 0;\n}\n"
+    },
+    "params": [
+      {
+        "name": "x"
+      }
+    ],
+    "testCases": [
+      {
+        "name": "perfect square",
+        "stdin": "4\n",
+        "expectedStdout": "2"
+      },
+      {
+        "name": "non perfect",
+        "stdin": "8\n",
+        "expectedStdout": "2"
+      },
+      {
+        "name": "zero",
+        "stdin": "0\n",
+        "expectedStdout": "0"
+      },
+      {
+        "name": "one",
+        "stdin": "1\n",
+        "expectedStdout": "1"
+      },
+      {
+        "name": "large",
+        "stdin": "2147395599\n",
+        "expectedStdout": "46339"
+      }
+    ]
+  },
+  {
+    "id": "find-disappeared-numbers",
+    "title": "Find All Numbers Disappeared in an Array",
+    "difficulty": "easy",
+    "tags": [
+      "array",
+      "hash-map"
+    ],
+    "description": "Given an array nums of n integers where nums[i] is in the range [1, n], return an array of all the integers in the range [1, n] that do not appear in nums.\n\nInput: a JSON array of integers.\nOutput: a JSON array of the missing integers, in ascending order (for example [5,6]).",
+    "examples": [
+      {
+        "input": "nums = [4,3,2,7,8,2,3,1]",
+        "output": "[5,6]"
+      },
+      {
+        "input": "nums = [1,1]",
+        "output": "[2]"
+      }
+    ],
+    "constraints": [
+      "n == nums.length",
+      "1 <= n <= 10^5",
+      "1 <= nums[i] <= n"
+    ],
+    "starterCode": {
+      "javascript": "function findDisappearedNumbers(nums) {\n  // your code here\n}\n",
+      "typescript": "function findDisappearedNumbers(nums: number[]): number[] {\n  // your code here\n  return [];\n}\n",
+      "python": "def find_disappeared_numbers(nums):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int[] findDisappearedNumbers(int[] nums) {\n        // your code here (java.util.* is already imported)\n        return new int[]{};\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nvector<int> findDisappearedNumbers(vector<int>& nums) {\n    // your code here\n    return {};\n}\n"
+    },
+    "harness": {
+      "javascript": "const __nums = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(JSON.stringify(findDisappearedNumbers(__nums)));\n",
+      "typescript": "const __nums = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(JSON.stringify(findDisappearedNumbers(__nums)));\n",
+      "python": "import sys, json\n__nums = json.loads(sys.stdin.read().splitlines()[0])\nprint(json.dumps(find_disappeared_numbers(__nums), separators=(\",\", \":\")))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    static int[] pi(String s) {\n        int a = s.indexOf('['), b = s.lastIndexOf(']');\n        if (a >= 0 && b >= 0) s = s.substring(a + 1, b);\n        s = s.trim();\n        if (s.isEmpty()) return new int[0];\n        String[] p = s.split(\",\");\n        int[] r = new int[p.length];\n        for (int i = 0; i < p.length; i++) r[i] = Integer.parseInt(p[i].trim());\n        return r;\n    }\n    static String ia(int[] a) {\n        StringBuilder b = new StringBuilder(\"[\");\n        for (int i = 0; i < a.length; i++) { if (i > 0) b.append(','); b.append(a[i]); }\n        return b.append(']').toString();\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(ia(sol.findDisappearedNumbers(pi(x[0]))));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nstatic vector<int> PI(const string& s){string t;for(char c:s)t+=(c=='['||c==']'||c==',')?' ':c;vector<int> r;stringstream ss(t);int x;while(ss>>x)r.push_back(x);return r;}\nstatic string IA(const vector<int>& a){string o=\"[\";for(size_t i=0;i<a.size();i++){if(i)o+=\",\";o+=to_string(a[i]);}return o+\"]\";}\nint main(){\n    vector<string> x = RL();\n    auto a0=PI(x[0]);\n    cout << IA(findDisappearedNumbers(a0)) << \"\\n\";\n    return 0;\n}\n"
+    },
+    "params": [
+      {
+        "name": "nums"
+      }
+    ],
+    "testCases": [
+      {
+        "name": "two missing",
+        "stdin": "[4,3,2,7,8,2,3,1]\n",
+        "expectedStdout": "[5,6]"
+      },
+      {
+        "name": "one missing",
+        "stdin": "[1,1]\n",
+        "expectedStdout": "[2]"
+      },
+      {
+        "name": "none missing",
+        "stdin": "[1]\n",
+        "expectedStdout": "[]"
+      },
+      {
+        "name": "dup two",
+        "stdin": "[2,2]\n",
+        "expectedStdout": "[1]"
+      },
+      {
+        "name": "complete",
+        "stdin": "[1,2,3]\n",
+        "expectedStdout": "[]"
+      }
+    ]
+  },
+  {
+    "id": "intersection-of-two-arrays",
+    "title": "Intersection of Two Arrays",
+    "difficulty": "easy",
+    "tags": [
+      "array",
+      "hash-map"
+    ],
+    "description": "Given two integer arrays nums1 and nums2, return an array of their intersection. Each element in the result must be unique.\n\nReturn the result sorted in ascending order.\n\nInput: line 1 is nums1 as a JSON array; line 2 is nums2 as a JSON array.\nOutput: a JSON array of the unique common values, sorted ascending.",
+    "examples": [
+      {
+        "input": "nums1 = [1,2,2,1], nums2 = [2,2]",
+        "output": "[2]"
+      },
+      {
+        "input": "nums1 = [4,9,5], nums2 = [9,4,9,8,4]",
+        "output": "[4,9]"
+      }
+    ],
+    "constraints": [
+      "1 <= nums1.length, nums2.length <= 1000",
+      "0 <= nums1[i], nums2[i] <= 1000"
+    ],
+    "starterCode": {
+      "javascript": "function intersection(nums1, nums2) {\n  // your code here\n}\n",
+      "typescript": "function intersection(nums1: number[], nums2: number[]): number[] {\n  // your code here\n  return [];\n}\n",
+      "python": "def intersection(nums1, nums2):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int[] intersection(int[] nums1, int[] nums2) {\n        // your code here (java.util.* is already imported)\n        return new int[]{};\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nvector<int> intersection(vector<int>& nums1, vector<int>& nums2) {\n    // your code here\n    return {};\n}\n"
+    },
+    "harness": {
+      "javascript": "const __l = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nconsole.log(JSON.stringify(intersection(JSON.parse(__l[0]), JSON.parse(__l[1]))));\n",
+      "typescript": "const __l = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nconsole.log(JSON.stringify(intersection(JSON.parse(__l[0]), JSON.parse(__l[1]))));\n",
+      "python": "import sys, json\n__l = sys.stdin.read().splitlines()\nprint(json.dumps(intersection(json.loads(__l[0]), json.loads(__l[1])), separators=(\",\", \":\")))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    static int[] pi(String s) {\n        int a = s.indexOf('['), b = s.lastIndexOf(']');\n        if (a >= 0 && b >= 0) s = s.substring(a + 1, b);\n        s = s.trim();\n        if (s.isEmpty()) return new int[0];\n        String[] p = s.split(\",\");\n        int[] r = new int[p.length];\n        for (int i = 0; i < p.length; i++) r[i] = Integer.parseInt(p[i].trim());\n        return r;\n    }\n    static String ia(int[] a) {\n        StringBuilder b = new StringBuilder(\"[\");\n        for (int i = 0; i < a.length; i++) { if (i > 0) b.append(','); b.append(a[i]); }\n        return b.append(']').toString();\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(ia(sol.intersection(pi(x[0]), pi(x[1]))));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nstatic vector<int> PI(const string& s){string t;for(char c:s)t+=(c=='['||c==']'||c==',')?' ':c;vector<int> r;stringstream ss(t);int x;while(ss>>x)r.push_back(x);return r;}\nstatic string IA(const vector<int>& a){string o=\"[\";for(size_t i=0;i<a.size();i++){if(i)o+=\",\";o+=to_string(a[i]);}return o+\"]\";}\nint main(){\n    vector<string> x = RL();\n    auto a0=PI(x[0]);auto a1=PI(x[1]);\n    cout << IA(intersection(a0, a1)) << \"\\n\";\n    return 0;\n}\n"
+    },
+    "params": [
+      {
+        "name": "nums1"
+      },
+      {
+        "name": "nums2"
+      }
+    ],
+    "testCases": [
+      {
+        "name": "single common",
+        "stdin": "[1,2,2,1]\n[2,2]\n",
+        "expectedStdout": "[2]"
+      },
+      {
+        "name": "two common",
+        "stdin": "[4,9,5]\n[9,4,9,8,4]\n",
+        "expectedStdout": "[4,9]"
+      },
+      {
+        "name": "disjoint",
+        "stdin": "[1,2]\n[3,4]\n",
+        "expectedStdout": "[]"
+      },
+      {
+        "name": "identical",
+        "stdin": "[1,2,3]\n[1,2,3]\n",
+        "expectedStdout": "[1,2,3]"
+      },
+      {
+        "name": "one element",
+        "stdin": "[5]\n[5,5,5]\n",
+        "expectedStdout": "[5]"
+      }
+    ]
   }
 ]
