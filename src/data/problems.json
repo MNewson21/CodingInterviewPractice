@@ -5105,5 +5105,442 @@
         "expectedStdout": "[5]"
       }
     ]
+  },
+  {
+    "id": "power-of-three",
+    "title": "Power of Three",
+    "difficulty": "easy",
+    "tags": [
+      "math",
+      "recursion"
+    ],
+    "description": "Given an integer n, return true if it is a power of three. Otherwise, return false.\n\nAn integer n is a power of three if there exists an integer x such that n == 3^x.\n\nInput: a single integer.\nOutput: 'true' or 'false'.",
+    "examples": [
+      {
+        "input": "n = 27",
+        "output": "true",
+        "explanation": "27 = 3^3."
+      },
+      {
+        "input": "n = 0",
+        "output": "false"
+      },
+      {
+        "input": "n = -1",
+        "output": "false"
+      }
+    ],
+    "constraints": [
+      "-2^31 <= n <= 2^31 - 1"
+    ],
+    "starterCode": {
+      "javascript": "function isPowerOfThree(n) {\n  // your code here\n}\n",
+      "typescript": "function isPowerOfThree(n: number): boolean {\n  // your code here\n  return false;\n}\n",
+      "python": "def is_power_of_three(n):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    boolean isPowerOfThree(int n) {\n        // your code here (java.util.* is already imported)\n        return false;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nbool isPowerOfThree(int n) {\n    // your code here\n    return false;\n}\n"
+    },
+    "harness": {
+      "javascript": "const __n = parseInt(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0], 10);\nconsole.log(isPowerOfThree(__n));\n",
+      "typescript": "const __n = parseInt(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0], 10);\nconsole.log(isPowerOfThree(__n));\n",
+      "python": "import sys\n__n = int(sys.stdin.read().splitlines()[0])\nprint(\"true\" if is_power_of_three(__n) else \"false\")\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.isPowerOfThree(Integer.parseInt(x[0].trim())));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nint main(){\n    vector<string> x = RL();\n    int a0=stoi(x[0]);\n    cout << (isPowerOfThree(a0) ? \"true\" : \"false\") << \"\\n\";\n    return 0;\n}\n"
+    },
+    "params": [
+      {
+        "name": "n"
+      }
+    ],
+    "testCases": [
+      {
+        "name": "three cubed",
+        "stdin": "27\n",
+        "expectedStdout": "true"
+      },
+      {
+        "name": "zero",
+        "stdin": "0\n",
+        "expectedStdout": "false"
+      },
+      {
+        "name": "negative",
+        "stdin": "-3\n",
+        "expectedStdout": "false"
+      },
+      {
+        "name": "nine",
+        "stdin": "9\n",
+        "expectedStdout": "true"
+      },
+      {
+        "name": "not power",
+        "stdin": "45\n",
+        "expectedStdout": "false"
+      }
+    ]
+  },
+  {
+    "id": "ugly-number",
+    "title": "Ugly Number",
+    "difficulty": "easy",
+    "tags": [
+      "math"
+    ],
+    "description": "An ugly number is a positive integer whose prime factors are limited to 2, 3, and 5.\n\nGiven an integer n, return true if n is an ugly number.\n\nBy convention, 1 is treated as an ugly number (it has no prime factors).\n\nInput: a single integer.\nOutput: 'true' or 'false'.",
+    "examples": [
+      {
+        "input": "n = 6",
+        "output": "true",
+        "explanation": "6 = 2 * 3."
+      },
+      {
+        "input": "n = 1",
+        "output": "true",
+        "explanation": "1 has no prime factors, so it is ugly by convention."
+      },
+      {
+        "input": "n = 14",
+        "output": "false",
+        "explanation": "14 = 2 * 7, and 7 is not allowed."
+      }
+    ],
+    "constraints": [
+      "-2^31 <= n <= 2^31 - 1"
+    ],
+    "starterCode": {
+      "javascript": "function isUgly(n) {\n  // your code here\n}\n",
+      "typescript": "function isUgly(n: number): boolean {\n  // your code here\n  return false;\n}\n",
+      "python": "def is_ugly(n):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    boolean isUgly(int n) {\n        // your code here (java.util.* is already imported)\n        return false;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nbool isUgly(int n) {\n    // your code here\n    return false;\n}\n"
+    },
+    "harness": {
+      "javascript": "const __n = parseInt(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0], 10);\nconsole.log(isUgly(__n));\n",
+      "typescript": "const __n = parseInt(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0], 10);\nconsole.log(isUgly(__n));\n",
+      "python": "import sys\n__n = int(sys.stdin.read().splitlines()[0])\nprint(\"true\" if is_ugly(__n) else \"false\")\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.isUgly(Integer.parseInt(x[0].trim())));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nint main(){\n    vector<string> x = RL();\n    int a0=stoi(x[0]);\n    cout << (isUgly(a0) ? \"true\" : \"false\") << \"\\n\";\n    return 0;\n}\n"
+    },
+    "params": [
+      {
+        "name": "n"
+      }
+    ],
+    "testCases": [
+      {
+        "name": "two times three",
+        "stdin": "6\n",
+        "expectedStdout": "true"
+      },
+      {
+        "name": "one",
+        "stdin": "1\n",
+        "expectedStdout": "true"
+      },
+      {
+        "name": "has seven",
+        "stdin": "14\n",
+        "expectedStdout": "false"
+      },
+      {
+        "name": "power of two",
+        "stdin": "8\n",
+        "expectedStdout": "true"
+      },
+      {
+        "name": "zero",
+        "stdin": "0\n",
+        "expectedStdout": "false"
+      }
+    ]
+  },
+  {
+    "id": "arranging-coins",
+    "title": "Arranging Coins",
+    "difficulty": "easy",
+    "tags": [
+      "math",
+      "binary-search"
+    ],
+    "description": "You have n coins and you want to build a staircase. The staircase consists of k rows where the i-th row has exactly i coins. The last row of the staircase may be incomplete.\n\nGiven the integer n, return the number of complete rows of the staircase you can build.\n\nInput: a single non-negative integer.\nOutput: the number of complete rows.",
+    "examples": [
+      {
+        "input": "n = 5",
+        "output": "2",
+        "explanation": "Rows of 1 and 2 coins use 3 coins; the third row would need 3 but only 2 remain."
+      },
+      {
+        "input": "n = 8",
+        "output": "3"
+      }
+    ],
+    "constraints": [
+      "0 <= n <= 2^31 - 1"
+    ],
+    "starterCode": {
+      "javascript": "function arrangeCoins(n) {\n  // your code here\n}\n",
+      "typescript": "function arrangeCoins(n: number): number {\n  // your code here\n  return 0;\n}\n",
+      "python": "def arrange_coins(n):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int arrangeCoins(int n) {\n        // your code here (java.util.* is already imported)\n        return 0;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint arrangeCoins(int n) {\n    // your code here\n    return 0;\n}\n"
+    },
+    "harness": {
+      "javascript": "const __n = parseInt(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0], 10);\nconsole.log(arrangeCoins(__n));\n",
+      "typescript": "const __n = parseInt(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0], 10);\nconsole.log(arrangeCoins(__n));\n",
+      "python": "import sys\n__n = int(sys.stdin.read().splitlines()[0])\nprint(arrange_coins(__n))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.arrangeCoins(Integer.parseInt(x[0].trim())));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nint main(){\n    vector<string> x = RL();\n    int a0=stoi(x[0]);\n    cout << arrangeCoins(a0) << \"\\n\";\n    return 0;\n}\n"
+    },
+    "params": [
+      {
+        "name": "n"
+      }
+    ],
+    "testCases": [
+      {
+        "name": "five",
+        "stdin": "5\n",
+        "expectedStdout": "2"
+      },
+      {
+        "name": "eight",
+        "stdin": "8\n",
+        "expectedStdout": "3"
+      },
+      {
+        "name": "one",
+        "stdin": "1\n",
+        "expectedStdout": "1"
+      },
+      {
+        "name": "zero",
+        "stdin": "0\n",
+        "expectedStdout": "0"
+      },
+      {
+        "name": "large",
+        "stdin": "1804289383\n",
+        "expectedStdout": "60070"
+      }
+    ]
+  },
+  {
+    "id": "gcd-of-two-numbers",
+    "title": "Greatest Common Divisor",
+    "difficulty": "easy",
+    "tags": [
+      "math"
+    ],
+    "description": "Given two positive integers a and b, return their greatest common divisor: the largest positive integer that divides both a and b without a remainder.\n\nInput: line 1 is a; line 2 is b.\nOutput: gcd(a, b).",
+    "examples": [
+      {
+        "input": "a = 12, b = 8",
+        "output": "4"
+      },
+      {
+        "input": "a = 7, b = 5",
+        "output": "1",
+        "explanation": "7 and 5 are coprime."
+      }
+    ],
+    "constraints": [
+      "1 <= a, b <= 2^31 - 1"
+    ],
+    "starterCode": {
+      "javascript": "function gcd(a, b) {\n  // your code here\n}\n",
+      "typescript": "function gcd(a: number, b: number): number {\n  // your code here\n  return 0;\n}\n",
+      "python": "def gcd(a, b):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int gcd(int a, int b) {\n        // your code here (java.util.* is already imported)\n        return 0;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint gcd(int a, int b) {\n    // your code here\n    return 0;\n}\n"
+    },
+    "harness": {
+      "javascript": "const __l = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nconsole.log(gcd(parseInt(__l[0], 10), parseInt(__l[1], 10)));\n",
+      "typescript": "const __l = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nconsole.log(gcd(parseInt(__l[0], 10), parseInt(__l[1], 10)));\n",
+      "python": "import sys\n__l = sys.stdin.read().splitlines()\nprint(gcd(int(__l[0]), int(__l[1])))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.gcd(Integer.parseInt(x[0].trim()), Integer.parseInt(x[1].trim())));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nint main(){\n    vector<string> x = RL();\n    int a0=stoi(x[0]);int a1=stoi(x[1]);\n    cout << gcd(a0, a1) << \"\\n\";\n    return 0;\n}\n"
+    },
+    "params": [
+      {
+        "name": "a"
+      },
+      {
+        "name": "b"
+      }
+    ],
+    "testCases": [
+      {
+        "name": "shared factor",
+        "stdin": "12\n8\n",
+        "expectedStdout": "4"
+      },
+      {
+        "name": "coprime",
+        "stdin": "7\n5\n",
+        "expectedStdout": "1"
+      },
+      {
+        "name": "divisible",
+        "stdin": "100\n10\n",
+        "expectedStdout": "10"
+      },
+      {
+        "name": "equal",
+        "stdin": "9\n9\n",
+        "expectedStdout": "9"
+      },
+      {
+        "name": "one input",
+        "stdin": "1\n999\n",
+        "expectedStdout": "1"
+      }
+    ]
+  },
+  {
+    "id": "first-unique-character",
+    "title": "First Unique Character in a String",
+    "difficulty": "easy",
+    "tags": [
+      "string",
+      "hash-map"
+    ],
+    "description": "Given a string s, return the index of the first non-repeating character in it. If it does not exist, return -1.\n\nInput: the string s (lowercase English letters).\nOutput: the index of the first unique character, or -1.",
+    "examples": [
+      {
+        "input": "s = \"leetcode\"",
+        "output": "0"
+      },
+      {
+        "input": "s = \"loveleetcode\"",
+        "output": "2"
+      },
+      {
+        "input": "s = \"aabb\"",
+        "output": "-1"
+      }
+    ],
+    "constraints": [
+      "1 <= s.length <= 10^5",
+      "s consists of only lowercase English letters."
+    ],
+    "starterCode": {
+      "javascript": "function firstUniqChar(s) {\n  // your code here\n}\n",
+      "typescript": "function firstUniqChar(s: string): number {\n  // your code here\n  return 0;\n}\n",
+      "python": "def first_uniq_char(s):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int firstUniqChar(String s) {\n        // your code here (java.util.* is already imported)\n        return 0;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint firstUniqChar(string s) {\n    // your code here\n    return 0;\n}\n"
+    },
+    "harness": {
+      "javascript": "const __s = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0];\nconsole.log(firstUniqChar(__s));\n",
+      "typescript": "const __s = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0];\nconsole.log(firstUniqChar(__s));\n",
+      "python": "import sys\n__lines = sys.stdin.read().splitlines()\n__s = __lines[0] if __lines else \"\"\nprint(first_uniq_char(__s))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.firstUniqChar(x[0]));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nint main(){\n    vector<string> x = RL();\n    string a0 = x.size() > 0 ? x[0] : \"\";\n    cout << firstUniqChar(a0) << \"\\n\";\n    return 0;\n}\n"
+    },
+    "params": [
+      {
+        "name": "s",
+        "quote": true
+      }
+    ],
+    "testCases": [
+      {
+        "name": "front unique",
+        "stdin": "leetcode\n",
+        "expectedStdout": "0"
+      },
+      {
+        "name": "middle unique",
+        "stdin": "loveleetcode\n",
+        "expectedStdout": "2"
+      },
+      {
+        "name": "no unique",
+        "stdin": "aabb\n",
+        "expectedStdout": "-1"
+      },
+      {
+        "name": "single char",
+        "stdin": "z\n",
+        "expectedStdout": "0"
+      },
+      {
+        "name": "later unique",
+        "stdin": "abcabd\n",
+        "expectedStdout": "2"
+      }
+    ]
+  },
+  {
+    "id": "running-sum",
+    "title": "Running Sum of 1d Array",
+    "difficulty": "easy",
+    "tags": [
+      "array",
+      "prefix-sum"
+    ],
+    "description": "Given an array nums, the running sum of an array is defined as runningSum[i] = sum(nums[0..i]).\n\nReturn the running sum of nums.\n\nInput: a JSON array of integers.\nOutput: a JSON array of the running sums.",
+    "examples": [
+      {
+        "input": "nums = [1,2,3,4]",
+        "output": "[1,3,6,10]",
+        "explanation": "Running sum is [1, 1+2, 1+2+3, 1+2+3+4]."
+      },
+      {
+        "input": "nums = [1,1,1,1,1]",
+        "output": "[1,2,3,4,5]"
+      }
+    ],
+    "constraints": [
+      "1 <= nums.length <= 1000",
+      "-10^6 <= nums[i] <= 10^6"
+    ],
+    "starterCode": {
+      "javascript": "function runningSum(nums) {\n  // your code here\n}\n",
+      "typescript": "function runningSum(nums: number[]): number[] {\n  // your code here\n  return [];\n}\n",
+      "python": "def running_sum(nums):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int[] runningSum(int[] nums) {\n        // your code here (java.util.* is already imported)\n        return new int[]{};\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nvector<int> runningSum(vector<int>& nums) {\n    // your code here\n    return {};\n}\n"
+    },
+    "harness": {
+      "javascript": "const __nums = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(JSON.stringify(runningSum(__nums)));\n",
+      "typescript": "const __nums = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(JSON.stringify(runningSum(__nums)));\n",
+      "python": "import sys, json\n__nums = json.loads(sys.stdin.read().splitlines()[0])\nprint(json.dumps(running_sum(__nums), separators=(\",\", \":\")))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    static int[] pi(String s) {\n        int a = s.indexOf('['), b = s.lastIndexOf(']');\n        if (a >= 0 && b >= 0) s = s.substring(a + 1, b);\n        s = s.trim();\n        if (s.isEmpty()) return new int[0];\n        String[] p = s.split(\",\");\n        int[] r = new int[p.length];\n        for (int i = 0; i < p.length; i++) r[i] = Integer.parseInt(p[i].trim());\n        return r;\n    }\n    static String ia(int[] a) {\n        StringBuilder b = new StringBuilder(\"[\");\n        for (int i = 0; i < a.length; i++) { if (i > 0) b.append(','); b.append(a[i]); }\n        return b.append(']').toString();\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(ia(sol.runningSum(pi(x[0]))));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nstatic vector<int> PI(const string& s){string t;for(char c:s)t+=(c=='['||c==']'||c==',')?' ':c;vector<int> r;stringstream ss(t);int x;while(ss>>x)r.push_back(x);return r;}\nstatic string IA(const vector<int>& a){string o=\"[\";for(size_t i=0;i<a.size();i++){if(i)o+=\",\";o+=to_string(a[i]);}return o+\"]\";}\nint main(){\n    vector<string> x = RL();\n    auto a0=PI(x[0]);\n    cout << IA(runningSum(a0)) << \"\\n\";\n    return 0;\n}\n"
+    },
+    "params": [
+      {
+        "name": "nums"
+      }
+    ],
+    "testCases": [
+      {
+        "name": "basic",
+        "stdin": "[1,2,3,4]\n",
+        "expectedStdout": "[1,3,6,10]"
+      },
+      {
+        "name": "single",
+        "stdin": "[1]\n",
+        "expectedStdout": "[1]"
+      },
+      {
+        "name": "negatives",
+        "stdin": "[1,-1,1,-1]\n",
+        "expectedStdout": "[1,0,1,0]"
+      },
+      {
+        "name": "all same",
+        "stdin": "[3,3,3]\n",
+        "expectedStdout": "[3,6,9]"
+      },
+      {
+        "name": "ones",
+        "stdin": "[1,1,1,1,1]\n",
+        "expectedStdout": "[1,2,3,4,5]"
+      }
+    ]
   }
 ]
