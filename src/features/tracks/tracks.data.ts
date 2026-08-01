@@ -108,6 +108,7 @@ export const TRACKS: Track[] = [
       'valid-palindrome',
       'move-zeroes',
       'merge-two-sorted-lists',
+      'squares-of-a-sorted-array',
       'container-most-water',
       'longest-substring-no-repeat',
       'subarray-sum-k',
