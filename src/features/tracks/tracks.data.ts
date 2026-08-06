@@ -19,6 +19,29 @@ export interface Track {
 
 export const TRACKS: Track[] = [
   {
+    id: 'interviews',
+    title: 'Interviews',
+    blurb: 'The 15 questions asked most often in real coding interviews - start here.',
+    accent: 'text-rose-400',
+    problemIds: [
+      'two-sum',
+      'valid-parentheses',
+      'best-time-to-buy-sell-stock',
+      'valid-anagram',
+      'maximum-subarray',
+      'product-except-self',
+      'top-k-frequent',
+      'longest-substring-no-repeat',
+      'container-most-water',
+      'coin-change',
+      'number-of-islands',
+      'merge-intervals',
+      'reverse-linked-list',
+      'merge-two-sorted-lists',
+      'validate-bst',
+    ],
+  },
+  {
     id: 'easy-warmup',
     title: 'Easy Warmup',
     blurb: 'Gentle fundamentals to build momentum before the harder sets.',
