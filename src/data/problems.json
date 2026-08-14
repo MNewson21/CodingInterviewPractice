@@ -6157,5 +6157,170 @@
         "expectedStdout": "0"
       }
     ]
+  },
+  {
+    "id": "candy",
+    "title": "Candy",
+    "difficulty": "hard",
+    "tags": [
+      "array",
+      "greedy"
+    ],
+    "description": "There are n children standing in a line. Each child is assigned a rating value given in the integer array ratings.\n\nYou are giving candies to these children subject to the following requirements:\n- Each child must have at least one candy.\n- Children with a higher rating get more candies than their neighbors.\n\nReturn the minimum number of candies you need to have to distribute the candies to the children.\n\nInput: an array of integer ratings.\nOutput: the minimum total number of candies.",
+    "examples": [
+      {
+        "input": "ratings = [1,0,2]",
+        "output": "5",
+        "explanation": "You can allocate 2, 1, 2 candies respectively."
+      },
+      {
+        "input": "ratings = [1,2,2]",
+        "output": "4",
+        "explanation": "Allocate 1, 2, 1 candies; the third child gets 1 candy, which satisfies the requirements."
+      }
+    ],
+    "constraints": [
+      "n == ratings.length",
+      "1 <= n <= 2 * 10^4",
+      "0 <= ratings[i] <= 2 * 10^4"
+    ],
+    "starterCode": {
+      "javascript": "function candy(ratings) {\n  // your code here\n}\n",
+      "typescript": "function candy(ratings: number[]): number {\n  // your code here\n  return 0;\n}\n",
+      "python": "def candy(ratings):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int candy(int[] ratings) {\n        // your code here (java.util.* is already imported)\n        return 0;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint candy(vector<int>& ratings) {\n    // your code here\n    return 0;\n}\n"
+    },
+    "harness": {
+      "javascript": "const __ratings = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(candy(__ratings));\n",
+      "typescript": "const __ratings = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(candy(__ratings));\n",
+      "python": "import sys, json\n__ratings = json.loads(sys.stdin.read().splitlines()[0])\nprint(candy(__ratings))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    static int[] pi(String s) {\n        int a = s.indexOf('['), b = s.lastIndexOf(']');\n        if (a >= 0 && b >= 0) s = s.substring(a + 1, b);\n        s = s.trim();\n        if (s.isEmpty()) return new int[0];\n        String[] p = s.split(\",\");\n        int[] r = new int[p.length];\n        for (int i = 0; i < p.length; i++) r[i] = Integer.parseInt(p[i].trim());\n        return r;\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.candy(pi(x[0])));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nstatic vector<int> PI(const string& s){string t;for(char c:s)t+=(c=='['||c==']'||c==',')?' ':c;vector<int> r;stringstream ss(t);int x;while(ss>>x)r.push_back(x);return r;}\nint main(){\n    vector<string> x = RL();\n    auto a0=PI(x[0]);\n    cout << candy(a0) << \"\\n\";\n    return 0;\n}\n"
+    },
+    "params": [
+      {
+        "name": "ratings"
+      }
+    ],
+    "testCases": [
+      {
+        "name": "valley",
+        "stdin": "[1,0,2]\n",
+        "expectedStdout": "5"
+      },
+      {
+        "name": "equal neighbors",
+        "stdin": "[1,2,2]\n",
+        "expectedStdout": "4"
+      },
+      {
+        "name": "peak",
+        "stdin": "[1,3,2,2,1]\n",
+        "expectedStdout": "7"
+      },
+      {
+        "name": "ascending",
+        "stdin": "[1,2,3,4,5]\n",
+        "expectedStdout": "15"
+      },
+      {
+        "name": "descending",
+        "stdin": "[5,4,3,2,1]\n",
+        "expectedStdout": "15"
+      },
+      {
+        "name": "single",
+        "stdin": "[1]\n",
+        "expectedStdout": "1"
+      },
+      {
+        "name": "all equal",
+        "stdin": "[2,2,2]\n",
+        "expectedStdout": "3"
+      }
+    ]
+  },
+  {
+    "id": "best-time-to-buy-and-sell-stock-iii",
+    "title": "Best Time to Buy and Sell Stock III",
+    "difficulty": "hard",
+    "tags": [
+      "array",
+      "dynamic-programming"
+    ],
+    "description": "You are given an array prices where prices[i] is the price of a given stock on the i-th day.\n\nFind the maximum profit you can achieve. You may complete at most two transactions.\n\nNote: You may not engage in multiple transactions simultaneously (you must sell the stock before you buy again).\n\nInput: an array of stock prices.\nOutput: the maximum achievable profit.",
+    "examples": [
+      {
+        "input": "prices = [3,3,5,0,0,3,1,4]",
+        "output": "6",
+        "explanation": "Buy on day 4 (price 0) and sell on day 6 (price 3), profit 3; then buy on day 7 (price 1) and sell on day 8 (price 4), profit 3. Total = 6."
+      },
+      {
+        "input": "prices = [1,2,3,4,5]",
+        "output": "4",
+        "explanation": "Buy on day 1 and sell on day 5; a single transaction of profit 4 is optimal."
+      },
+      {
+        "input": "prices = [7,6,4,3,1]",
+        "output": "0",
+        "explanation": "Prices only fall, so no transaction is made and profit is 0."
+      }
+    ],
+    "constraints": [
+      "1 <= prices.length <= 10^5",
+      "0 <= prices[i] <= 10^5"
+    ],
+    "starterCode": {
+      "javascript": "function maxProfit(prices) {\n  // your code here\n}\n",
+      "typescript": "function maxProfit(prices: number[]): number {\n  // your code here\n  return 0;\n}\n",
+      "python": "def max_profit(prices):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int maxProfit(int[] prices) {\n        // your code here (java.util.* is already imported)\n        return 0;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint maxProfit(vector<int>& prices) {\n    // your code here\n    return 0;\n}\n"
+    },
+    "harness": {
+      "javascript": "const __prices = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(maxProfit(__prices));\n",
+      "typescript": "const __prices = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(maxProfit(__prices));\n",
+      "python": "import sys, json\n__prices = json.loads(sys.stdin.read().splitlines()[0])\nprint(max_profit(__prices))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    static int[] pi(String s) {\n        int a = s.indexOf('['), b = s.lastIndexOf(']');\n        if (a >= 0 && b >= 0) s = s.substring(a + 1, b);\n        s = s.trim();\n        if (s.isEmpty()) return new int[0];\n        String[] p = s.split(\",\");\n        int[] r = new int[p.length];\n        for (int i = 0; i < p.length; i++) r[i] = Integer.parseInt(p[i].trim());\n        return r;\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.maxProfit(pi(x[0])));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nstatic vector<int> PI(const string& s){string t;for(char c:s)t+=(c=='['||c==']'||c==',')?' ':c;vector<int> r;stringstream ss(t);int x;while(ss>>x)r.push_back(x);return r;}\nint main(){\n    vector<string> x = RL();\n    auto a0=PI(x[0]);\n    cout << maxProfit(a0) << \"\\n\";\n    return 0;\n}\n"
+    },
+    "params": [
+      {
+        "name": "prices"
+      }
+    ],
+    "testCases": [
+      {
+        "name": "two transactions",
+        "stdin": "[3,3,5,0,0,3,1,4]\n",
+        "expectedStdout": "6"
+      },
+      {
+        "name": "single best",
+        "stdin": "[1,2,3,4,5]\n",
+        "expectedStdout": "4"
+      },
+      {
+        "name": "no profit",
+        "stdin": "[7,6,4,3,1]\n",
+        "expectedStdout": "0"
+      },
+      {
+        "name": "single day",
+        "stdin": "[1]\n",
+        "expectedStdout": "0"
+      },
+      {
+        "name": "two peaks",
+        "stdin": "[1,2,4,2,5,7,2,4,9,0]\n",
+        "expectedStdout": "13"
+      },
+      {
+        "name": "flat",
+        "stdin": "[2,2,2,2]\n",
+        "expectedStdout": "0"
+      }
+    ]
   }
 ]
