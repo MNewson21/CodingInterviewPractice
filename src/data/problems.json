@@ -6491,5 +6491,186 @@
         "expectedStdout": "[0,0,0]"
       }
     ]
+  },
+  {
+    "id": "longest-valid-parentheses",
+    "title": "Longest Valid Parentheses",
+    "difficulty": "hard",
+    "tags": [
+      "string",
+      "stack",
+      "dynamic-programming"
+    ],
+    "description": "Given a string containing just the characters '(' and ')', return the length of the longest valid (well-formed) parentheses substring.\n\nA substring is valid if every opening bracket has a matching closing bracket that appears after it, and the brackets are correctly nested.\n\nInput: a single line containing the string (it may be empty).\nOutput: the length of the longest valid parentheses substring.",
+    "examples": [
+      {
+        "input": "s = \"(()\"",
+        "output": "2",
+        "explanation": "The longest valid substring is \"()\", of length 2."
+      },
+      {
+        "input": "s = \")()())\"",
+        "output": "4",
+        "explanation": "The longest valid substring is \"()()\", of length 4."
+      },
+      {
+        "input": "s = \"\"",
+        "output": "0",
+        "explanation": "There is no valid substring in an empty string."
+      }
+    ],
+    "constraints": [
+      "0 <= s.length <= 3 * 10^4",
+      "s[i] is '(' or ')'"
+    ],
+    "starterCode": {
+      "javascript": "function longestValidParentheses(s) {\n  // your code here\n}\n",
+      "typescript": "function longestValidParentheses(s: string): number {\n  // your code here\n  return 0;\n}\n",
+      "python": "def longest_valid_parentheses(s):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int longestValidParentheses(String s) {\n        // your code here (java.util.* is already imported)\n        return 0;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint longestValidParentheses(string s) {\n    // your code here\n    return 0;\n}\n"
+    },
+    "harness": {
+      "javascript": "const __s = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0];\nconsole.log(longestValidParentheses(__s));\n",
+      "typescript": "const __s = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0];\nconsole.log(longestValidParentheses(__s));\n",
+      "python": "import sys\n__lines = sys.stdin.read().splitlines()\n__s = __lines[0] if __lines else \"\"\nprint(longest_valid_parentheses(__s))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.longestValidParentheses(x[0]));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nint main(){\n    vector<string> x = RL();\n    string a0 = x.size() > 0 ? x[0] : \"\";\n    cout << longestValidParentheses(a0) << \"\\n\";\n    return 0;\n}\n"
+    },
+    "params": [
+      {
+        "name": "s",
+        "quote": true
+      }
+    ],
+    "testCases": [
+      {
+        "name": "unclosed open",
+        "stdin": "(()\n",
+        "expectedStdout": "2"
+      },
+      {
+        "name": "leading close",
+        "stdin": ")()())\n",
+        "expectedStdout": "4"
+      },
+      {
+        "name": "empty",
+        "stdin": "\n",
+        "expectedStdout": "0"
+      },
+      {
+        "name": "all open",
+        "stdin": "((((\n",
+        "expectedStdout": "0"
+      },
+      {
+        "name": "fully nested",
+        "stdin": "(((())))\n",
+        "expectedStdout": "8"
+      },
+      {
+        "name": "split runs",
+        "stdin": "()(()\n",
+        "expectedStdout": "2"
+      },
+      {
+        "name": "long tail",
+        "stdin": "()(())\n",
+        "expectedStdout": "6"
+      }
+    ]
+  },
+  {
+    "id": "split-array-largest-sum",
+    "title": "Split Array Largest Sum",
+    "difficulty": "hard",
+    "tags": [
+      "array",
+      "binary-search",
+      "dynamic-programming"
+    ],
+    "description": "Given an integer array nums and an integer k, split nums into k non-empty contiguous subarrays.\n\nWrite an algorithm to minimise the largest sum among these k subarrays, and return that minimised largest sum.\n\nInput: line 1 is an array of integers, line 2 is the integer k.\nOutput: the smallest possible value of the largest subarray sum.",
+    "examples": [
+      {
+        "input": "nums = [7,2,5,10,8], k = 2",
+        "output": "18",
+        "explanation": "The best split is [7,2,5] and [10,8]; the largest sum is 18, and no split does better."
+      },
+      {
+        "input": "nums = [1,2,3,4,5], k = 2",
+        "output": "9",
+        "explanation": "Split into [1,2,3] and [4,5]; the largest sum is 9."
+      },
+      {
+        "input": "nums = [1,4,4], k = 3",
+        "output": "4",
+        "explanation": "Every element becomes its own subarray, so the largest sum is 4."
+      }
+    ],
+    "constraints": [
+      "1 <= nums.length <= 1000",
+      "0 <= nums[i] <= 10^6",
+      "1 <= k <= min(50, nums.length)"
+    ],
+    "starterCode": {
+      "javascript": "function splitArray(nums, k) {\n  // your code here\n}\n",
+      "typescript": "function splitArray(nums: number[], k: number): number {\n  // your code here\n  return 0;\n}\n",
+      "python": "def split_array(nums, k):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int splitArray(int[] nums, int k) {\n        // your code here (java.util.* is already imported)\n        return 0;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint splitArray(vector<int>& nums, int k) {\n    // your code here\n    return 0;\n}\n"
+    },
+    "harness": {
+      "javascript": "const __l = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nconsole.log(splitArray(JSON.parse(__l[0]), parseInt(__l[1], 10)));\n",
+      "typescript": "const __l = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nconsole.log(splitArray(JSON.parse(__l[0]), parseInt(__l[1], 10)));\n",
+      "python": "import sys, json\n__l = sys.stdin.read().splitlines()\nprint(split_array(json.loads(__l[0]), int(__l[1])))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    static int[] pi(String s) {\n        int a = s.indexOf('['), b = s.lastIndexOf(']');\n        if (a >= 0 && b >= 0) s = s.substring(a + 1, b);\n        s = s.trim();\n        if (s.isEmpty()) return new int[0];\n        String[] p = s.split(\",\");\n        int[] r = new int[p.length];\n        for (int i = 0; i < p.length; i++) r[i] = Integer.parseInt(p[i].trim());\n        return r;\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.splitArray(pi(x[0]), Integer.parseInt(x[1].trim())));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nstatic vector<int> PI(const string& s){string t;for(char c:s)t+=(c=='['||c==']'||c==',')?' ':c;vector<int> r;stringstream ss(t);int x;while(ss>>x)r.push_back(x);return r;}\nint main(){\n    vector<string> x = RL();\n    auto a0=PI(x[0]);int a1=stoi(x[1]);\n    cout << splitArray(a0, a1) << \"\\n\";\n    return 0;\n}\n"
+    },
+    "params": [
+      {
+        "name": "nums"
+      },
+      {
+        "name": "k"
+      }
+    ],
+    "testCases": [
+      {
+        "name": "classic",
+        "stdin": "[7,2,5,10,8]\n2\n",
+        "expectedStdout": "18"
+      },
+      {
+        "name": "even split",
+        "stdin": "[1,2,3,4,5]\n2\n",
+        "expectedStdout": "9"
+      },
+      {
+        "name": "one each",
+        "stdin": "[1,4,4]\n3\n",
+        "expectedStdout": "4"
+      },
+      {
+        "name": "single part",
+        "stdin": "[1,2,3,4,5]\n1\n",
+        "expectedStdout": "15"
+      },
+      {
+        "name": "single element",
+        "stdin": "[10]\n1\n",
+        "expectedStdout": "10"
+      },
+      {
+        "name": "with zeros",
+        "stdin": "[0,0,5,0,3]\n2\n",
+        "expectedStdout": "5"
+      },
+      {
+        "name": "dominant max",
+        "stdin": "[2,3,1,100,4,5]\n3\n",
+        "expectedStdout": "100"
+      }
+    ]
   }
 ]
