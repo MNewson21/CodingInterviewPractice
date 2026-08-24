@@ -6672,5 +6672,183 @@
         "expectedStdout": "100"
       }
     ]
+  },
+  {
+    "id": "number-of-digit-one",
+    "title": "Number of Digit One",
+    "difficulty": "hard",
+    "tags": [
+      "math",
+      "dynamic-programming",
+      "recursion"
+    ],
+    "description": "Given an integer n, count the total number of times the digit 1 appears in all non-negative integers less than or equal to n.\n\nA single number can contribute more than once: 11 contains the digit 1 twice, so it counts twice.\n\nInput: a single integer n.\nOutput: the total number of times the digit 1 appears.",
+    "examples": [
+      {
+        "input": "n = 13",
+        "output": "6",
+        "explanation": "The digit 1 appears in 1, 10, 11 (twice), 12 and 13, giving 6 occurrences."
+      },
+      {
+        "input": "n = 0",
+        "output": "0",
+        "explanation": "Only the number 0 is in range, and it contains no digit 1."
+      },
+      {
+        "input": "n = 100",
+        "output": "21",
+        "explanation": "1 appears once in each of 1 and 21..91, twice in 11, and in every number from 10 to 19 and in 100."
+      }
+    ],
+    "constraints": [
+      "0 <= n <= 10^9"
+    ],
+    "starterCode": {
+      "javascript": "function countDigitOne(n) {\n  // your code here\n}\n",
+      "typescript": "function countDigitOne(n: number): number {\n  // your code here\n  return 0;\n}\n",
+      "python": "def count_digit_one(n):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int countDigitOne(int n) {\n        // your code here (java.util.* is already imported)\n        return 0;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint countDigitOne(int n) {\n    // your code here\n    return 0;\n}\n"
+    },
+    "harness": {
+      "javascript": "const __n = parseInt(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0], 10);\nconsole.log(countDigitOne(__n));\n",
+      "typescript": "const __n = parseInt(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0], 10);\nconsole.log(countDigitOne(__n));\n",
+      "python": "import sys\n__n = int(sys.stdin.read().splitlines()[0])\nprint(count_digit_one(__n))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.countDigitOne(Integer.parseInt(x[0].trim())));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nint main(){\n    vector<string> x = RL();\n    int a0=stoi(x[0]);\n    cout << countDigitOne(a0) << \"\\n\";\n    return 0;\n}\n"
+    },
+    "params": [
+      {
+        "name": "n"
+      }
+    ],
+    "testCases": [
+      {
+        "name": "classic",
+        "stdin": "13\n",
+        "expectedStdout": "6"
+      },
+      {
+        "name": "zero",
+        "stdin": "0\n",
+        "expectedStdout": "0"
+      },
+      {
+        "name": "single one",
+        "stdin": "1\n",
+        "expectedStdout": "1"
+      },
+      {
+        "name": "no tens",
+        "stdin": "9\n",
+        "expectedStdout": "1"
+      },
+      {
+        "name": "first ten",
+        "stdin": "10\n",
+        "expectedStdout": "2"
+      },
+      {
+        "name": "round hundred",
+        "stdin": "100\n",
+        "expectedStdout": "21"
+      },
+      {
+        "name": "large",
+        "stdin": "1000000000\n",
+        "expectedStdout": "900000001"
+      }
+    ]
+  },
+  {
+    "id": "super-egg-drop",
+    "title": "Super Egg Drop",
+    "difficulty": "hard",
+    "tags": [
+      "math",
+      "binary-search",
+      "dynamic-programming"
+    ],
+    "description": "You are given k identical eggs and a building with n floors numbered from 1 to n.\n\nThere is a floor f, with 0 <= f <= n, such that an egg dropped from any floor above f breaks, and an egg dropped from floor f or below does not. Each move you take one unbroken egg and drop it from a floor of your choice; an egg that breaks cannot be reused, and one that survives can be dropped again.\n\nReturn the minimum number of moves that is always enough to determine f, no matter where f actually is.\n\nInput: line 1 is k, the number of eggs; line 2 is n, the number of floors.\nOutput: the minimum number of moves needed in the worst case.",
+    "examples": [
+      {
+        "input": "k = 1, n = 2",
+        "output": "2",
+        "explanation": "With one egg you must search upward one floor at a time: drop from floor 1, and if it survives drop from floor 2."
+      },
+      {
+        "input": "k = 2, n = 6",
+        "output": "3",
+        "explanation": "Three moves are always enough with two eggs, and two moves are not."
+      },
+      {
+        "input": "k = 3, n = 14",
+        "output": "4",
+        "explanation": "Four moves suffice for 14 floors once a third egg is available."
+      }
+    ],
+    "constraints": [
+      "1 <= k <= 100",
+      "1 <= n <= 10^4"
+    ],
+    "starterCode": {
+      "javascript": "function superEggDrop(k, n) {\n  // your code here\n}\n",
+      "typescript": "function superEggDrop(k: number, n: number): number {\n  // your code here\n  return 0;\n}\n",
+      "python": "def super_egg_drop(k, n):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int superEggDrop(int k, int n) {\n        // your code here (java.util.* is already imported)\n        return 0;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint superEggDrop(int k, int n) {\n    // your code here\n    return 0;\n}\n"
+    },
+    "harness": {
+      "javascript": "const __l = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nconsole.log(superEggDrop(parseInt(__l[0], 10), parseInt(__l[1], 10)));\n",
+      "typescript": "const __l = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nconsole.log(superEggDrop(parseInt(__l[0], 10), parseInt(__l[1], 10)));\n",
+      "python": "import sys\n__l = sys.stdin.read().splitlines()\nprint(super_egg_drop(int(__l[0]), int(__l[1])))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.superEggDrop(Integer.parseInt(x[0].trim()), Integer.parseInt(x[1].trim())));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nint main(){\n    vector<string> x = RL();\n    int a0=stoi(x[0]);int a1=stoi(x[1]);\n    cout << superEggDrop(a0, a1) << \"\\n\";\n    return 0;\n}\n"
+    },
+    "params": [
+      {
+        "name": "k"
+      },
+      {
+        "name": "n"
+      }
+    ],
+    "testCases": [
+      {
+        "name": "one egg",
+        "stdin": "1\n2\n",
+        "expectedStdout": "2"
+      },
+      {
+        "name": "two eggs",
+        "stdin": "2\n6\n",
+        "expectedStdout": "3"
+      },
+      {
+        "name": "three eggs",
+        "stdin": "3\n14\n",
+        "expectedStdout": "4"
+      },
+      {
+        "name": "single floor",
+        "stdin": "1\n1\n",
+        "expectedStdout": "1"
+      },
+      {
+        "name": "two eggs tall building",
+        "stdin": "2\n100\n",
+        "expectedStdout": "14"
+      },
+      {
+        "name": "many eggs",
+        "stdin": "10\n10000\n",
+        "expectedStdout": "14"
+      },
+      {
+        "name": "eggs exceed need",
+        "stdin": "100\n10000\n",
+        "expectedStdout": "14"
+      }
+    ]
   }
 ]
