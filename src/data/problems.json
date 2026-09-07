@@ -6850,5 +6850,373 @@
         "expectedStdout": "14"
       }
     ]
+  },
+  {
+    "id": "minimum-path-sum",
+    "title": "Minimum Path Sum",
+    "difficulty": "medium",
+    "tags": [
+      "matrix",
+      "array",
+      "dynamic-programming",
+      "grid"
+    ],
+    "description": "Given an m x n grid filled with non-negative numbers, find a path from the top-left cell to the bottom-right cell that minimises the sum of the numbers along the path.\n\nYou may only ever move one cell to the right or one cell down.\n\nInput: a single line holding the grid as a list of rows, e.g. [[1,3,1],[1,5,1]].\nOutput: the smallest achievable path sum.",
+    "examples": [
+      {
+        "input": "grid = [[1,3,1],[1,5,1],[4,2,1]]",
+        "output": "7",
+        "explanation": "The path 1 -> 3 -> 1 -> 1 -> 1 sums to 7, which is the smallest possible."
+      },
+      {
+        "input": "grid = [[1,2,3],[4,5,6]]",
+        "output": "12",
+        "explanation": "The path 1 -> 2 -> 3 -> 6 sums to 12."
+      },
+      {
+        "input": "grid = [[5]]",
+        "output": "5",
+        "explanation": "A single cell is both the start and the end, so the answer is that cell."
+      }
+    ],
+    "constraints": [
+      "1 <= m, n <= 200",
+      "0 <= grid[i][j] <= 200"
+    ],
+    "starterCode": {
+      "javascript": "function minPathSum(grid) {\n  // your code here\n}\n",
+      "typescript": "function minPathSum(grid: number[][]): number {\n  // your code here\n  return 0;\n}\n",
+      "python": "def min_path_sum(grid):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int minPathSum(int[][] grid) {\n        // your code here (java.util.* is already imported)\n        return 0;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint minPathSum(vector<vector<int>>& grid) {\n    // your code here\n    return 0;\n}\n"
+    },
+    "harness": {
+      "javascript": "const __grid = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(minPathSum(__grid));\n",
+      "typescript": "const __grid = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(minPathSum(__grid));\n",
+      "python": "import sys, json\n__grid = json.loads(sys.stdin.read().splitlines()[0])\nprint(min_path_sum(__grid))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    static int[] pi(String s) {\n        int a = s.indexOf('['), b = s.lastIndexOf(']');\n        if (a >= 0 && b >= 0) s = s.substring(a + 1, b);\n        s = s.trim();\n        if (s.isEmpty()) return new int[0];\n        String[] p = s.split(\",\");\n        int[] r = new int[p.length];\n        for (int i = 0; i < p.length; i++) r[i] = Integer.parseInt(p[i].trim());\n        return r;\n    }\n    static int[][] pg(String s) {\n        List<int[]> rows = new ArrayList<>();\n        int d = 0, st = -1;\n        for (int i = 0; i < s.length(); i++) {\n            char c = s.charAt(i);\n            if (c == '[') { d++; if (d == 2) st = i; }\n            else if (c == ']') { if (d == 2) rows.add(pi(s.substring(st, i + 1))); d--; }\n        }\n        return rows.toArray(new int[0][]);\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.minPathSum(pg(x[0])));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nstatic vector<int> PI(const string& s){string t;for(char c:s)t+=(c=='['||c==']'||c==',')?' ':c;vector<int> r;stringstream ss(t);int x;while(ss>>x)r.push_back(x);return r;}\nstatic vector<vector<int>> PG(const string& s){vector<vector<int>> r;int d=0;size_t st=0;for(size_t i=0;i<s.size();i++){char c=s[i];if(c=='['){d++;if(d==2)st=i;}else if(c==']'){if(d==2)r.push_back(PI(s.substr(st,i-st+1)));d--;}}return r;}\nint main(){\n    vector<string> x = RL();\n    auto a0=PG(x[0]);\n    cout << minPathSum(a0) << \"\\n\";\n    return 0;\n}\n"
+    },
+    "params": [
+      {
+        "name": "grid"
+      }
+    ],
+    "testCases": [
+      {
+        "name": "classic",
+        "stdin": "[[1,3,1],[1,5,1],[4,2,1]]\n",
+        "expectedStdout": "7"
+      },
+      {
+        "name": "two rows",
+        "stdin": "[[1,2,3],[4,5,6]]\n",
+        "expectedStdout": "12"
+      },
+      {
+        "name": "single cell",
+        "stdin": "[[5]]\n",
+        "expectedStdout": "5"
+      },
+      {
+        "name": "single row",
+        "stdin": "[[1,2,3,4]]\n",
+        "expectedStdout": "10"
+      },
+      {
+        "name": "single column",
+        "stdin": "[[1],[2],[3]]\n",
+        "expectedStdout": "6"
+      },
+      {
+        "name": "all zeroes",
+        "stdin": "[[0,0],[0,0]]\n",
+        "expectedStdout": "0"
+      },
+      {
+        "name": "cheap detour",
+        "stdin": "[[1,9,9,9],[1,1,1,9],[9,9,1,1]]\n",
+        "expectedStdout": "6"
+      }
+    ]
+  },
+  {
+    "id": "number-of-provinces",
+    "title": "Number of Provinces",
+    "difficulty": "medium",
+    "tags": [
+      "graph",
+      "depth-first-search",
+      "breadth-first-search",
+      "union-find",
+      "matrix"
+    ],
+    "description": "There are n cities. Some of them are connected directly, and if city a is connected to city b and city b is connected to city c, then a and c are connected indirectly. A province is a group of cities that are all connected to each other, directly or indirectly, and which has no connection to any city outside the group.\n\nYou are given an n x n matrix isConnected where isConnected[i][j] is 1 if the i-th and j-th cities are directly connected and 0 otherwise. Return the number of provinces.\n\nInput: a single line holding the matrix as a list of rows, e.g. [[1,1,0],[1,1,0],[0,0,1]].\nOutput: the number of provinces.",
+    "examples": [
+      {
+        "input": "isConnected = [[1,1,0],[1,1,0],[0,0,1]]",
+        "output": "2",
+        "explanation": "Cities 0 and 1 form one province and city 2 forms another."
+      },
+      {
+        "input": "isConnected = [[1,0,0],[0,1,0],[0,0,1]]",
+        "output": "3",
+        "explanation": "No city is connected to any other, so each is its own province."
+      },
+      {
+        "input": "isConnected = [[1,1,0,0],[1,1,1,0],[0,1,1,0],[0,0,0,1]]",
+        "output": "2",
+        "explanation": "Cities 0, 1 and 2 are linked in a chain, so they form a single province alongside the lone city 3."
+      }
+    ],
+    "constraints": [
+      "1 <= n <= 200",
+      "isConnected[i][j] is 1 or 0",
+      "isConnected[i][i] == 1",
+      "isConnected[i][j] == isConnected[j][i]"
+    ],
+    "starterCode": {
+      "javascript": "function findCircleNum(isConnected) {\n  // your code here\n}\n",
+      "typescript": "function findCircleNum(isConnected: number[][]): number {\n  // your code here\n  return 0;\n}\n",
+      "python": "def find_circle_num(isConnected):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int findCircleNum(int[][] isConnected) {\n        // your code here (java.util.* is already imported)\n        return 0;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint findCircleNum(vector<vector<int>>& isConnected) {\n    // your code here\n    return 0;\n}\n"
+    },
+    "harness": {
+      "javascript": "const __isConnected = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(findCircleNum(__isConnected));\n",
+      "typescript": "const __isConnected = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(findCircleNum(__isConnected));\n",
+      "python": "import sys, json\n__isConnected = json.loads(sys.stdin.read().splitlines()[0])\nprint(find_circle_num(__isConnected))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    static int[] pi(String s) {\n        int a = s.indexOf('['), b = s.lastIndexOf(']');\n        if (a >= 0 && b >= 0) s = s.substring(a + 1, b);\n        s = s.trim();\n        if (s.isEmpty()) return new int[0];\n        String[] p = s.split(\",\");\n        int[] r = new int[p.length];\n        for (int i = 0; i < p.length; i++) r[i] = Integer.parseInt(p[i].trim());\n        return r;\n    }\n    static int[][] pg(String s) {\n        List<int[]> rows = new ArrayList<>();\n        int d = 0, st = -1;\n        for (int i = 0; i < s.length(); i++) {\n            char c = s.charAt(i);\n            if (c == '[') { d++; if (d == 2) st = i; }\n            else if (c == ']') { if (d == 2) rows.add(pi(s.substring(st, i + 1))); d--; }\n        }\n        return rows.toArray(new int[0][]);\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.findCircleNum(pg(x[0])));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nstatic vector<int> PI(const string& s){string t;for(char c:s)t+=(c=='['||c==']'||c==',')?' ':c;vector<int> r;stringstream ss(t);int x;while(ss>>x)r.push_back(x);return r;}\nstatic vector<vector<int>> PG(const string& s){vector<vector<int>> r;int d=0;size_t st=0;for(size_t i=0;i<s.size();i++){char c=s[i];if(c=='['){d++;if(d==2)st=i;}else if(c==']'){if(d==2)r.push_back(PI(s.substr(st,i-st+1)));d--;}}return r;}\nint main(){\n    vector<string> x = RL();\n    auto a0=PG(x[0]);\n    cout << findCircleNum(a0) << \"\\n\";\n    return 0;\n}\n"
+    },
+    "params": [
+      {
+        "name": "isConnected"
+      }
+    ],
+    "testCases": [
+      {
+        "name": "two provinces",
+        "stdin": "[[1,1,0],[1,1,0],[0,0,1]]\n",
+        "expectedStdout": "2"
+      },
+      {
+        "name": "all separate",
+        "stdin": "[[1,0,0],[0,1,0],[0,0,1]]\n",
+        "expectedStdout": "3"
+      },
+      {
+        "name": "all connected",
+        "stdin": "[[1,1,1],[1,1,1],[1,1,1]]\n",
+        "expectedStdout": "1"
+      },
+      {
+        "name": "single city",
+        "stdin": "[[1]]\n",
+        "expectedStdout": "1"
+      },
+      {
+        "name": "chain plus loner",
+        "stdin": "[[1,1,0,0],[1,1,1,0],[0,1,1,0],[0,0,0,1]]\n",
+        "expectedStdout": "2"
+      },
+      {
+        "name": "two pairs",
+        "stdin": "[[1,1,0,0],[1,1,0,0],[0,0,1,1],[0,0,1,1]]\n",
+        "expectedStdout": "2"
+      },
+      {
+        "name": "indirect link",
+        "stdin": "[[1,0,1,0,0],[0,1,0,1,0],[1,0,1,0,0],[0,1,0,1,0],[0,0,0,0,1]]\n",
+        "expectedStdout": "3"
+      }
+    ]
+  },
+  {
+    "id": "unique-paths-iii",
+    "title": "Unique Paths III",
+    "difficulty": "hard",
+    "tags": [
+      "matrix",
+      "backtracking",
+      "depth-first-search",
+      "grid"
+    ],
+    "description": "You are given an m x n grid where each cell is one of the following:\n\n1 is the starting square (there is exactly one), 2 is the ending square (there is exactly one), 0 is an empty square you may walk over, and -1 is an obstacle you may not enter.\n\nReturn the number of distinct four-directional walks from the starting square to the ending square that step on every non-obstacle square exactly once.\n\nInput: a single line holding the grid as a list of rows, e.g. [[1,0,0,0],[0,0,2,-1]].\nOutput: the number of such walks.",
+    "examples": [
+      {
+        "input": "grid = [[1,0,0,0],[0,0,0,0],[0,0,2,-1]]",
+        "output": "2",
+        "explanation": "Two walks cover all ten walkable squares before finishing on the 2."
+      },
+      {
+        "input": "grid = [[1,0,0,0],[0,0,0,0],[0,0,0,2]]",
+        "output": "4",
+        "explanation": "With no obstacle there are four full-coverage walks."
+      },
+      {
+        "input": "grid = [[0,1],[2,0]]",
+        "output": "0",
+        "explanation": "Any walk from the 1 to the 2 has to skip a square, so no valid walk exists."
+      }
+    ],
+    "constraints": [
+      "1 <= m, n <= 20",
+      "1 <= m * n <= 20",
+      "grid[i][j] is 0, 1, 2, or -1",
+      "there is exactly one 1 and exactly one 2"
+    ],
+    "starterCode": {
+      "javascript": "function uniquePathsIII(grid) {\n  // your code here\n}\n",
+      "typescript": "function uniquePathsIII(grid: number[][]): number {\n  // your code here\n  return 0;\n}\n",
+      "python": "def unique_paths_iii(grid):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int uniquePathsIII(int[][] grid) {\n        // your code here (java.util.* is already imported)\n        return 0;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint uniquePathsIII(vector<vector<int>>& grid) {\n    // your code here\n    return 0;\n}\n"
+    },
+    "harness": {
+      "javascript": "const __grid = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(uniquePathsIII(__grid));\n",
+      "typescript": "const __grid = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(uniquePathsIII(__grid));\n",
+      "python": "import sys, json\n__grid = json.loads(sys.stdin.read().splitlines()[0])\nprint(unique_paths_iii(__grid))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    static int[] pi(String s) {\n        int a = s.indexOf('['), b = s.lastIndexOf(']');\n        if (a >= 0 && b >= 0) s = s.substring(a + 1, b);\n        s = s.trim();\n        if (s.isEmpty()) return new int[0];\n        String[] p = s.split(\",\");\n        int[] r = new int[p.length];\n        for (int i = 0; i < p.length; i++) r[i] = Integer.parseInt(p[i].trim());\n        return r;\n    }\n    static int[][] pg(String s) {\n        List<int[]> rows = new ArrayList<>();\n        int d = 0, st = -1;\n        for (int i = 0; i < s.length(); i++) {\n            char c = s.charAt(i);\n            if (c == '[') { d++; if (d == 2) st = i; }\n            else if (c == ']') { if (d == 2) rows.add(pi(s.substring(st, i + 1))); d--; }\n        }\n        return rows.toArray(new int[0][]);\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.uniquePathsIII(pg(x[0])));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nstatic vector<int> PI(const string& s){string t;for(char c:s)t+=(c=='['||c==']'||c==',')?' ':c;vector<int> r;stringstream ss(t);int x;while(ss>>x)r.push_back(x);return r;}\nstatic vector<vector<int>> PG(const string& s){vector<vector<int>> r;int d=0;size_t st=0;for(size_t i=0;i<s.size();i++){char c=s[i];if(c=='['){d++;if(d==2)st=i;}else if(c==']'){if(d==2)r.push_back(PI(s.substr(st,i-st+1)));d--;}}return r;}\nint main(){\n    vector<string> x = RL();\n    auto a0=PG(x[0]);\n    cout << uniquePathsIII(a0) << \"\\n\";\n    return 0;\n}\n"
+    },
+    "params": [
+      {
+        "name": "grid"
+      }
+    ],
+    "testCases": [
+      {
+        "name": "one obstacle",
+        "stdin": "[[1,0,0,0],[0,0,0,0],[0,0,2,-1]]\n",
+        "expectedStdout": "2"
+      },
+      {
+        "name": "no obstacle",
+        "stdin": "[[1,0,0,0],[0,0,0,0],[0,0,0,2]]\n",
+        "expectedStdout": "4"
+      },
+      {
+        "name": "unreachable coverage",
+        "stdin": "[[0,1],[2,0]]\n",
+        "expectedStdout": "0"
+      },
+      {
+        "name": "adjacent ends",
+        "stdin": "[[1,2]]\n",
+        "expectedStdout": "1"
+      },
+      {
+        "name": "corridor",
+        "stdin": "[[1,0,0,2]]\n",
+        "expectedStdout": "1"
+      },
+      {
+        "name": "blocked corridor",
+        "stdin": "[[1,-1,2]]\n",
+        "expectedStdout": "0"
+      },
+      {
+        "name": "open square",
+        "stdin": "[[1,0,0],[0,0,0],[0,0,2]]\n",
+        "expectedStdout": "2"
+      }
+    ]
+  },
+  {
+    "id": "course-schedule",
+    "title": "Course Schedule",
+    "difficulty": "medium",
+    "tags": [
+      "graph",
+      "topological-sort",
+      "depth-first-search",
+      "breadth-first-search"
+    ],
+    "description": "There are numCourses courses labelled from 0 to numCourses - 1. You are given a list of prerequisite pairs, where the pair [a, b] means you must take course b before course a.\n\nReturn true if it is possible to finish every course, and false otherwise. It is impossible exactly when the prerequisites contain a cycle.\n\nInput: line 1 is the integer numCourses, line 2 is the list of prerequisite pairs, e.g. [[1,0]]. An empty list is written as [].\nOutput: 'true' or 'false'.",
+    "examples": [
+      {
+        "input": "numCourses = 2, prerequisites = [[1,0]]",
+        "output": "true",
+        "explanation": "Take course 0 first, then course 1."
+      },
+      {
+        "input": "numCourses = 2, prerequisites = [[1,0],[0,1]]",
+        "output": "false",
+        "explanation": "Each course requires the other, so neither can be taken first."
+      },
+      {
+        "input": "numCourses = 3, prerequisites = []",
+        "output": "true",
+        "explanation": "With no prerequisites the courses can be taken in any order."
+      }
+    ],
+    "constraints": [
+      "1 <= numCourses <= 2000",
+      "0 <= prerequisites.length <= 5000",
+      "prerequisites[i].length == 2",
+      "0 <= a, b < numCourses",
+      "a != b",
+      "all prerequisite pairs are distinct"
+    ],
+    "starterCode": {
+      "javascript": "function canFinish(numCourses, prerequisites) {\n  // your code here\n}\n",
+      "typescript": "function canFinish(numCourses: number, prerequisites: number[][]): boolean {\n  // your code here\n  return false;\n}\n",
+      "python": "def can_finish(numCourses, prerequisites):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    boolean canFinish(int numCourses, int[][] prerequisites) {\n        // your code here (java.util.* is already imported)\n        return false;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nbool canFinish(int numCourses, vector<vector<int>>& prerequisites) {\n    // your code here\n    return false;\n}\n"
+    },
+    "harness": {
+      "javascript": "const __l = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nconsole.log(canFinish(parseInt(__l[0], 10), JSON.parse(__l[1])));\n",
+      "typescript": "const __l = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nconsole.log(canFinish(parseInt(__l[0], 10), JSON.parse(__l[1])));\n",
+      "python": "import sys, json\n__l = sys.stdin.read().splitlines()\nprint(\"true\" if can_finish(int(__l[0]), json.loads(__l[1])) else \"false\")\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    static int[] pi(String s) {\n        int a = s.indexOf('['), b = s.lastIndexOf(']');\n        if (a >= 0 && b >= 0) s = s.substring(a + 1, b);\n        s = s.trim();\n        if (s.isEmpty()) return new int[0];\n        String[] p = s.split(\",\");\n        int[] r = new int[p.length];\n        for (int i = 0; i < p.length; i++) r[i] = Integer.parseInt(p[i].trim());\n        return r;\n    }\n    static int[][] pg(String s) {\n        List<int[]> rows = new ArrayList<>();\n        int d = 0, st = -1;\n        for (int i = 0; i < s.length(); i++) {\n            char c = s.charAt(i);\n            if (c == '[') { d++; if (d == 2) st = i; }\n            else if (c == ']') { if (d == 2) rows.add(pi(s.substring(st, i + 1))); d--; }\n        }\n        return rows.toArray(new int[0][]);\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.canFinish(Integer.parseInt(x[0].trim()), pg(x[1])));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nstatic vector<int> PI(const string& s){string t;for(char c:s)t+=(c=='['||c==']'||c==',')?' ':c;vector<int> r;stringstream ss(t);int x;while(ss>>x)r.push_back(x);return r;}\nstatic vector<vector<int>> PG(const string& s){vector<vector<int>> r;int d=0;size_t st=0;for(size_t i=0;i<s.size();i++){char c=s[i];if(c=='['){d++;if(d==2)st=i;}else if(c==']'){if(d==2)r.push_back(PI(s.substr(st,i-st+1)));d--;}}return r;}\nint main(){\n    vector<string> x = RL();\n    int a0=stoi(x[0]);auto a1=PG(x[1]);\n    cout << (canFinish(a0, a1) ? \"true\" : \"false\") << \"\\n\";\n    return 0;\n}\n"
+    },
+    "params": [
+      {
+        "name": "numCourses"
+      },
+      {
+        "name": "prerequisites"
+      }
+    ],
+    "testCases": [
+      {
+        "name": "simple order",
+        "stdin": "2\n[[1,0]]\n",
+        "expectedStdout": "true"
+      },
+      {
+        "name": "two-course cycle",
+        "stdin": "2\n[[1,0],[0,1]]\n",
+        "expectedStdout": "false"
+      },
+      {
+        "name": "no prerequisites",
+        "stdin": "3\n[]\n",
+        "expectedStdout": "true"
+      },
+      {
+        "name": "long chain",
+        "stdin": "4\n[[1,0],[2,1],[3,2]]\n",
+        "expectedStdout": "true"
+      },
+      {
+        "name": "cycle behind a chain",
+        "stdin": "5\n[[1,0],[2,1],[3,2],[1,3]]\n",
+        "expectedStdout": "false"
+      },
+      {
+        "name": "diamond",
+        "stdin": "4\n[[1,0],[2,0],[3,1],[3,2]]\n",
+        "expectedStdout": "true"
+      },
+      {
+        "name": "single course",
+        "stdin": "1\n[]\n",
+        "expectedStdout": "true"
+      }
+    ]
   }
 ]
