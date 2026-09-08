@@ -46,6 +46,13 @@ I also wanted to build this project, so that I can solve these current problems 
 
 > New here? The [**User Guide**](./docs/USER-GUIDE.md) walks through every feature.
 
+
+## Types of Problems
+- It has many different lists of similar types of questions and their approaches
+- You can also revise these approaches with example code on the Revise page
+- The website has many questions of varying difficulty and I am constantly adding more
+
+
 ## Tech stack
 
 | Layer            | Choice                                            |
