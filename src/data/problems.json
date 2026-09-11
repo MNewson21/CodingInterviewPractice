@@ -7218,5 +7218,824 @@
         "expectedStdout": "true"
       }
     ]
+  },
+  {
+    "id": "minimum-size-subarray-sum",
+    "title": "Minimum Size Subarray Sum",
+    "difficulty": "medium",
+    "tags": [
+      "array",
+      "sliding-window",
+      "two-pointers",
+      "prefix-sum",
+      "binary-search"
+    ],
+    "description": "Given an array of positive integers nums and a positive integer target, return the minimal length of a contiguous subarray whose sum is greater than or equal to target.\n\nIf there is no such subarray, return 0 instead.\n\nInput: line 1 is the array, e.g. [2,3,1,2,4,3]; line 2 is target.\nOutput: the minimal length, or 0.",
+    "examples": [
+      {
+        "input": "nums = [2,3,1,2,4,3], target = 7",
+        "output": "2",
+        "explanation": "The subarray [4,3] has sum 7 and is the shortest that reaches the target."
+      },
+      {
+        "input": "nums = [1,4,4], target = 4",
+        "output": "1",
+        "explanation": "A single 4 already reaches the target."
+      },
+      {
+        "input": "nums = [1,1,1,1,1,1,1,1], target = 11",
+        "output": "0",
+        "explanation": "The whole array sums to 8, so no subarray reaches 11."
+      }
+    ],
+    "constraints": [
+      "1 <= target <= 10^9",
+      "1 <= nums.length <= 10^5",
+      "1 <= nums[i] <= 10^4"
+    ],
+    "starterCode": {
+      "javascript": "function minSubArrayLen(nums, target) {\n  // your code here\n}\n",
+      "typescript": "function minSubArrayLen(nums: number[], target: number): number {\n  // your code here\n  return 0;\n}\n",
+      "python": "def min_sub_array_len(nums, target):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int minSubArrayLen(int[] nums, int target) {\n        // your code here (java.util.* is already imported)\n        return 0;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint minSubArrayLen(vector<int>& nums, int target) {\n    // your code here\n    return 0;\n}\n"
+    },
+    "harness": {
+      "javascript": "const __l = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nconsole.log(minSubArrayLen(JSON.parse(__l[0]), parseInt(__l[1], 10)));\n",
+      "typescript": "const __l = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nconsole.log(minSubArrayLen(JSON.parse(__l[0]), parseInt(__l[1], 10)));\n",
+      "python": "import sys, json\n__l = sys.stdin.read().splitlines()\nprint(min_sub_array_len(json.loads(__l[0]), int(__l[1])))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    static int[] pi(String s) {\n        int a = s.indexOf('['), b = s.lastIndexOf(']');\n        if (a >= 0 && b >= 0) s = s.substring(a + 1, b);\n        s = s.trim();\n        if (s.isEmpty()) return new int[0];\n        String[] p = s.split(\",\");\n        int[] r = new int[p.length];\n        for (int i = 0; i < p.length; i++) r[i] = Integer.parseInt(p[i].trim());\n        return r;\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.minSubArrayLen(pi(x[0]), Integer.parseInt(x[1].trim())));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nstatic vector<int> PI(const string& s){string t;for(char c:s)t+=(c=='['||c==']'||c==',')?' ':c;vector<int> r;stringstream ss(t);int x;while(ss>>x)r.push_back(x);return r;}\nint main(){\n    vector<string> x = RL();\n    auto a0=PI(x[0]);int a1=stoi(x[1]);\n    cout << minSubArrayLen(a0, a1) << \"\\n\";\n    return 0;\n}\n"
+    },
+    "params": [
+      {
+        "name": "nums"
+      },
+      {
+        "name": "target"
+      }
+    ],
+    "testCases": [
+      {
+        "name": "classic",
+        "stdin": "[2,3,1,2,4,3]\n7\n",
+        "expectedStdout": "2"
+      },
+      {
+        "name": "single element suffices",
+        "stdin": "[1,4,4]\n4\n",
+        "expectedStdout": "1"
+      },
+      {
+        "name": "target unreachable",
+        "stdin": "[1,1,1,1,1,1,1,1]\n11\n",
+        "expectedStdout": "0"
+      },
+      {
+        "name": "whole array exactly",
+        "stdin": "[1,2,3]\n6\n",
+        "expectedStdout": "3"
+      },
+      {
+        "name": "single element array",
+        "stdin": "[5]\n5\n",
+        "expectedStdout": "1"
+      },
+      {
+        "name": "tiny target",
+        "stdin": "[10,2,3]\n1\n",
+        "expectedStdout": "1"
+      },
+      {
+        "name": "front heavy",
+        "stdin": "[12,28,83,4,25,26,25,2,25,25,25,12]\n213\n",
+        "expectedStdout": "8"
+      }
+    ]
+  },
+  {
+    "id": "longest-common-subsequence",
+    "title": "Longest Common Subsequence",
+    "difficulty": "medium",
+    "tags": [
+      "string",
+      "dynamic-programming"
+    ],
+    "description": "Given two strings text1 and text2, return the length of their longest common subsequence. If there is no common subsequence, return 0.\n\nA subsequence of a string is a new string formed from the original by deleting some (possibly no) characters without changing the relative order of the remaining characters. A common subsequence is a subsequence of both strings.\n\nInput: line 1 is text1; line 2 is text2.\nOutput: the length of the longest common subsequence.",
+    "examples": [
+      {
+        "input": "text1 = \"abcde\", text2 = \"ace\"",
+        "output": "3",
+        "explanation": "The longest common subsequence is \"ace\"."
+      },
+      {
+        "input": "text1 = \"abc\", text2 = \"abc\"",
+        "output": "3",
+        "explanation": "The whole string is common to both."
+      },
+      {
+        "input": "text1 = \"abc\", text2 = \"def\"",
+        "output": "0",
+        "explanation": "There is no common character."
+      }
+    ],
+    "constraints": [
+      "1 <= text1.length, text2.length <= 1000",
+      "text1 and text2 consist of lowercase English characters."
+    ],
+    "starterCode": {
+      "javascript": "function longestCommonSubsequence(text1, text2) {\n  // your code here\n}\n",
+      "typescript": "function longestCommonSubsequence(text1: string, text2: string): number {\n  // your code here\n  return 0;\n}\n",
+      "python": "def longest_common_subsequence(text1, text2):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int longestCommonSubsequence(String text1, String text2) {\n        // your code here (java.util.* is already imported)\n        return 0;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint longestCommonSubsequence(string text1, string text2) {\n    // your code here\n    return 0;\n}\n"
+    },
+    "harness": {
+      "javascript": "const __lines = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nconsole.log(longestCommonSubsequence(__lines[0], __lines[1]));\n",
+      "typescript": "const __lines = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nconsole.log(longestCommonSubsequence(__lines[0], __lines[1]));\n",
+      "python": "import sys\n__lines = sys.stdin.read().splitlines()\nprint(longest_common_subsequence(__lines[0], __lines[1]))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.longestCommonSubsequence(x[0], x[1]));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nint main(){\n    vector<string> x = RL();\n    cout << longestCommonSubsequence(x[0], x[1]) << \"\\n\";\n    return 0;\n}\n"
+    },
+    "params": [
+      {
+        "name": "text1",
+        "quote": true
+      },
+      {
+        "name": "text2",
+        "quote": true
+      }
+    ],
+    "testCases": [
+      {
+        "name": "abcde and ace",
+        "stdin": "abcde\nace\n",
+        "expectedStdout": "3"
+      },
+      {
+        "name": "identical",
+        "stdin": "abc\nabc\n",
+        "expectedStdout": "3"
+      },
+      {
+        "name": "nothing in common",
+        "stdin": "abc\ndef\n",
+        "expectedStdout": "0"
+      },
+      {
+        "name": "single matching char",
+        "stdin": "a\na\n",
+        "expectedStdout": "1"
+      },
+      {
+        "name": "one char overlap",
+        "stdin": "bl\nyby\n",
+        "expectedStdout": "1"
+      },
+      {
+        "name": "interleaved",
+        "stdin": "bsbininm\njmjkbkjkv\n",
+        "expectedStdout": "1"
+      },
+      {
+        "name": "longer pair",
+        "stdin": "oxcpqrsvwf\nshmtulqrypy\n",
+        "expectedStdout": "2"
+      }
+    ]
+  },
+  {
+    "id": "longest-repeating-character-replacement",
+    "title": "Longest Repeating Character Replacement",
+    "difficulty": "medium",
+    "tags": [
+      "string",
+      "sliding-window",
+      "hash-map"
+    ],
+    "description": "You are given a string s and an integer k. You may choose any character of the string and change it to any other uppercase English character, and you may do this at most k times.\n\nReturn the length of the longest substring containing the same letter you can obtain after performing those changes.\n\nInput: line 1 is s; line 2 is k.\nOutput: the length of the longest achievable run.",
+    "examples": [
+      {
+        "input": "s = \"ABAB\", k = 2",
+        "output": "4",
+        "explanation": "Change both A's into B's, or both B's into A's."
+      },
+      {
+        "input": "s = \"AABABBA\", k = 1",
+        "output": "4",
+        "explanation": "Change the middle A into a B to get \"AABBBBA\", which contains \"BBBB\"."
+      },
+      {
+        "input": "s = \"ABCDE\", k = 0",
+        "output": "1",
+        "explanation": "With no changes allowed the best run is a single character."
+      }
+    ],
+    "constraints": [
+      "1 <= s.length <= 10^5",
+      "s consists of only uppercase English letters.",
+      "0 <= k <= s.length"
+    ],
+    "starterCode": {
+      "javascript": "function characterReplacement(s, k) {\n  // your code here\n}\n",
+      "typescript": "function characterReplacement(s: string, k: number): number {\n  // your code here\n  return 0;\n}\n",
+      "python": "def character_replacement(s, k):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int characterReplacement(String s, int k) {\n        // your code here (java.util.* is already imported)\n        return 0;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint characterReplacement(string s, int k) {\n    // your code here\n    return 0;\n}\n"
+    },
+    "harness": {
+      "javascript": "const __l = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nconsole.log(characterReplacement(__l[0], parseInt(__l[1], 10)));\n",
+      "typescript": "const __l = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nconsole.log(characterReplacement(__l[0], parseInt(__l[1], 10)));\n",
+      "python": "import sys\n__l = sys.stdin.read().splitlines()\nprint(character_replacement(__l[0], int(__l[1])))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.characterReplacement(x[0], Integer.parseInt(x[1].trim())));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nint main(){\n    vector<string> x = RL();\n    cout << characterReplacement(x[0], stoi(x[1])) << \"\\n\";\n    return 0;\n}\n"
+    },
+    "params": [
+      {
+        "name": "s",
+        "quote": true
+      },
+      {
+        "name": "k"
+      }
+    ],
+    "testCases": [
+      {
+        "name": "two swaps",
+        "stdin": "ABAB\n2\n",
+        "expectedStdout": "4"
+      },
+      {
+        "name": "one swap in the middle",
+        "stdin": "AABABBA\n1\n",
+        "expectedStdout": "4"
+      },
+      {
+        "name": "no swaps allowed",
+        "stdin": "ABCDE\n0\n",
+        "expectedStdout": "1"
+      },
+      {
+        "name": "already uniform",
+        "stdin": "AAAA\n2\n",
+        "expectedStdout": "4"
+      },
+      {
+        "name": "single character",
+        "stdin": "A\n0\n",
+        "expectedStdout": "1"
+      },
+      {
+        "name": "k exceeds length",
+        "stdin": "ABC\n5\n",
+        "expectedStdout": "3"
+      },
+      {
+        "name": "long run with tail",
+        "stdin": "AABBBCCCCA\n2\n",
+        "expectedStdout": "6"
+      }
+    ]
+  },
+  {
+    "id": "rotting-oranges",
+    "title": "Rotting Oranges",
+    "difficulty": "medium",
+    "tags": [
+      "breadth-first-search",
+      "matrix",
+      "grid",
+      "simulation"
+    ],
+    "description": "You are given a grid where each cell is 0 (empty), 1 (a fresh orange) or 2 (a rotten orange).\n\nEvery minute, any fresh orange that is horizontally or vertically adjacent to a rotten orange becomes rotten. Return the minimum number of minutes until no cell has a fresh orange. If that is impossible, return -1.\n\nInput: a single line holding the grid as a list of rows, e.g. [[2,1,1],[1,1,0],[0,1,1]].\nOutput: the number of minutes, or -1.",
+    "examples": [
+      {
+        "input": "grid = [[2,1,1],[1,1,0],[0,1,1]]",
+        "output": "4",
+        "explanation": "The rot spreads outward from the top-left corner and reaches the last orange after 4 minutes."
+      },
+      {
+        "input": "grid = [[2,1,1],[0,1,1],[1,0,1]]",
+        "output": "-1",
+        "explanation": "The orange in the bottom-left corner is never reached."
+      },
+      {
+        "input": "grid = [[0,2]]",
+        "output": "0",
+        "explanation": "There are no fresh oranges, so zero minutes are needed."
+      }
+    ],
+    "constraints": [
+      "1 <= grid.length, grid[i].length <= 10",
+      "grid[i][j] is 0, 1 or 2"
+    ],
+    "starterCode": {
+      "javascript": "function orangesRotting(grid) {\n  // your code here\n}\n",
+      "typescript": "function orangesRotting(grid: number[][]): number {\n  // your code here\n  return 0;\n}\n",
+      "python": "def oranges_rotting(grid):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int orangesRotting(int[][] grid) {\n        // your code here (java.util.* is already imported)\n        return 0;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint orangesRotting(vector<vector<int>>& grid) {\n    // your code here\n    return 0;\n}\n"
+    },
+    "harness": {
+      "javascript": "const __grid = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(orangesRotting(__grid));\n",
+      "typescript": "const __grid = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(orangesRotting(__grid));\n",
+      "python": "import sys, json\n__grid = json.loads(sys.stdin.read().splitlines()[0])\nprint(oranges_rotting(__grid))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    static int[] pi(String s) {\n        int a = s.indexOf('['), b = s.lastIndexOf(']');\n        if (a >= 0 && b >= 0) s = s.substring(a + 1, b);\n        s = s.trim();\n        if (s.isEmpty()) return new int[0];\n        String[] p = s.split(\",\");\n        int[] r = new int[p.length];\n        for (int i = 0; i < p.length; i++) r[i] = Integer.parseInt(p[i].trim());\n        return r;\n    }\n    static int[][] pg(String s) {\n        List<int[]> rows = new ArrayList<>();\n        int d = 0, st = -1;\n        for (int i = 0; i < s.length(); i++) {\n            char c = s.charAt(i);\n            if (c == '[') { d++; if (d == 2) st = i; }\n            else if (c == ']') { if (d == 2) rows.add(pi(s.substring(st, i + 1))); d--; }\n        }\n        return rows.toArray(new int[0][]);\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.orangesRotting(pg(x[0])));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nstatic vector<int> PI(const string& s){string t;for(char c:s)t+=(c=='['||c==']'||c==',')?' ':c;vector<int> r;stringstream ss(t);int x;while(ss>>x)r.push_back(x);return r;}\nstatic vector<vector<int>> PG(const string& s){vector<vector<int>> r;int d=0;size_t st=0;for(size_t i=0;i<s.size();i++){char c=s[i];if(c=='['){d++;if(d==2)st=i;}else if(c==']'){if(d==2)r.push_back(PI(s.substr(st,i-st+1)));d--;}}return r;}\nint main(){\n    vector<string> x = RL();\n    auto a0=PG(x[0]);\n    cout << orangesRotting(a0) << \"\\n\";\n    return 0;\n}\n"
+    },
+    "params": [
+      {
+        "name": "grid"
+      }
+    ],
+    "testCases": [
+      {
+        "name": "spreads fully",
+        "stdin": "[[2,1,1],[1,1,0],[0,1,1]]\n",
+        "expectedStdout": "4"
+      },
+      {
+        "name": "unreachable corner",
+        "stdin": "[[2,1,1],[0,1,1],[1,0,1]]\n",
+        "expectedStdout": "-1"
+      },
+      {
+        "name": "no fresh oranges",
+        "stdin": "[[0,2]]\n",
+        "expectedStdout": "0"
+      },
+      {
+        "name": "all empty",
+        "stdin": "[[0,0],[0,0]]\n",
+        "expectedStdout": "0"
+      },
+      {
+        "name": "already all rotten",
+        "stdin": "[[2,2],[2,2]]\n",
+        "expectedStdout": "0"
+      },
+      {
+        "name": "lone fresh orange",
+        "stdin": "[[1]]\n",
+        "expectedStdout": "-1"
+      },
+      {
+        "name": "one minute",
+        "stdin": "[[2,1]]\n",
+        "expectedStdout": "1"
+      }
+    ]
+  },
+  {
+    "id": "max-area-of-island",
+    "title": "Max Area of Island",
+    "difficulty": "medium",
+    "tags": [
+      "depth-first-search",
+      "breadth-first-search",
+      "union-find",
+      "matrix",
+      "grid"
+    ],
+    "description": "You are given a binary grid where 1 marks land and 0 marks water. An island is a group of 1s connected horizontally or vertically, and the grid is surrounded by water on all four edges.\n\nThe area of an island is the number of cells with value 1 in that island. Return the maximum area of an island in the grid, or 0 if there is no island.\n\nInput: a single line holding the grid as a list of rows, e.g. [[1,1,0],[0,1,0]].\nOutput: the maximum island area.",
+    "examples": [
+      {
+        "input": "grid = [[1,1,0],[0,1,0],[0,1,1]]",
+        "output": "5",
+        "explanation": "All five land cells are connected into one island."
+      },
+      {
+        "input": "grid = [[1,0],[0,1]]",
+        "output": "1",
+        "explanation": "Diagonal cells are not connected, so each island has area 1."
+      },
+      {
+        "input": "grid = [[0,0,0],[0,0,0]]",
+        "output": "0",
+        "explanation": "There is no land at all."
+      }
+    ],
+    "constraints": [
+      "1 <= grid.length, grid[i].length <= 50",
+      "grid[i][j] is 0 or 1"
+    ],
+    "starterCode": {
+      "javascript": "function maxAreaOfIsland(grid) {\n  // your code here\n}\n",
+      "typescript": "function maxAreaOfIsland(grid: number[][]): number {\n  // your code here\n  return 0;\n}\n",
+      "python": "def max_area_of_island(grid):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int maxAreaOfIsland(int[][] grid) {\n        // your code here (java.util.* is already imported)\n        return 0;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint maxAreaOfIsland(vector<vector<int>>& grid) {\n    // your code here\n    return 0;\n}\n"
+    },
+    "harness": {
+      "javascript": "const __grid = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(maxAreaOfIsland(__grid));\n",
+      "typescript": "const __grid = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(maxAreaOfIsland(__grid));\n",
+      "python": "import sys, json\n__grid = json.loads(sys.stdin.read().splitlines()[0])\nprint(max_area_of_island(__grid))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    static int[] pi(String s) {\n        int a = s.indexOf('['), b = s.lastIndexOf(']');\n        if (a >= 0 && b >= 0) s = s.substring(a + 1, b);\n        s = s.trim();\n        if (s.isEmpty()) return new int[0];\n        String[] p = s.split(\",\");\n        int[] r = new int[p.length];\n        for (int i = 0; i < p.length; i++) r[i] = Integer.parseInt(p[i].trim());\n        return r;\n    }\n    static int[][] pg(String s) {\n        List<int[]> rows = new ArrayList<>();\n        int d = 0, st = -1;\n        for (int i = 0; i < s.length(); i++) {\n            char c = s.charAt(i);\n            if (c == '[') { d++; if (d == 2) st = i; }\n            else if (c == ']') { if (d == 2) rows.add(pi(s.substring(st, i + 1))); d--; }\n        }\n        return rows.toArray(new int[0][]);\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.maxAreaOfIsland(pg(x[0])));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nstatic vector<int> PI(const string& s){string t;for(char c:s)t+=(c=='['||c==']'||c==',')?' ':c;vector<int> r;stringstream ss(t);int x;while(ss>>x)r.push_back(x);return r;}\nstatic vector<vector<int>> PG(const string& s){vector<vector<int>> r;int d=0;size_t st=0;for(size_t i=0;i<s.size();i++){char c=s[i];if(c=='['){d++;if(d==2)st=i;}else if(c==']'){if(d==2)r.push_back(PI(s.substr(st,i-st+1)));d--;}}return r;}\nint main(){\n    vector<string> x = RL();\n    auto a0=PG(x[0]);\n    cout << maxAreaOfIsland(a0) << \"\\n\";\n    return 0;\n}\n"
+    },
+    "params": [
+      {
+        "name": "grid"
+      }
+    ],
+    "testCases": [
+      {
+        "name": "snake shaped island",
+        "stdin": "[[1,1,0],[0,1,0],[0,1,1]]\n",
+        "expectedStdout": "5"
+      },
+      {
+        "name": "diagonals not connected",
+        "stdin": "[[1,0],[0,1]]\n",
+        "expectedStdout": "1"
+      },
+      {
+        "name": "no land",
+        "stdin": "[[0,0,0],[0,0,0]]\n",
+        "expectedStdout": "0"
+      },
+      {
+        "name": "all land",
+        "stdin": "[[1,1],[1,1]]\n",
+        "expectedStdout": "4"
+      },
+      {
+        "name": "single cell",
+        "stdin": "[[1]]\n",
+        "expectedStdout": "1"
+      },
+      {
+        "name": "two equal islands",
+        "stdin": "[[1,1,0,1,1]]\n",
+        "expectedStdout": "2"
+      },
+      {
+        "name": "largest of several",
+        "stdin": "[[0,0,1,0,0,0,0,1,0,0,0,0,0],[0,0,0,0,0,0,0,1,1,1,0,0,0],[0,1,1,0,1,0,0,0,0,0,0,0,0],[0,1,0,0,1,1,0,0,1,0,1,0,0],[0,1,0,0,1,1,0,0,1,1,1,0,0],[0,0,0,0,0,0,0,0,0,0,1,0,0],[0,0,0,0,0,0,0,1,1,1,0,0,0],[0,0,0,0,0,0,0,1,1,0,0,0,0]]\n",
+        "expectedStdout": "6"
+      }
+    ]
+  },
+  {
+    "id": "longest-increasing-subsequence",
+    "title": "Longest Increasing Subsequence",
+    "difficulty": "medium",
+    "tags": [
+      "array",
+      "dynamic-programming",
+      "binary-search"
+    ],
+    "description": "Given an integer array nums, return the length of the longest strictly increasing subsequence.\n\nA subsequence is formed by deleting some (possibly no) elements without changing the order of the remaining elements.\n\nInput: an array of integers.\nOutput: the length of the longest strictly increasing subsequence.",
+    "examples": [
+      {
+        "input": "nums = [10,9,2,5,3,7,101,18]",
+        "output": "4",
+        "explanation": "One longest increasing subsequence is [2,3,7,101]."
+      },
+      {
+        "input": "nums = [0,1,0,3,2,3]",
+        "output": "4",
+        "explanation": "One longest increasing subsequence is [0,1,2,3]."
+      },
+      {
+        "input": "nums = [7,7,7,7,7]",
+        "output": "1",
+        "explanation": "Equal values are not strictly increasing, so only one element can be used."
+      }
+    ],
+    "constraints": [
+      "1 <= nums.length <= 2500",
+      "-10^4 <= nums[i] <= 10^4"
+    ],
+    "starterCode": {
+      "javascript": "function lengthOfLIS(nums) {\n  // your code here\n}\n",
+      "typescript": "function lengthOfLIS(nums: number[]): number {\n  // your code here\n  return 0;\n}\n",
+      "python": "def length_of_lis(nums):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int lengthOfLIS(int[] nums) {\n        // your code here (java.util.* is already imported)\n        return 0;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint lengthOfLIS(vector<int>& nums) {\n    // your code here\n    return 0;\n}\n"
+    },
+    "harness": {
+      "javascript": "const __nums = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(lengthOfLIS(__nums));\n",
+      "typescript": "const __nums = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(lengthOfLIS(__nums));\n",
+      "python": "import sys, json\n__nums = json.loads(sys.stdin.read().splitlines()[0])\nprint(length_of_lis(__nums))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    static int[] pi(String s) {\n        int a = s.indexOf('['), b = s.lastIndexOf(']');\n        if (a >= 0 && b >= 0) s = s.substring(a + 1, b);\n        s = s.trim();\n        if (s.isEmpty()) return new int[0];\n        String[] p = s.split(\",\");\n        int[] r = new int[p.length];\n        for (int i = 0; i < p.length; i++) r[i] = Integer.parseInt(p[i].trim());\n        return r;\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.lengthOfLIS(pi(x[0])));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nstatic vector<int> PI(const string& s){string t;for(char c:s)t+=(c=='['||c==']'||c==',')?' ':c;vector<int> r;stringstream ss(t);int x;while(ss>>x)r.push_back(x);return r;}\nint main(){\n    vector<string> x = RL();\n    auto a0=PI(x[0]);\n    cout << lengthOfLIS(a0) << \"\\n\";\n    return 0;\n}\n"
+    },
+    "params": [
+      {
+        "name": "nums"
+      }
+    ],
+    "testCases": [
+      {
+        "name": "classic",
+        "stdin": "[10,9,2,5,3,7,101,18]\n",
+        "expectedStdout": "4"
+      },
+      {
+        "name": "with duplicates",
+        "stdin": "[0,1,0,3,2,3]\n",
+        "expectedStdout": "4"
+      },
+      {
+        "name": "all equal",
+        "stdin": "[7,7,7,7,7]\n",
+        "expectedStdout": "1"
+      },
+      {
+        "name": "single element",
+        "stdin": "[5]\n",
+        "expectedStdout": "1"
+      },
+      {
+        "name": "strictly decreasing",
+        "stdin": "[9,7,5,3,1]\n",
+        "expectedStdout": "1"
+      },
+      {
+        "name": "already increasing",
+        "stdin": "[1,2,3,4,5,6]\n",
+        "expectedStdout": "6"
+      },
+      {
+        "name": "negatives",
+        "stdin": "[-3,-5,-1,-8,0,-2]\n",
+        "expectedStdout": "3"
+      }
+    ]
+  },
+  {
+    "id": "last-stone-weight",
+    "title": "Last Stone Weight",
+    "difficulty": "easy",
+    "tags": [
+      "array",
+      "heap",
+      "greedy",
+      "sorting"
+    ],
+    "description": "You are given an array of integers stones where stones[i] is the weight of the i-th stone.\n\nEach turn, take the two heaviest stones x and y with x <= y and smash them together: if x == y both are destroyed, otherwise the stone of weight y - x is put back. Repeat until at most one stone is left.\n\nReturn the weight of the last remaining stone, or 0 if none remains.\n\nInput: an array of positive integers.\nOutput: the weight of the last stone, or 0.",
+    "examples": [
+      {
+        "input": "stones = [2,7,4,1,8,1]",
+        "output": "1",
+        "explanation": "Smash 8 and 7 to get 1, then 4 and 2 to get 2, then 2 and 1 to get 1, then 1 and 1 destroy each other, leaving 1."
+      },
+      {
+        "input": "stones = [3,3]",
+        "output": "0",
+        "explanation": "The two equal stones destroy each other."
+      },
+      {
+        "input": "stones = [1]",
+        "output": "1",
+        "explanation": "A single stone is never smashed."
+      }
+    ],
+    "constraints": [
+      "1 <= stones.length <= 30",
+      "1 <= stones[i] <= 1000"
+    ],
+    "starterCode": {
+      "javascript": "function lastStoneWeight(stones) {\n  // your code here\n}\n",
+      "typescript": "function lastStoneWeight(stones: number[]): number {\n  // your code here\n  return 0;\n}\n",
+      "python": "def last_stone_weight(stones):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int lastStoneWeight(int[] stones) {\n        // your code here (java.util.* is already imported)\n        return 0;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint lastStoneWeight(vector<int>& stones) {\n    // your code here\n    return 0;\n}\n"
+    },
+    "harness": {
+      "javascript": "const __stones = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(lastStoneWeight(__stones));\n",
+      "typescript": "const __stones = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(lastStoneWeight(__stones));\n",
+      "python": "import sys, json\n__stones = json.loads(sys.stdin.read().splitlines()[0])\nprint(last_stone_weight(__stones))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    static int[] pi(String s) {\n        int a = s.indexOf('['), b = s.lastIndexOf(']');\n        if (a >= 0 && b >= 0) s = s.substring(a + 1, b);\n        s = s.trim();\n        if (s.isEmpty()) return new int[0];\n        String[] p = s.split(\",\");\n        int[] r = new int[p.length];\n        for (int i = 0; i < p.length; i++) r[i] = Integer.parseInt(p[i].trim());\n        return r;\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.lastStoneWeight(pi(x[0])));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nstatic vector<int> PI(const string& s){string t;for(char c:s)t+=(c=='['||c==']'||c==',')?' ':c;vector<int> r;stringstream ss(t);int x;while(ss>>x)r.push_back(x);return r;}\nint main(){\n    vector<string> x = RL();\n    auto a0=PI(x[0]);\n    cout << lastStoneWeight(a0) << \"\\n\";\n    return 0;\n}\n"
+    },
+    "params": [
+      {
+        "name": "stones"
+      }
+    ],
+    "testCases": [
+      {
+        "name": "classic",
+        "stdin": "[2,7,4,1,8,1]\n",
+        "expectedStdout": "1"
+      },
+      {
+        "name": "single stone",
+        "stdin": "[1]\n",
+        "expectedStdout": "1"
+      },
+      {
+        "name": "two equal stones",
+        "stdin": "[3,3]\n",
+        "expectedStdout": "0"
+      },
+      {
+        "name": "all destroyed",
+        "stdin": "[2,2,4,4]\n",
+        "expectedStdout": "0"
+      },
+      {
+        "name": "two stones",
+        "stdin": "[10,4]\n",
+        "expectedStdout": "6"
+      },
+      {
+        "name": "three equal",
+        "stdin": "[1,1,1]\n",
+        "expectedStdout": "1"
+      },
+      {
+        "name": "unsorted",
+        "stdin": "[9,3,2,10]\n",
+        "expectedStdout": "0"
+      }
+    ]
+  },
+  {
+    "id": "distinct-subsequences",
+    "title": "Distinct Subsequences",
+    "difficulty": "hard",
+    "tags": [
+      "string",
+      "dynamic-programming"
+    ],
+    "description": "Given two strings s and t, return the number of distinct subsequences of s which equal t.\n\nA subsequence is formed by deleting some (possibly no) characters of s without changing the order of the remaining characters. Two subsequences are distinct when they use different sets of positions, even if they read the same.\n\nInput: line 1 is s; line 2 is t.\nOutput: the number of distinct subsequences.",
+    "examples": [
+      {
+        "input": "s = \"rabbbit\", t = \"rabbit\"",
+        "output": "3",
+        "explanation": "There are three ways to choose which of the three b's to drop."
+      },
+      {
+        "input": "s = \"babgbag\", t = \"bag\"",
+        "output": "5",
+        "explanation": "Five different position sets in \"babgbag\" spell \"bag\"."
+      },
+      {
+        "input": "s = \"abc\", t = \"d\"",
+        "output": "0",
+        "explanation": "No subsequence of s equals t."
+      }
+    ],
+    "constraints": [
+      "1 <= s.length, t.length <= 1000",
+      "s and t consist of English letters.",
+      "The answer fits in a 32-bit signed integer."
+    ],
+    "starterCode": {
+      "javascript": "function numDistinct(s, t) {\n  // your code here\n}\n",
+      "typescript": "function numDistinct(s: string, t: string): number {\n  // your code here\n  return 0;\n}\n",
+      "python": "def num_distinct(s, t):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int numDistinct(String s, String t) {\n        // your code here (java.util.* is already imported)\n        return 0;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint numDistinct(string s, string t) {\n    // your code here\n    return 0;\n}\n"
+    },
+    "harness": {
+      "javascript": "const __lines = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nconsole.log(numDistinct(__lines[0], __lines[1]));\n",
+      "typescript": "const __lines = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\");\nconsole.log(numDistinct(__lines[0], __lines[1]));\n",
+      "python": "import sys\n__lines = sys.stdin.read().splitlines()\nprint(num_distinct(__lines[0], __lines[1]))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.numDistinct(x[0], x[1]));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nint main(){\n    vector<string> x = RL();\n    cout << numDistinct(x[0], x[1]) << \"\\n\";\n    return 0;\n}\n"
+    },
+    "params": [
+      {
+        "name": "s",
+        "quote": true
+      },
+      {
+        "name": "t",
+        "quote": true
+      }
+    ],
+    "testCases": [
+      {
+        "name": "rabbbit",
+        "stdin": "rabbbit\nrabbit\n",
+        "expectedStdout": "3"
+      },
+      {
+        "name": "babgbag",
+        "stdin": "babgbag\nbag\n",
+        "expectedStdout": "5"
+      },
+      {
+        "name": "no match",
+        "stdin": "abc\nd\n",
+        "expectedStdout": "0"
+      },
+      {
+        "name": "identical strings",
+        "stdin": "abc\nabc\n",
+        "expectedStdout": "1"
+      },
+      {
+        "name": "t longer than s",
+        "stdin": "ab\nabc\n",
+        "expectedStdout": "0"
+      },
+      {
+        "name": "repeated letter",
+        "stdin": "aaaa\naa\n",
+        "expectedStdout": "6"
+      },
+      {
+        "name": "single char target",
+        "stdin": "aaa\na\n",
+        "expectedStdout": "3"
+      }
+    ]
+  },
+  {
+    "id": "longest-increasing-path-in-a-matrix",
+    "title": "Longest Increasing Path in a Matrix",
+    "difficulty": "hard",
+    "tags": [
+      "depth-first-search",
+      "dynamic-programming",
+      "memoization",
+      "matrix",
+      "graph",
+      "topological-sort"
+    ],
+    "description": "Given an integer matrix, return the length of the longest strictly increasing path.\n\nFrom each cell you may move up, down, left or right, and only onto a strictly larger value. You may not move diagonally or step outside the matrix.\n\nInput: a single line holding the matrix as a list of rows, e.g. [[9,9,4],[6,6,8],[2,1,1]].\nOutput: the number of cells on the longest increasing path.",
+    "examples": [
+      {
+        "input": "matrix = [[9,9,4],[6,6,8],[2,1,1]]",
+        "output": "4",
+        "explanation": "The longest increasing path is 1 -> 2 -> 6 -> 9."
+      },
+      {
+        "input": "matrix = [[3,4,5],[3,2,6],[2,2,1]]",
+        "output": "4",
+        "explanation": "The longest increasing path is 3 -> 4 -> 5 -> 6."
+      },
+      {
+        "input": "matrix = [[1]]",
+        "output": "1",
+        "explanation": "A single cell is a path of length 1."
+      }
+    ],
+    "constraints": [
+      "1 <= matrix.length, matrix[i].length <= 200",
+      "0 <= matrix[i][j] <= 2^31 - 1"
+    ],
+    "starterCode": {
+      "javascript": "function longestIncreasingPath(matrix) {\n  // your code here\n}\n",
+      "typescript": "function longestIncreasingPath(matrix: number[][]): number {\n  // your code here\n  return 0;\n}\n",
+      "python": "def longest_increasing_path(matrix):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    int longestIncreasingPath(int[][] matrix) {\n        // your code here (java.util.* is already imported)\n        return 0;\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nint longestIncreasingPath(vector<vector<int>>& matrix) {\n    // your code here\n    return 0;\n}\n"
+    },
+    "harness": {
+      "javascript": "const __matrix = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(longestIncreasingPath(__matrix));\n",
+      "typescript": "const __matrix = JSON.parse(require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0]);\nconsole.log(longestIncreasingPath(__matrix));\n",
+      "python": "import sys, json\n__matrix = json.loads(sys.stdin.read().splitlines()[0])\nprint(longest_increasing_path(__matrix))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    static int[] pi(String s) {\n        int a = s.indexOf('['), b = s.lastIndexOf(']');\n        if (a >= 0 && b >= 0) s = s.substring(a + 1, b);\n        s = s.trim();\n        if (s.isEmpty()) return new int[0];\n        String[] p = s.split(\",\");\n        int[] r = new int[p.length];\n        for (int i = 0; i < p.length; i++) r[i] = Integer.parseInt(p[i].trim());\n        return r;\n    }\n    static int[][] pg(String s) {\n        List<int[]> rows = new ArrayList<>();\n        int d = 0, st = -1;\n        for (int i = 0; i < s.length(); i++) {\n            char c = s.charAt(i);\n            if (c == '[') { d++; if (d == 2) st = i; }\n            else if (c == ']') { if (d == 2) rows.add(pi(s.substring(st, i + 1))); d--; }\n        }\n        return rows.toArray(new int[0][]);\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sol.longestIncreasingPath(pg(x[0])));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nstatic vector<int> PI(const string& s){string t;for(char c:s)t+=(c=='['||c==']'||c==',')?' ':c;vector<int> r;stringstream ss(t);int x;while(ss>>x)r.push_back(x);return r;}\nstatic vector<vector<int>> PG(const string& s){vector<vector<int>> r;int d=0;size_t st=0;for(size_t i=0;i<s.size();i++){char c=s[i];if(c=='['){d++;if(d==2)st=i;}else if(c==']'){if(d==2)r.push_back(PI(s.substr(st,i-st+1)));d--;}}return r;}\nint main(){\n    vector<string> x = RL();\n    auto a0=PG(x[0]);\n    cout << longestIncreasingPath(a0) << \"\\n\";\n    return 0;\n}\n"
+    },
+    "params": [
+      {
+        "name": "matrix"
+      }
+    ],
+    "testCases": [
+      {
+        "name": "classic",
+        "stdin": "[[9,9,4],[6,6,8],[2,1,1]]\n",
+        "expectedStdout": "4"
+      },
+      {
+        "name": "winding path",
+        "stdin": "[[3,4,5],[3,2,6],[2,2,1]]\n",
+        "expectedStdout": "4"
+      },
+      {
+        "name": "single cell",
+        "stdin": "[[1]]\n",
+        "expectedStdout": "1"
+      },
+      {
+        "name": "all equal",
+        "stdin": "[[2,2],[2,2]]\n",
+        "expectedStdout": "1"
+      },
+      {
+        "name": "single increasing row",
+        "stdin": "[[1,2,3,4]]\n",
+        "expectedStdout": "4"
+      },
+      {
+        "name": "single decreasing column",
+        "stdin": "[[4],[3],[2],[1]]\n",
+        "expectedStdout": "4"
+      },
+      {
+        "name": "mixed",
+        "stdin": "[[7,8,9],[9,7,6],[7,2,3]]\n",
+        "expectedStdout": "6"
+      }
+    ]
   }
 ]
