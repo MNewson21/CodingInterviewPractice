@@ -154,6 +154,41 @@ export const TRACKS: Track[] = [
       'regular-expression-matching',
     ],
   },
+  {
+    id: 'demon-list',
+    title: 'Demon List',
+    blurb: 'Every hard problem in the catalog, ranked hardest first - the final climb.',
+    accent: 'text-fuchsia-400',
+    // Ranked by how much insight the optimal solution demands, not by tag or acceptance
+    // rate alone: the openers need a reformulation you are unlikely to stumble into, the
+    // closers are famous problems whose patterns most people already know. Kept in sync
+    // with the catalog by tracks.data.test.ts, which fails if a new hard problem is added
+    // and not ranked here.
+    problemIds: [
+      // Tier 1 - you either know the reformulation or you do not finish.
+      'super-egg-drop',
+      'regular-expression-matching',
+      'count-of-smaller-numbers-after-self',
+      'number-of-digit-one',
+      // Tier 2 - one non-obvious idea stands between brute force and the bound.
+      'first-missing-positive',
+      'maximum-gap',
+      'longest-valid-parentheses',
+      'largest-rectangle-histogram',
+      // Tier 3 - a known pattern, but the bookkeeping is where people lose it.
+      'sliding-window-maximum',
+      'distinct-subsequences',
+      'best-time-to-buy-and-sell-stock-iii',
+      'split-array-largest-sum',
+      'candy',
+      'edit-distance',
+      // Tier 4 - the approachable end: famous, well-documented, pattern-first.
+      'trapping-rain-water',
+      'longest-increasing-path-in-a-matrix',
+      'n-queens',
+      'unique-paths-iii',
+    ],
+  },
 ];
 
 /** Look up a single track by its id. */
