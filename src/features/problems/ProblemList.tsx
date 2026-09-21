@@ -1,8 +1,8 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import type { Difficulty, Problem } from '../../types/problem';
 import { useAuth } from '../../lib/auth';
-import { listSessions } from '../sessions/sessions.api';
+import { useSolvedIds } from '../sessions/useSolvedIds';
 
 const difficultyColor: Record<string, string> = {
   easy: 'text-green-400',
@@ -17,41 +17,18 @@ const STATUSES: Status[] = ['all', 'unsolved', 'solved'];
 
 /**
  * The built-in problem catalog with search, difficulty filter, tag filter,
- * solved-status filter, and per-problem solved state. Solved state is derived
- * from the signed-in user's sessions (a problem is "solved" if any of their
- * sessions for it is marked solved); guests see the list without checkmarks
- * and without the status filter.
+ * solved-status filter, and per-problem solved state. Solved state comes from
+ * {@link useSolvedIds}, shared with the tracks pages; guests see the list without
+ * checkmarks and without the status filter.
  */
 export function ProblemList({ problems }: { problems: Problem[] }) {
   const { user } = useAuth();
-  const [solvedIds, setSolvedIds] = useState<Set<string>>(new Set());
+  const solvedIds = useSolvedIds();
   const [query, setQuery] = useState('');
   const [difficulty, setDifficulty] = useState<Difficulty | 'all'>('all');
   const [selectedTags, setSelectedTags] = useState<Set<string>>(new Set());
   const [showTags, setShowTags] = useState(false);
   const [status, setStatus] = useState<Status>('all');
-
-  useEffect(() => {
-    if (!user) {
-      setSolvedIds(new Set());
-      return;
-    }
-    let cancelled = false;
-    listSessions()
-      .then((sessions) => {
-        if (cancelled) return;
-        const solved = new Set(
-          sessions.filter((s) => s.status === 'solved').map((s) => s.problemId),
-        );
-        setSolvedIds(solved);
-      })
-      .catch(() => {
-        // Solved badges are a non-critical enhancement; a failed fetch just shows no badges.
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [user]);
 
   const allTags = useMemo(() => {
     const tags = new Set<string>();

@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { listSessions, deleteSession, setSessionPublic } from './sessions.api';
+import { listSessionSummaries, deleteSession, setSessionPublic } from './sessions.api';
 import { problems } from '../problems/problems.data';
 import { useProblemsStore } from '../../stores/useProblemsStore';
-import type { SessionRecord } from '../../types/session';
+import type { SessionSummary } from '../../types/session';
 
 const statusColor: Record<string, string> = {
   solved: 'text-green-400',
@@ -12,7 +12,7 @@ const statusColor: Record<string, string> = {
 };
 
 export function SessionHistory() {
-  const [sessions, setSessions] = useState<SessionRecord[] | null>(null);
+  const [sessions, setSessions] = useState<SessionSummary[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [sharingId, setSharingId] = useState<string | null>(null);
@@ -20,7 +20,7 @@ export function SessionHistory() {
   const custom = useProblemsStore((s) => s.custom);
 
   useEffect(() => {
-    listSessions()
+    listSessionSummaries()
       .then(setSessions)
       .catch((err) => setError(err instanceof Error ? err.message : String(err)));
   }, []);
@@ -95,7 +95,8 @@ export function SessionHistory() {
           hour: '2-digit',
           minute: '2-digit',
         });
-        const replayable = s.keystrokes.length > 0;
+        // Derived server-side (migration 0005) so the list never downloads the logs.
+        const replayable = s.keystrokeCount > 0;
         return (
           <li key={s.id} className="flex items-center justify-between px-4 py-2 text-sm">
             <div>

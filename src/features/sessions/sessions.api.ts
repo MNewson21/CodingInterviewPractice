@@ -4,6 +4,7 @@ import type {
   KeystrokeEvent,
   SessionRecord,
   SessionStatus,
+  SessionSummary,
   SharedReplay,
 } from '../../types/session';
 
@@ -20,6 +21,8 @@ interface SessionRow {
   ai_review: unknown | null;
   created_at: string;
   is_public: boolean;
+  /** Generated column (migration 0005): jsonb_array_length(keystrokes). */
+  keystroke_count: number;
 }
 
 function fromRow(r: SessionRow): SessionRecord {
@@ -127,14 +130,52 @@ export async function updateSession(
   return fromRow(data as SessionRow);
 }
 
-export async function listSessions(): Promise<SessionRecord[]> {
+/**
+ * Explicit metadata columns for listing pages. `code`, `ai_review` and above all
+ * `keystrokes` are omitted on purpose - see {@link listSessionSummaries}. Keep this list
+ * in sync with {@link SessionSummary}; never add `keystrokes` to it.
+ */
+const SUMMARY_COLUMNS =
+  'id, problem_id, language, status, duration_ms, created_at, is_public, keystroke_count';
+
+type SummaryRow = Pick<
+  SessionRow,
+  'id' | 'problem_id' | 'language' | 'status' | 'duration_ms' | 'created_at' | 'is_public' | 'keystroke_count'
+>;
+
+export function summaryFromRow(r: SummaryRow): SessionSummary {
+  return {
+    id: r.id,
+    problemId: r.problem_id,
+    language: r.language as Language,
+    status: r.status,
+    durationMs: r.duration_ms,
+    createdAt: r.created_at,
+    isPublic: r.is_public ?? false,
+    // Migration 0005 backfills every existing row, so this is not expected to be null
+    // in practice - but a missing/ungranted column would arrive as undefined, and an
+    // unknown count must degrade to "no replay" rather than link to an empty player.
+    keystrokeCount: r.keystroke_count ?? 0,
+  };
+}
+
+/**
+ * The caller's sessions, newest first, as metadata only.
+ *
+ * This is the listing path used by the home page, tracks pages, progress page and
+ * session history. It selects an explicit column list so the `keystrokes` jsonb log -
+ * which {@link MAX_KEYSTROKES_BYTES} permits to reach ~3 MB per row - is never fetched
+ * just to draw a solved badge or decide whether a Replay link belongs on a row. Use
+ * {@link getSession} when the events themselves are needed.
+ */
+export async function listSessionSummaries(): Promise<SessionSummary[]> {
   const { data, error } = await supabase
     .from('sessions')
-    .select()
+    .select(SUMMARY_COLUMNS)
     .order('created_at', { ascending: false });
 
   if (error) throw new Error(error.message);
-  return (data as SessionRow[]).map(fromRow);
+  return (data as SummaryRow[]).map(summaryFromRow);
 }
 
 /** Permanently delete one of the caller's saved sessions. RLS ensures only own rows match. */

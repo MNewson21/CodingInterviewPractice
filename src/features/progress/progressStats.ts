@@ -1,5 +1,5 @@
 import type { Difficulty, Language, Problem } from '../../types/problem';
-import type { SessionRecord } from '../../types/session';
+import type { SessionSummary } from '../../types/session';
 
 export interface DifficultyProgress {
   difficulty: Difficulty;
@@ -57,9 +57,12 @@ function computeStreak(activeDays: Set<string>): number {
  * Aggregates a user's saved sessions into the headline numbers shown on the Progress
  * page. Difficulty denominators come from the built-in catalog; solved/attempted counts
  * are by unique problem (a problem solved twice still counts once).
+ *
+ * Takes {@link SessionSummary} rather than {@link SessionRecord}: none of these numbers
+ * need `code` or the keystroke log, so the Progress page fetches metadata only.
  */
 export function computeProgressStats(
-  sessions: SessionRecord[],
+  sessions: SessionSummary[],
   catalog: Problem[],
 ): ProgressStats {
   const solvedIds = new Set<string>();

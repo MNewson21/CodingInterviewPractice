@@ -1,24 +1,21 @@
 import { describe, it, expect } from 'vitest';
 import { computeProgressStats, formatDuration } from './progressStats';
 import type { Problem } from '../../types/problem';
-import type { SessionRecord } from '../../types/session';
+import type { SessionSummary } from '../../types/session';
 
 // ---- fixtures -------------------------------------------------------------
 
-/** A session record with sensible defaults; override only what a test cares about. */
-function session(overrides: Partial<SessionRecord> = {}): SessionRecord {
+/** A session summary with sensible defaults; override only what a test cares about. */
+function session(overrides: Partial<SessionSummary> = {}): SessionSummary {
   return {
     id: 'sess-1',
-    userId: 'user-1',
     problemId: 'two-sum',
     language: 'python',
-    code: 'print(1)',
     status: 'solved',
     durationMs: 60_000,
-    keystrokes: [],
-    aiReview: null,
     createdAt: new Date().toISOString(),
     isPublic: false,
+    keystrokeCount: 0,
     ...overrides,
   };
 }
