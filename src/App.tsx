@@ -12,6 +12,7 @@ import { TrackDetailPage } from './routes/TrackDetailPage';
 import { PrivacyPage } from './routes/PrivacyPage';
 import { NotFoundPage } from './routes/NotFoundPage';
 import { AuthPage } from './features/auth/AuthPage';
+import { AuthProvider } from './lib/auth';
 import { useThemeStore } from './stores/useThemeStore';
 import { CUSTOM_THEME_ID, buildZincRamp, ZINC_VAR_NAMES } from './features/editor/themes';
 
@@ -42,21 +43,23 @@ export function App() {
 
   return (
     <ErrorBoundary>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/revise" element={<RevisePage />} />
-          <Route path="/progress" element={<ProgressPage />} />
-          <Route path="/tracks" element={<TracksPage />} />
-          <Route path="/tracks/:trackId" element={<TrackDetailPage />} />
-          <Route path="/auth" element={<AuthPage />} />
-          <Route path="/session/:problemId" element={<SessionPage />} />
-          <Route path="/replay/:sessionId" element={<ReplayPage />} />
-          <Route path="/privacy" element={<PrivacyPage />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      </BrowserRouter>
+      <AuthProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/revise" element={<RevisePage />} />
+            <Route path="/progress" element={<ProgressPage />} />
+            <Route path="/tracks" element={<TracksPage />} />
+            <Route path="/tracks/:trackId" element={<TrackDetailPage />} />
+            <Route path="/auth" element={<AuthPage />} />
+            <Route path="/session/:problemId" element={<SessionPage />} />
+            <Route path="/replay/:sessionId" element={<ReplayPage />} />
+            <Route path="/privacy" element={<PrivacyPage />} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
     </ErrorBoundary>
   );
 }
