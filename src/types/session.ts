@@ -33,6 +33,26 @@ export interface SessionRecord {
 }
 
 /**
+ * Metadata-only view of a session, as returned by `listSessionSummaries`. Deliberately
+ * omits `code`, `aiReview` and the `keystrokes` log so listing pages never download a
+ * multi-megabyte replay blob; `keystrokeCount` carries the only fact those pages needed
+ * from it (whether a replay exists). Fetch the full {@link SessionRecord} via
+ * `getSession` when the events themselves are required.
+ */
+export interface SessionSummary {
+  id: string;
+  problemId: string;
+  language: Language;
+  status: SessionStatus;
+  durationMs: number | null;
+  createdAt: string;
+  /** When true, anyone with the /replay/:id link can view this session. */
+  isPublic: boolean;
+  /** Number of recorded keystroke events; > 0 means the session is replayable. */
+  keystrokeCount: number;
+}
+
+/**
  * The subset of a session readable by a link-holder who is not the owner. Mirrors the
  * column-level grant in migration 0004 — deliberately omits userId and aiReview.
  */

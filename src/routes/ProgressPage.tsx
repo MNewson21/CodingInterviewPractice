@@ -4,10 +4,10 @@ import { ThemeSwitcher } from '../features/editor/ThemeSwitcher';
 import { SiteFooter } from '../components/SiteFooter';
 import { usePageTitle } from '../hooks/usePageTitle';
 import { useAuth } from '../lib/auth';
-import { listSessions } from '../features/sessions/sessions.api';
+import { listSessionSummaries } from '../features/sessions/sessions.api';
 import { problems } from '../features/problems/problems.data';
 import { LANGUAGE_LABELS } from '../lib/languages';
-import type { SessionRecord } from '../types/session';
+import type { SessionSummary } from '../types/session';
 import type { Difficulty } from '../types/problem';
 import {
   computeProgressStats,
@@ -61,7 +61,7 @@ function DifficultyRow({ row }: { row: DifficultyProgress }) {
 export function ProgressPage() {
   usePageTitle('Progress');
   const { user, loading: authLoading } = useAuth();
-  const [sessions, setSessions] = useState<SessionRecord[] | null>(null);
+  const [sessions, setSessions] = useState<SessionSummary[] | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -70,7 +70,7 @@ export function ProgressPage() {
       return;
     }
     let cancelled = false;
-    listSessions()
+    listSessionSummaries()
       .then((s) => {
         if (!cancelled) setSessions(s);
       })
