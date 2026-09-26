@@ -168,7 +168,7 @@ export function summaryFromRow(r: SummaryRow): SessionSummary {
  * just to draw a solved badge or decide whether a Replay link belongs on a row. Use
  * {@link getSession} when the events themselves are needed.
  */
-export async function listSessionSummaries(): Promise<SessionSummary[]> {
+async function fetchSessionSummaries(): Promise<SessionSummary[]> {
   const { data, error } = await supabase
     .from('sessions')
     .select(SUMMARY_COLUMNS)
@@ -176,6 +176,28 @@ export async function listSessionSummaries(): Promise<SessionSummary[]> {
 
   if (error) throw new Error(error.message);
   return (data as SummaryRow[]).map(summaryFromRow);
+}
+
+/**
+ * The single query currently in flight, or null. See {@link listSessionSummaries}.
+ */
+let inFlightSummaries: Promise<SessionSummary[]> | null = null;
+
+export function listSessionSummaries(): Promise<SessionSummary[]> {
+  // The home page mounts two independent consumers in the same commit - ProblemList's
+  // useSolvedIds and SessionHistory - so both effects fire in the same tick and issue
+  // byte-identical queries. Sharing the pending promise collapses them into one request.
+  //
+  // This deliberately coalesces rather than caches: the entry is cleared as soon as the
+  // query settles, so navigating back after solving a problem still refetches and solved
+  // badges cannot go stale. A cache here would need explicit invalidation on every save.
+  inFlightSummaries ??= fetchSessionSummaries().finally(() => {
+    inFlightSummaries = null;
+  });
+
+  // Each caller gets its own array so one consumer's list handling can never be observed
+  // by the other - SessionHistory drops rows from its copy as the user deletes them.
+  return inFlightSummaries.then((rows) => rows.slice());
 }
 
 /** Permanently delete one of the caller's saved sessions. RLS ensures only own rows match. */
