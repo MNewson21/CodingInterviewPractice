@@ -99,6 +99,56 @@ describe('listSessionSummaries', () => {
   });
 });
 
+// The home page fired this query once per consumer - useSolvedIds and SessionHistory mount
+// in the same commit - so a signed-in load issued two byte-identical requests.
+describe('listSessionSummaries in-flight dedupe', () => {
+  it('issues one query when two callers overlap', async () => {
+    await Promise.all([listSessionSummaries(), listSessionSummaries()]);
+    expect(from).toHaveBeenCalledTimes(1);
+    expect(select).toHaveBeenCalledTimes(1);
+  });
+
+  it('resolves every overlapping caller with the same contents', async () => {
+    const [a, b] = await Promise.all([listSessionSummaries(), listSessionSummaries()]);
+    expect(a).toEqual(b);
+    expect(a).toHaveLength(1);
+  });
+
+  // Callers own their list independently: SessionHistory removes rows as the user deletes
+  // them, and that must not be visible to the solved-badge consumer.
+  it('hands each caller its own array instance', async () => {
+    const [a, b] = await Promise.all([listSessionSummaries(), listSessionSummaries()]);
+    expect(a).not.toBe(b);
+  });
+
+  // The guard against this becoming a cache. Solving a problem then navigating home must
+  // refetch, or the solved badge never appears.
+  it('issues a fresh query once the previous one has settled', async () => {
+    await listSessionSummaries();
+    await listSessionSummaries();
+    expect(select).toHaveBeenCalledTimes(2);
+  });
+
+  it('rejects every overlapping caller when the query fails', async () => {
+    order.mockResolvedValue({ data: null, error: { message: 'permission denied' } });
+    const a = listSessionSummaries();
+    const b = listSessionSummaries();
+    await expect(a).rejects.toThrow('permission denied');
+    await expect(b).rejects.toThrow('permission denied');
+    expect(select).toHaveBeenCalledTimes(1);
+  });
+
+  // A failed request must not latch: the next caller has to be able to retry.
+  it('retries after a failure instead of latching the rejection', async () => {
+    order.mockResolvedValue({ data: null, error: { message: 'boom' } });
+    await expect(listSessionSummaries()).rejects.toThrow('boom');
+
+    order.mockResolvedValue({ data: [row()], error: null });
+    await expect(listSessionSummaries()).resolves.toHaveLength(1);
+    expect(select).toHaveBeenCalledTimes(2);
+  });
+});
+
 describe('summaryFromRow', () => {
   // A missing or ungranted column arrives as null/undefined; it must not render a
   // Replay link to an empty player, so it degrades to "not replayable".
