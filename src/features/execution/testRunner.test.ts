@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import type { Mock } from 'vitest';
-import { buildSource, normalize, evaluate, runTests } from './testRunner';
+import { buildSource, normalize, evaluate, compareOutputs, runTests } from './testRunner';
 import { executeCode, PistonError, type PistonResponse, type PistonRunStage } from './pistonClient';
 
 // Mock only executeCode; keep the real PistonError so `instanceof` checks in runTests hold.
@@ -69,6 +69,61 @@ describe('normalize', () => {
   });
 });
 
+// ---- compareOutputs -------------------------------------------------------
+
+describe('compareOutputs', () => {
+  it('defaults to exact comparison', () => {
+    expect(compareOutputs('[1,2]', '[1,2]')).toBe(true);
+    expect(compareOutputs('[2,1]', '[1,2]')).toBe(false);
+  });
+
+  it('normalizes whitespace on both sides before comparing', () => {
+    expect(compareOutputs('[1,2]  \r\n', '[1,2]\n')).toBe(true);
+  });
+
+  it('exact mode rejects a reordering even when it parses as JSON', () => {
+    expect(compareOutputs('[[3],[1,2]]', '[[1,2],[3]]', 'exact')).toBe(false);
+  });
+
+  it('unordered mode accepts top-level elements in any order', () => {
+    expect(compareOutputs('[[3],[1,2],[]]', '[[],[1,2],[3]]', 'unordered')).toBe(true);
+  });
+
+  it('unordered mode keeps order INSIDE an element significant (Permutations)', () => {
+    expect(compareOutputs('[[2,1]]', '[[1,2]]', 'unordered')).toBe(false);
+  });
+
+  it('unordered mode reorders strings too (Letter Combinations)', () => {
+    expect(compareOutputs('["ae","ad"]', '["ad","ae"]', 'unordered')).toBe(true);
+  });
+
+  it('unordered mode compares as a MULTISET, not a set (duplicates must match)', () => {
+    expect(compareOutputs('[1,1,2]', '[1,2,2]', 'unordered')).toBe(false);
+    expect(compareOutputs('[1,1,2]', '[1,2,1]', 'unordered')).toBe(true);
+  });
+
+  it('unordered mode rejects a differing element count in BOTH directions', () => {
+    expect(compareOutputs('[1,2,3]', '[1,2]', 'unordered')).toBe(false);
+    // The short-output direction is the one that needs the explicit length check:
+    // a prefix-matching answer would otherwise pass element-by-element.
+    expect(compareOutputs('[1,2]', '[1,2,3]', 'unordered')).toBe(false);
+  });
+
+  it('unordered mode does not excuse output that is not JSON', () => {
+    expect(compareOutputs('Traceback...', '[1,2]', 'unordered')).toBe(false);
+  });
+
+  it('unordered mode does not excuse a non-array JSON value', () => {
+    // A scalar answer has no top level to reorder; fall back to exact.
+    expect(compareOutputs('3', '4', 'unordered')).toBe(false);
+    expect(compareOutputs('3', '3', 'unordered')).toBe(true);
+  });
+
+  it('unordered mode still passes identical empty output', () => {
+    expect(compareOutputs('[]', '[]', 'unordered')).toBe(true);
+  });
+});
+
 // ---- evaluate -------------------------------------------------------------
 
 describe('evaluate', () => {
@@ -80,6 +135,13 @@ describe('evaluate', () => {
 
   it('fails when stdout differs from expected', () => {
     expect(evaluate(response({ stdout: '[1,0]' }), '[0,1]').verdict).toBe('fail');
+  });
+
+  it('applies the judge mode it is given', () => {
+    expect(evaluate(response({ stdout: '[[3],[1,2]]' }), '[[1,2],[3]]').verdict).toBe('fail');
+    expect(evaluate(response({ stdout: '[[3],[1,2]]' }), '[[1,2],[3]]', 'unordered').verdict).toBe(
+      'pass',
+    );
   });
 
   it('reports a compile failure as error, not wrong answer', () => {
@@ -128,6 +190,35 @@ describe('runTests', () => {
     expect(mockExecute).toHaveBeenCalledWith(
       expect.objectContaining({ language: 'python', code: 'CODE\n\nHARNESS', stdin: 'a' }),
     );
+  });
+
+  it('threads the problem judge mode through to every test case', async () => {
+    mockExecute
+      .mockResolvedValueOnce(response({ stdout: '[[3],[1,2]]' }))
+      .mockResolvedValueOnce(response({ stdout: '[[2,1]]' }));
+
+    const results = await runTests({
+      language: 'python',
+      code: 'c',
+      judge: 'unordered',
+      testCases: [
+        { stdin: 'a', expectedStdout: '[[1,2],[3]]' },
+        { stdin: 'b', expectedStdout: '[[1,2]]' },
+      ],
+    });
+
+    // Reordered top level passes; a reordered element does not.
+    expect(results.map((r) => r.verdict)).toEqual(['pass', 'fail']);
+  });
+
+  it('judges exactly when no judge mode is given', async () => {
+    mockExecute.mockResolvedValue(response({ stdout: '[[3],[1,2]]' }));
+    const results = await runTests({
+      language: 'python',
+      code: 'c',
+      testCases: [{ stdin: 'a', expectedStdout: '[[1,2],[3]]' }],
+    });
+    expect(results[0].verdict).toBe('fail');
   });
 
   it('auto-names unnamed test cases "Test N"', async () => {

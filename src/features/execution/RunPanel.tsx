@@ -73,6 +73,7 @@ export function RunPanel({ problem }: { problem: Problem }) {
         code,
         testCases: problem.testCases,
         harness: problem.harness,
+        judge: problem.judge,
       });
       setResults(res);
     } catch (err) {
@@ -118,6 +119,13 @@ export function RunPanel({ problem }: { problem: Problem }) {
       )}
 
       <div className="min-h-0 flex-1 overflow-y-auto px-4 pb-4 pt-2">
+        {/* Say so up front: otherwise a correct answer in a different order looks broken. */}
+        {problem.judge === 'unordered' && (
+          <p className="mb-2 rounded border border-zinc-800 bg-zinc-900 px-2 py-1 text-xs text-zinc-400">
+            Judged as a set - the top-level items may be returned in any order. The contents of
+            each item must still be in the order the problem asks for.
+          </p>
+        )}
         {error && (
           <p className="rounded border border-red-900 bg-red-950/40 p-2 text-xs text-red-300">
             {error}

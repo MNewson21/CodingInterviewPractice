@@ -1,5 +1,6 @@
 import type {
   Difficulty,
+  JudgeMode,
   Language,
   Problem,
   ProblemExample,
@@ -15,6 +16,7 @@ const MAX_TEST_CASES = 50;
 const MAX_LEN = 20_000;
 const DIFFICULTIES: Difficulty[] = ['easy', 'medium', 'hard'];
 const LANGUAGES: Language[] = ['javascript', 'typescript', 'python', 'java', 'cpp'];
+const JUDGE_MODES: JudgeMode[] = ['exact', 'unordered'];
 
 function str(
   v: unknown,
@@ -101,6 +103,12 @@ export function parseProblemData(text: string): ProblemData {
         })
     : [];
 
+  // How output is compared. Anything unrecognised falls back to the strict mode
+  // rather than being rejected, so an older/newer file still imports.
+  const judge: JudgeMode = JUDGE_MODES.includes(raw.judge as JudgeMode)
+    ? (raw.judge as JudgeMode)
+    : 'exact';
+
   if (!Array.isArray(raw.testCases) || raw.testCases.length === 0) {
     throw new Error('"testCases" must be a non-empty array');
   }
@@ -126,6 +134,7 @@ export function parseProblemData(text: string): ProblemData {
     starterCode,
     ...(Object.keys(harness).length ? { harness } : {}),
     ...(params.length ? { params } : {}),
+    ...(judge !== 'exact' ? { judge } : {}),
     testCases,
   };
 }

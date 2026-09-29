@@ -2,6 +2,18 @@ export type Difficulty = 'easy' | 'medium' | 'hard';
 
 export type Language = 'javascript' | 'typescript' | 'python' | 'java' | 'cpp';
 
+/**
+ * How a test case's output is compared with `expectedStdout`.
+ * - `exact` (default) - must match after whitespace normalisation.
+ * - `unordered` - the output is a JSON array whose TOP-LEVEL elements may come
+ *   back in any order, for problems like Subsets or Permutations where every
+ *   ordering is a correct answer. Order INSIDE each element is still
+ *   significant (so `[1,2]` never matches `[2,1]`), which is what keeps
+ *   Permutations judgeable; a problem using this must therefore state a
+ *   canonical order for the contents of each element.
+ */
+export type JudgeMode = 'exact' | 'unordered';
+
 export interface TestCase {
   name?: string;
   stdin: string;
@@ -38,5 +50,10 @@ export interface Problem {
    * string arguments).
    */
   params?: { name: string; quote?: boolean }[];
+  /**
+   * How every test case of this problem is judged. Omitted means `exact`, so
+   * existing problems keep byte-comparison semantics.
+   */
+  judge?: JudgeMode;
   testCases: TestCase[];
 }

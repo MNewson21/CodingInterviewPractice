@@ -117,6 +117,20 @@ describe('parseProblemData — normalization & defaults', () => {
   it('requires a name on each declared param', () => {
     expect(() => parse(validRaw({ params: [{ quote: true }] }))).toThrow(/name/i);
   });
+
+  it('omits the judge key when the problem uses the default exact comparison', () => {
+    expect('judge' in parse(validRaw())).toBe(false);
+    expect('judge' in parse(validRaw({ judge: 'exact' }))).toBe(false);
+  });
+
+  it('keeps an explicit unordered judge', () => {
+    expect(parse(validRaw({ judge: 'unordered' })).judge).toBe('unordered');
+  });
+
+  it('falls back to exact for an unrecognised judge rather than rejecting the file', () => {
+    expect('judge' in parse(validRaw({ judge: 'anything-goes' }))).toBe(false);
+    expect('judge' in parse(validRaw({ judge: 7 }))).toBe(false);
+  });
 });
 
 describe('buildProblemFile', () => {
@@ -144,5 +158,10 @@ describe('buildProblemFile', () => {
     expect(reparsed.title).toBe(problem.title);
     expect(reparsed.difficulty).toBe(problem.difficulty);
     expect(reparsed.testCases).toEqual(problem.testCases);
+  });
+
+  it('round-trips the judge mode so a shared file keeps its looser comparison', () => {
+    const reparsed = parseProblemData(buildProblemFile({ ...problem, judge: 'unordered' }));
+    expect(reparsed.judge).toBe('unordered');
   });
 });
