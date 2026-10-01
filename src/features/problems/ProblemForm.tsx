@@ -89,6 +89,7 @@ export function ProblemForm({
   const [params, setParams] = useState<{ name: string; quote: boolean }[]>(
     () => initial?.params?.map((p) => ({ name: p.name, quote: !!p.quote })) ?? [],
   );
+  const [unordered, setUnordered] = useState(initial?.judge === 'unordered');
   const [testCases, setTestCases] = useState<TestCaseField[]>(() =>
     initial?.testCases.length
       ? initial.testCases.map((tc) => ({ name: tc.name ?? '', stdin: tc.stdin, expectedStdout: tc.expectedStdout }))
@@ -108,6 +109,7 @@ export function ProblemForm({
     setStarter({});
     setHarness(defaultHarness());
     setParams([]);
+    setUnordered(false);
     setTestCases([emptyTestCase()]);
   }
 
@@ -140,6 +142,7 @@ export function ProblemForm({
         params: params
           .filter((p) => p.name.trim())
           .map((p) => (p.quote ? { name: p.name.trim(), quote: true } : { name: p.name.trim() })),
+        judge: unordered ? 'unordered' : 'exact',
         testCases: testCases
           .filter((tc) => tc.stdin.trim() || tc.expectedStdout.trim())
           .map((tc) => ({
@@ -372,6 +375,19 @@ export function ProblemForm({
           Each case feeds <code className="text-zinc-400">stdin</code> to the program and compares its
           output against <code className="text-zinc-400">expected output</code> (whitespace-trimmed).
         </p>
+        <label className="flex items-start gap-2 text-xs text-zinc-400">
+          <input
+            type="checkbox"
+            className="mt-0.5 accent-emerald-500"
+            checked={unordered}
+            onChange={(e) => setUnordered(e.target.checked)}
+          />
+          <span>
+            Accept the items in any order - for answers like subsets or permutations, where every
+            ordering is correct. Both outputs must be a JSON array; only the top level is reordered,
+            so each item's own contents still have to match exactly.
+          </span>
+        </label>
         {testCases.map((tc, i) => (
           <div key={i} className="space-y-2 rounded border border-zinc-800 p-3">
             <input
