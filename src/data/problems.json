@@ -8231,5 +8231,96 @@
         "expectedStdout": "true"
       }
     ]
+  },
+  {
+    "id": "letter-combinations",
+    "title": "Letter Combinations of a Phone Number",
+    "difficulty": "medium",
+    "tags": [
+      "string",
+      "backtracking",
+      "recursion",
+      "combinatorics"
+    ],
+    "description": "Given a string containing digits from 2-9 inclusive, return every letter combination the number could spell on a telephone keypad.\n\nThe mapping is the one printed on the keys: 2 -> abc, 3 -> def, 4 -> ghi, 5 -> jkl, 6 -> mno, 7 -> pqrs, 8 -> tuv, 9 -> wxyz. The digit 1 carries no letters and never appears in the input.\n\nEach combination must spell its letters in the SAME ORDER as the digits that produced them: the first letter comes from the first digit, the second from the second, and so on. The combinations themselves may be returned in ANY ORDER - this problem is judged as a set, so your answer is accepted however you order the list.\n\nInput: a single line holding the digit string. An empty input is an empty line.\nOutput: a compact JSON array of strings, e.g. [\"ad\",\"ae\",\"af\"]. Return [] when the input is empty.",
+    "examples": [
+      {
+        "input": "digits = \"23\"",
+        "output": "[\"ad\",\"ae\",\"af\",\"bd\",\"be\",\"bf\",\"cd\",\"ce\",\"cf\"]",
+        "explanation": "2 contributes one of a, b, c and 3 contributes one of d, e, f, so there are 3 x 3 = 9 combinations. Any ordering of the nine is accepted."
+      },
+      {
+        "input": "digits = \"\"",
+        "output": "[]",
+        "explanation": "With no digits there is nothing to spell, so the answer is the empty list - not a list holding the empty string."
+      },
+      {
+        "input": "digits = \"2\"",
+        "output": "[\"a\",\"b\",\"c\"]",
+        "explanation": "A single digit yields one combination per letter on that key."
+      }
+    ],
+    "constraints": [
+      "0 <= digits.length <= 4",
+      "digits[i] is a digit in the range ['2', '9']"
+    ],
+    "starterCode": {
+      "javascript": "function letterCombinations(digits) {\n  // your code here\n}\n",
+      "typescript": "function letterCombinations(digits: string): string[] {\n  // your code here\n  return [];\n}\n",
+      "python": "def letter_combinations(digits):\n    # your code here\n    pass\n",
+      "java": "class Solution {\n    List<String> letterCombinations(String digits) {\n        // your code here (java.util.* is already imported)\n        return new ArrayList<>();\n    }\n}\n",
+      "cpp": "#include <bits/stdc++.h>\nusing namespace std;\n\nvector<string> letterCombinations(string digits) {\n    // your code here\n    return {};\n}\n"
+    },
+    "harness": {
+      "javascript": "const __digits = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0];\nconsole.log(JSON.stringify(letterCombinations(__digits)));\n",
+      "typescript": "const __digits = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\")[0];\nconsole.log(JSON.stringify(letterCombinations(__digits)));\n",
+      "python": "import sys, json\n__lines = sys.stdin.read().splitlines()\n__digits = __lines[0] if __lines else \"\"\nprint(json.dumps(letter_combinations(__digits), separators=(\",\", \":\")))\n",
+      "java": "import java.util.*;\n\npublic class Main {\n    static String[] L() throws Exception {\n        String[] a = new String(System.in.readAllBytes()).split(\"\\n\", -1);\n        for (int i = 0; i < a.length; i++) if (a[i].endsWith(\"\\r\")) a[i] = a[i].substring(0, a[i].length() - 1);\n        return a;\n    }\n    static String sa(List<String> a) {\n        StringBuilder b = new StringBuilder(\"[\");\n        for (int i = 0; i < a.size(); i++) {\n            if (i > 0) b.append(',');\n            b.append('\"');\n            for (char c : a.get(i).toCharArray()) { if (c == '\\\\' || c == '\"') b.append('\\\\'); b.append(c); }\n            b.append('\"');\n        }\n        return b.append(']').toString();\n    }\n    public static void main(String[] args) throws Exception {\n        String[] x = L();\n        Solution sol = new Solution();\n        System.out.println(sa(sol.letterCombinations(x[0])));\n    }\n}\n",
+      "cpp": "\nstatic vector<string> RL(){string a((istreambuf_iterator<char>(cin)),istreambuf_iterator<char>());vector<string> r;string c;for(char ch:a){if(ch=='\\n'){if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);c.clear();}else c.push_back(ch);}if(!c.empty()&&c.back()=='\\r')c.pop_back();r.push_back(c);return r;}\nstatic string SA(const vector<string>& a){string o=\"[\";for(size_t i=0;i<a.size();i++){if(i)o+=\",\";o+=\"\\\"\";for(char c:a[i]){if(c=='\\\\'||c=='\"')o+='\\\\';o+=c;}o+=\"\\\"\";}return o+\"]\";}\nint main(){\n    vector<string> x = RL();\n    string a0 = x.size() > 0 ? x[0] : \"\";\n    cout << SA(letterCombinations(a0)) << \"\\n\";\n    return 0;\n}\n"
+    },
+    "params": [
+      {
+        "name": "digits",
+        "quote": true
+      }
+    ],
+    "judge": "unordered",
+    "testCases": [
+      {
+        "name": "classic two digits",
+        "stdin": "23\n",
+        "expectedStdout": "[\"ad\",\"ae\",\"af\",\"bd\",\"be\",\"bf\",\"cd\",\"ce\",\"cf\"]"
+      },
+      {
+        "name": "empty input",
+        "stdin": "\n",
+        "expectedStdout": "[]"
+      },
+      {
+        "name": "single digit",
+        "stdin": "2\n",
+        "expectedStdout": "[\"a\",\"b\",\"c\"]"
+      },
+      {
+        "name": "four letter digit",
+        "stdin": "7\n",
+        "expectedStdout": "[\"p\",\"q\",\"r\",\"s\"]"
+      },
+      {
+        "name": "two four letter digits",
+        "stdin": "79\n",
+        "expectedStdout": "[\"pw\",\"px\",\"py\",\"pz\",\"qw\",\"qx\",\"qy\",\"qz\",\"rw\",\"rx\",\"ry\",\"rz\",\"sw\",\"sx\",\"sy\",\"sz\"]"
+      },
+      {
+        "name": "three digits",
+        "stdin": "234\n",
+        "expectedStdout": "[\"adg\",\"adh\",\"adi\",\"aeg\",\"aeh\",\"aei\",\"afg\",\"afh\",\"afi\",\"bdg\",\"bdh\",\"bdi\",\"beg\",\"beh\",\"bei\",\"bfg\",\"bfh\",\"bfi\",\"cdg\",\"cdh\",\"cdi\",\"ceg\",\"ceh\",\"cei\",\"cfg\",\"cfh\",\"cfi\"]"
+      },
+      {
+        "name": "repeated digit",
+        "stdin": "22\n",
+        "expectedStdout": "[\"aa\",\"ab\",\"ac\",\"ba\",\"bb\",\"bc\",\"ca\",\"cb\",\"cc\"]"
+      }
+    ]
   }
 ]
