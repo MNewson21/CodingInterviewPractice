@@ -398,8 +398,9 @@ export function ProblemForm({
             />
             <div className="grid grid-cols-2 gap-2">
               <div>
-                <label className={labelClass}>stdin</label>
+                <label className={labelClass} htmlFor={`pf-tc-${i}-stdin`}>stdin</label>
                 <textarea
+                  id={`pf-tc-${i}-stdin`}
                   className={codeClass}
                   rows={3}
                   value={tc.stdin}
@@ -409,8 +410,9 @@ export function ProblemForm({
                 />
               </div>
               <div>
-                <label className={labelClass}>expected output</label>
+                <label className={labelClass} htmlFor={`pf-tc-${i}-expected`}>expected output</label>
                 <textarea
+                  id={`pf-tc-${i}-expected`}
                   className={codeClass}
                   rows={3}
                   value={tc.expectedStdout}
