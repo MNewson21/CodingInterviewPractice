@@ -234,12 +234,14 @@ export function ProblemForm({
                 className={inputClass}
                 value={ex.input}
                 onChange={(e) => setExamples((xs) => xs.map((x, j) => (j === i ? { ...x, input: e.target.value } : x)))}
+                aria-label={`Example ${i + 1} input`}
                 placeholder="Input - e.g. nums = [2,7], target = 9"
               />
               <input
                 className={inputClass}
                 value={ex.output}
                 onChange={(e) => setExamples((xs) => xs.map((x, j) => (j === i ? { ...x, output: e.target.value } : x)))}
+                aria-label={`Example ${i + 1} output`}
                 placeholder="Output - e.g. [0,1]"
               />
             </div>
@@ -247,6 +249,7 @@ export function ProblemForm({
               className={inputClass}
               value={ex.explanation}
               onChange={(e) => setExamples((xs) => xs.map((x, j) => (j === i ? { ...x, explanation: e.target.value } : x)))}
+              aria-label={`Example ${i + 1} explanation`}
               placeholder="Explanation (optional)"
             />
             {examples.length > 1 && (
@@ -340,6 +343,7 @@ export function ProblemForm({
               className={inputClass}
               value={p.name}
               onChange={(e) => setParams((ps) => ps.map((x, j) => (j === i ? { ...x, name: e.target.value } : x)))}
+              aria-label={`Argument ${i + 1} name`}
               placeholder={`Argument ${i + 1} name - e.g. nums`}
             />
             <label className="flex shrink-0 items-center gap-1 text-xs text-zinc-400">
@@ -394,6 +398,7 @@ export function ProblemForm({
               className={inputClass}
               value={tc.name}
               onChange={(e) => setTestCases((ts) => ts.map((t, j) => (j === i ? { ...t, name: e.target.value } : t)))}
+              aria-label={`Test case ${i + 1} name`}
               placeholder={`Name (optional) - e.g. example ${i + 1}`}
             />
             <div className="grid grid-cols-2 gap-2">

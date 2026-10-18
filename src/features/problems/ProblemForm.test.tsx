@@ -207,4 +207,61 @@ describe('field labelling', () => {
     expect(screen.getAllByLabelText('stdin')).toHaveLength(2);
     expect(screen.getAllByLabelText('expected output')).toHaveLength(2);
   });
+
+  /**
+   * The repeated rows inside the Examples, Function arguments and Test cases
+   * fieldsets were placeholder-only: no label, no `aria-label`, so they had no
+   * accessible name at all. A placeholder is not a name, and it disappears the
+   * moment a value is typed - exactly when a name is needed to re-orient.
+   */
+  it('names every control in the repeated example, argument and test-case rows', () => {
+    render(<ProblemForm />);
+    // A fresh form starts with no argument row (params defaults to []).
+    fireEvent.click(screen.getByRole('button', { name: /add argument/i }));
+
+    for (const name of [
+      'Example 1 input',
+      'Example 1 output',
+      'Example 1 explanation',
+      'Argument 1 name',
+      'Test case 1 name',
+    ]) {
+      const field = screen.getByLabelText(name);
+      expect(field.tagName).toMatch(/^(INPUT|TEXTAREA|SELECT)$/);
+    }
+  });
+
+  it('numbers the row names so a second row stays distinguishable', () => {
+    render(<ProblemForm />);
+    for (const button of [/add example/i, /add argument/i, /add argument/i, /add test case/i]) {
+      fireEvent.click(screen.getByRole('button', { name: button }));
+    }
+
+    // getByLabelText throws on an ambiguous match, so these pass only while the
+    // index is part of each name.
+    for (const name of [
+      'Example 1 input',
+      'Example 2 input',
+      'Argument 1 name',
+      'Argument 2 name',
+      'Test case 1 name',
+      'Test case 2 name',
+    ]) {
+      expect(screen.getByLabelText(name)).toBeDefined();
+    }
+  });
+
+  /**
+   * The visible labels inside a test-case row read plain 'stdin' / 'expected output',
+   * so two cases produce two identically-named fields. The association is correct and
+   * unique by id; only the name is ambiguous. Pinned here so a future fix is a
+   * deliberate change rather than an accident.
+   */
+  it('still leaves the per-case stdin and expected-output names unnumbered', () => {
+    render(<ProblemForm />);
+    fireEvent.click(screen.getByRole('button', { name: /add test case/i }));
+
+    expect(screen.getAllByLabelText('stdin')).toHaveLength(2);
+    expect(screen.queryByLabelText('Test case 1 stdin')).toBeNull();
+  });
 });
