@@ -1,0 +1,53 @@
+name: CI (web app)
+
+# Verifies the Vite/React app under src/: types, unit tests, production build.
+# Complements deno.yml, which covers only the Supabase edge functions.
+#
+# Runs on dev as well as main because dev is the working branch — a regression
+# should surface on push, not wait for the PR into main.
+
+on:
+  push:
+    branches: ["main", "dev"]
+    paths-ignore: ["supabase/functions/**", "docs/**", "**/*.md"]
+  pull_request:
+    branches: ["main", "dev"]
+    paths-ignore: ["supabase/functions/**", "docs/**", "**/*.md"]
+
+permissions:
+  contents: read
+
+# A newer push to the same branch makes an in-flight run obsolete.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      # `npm ci` installs exactly what package-lock.json pins, so CI cannot
+      # drift onto a different dependency tree than a local checkout.
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type-check
+        run: npm run typecheck
+
+      - name: Unit tests
+        run: npm test
+
+      # Builds without any VITE_* secrets on purpose: the app must compile with
+      # Supabase/Piston unconfigured (it degrades to a read-only demo at runtime),
+      # so a build that needs env vars to succeed is itself a regression.
+      - name: Production build
+        run: npx vite build

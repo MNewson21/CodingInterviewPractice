@@ -1,0 +1,13 @@
+# Public demo site. Everything is crawlable except the routes that are either
+# per-user or meaningless without state:
+#   /auth    - sign-in form, nothing to index
+#   /replay  - replays belong to one account and 404 for a crawler
+#   /session - a problem workspace, only useful with an open session
+# The problem catalog itself is reachable from / and /tracks, which stay open.
+User-agent: *
+Allow: /
+Disallow: /auth
+Disallow: /replay/
+Disallow: /session/
+
+Sitemap: https://codinginterviewpractice.dev/sitemap.xml
