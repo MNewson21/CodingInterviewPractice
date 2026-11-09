@@ -22,8 +22,6 @@ export interface TestResult {
  * the harness (`public class Main` with `main`) must come first, with its imports
  * at the very top, and the user's `class Solution` follows (forward reference is
  * fine). The harness pre-imports `java.util.*`, so user code must not add imports.
- * 
- * This is to test the code btw
  */
 export function buildSource(
   language: Language,

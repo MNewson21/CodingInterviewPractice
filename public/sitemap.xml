@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Static list of the app's crawlable routes. Per-problem (/session/:id) and
+  per-replay URLs are deliberately absent: they are client-rendered workspaces
+  rather than content pages, and are disallowed in robots.txt.
+
+  Track detail pages are listed individually because each one is a distinct,
+  linkable reading page. If a track is added to src/features/tracks/tracks.data.ts,
+  add it here too.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://codinginterviewpractice.dev/</loc><priority>1.0</priority></url>
+  <url><loc>https://codinginterviewpractice.dev/revise</loc><priority>0.8</priority></url>
+  <url><loc>https://codinginterviewpractice.dev/tracks</loc><priority>0.8</priority></url>
+  <url><loc>https://codinginterviewpractice.dev/tracks/interviews</loc><priority>0.6</priority></url>
+  <url><loc>https://codinginterviewpractice.dev/tracks/easy-warmup</loc><priority>0.6</priority></url>
+  <url><loc>https://codinginterviewpractice.dev/tracks/blind-75</loc><priority>0.6</priority></url>
+  <url><loc>https://codinginterviewpractice.dev/tracks/dynamic-programming</loc><priority>0.6</priority></url>
+  <url><loc>https://codinginterviewpractice.dev/tracks/trees-and-lists</loc><priority>0.6</priority></url>
+  <url><loc>https://codinginterviewpractice.dev/tracks/pointers-and-windows</loc><priority>0.6</priority></url>
+  <url><loc>https://codinginterviewpractice.dev/tracks/hard-mode</loc><priority>0.6</priority></url>
+  <url><loc>https://codinginterviewpractice.dev/tracks/demon-list</loc><priority>0.6</priority></url>
+  <url><loc>https://codinginterviewpractice.dev/about</loc><priority>0.5</priority></url>
+  <url><loc>https://codinginterviewpractice.dev/privacy</loc><priority>0.3</priority></url>
+</urlset>
