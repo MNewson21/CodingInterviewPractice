@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { getSession, getSharedReplay } from '../features/sessions/sessions.api';
-import { problems } from '../features/problems/problems.data';
+import { useProblem } from '../features/problems/useProblem';
 import { ReplayPlayer } from '../features/keystrokes/ReplayPlayer';
-import { useProblemsStore } from '../stores/useProblemsStore';
 import type { Language } from '../types/problem';
 import type { KeystrokeEvent } from '../types/session';
 
@@ -19,13 +18,6 @@ export function ReplayPage() {
   const [session, setSession] = useState<ReplayData | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
-
-  const custom = useProblemsStore((s) => s.custom);
-  const customLoaded = useProblemsStore((s) => s.loaded);
-  const loadCustom = useProblemsStore((s) => s.load);
-  useEffect(() => {
-    loadCustom();
-  }, [loadCustom]);
 
   useEffect(() => {
     if (!sessionId) return;
@@ -49,12 +41,12 @@ export function ReplayPage() {
     })();
   }, [sessionId]);
 
-  const problem = session
-    ? problems.find((p) => p.id === session.problemId) ??
-      custom.find((p) => p.id === session.problemId)
-    : undefined;
-  const title = session ? problem?.title ?? session.problemId : '';
-  const ready = !loading && customLoaded;
+  // The player seeds its editor with the problem's starter code, which lives in the
+  // lazily fetched run payload - so the replay waits on that as well as on the session.
+  // The title comes from the metadata half, which needs no fetch for a built-in problem.
+  const { problem, meta, resolving } = useProblem(session?.problemId);
+  const title = session ? meta?.title ?? session.problemId : '';
+  const ready = !loading && !resolving;
 
   return (
     <div className="flex h-full flex-col bg-zinc-950 text-zinc-100">

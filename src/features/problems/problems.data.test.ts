@@ -1,16 +1,48 @@
-import { describe, it, expect, vi } from 'vitest';
-
-// problems.data -> useProblemsStore -> userProblems.api -> supabaseClient, whose
-// createClient() call needs a WebSocket global that Node 20 does not expose. None of that
-// is under test here - these are static assertions about the shipped catalog - so the
-// client is stubbed to keep the import chain from constructing a realtime socket.
-vi.mock('../../lib/supabaseClient', () => ({
-  isSupabaseConfigured: false,
-  supabase: {},
-}));
+import { describe, it, expect } from 'vitest';
 
 import { problems } from './problems.data';
+import runtimeJson from '../../data/problem-runtime.json';
+import type { Problem, ProblemRuntime } from '../../types/problem';
 import { compareOutputs } from '../execution/testRunner';
+
+const runtime = runtimeJson as Record<string, ProblemRuntime>;
+
+/**
+ * The catalog rejoined with its run payload - the shape a session actually sees. The two
+ * halves ship as separate files so the landing page downloads only the metadata, and the
+ * assertions below are about the run payload, so they have to put them back together.
+ */
+const full: Problem[] = problems.map((p) => ({ ...p, ...runtime[p.id] }));
+
+/**
+ * The split only holds if the two files stay in step: a problem whose run payload is
+ * missing looks fine in the list and then opens into a session with no starter code and
+ * no test cases, and an orphaned payload is dead weight in the lazily loaded chunk.
+ */
+describe('catalog and run payload are in step', () => {
+  it('gives every catalog problem a run payload', () => {
+    expect(problems.filter((p) => !runtime[p.id]).map((p) => p.id)).toEqual([]);
+  });
+
+  it('has no run payload without a catalog entry', () => {
+    const ids = new Set(problems.map((p) => p.id));
+    expect(Object.keys(runtime).filter((id) => !ids.has(id))).toEqual([]);
+  });
+
+  it('gives every run payload starter code and at least one test case', () => {
+    const bad = Object.entries(runtime).filter(
+      ([, r]) => r.starterCode == null || !r.testCases?.length,
+    );
+    expect(bad.map(([id]) => id)).toEqual([]);
+  });
+
+  it('keeps the session-only fields out of the catalog half', () => {
+    const leaked = problems.filter((p) =>
+      ['starterCode', 'harness', 'testCases'].some((k) => k in p),
+    );
+    expect(leaked.map((p) => p.id)).toEqual([]);
+  });
+});
 
 describe('built-in catalog', () => {
   it('has unique problem ids', () => {
@@ -31,7 +63,7 @@ describe('built-in catalog', () => {
  * These assertions make that failure loud instead.
  */
 describe('problems judged as unordered', () => {
-  const unordered = problems.filter((p) => p.judge === 'unordered');
+  const unordered = full.filter((p) => p.judge === 'unordered');
 
   it('exist at all (the mode is wired to the catalog, not just to the runner)', () => {
     expect(unordered.length).toBeGreaterThan(0);
@@ -76,8 +108,8 @@ describe('problems judged as unordered', () => {
 });
 
 /**
- * The expected outputs in problems.json are computed by scripts/add-problems.py and then
- * never re-checked, so a hand-edit that drops or mistypes an item would make the problem
+ * The expected outputs in problem-runtime.json are computed by scripts/add-problems.py and
+ * then never re-checked, so a hand-edit that drops or mistypes an item would make the problem
  * permanently unsolvable with no test objecting. These assertions re-derive the keypad
  * rule and check the shipped answers against it WITHOUT re-implementing the enumeration,
  * so they stay an independent check rather than a copy of the solution.
@@ -100,7 +132,7 @@ describe('letter-combinations expected outputs obey the keypad rule', () => {
     expect(pad['9']).toBe('wxyz');
   });
 
-  const problem = problems.find((p) => p.id === 'letter-combinations');
+  const problem = full.find((p) => p.id === 'letter-combinations');
 
   it('is in the catalog and judged as a set', () => {
     expect(problem).toBeDefined();

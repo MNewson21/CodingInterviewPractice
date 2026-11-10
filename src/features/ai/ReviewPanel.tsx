@@ -3,7 +3,7 @@ import { useExecutionStore } from '../../stores/useExecutionStore';
 import { useAiStore } from '../../stores/useAiStore';
 import { fetchReview } from './aiClient';
 import { isSupabaseConfigured } from '../../lib/supabaseClient';
-import type { Problem } from '../../types/problem';
+import type { ProblemMeta } from '../../types/problem';
 
 function Row({ label, value }: { label: string; value: string }) {
   return (
@@ -14,7 +14,7 @@ function Row({ label, value }: { label: string; value: string }) {
   );
 }
 
-export function ReviewPanel({ problem }: { problem: Problem }) {
+export function ReviewPanel({ problem }: { problem: ProblemMeta }) {
   const code = useEditorStore((s) => s.code);
   const language = useEditorStore((s) => s.language);
   const results = useExecutionStore((s) => s.results);

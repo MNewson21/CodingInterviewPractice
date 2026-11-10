@@ -1,4 +1,4 @@
-import type { Problem } from '../../types/problem';
+import type { ProblemMeta } from '../../types/problem';
 import { problems } from '../problems/problems.data';
 
 /**
@@ -197,11 +197,11 @@ export function getTrack(id: string): Track | undefined {
 }
 
 /**
- * Resolve a track's problem ids to the actual built-in {@link Problem} objects, in track
+ * Resolve a track's problem ids to the actual built-in {@link ProblemMeta} objects, in track
  * order. Unknown ids are dropped (and reported in dev) so a typo can never crash a page.
  */
-export function trackProblems(track: Track): Problem[] {
-  const resolved: Problem[] = [];
+export function trackProblems(track: Track): ProblemMeta[] {
+  const resolved: ProblemMeta[] = [];
   for (const id of track.problemIds) {
     const problem = problems.find((p) => p.id === id);
     if (problem) resolved.push(problem);

@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import type { Difficulty, Problem } from '../../types/problem';
+import type { Difficulty, ProblemMeta } from '../../types/problem';
 import { useAuth } from '../../lib/auth';
 import { useSolvedIds } from '../sessions/useSolvedIds';
 
@@ -21,7 +21,7 @@ const STATUSES: Status[] = ['all', 'unsolved', 'solved'];
  * {@link useSolvedIds}, shared with the tracks pages; guests see the list without
  * checkmarks and without the status filter.
  */
-export function ProblemList({ problems }: { problems: Problem[] }) {
+export function ProblemList({ problems }: { problems: ProblemMeta[] }) {
   const { user } = useAuth();
   const solvedIds = useSolvedIds();
   const [query, setQuery] = useState('');

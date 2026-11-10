@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 /*
  * One-shot generator: adds `java` and `cpp` entries to every problem's
- * starterCode + harness in src/data/problems.json.
+ * starterCode + harness in src/data/problem-runtime.json (the session-only half
+ * of the catalog, keyed by problem id; src/data/problems.json holds the metadata
+ * and is only read here for the id list).
  *
  * Conventions (must match the existing js/ts/python harnesses byte-for-byte,
  * since testRunner compares stdout after normalize()):
@@ -13,8 +15,10 @@
  */
 const fs = require('fs');
 const path = require('path');
-const file = path.join(__dirname, '..', 'src', 'data', 'problems.json');
-const problems = JSON.parse(fs.readFileSync(file, 'utf8'));
+const dataDir = path.join(__dirname, '..', 'src', 'data');
+const runtimeFile = path.join(dataDir, 'problem-runtime.json');
+const problems = JSON.parse(fs.readFileSync(path.join(dataDir, 'problems.json'), 'utf8'));
+const runtime = JSON.parse(fs.readFileSync(runtimeFile, 'utf8'));
 
 // ---- per-problem spec -------------------------------------------------------
 // in:  ints | ints_int | str | str_str | str_int | int | strs
@@ -228,11 +232,13 @@ let changed = 0;
 for (const p of problems) {
   const s = SPEC[p.id];
   if (!s) { console.error('!! no spec for', p.id); process.exit(1); }
-  p.starterCode.java = javaStarter(s);
-  p.starterCode.cpp = cppStarter(s);
-  p.harness.java = javaHarness(s);
-  p.harness.cpp = cppHarness(s);
+  const r = runtime[p.id];
+  if (!r) { console.error('!! no run payload for', p.id); process.exit(1); }
+  r.starterCode.java = javaStarter(s);
+  r.starterCode.cpp = cppStarter(s);
+  r.harness.java = javaHarness(s);
+  r.harness.cpp = cppHarness(s);
   changed++;
 }
-fs.writeFileSync(file, JSON.stringify(problems, null, 2) + '\n');
+fs.writeFileSync(runtimeFile, JSON.stringify(runtime, null, 2) + '\n');
 console.log(`updated ${changed} problems with java + cpp`);

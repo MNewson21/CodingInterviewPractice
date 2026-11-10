@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
 import { HintPanel } from './HintPanel';
 import { ReviewPanel } from './ReviewPanel';
-import type { Problem } from '../../types/problem';
+import type { ProblemMeta } from '../../types/problem';
 import { useAuth } from '../../lib/auth';
 
-export function AiPanel({ problem }: { problem: Problem }) {
+export function AiPanel({ problem }: { problem: ProblemMeta }) {
   const { user } = useAuth();
 
   // Guests can't use AI (it needs an account + backend), so prompt to sign in rather
