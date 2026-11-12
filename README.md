@@ -80,13 +80,21 @@ medium and 18 hard.
 The parts that took the most thought, in case you are reading the source rather than using
 the app.
 
-**One problem definition, five languages.** A problem is a single JSON object holding a
-description, parameter metadata, test cases, and a per-language harness. The harness is what
-adapts the same stdin fixture to each toolchain, so one authored problem yields a working
-Python stub and a working C++ stub without the author writing either. Adding a language is a
-matter of teaching the builder one more target rather than rewriting 109 problems. The
-builder scripts emit these definitions, and `problems.data.test.ts` is a catalog integrity
-suite that fails the build if a problem is internally inconsistent.
+**One problem definition, five languages.** A problem is authored as a single JSON object
+holding a description, parameter metadata, test cases, and a per-language harness. The
+harness is what adapts the same stdin fixture to each toolchain, so one authored problem
+yields a working Python stub and a working C++ stub without the author writing either.
+Adding a language is a matter of teaching the builder one more target rather than rewriting
+109 problems. The builder scripts emit these definitions, and `problems.data.test.ts` is a
+catalog integrity suite that fails the build if a problem is internally inconsistent.
+
+**The catalog ships in two halves.** Starter code, hidden harnesses and test cases are about
+three quarters of the catalog by size and are useless to someone browsing the problem list,
+so they live in `problem-runtime.json`, keyed by problem id, and are fetched only when a
+session or a replay opens. `problems.json` keeps the half that renders a list - which is
+what every visitor downloads, and which the split cut from 49 kB to 22 kB gzipped. The
+`useProblem` hook joins the two back together, and the integrity suite fails if either half
+gains a problem the other does not have.
 
 **Judging answers that have no single correct output.** Most problems can be compared as
 strings. Some cannot: Letter Combinations is correct no matter what order the combinations

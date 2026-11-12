@@ -19,10 +19,16 @@ export default defineConfig(({ mode }) => {
            * Split the two things that change on a different clock from app code, so a
            * normal code deploy doesn't force returning visitors to re-download them.
            *
-           * `catalog` is src/data/problems.json (~420 kB raw) - it only changes when
+           * `catalog` is src/data/problems.json (~110 kB raw) - it only changes when
            * problems are added. `vendor` is the libraries every route needs, which only
            * change on a dependency bump. Everything else stays in the entry chunk,
            * which is what a typical commit actually touches.
+           *
+           * `problem-runtime` is the other half of the catalog (starter code, hidden
+           * harnesses, test cases - ~380 kB raw). It is only ever reached through a
+           * dynamic import from the session and replay pages, so Rollup would give it
+           * its own chunk regardless; naming it keeps that visible in the build output
+           * and stops it being merged into a route chunk.
            *
            * VENDOR_CORE is an explicit allow-list rather than a blanket
            * `node_modules -> vendor` rule, which would be a regression: it would drag
@@ -35,6 +41,7 @@ export default defineConfig(({ mode }) => {
           manualChunks(id) {
             const path = id.replace(/\\/g, '/');
             if (path.includes('src/data/problems.json')) return 'catalog';
+            if (path.includes('src/data/problem-runtime.json')) return 'problem-runtime';
             const VENDOR_CORE = [
               'node_modules/react/',
               'node_modules/react-dom/',

@@ -1,4 +1,4 @@
-import type { Language, Problem } from '../types/problem';
+import type { Language, ProblemRuntime } from '../types/problem';
 
 const ALL: Language[] = ['javascript', 'typescript', 'python', 'java', 'cpp'];
 
@@ -15,7 +15,7 @@ const COMMENT_PREFIX: Record<Language, string> = {
  * problem provides none for that language, return a guiding comment instead of an
  * empty editor (custom problems often only define starter for some languages).
  */
-export function starterFor(problem: Problem, language: Language): string {
+export function starterFor(problem: ProblemRuntime, language: Language): string {
   const existing = problem.starterCode[language];
   if (existing != null) return existing;
   return `${COMMENT_PREFIX[language]} No starter code for ${LANGUAGE_LABELS[language]} here - write your solution below.\n`;

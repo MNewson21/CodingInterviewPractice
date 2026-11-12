@@ -1,4 +1,4 @@
-import type { Difficulty, Language, Problem } from '../../types/problem';
+import type { Difficulty, Language, ProblemMeta } from '../../types/problem';
 import type { SessionSummary } from '../../types/session';
 
 export interface DifficultyProgress {
@@ -63,7 +63,7 @@ function computeStreak(activeDays: Set<string>): number {
  */
 export function computeProgressStats(
   sessions: SessionSummary[],
-  catalog: Problem[],
+  catalog: ProblemMeta[],
 ): ProgressStats {
   const solvedIds = new Set<string>();
   const attemptedIds = new Set<string>();

@@ -1,13 +1,4 @@
-import { describe, it, expect, vi } from 'vitest';
-
-// tracks.data -> problems.data -> useProblemsStore -> userProblems.api -> supabaseClient,
-// whose createClient() call needs a WebSocket global that Node 20 does not expose. None of
-// that is under test here - the tracks module only reads the static built-in catalog - so
-// the client is stubbed to keep the import chain from constructing a realtime socket.
-vi.mock('../../lib/supabaseClient', () => ({
-  isSupabaseConfigured: false,
-  supabase: {},
-}));
+import { describe, it, expect } from 'vitest';
 
 import { TRACKS, getTrack, trackProblems } from './tracks.data';
 import { problems } from '../problems/problems.data';

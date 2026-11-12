@@ -1,4 +1,4 @@
-import type { Problem } from '../../types/problem';
+import type { ProblemMeta } from '../../types/problem';
 import { Markdown } from '../../components/Markdown';
 
 const difficultyColor: Record<string, string> = {
@@ -7,7 +7,7 @@ const difficultyColor: Record<string, string> = {
   hard: 'text-red-400',
 };
 
-export function ProblemPanel({ problem }: { problem: Problem }) {
+export function ProblemPanel({ problem }: { problem: ProblemMeta }) {
   return (
     <div className="space-y-6 p-5 text-sm leading-relaxed">
       <div>

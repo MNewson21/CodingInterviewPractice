@@ -3,9 +3,9 @@ import { useAiStore } from '../../stores/useAiStore';
 import { useStuckDetector } from './useStuckDetector';
 import { fetchHint } from './aiClient';
 import { isSupabaseConfigured } from '../../lib/supabaseClient';
-import type { Problem } from '../../types/problem';
+import type { ProblemMeta } from '../../types/problem';
 
-export function HintPanel({ problem }: { problem: Problem }) {
+export function HintPanel({ problem }: { problem: ProblemMeta }) {
   const code = useEditorStore((s) => s.code);
   const language = useEditorStore((s) => s.language);
   const hints = useAiStore((s) => s.hints);

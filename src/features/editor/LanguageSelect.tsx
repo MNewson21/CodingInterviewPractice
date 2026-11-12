@@ -1,8 +1,8 @@
 import { useEditorStore } from '../../stores/useEditorStore';
 import { ENABLED_LANGUAGES, LANGUAGE_LABELS, starterFor } from '../../lib/languages';
-import type { Language, Problem } from '../../types/problem';
+import type { Language, ProblemRuntime } from '../../types/problem';
 
-export function LanguageSelect({ problem }: { problem: Problem }) {
+export function LanguageSelect({ problem }: { problem: ProblemRuntime }) {
   const language = useEditorStore((s) => s.language);
   const setLanguage = useEditorStore((s) => s.setLanguage);
   const setCode = useEditorStore((s) => s.setCode);

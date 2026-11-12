@@ -13,7 +13,13 @@
 const fs = require('fs');
 const path = require('path');
 const PISTON = process.env.PISTON || 'http://localhost:2000/api/v2';
-const problems = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'src', 'data', 'problems.json'), 'utf8'));
+// The catalog ships in two halves: metadata (problems.json) and the session-only run
+// payload (problem-runtime.json, keyed by id). Validation needs the harnesses and test
+// cases from the second, so the two are rejoined here.
+const dataDir = path.join(__dirname, '..', 'src', 'data');
+const runtime = JSON.parse(fs.readFileSync(path.join(dataDir, 'problem-runtime.json'), 'utf8'));
+const problems = JSON.parse(fs.readFileSync(path.join(dataDir, 'problems.json'), 'utf8'))
+  .map((p) => ({ ...p, ...runtime[p.id] }));
 
 function normalize(s) {
   return s.replace(/\r\n/g, '\n').split('\n').map((l) => l.replace(/\s+$/, '')).join('\n').replace(/\n+$/, '');

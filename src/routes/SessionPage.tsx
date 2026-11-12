@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useRef, useState, type PointerEvent as ReactPointerEvent } from 'react';
+import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from 'react';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
-import { problems } from '../features/problems/problems.data';
+import { useProblem } from '../features/problems/useProblem';
 import { downloadProblem } from '../features/problems/problemFile';
 import { ProblemPanel } from '../features/problems/ProblemPanel';
 import { CodeEditor } from '../features/editor/CodeEditor';
@@ -28,28 +28,15 @@ import { useExecutionStore } from '../stores/useExecutionStore';
 import { useSessionStore } from '../stores/useSessionStore';
 import { useKeystrokeStore } from '../stores/useKeystrokeStore';
 import { useAiStore } from '../stores/useAiStore';
-import { useProblemsStore } from '../stores/useProblemsStore';
 
 export function SessionPage() {
   const { problemId } = useParams();
   const [searchParams] = useSearchParams();
   const resumeId = searchParams.get('session');
 
-  const custom = useProblemsStore((s) => s.custom);
-  const customLoaded = useProblemsStore((s) => s.loaded);
-  const loadCustom = useProblemsStore((s) => s.load);
-  useEffect(() => {
-    loadCustom();
-  }, [loadCustom]);
-
-  const problem = useMemo(
-    () =>
-      problemId
-        ? problems.find((p) => p.id === problemId) ?? custom.find((p) => p.id === problemId)
-        : undefined,
-    [problemId, custom],
-  );
-  const resolving = !problem && !customLoaded;
+  // Needs the whole problem, run payload included - the editor seeds from its starter
+  // code and the run panel needs its test cases - so this waits on a fetch.
+  const { problem, resolving } = useProblem(problemId);
 
   const { user } = useAuth();
   const language = useEditorStore((s) => s.language);
