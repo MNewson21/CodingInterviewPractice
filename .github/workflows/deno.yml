@@ -4,16 +4,25 @@ name: Deno (edge functions)
 # Scoped to supabase/functions via `working-directory` + path filters so it never
 # touches the Vite/React app under src/ (which follows different formatting rules).
 
+# Runs on dev as well as main for the same reason ci.yml does: dev is the working
+# branch, so an edge-function regression should surface on push rather than waiting
+# for the PR into main.
 on:
   push:
-    branches: ["main"]
+    branches: ["main", "dev"]
     paths: ["supabase/functions/**", ".github/workflows/deno.yml"]
   pull_request:
-    branches: ["main"]
+    branches: ["main", "dev"]
     paths: ["supabase/functions/**", ".github/workflows/deno.yml"]
 
 permissions:
   contents: read
+
+# A newer push to the same branch makes an in-flight run obsolete. Matters more now
+# that dev is covered, since dev is pushed to far more often than main.
+concurrency:
+  group: deno-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   test:

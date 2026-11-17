@@ -40,6 +40,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # Lint before type-check: it is the faster of the two and catches the class of
+      # mistake (hook misuse) that the type checker cannot see at all.
+      - name: Lint
+        run: npm run lint
+
       - name: Type-check
         run: npm run typecheck
 
