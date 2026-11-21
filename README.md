@@ -152,12 +152,28 @@ Put them in a `.env.local` at the project root, noting the leading dot.
 | `npm run build`      | Typecheck, then a production build            |
 | `npm run preview`    | Serve the built output                        |
 | `npm run typecheck`  | `tsc --noEmit` on its own                     |
+| `npm run lint`       | ESLint over `src/`, `scripts/` and the config |
+| `npm run lint:fix`   | The same, applying the auto-fixable ones      |
 | `npm test`           | Full Vitest run                               |
 | `npm run test:watch` | Vitest in watch mode                          |
 | `npm run coverage`   | Vitest with a V8 coverage report              |
 
 Worth knowing: `npm test` does not typecheck, so run `npm run typecheck` separately before
 you trust a green suite.
+
+Lint config lives in `eslint.config.js` (flat config). It is mostly there for
+`eslint-plugin-react-hooks`, which catches the one class of bug the type checker is blind
+to - a hook called conditionally, or an effect whose dependency array has drifted from its
+body. Three environments are configured separately because they do not share globals: the
+browser/ESM app under `src/`, the CommonJS generators under `scripts/`, and the root
+tooling config. `supabase/functions/` is excluded on purpose - it is Deno, and `deno.yml`
+lints it instead.
+
+`npm run lint` currently reports five warnings from `react-hooks/set-state-in-effect`, a
+React-Compiler-era rule. They are real (each site resets state in an effect and so causes
+one extra render) but fixing them means rewriting effects rather than editing lint
+annotations, so they are left visible as a backlog instead of being silenced. CI treats
+errors as failures and prints warnings.
 
 
 ## Types of Problems
@@ -179,6 +195,7 @@ you trust a green suite.
 | AI proxy         | Supabase Edge Functions (Deno), provider-agnostic |
 | Code execution   | Self-hosted [Piston](https://github.com/engineer-man/piston) sandbox |
 | Testing          | Using Vitest and CI/CD pipeline / GitHub Actions |
+| Linting          | ESLint (flat config) + `eslint-plugin-react-hooks` |
 
 ## License
 [MIT](./LICENSE)
