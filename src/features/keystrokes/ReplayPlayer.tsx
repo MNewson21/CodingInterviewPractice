@@ -38,6 +38,12 @@ export function ReplayPlayer({
   const editorTheme = useThemeStore((s) => s.editorTheme);
   const customColor = useThemeStore((s) => s.customColor);
 
+  // `playing` is the user's intent; `isPlaying` is whether the rAF loop should actually
+  // run. Deriving the stop-at-the-end here means the playhead halts in the same render
+  // that reaches the end, with no effect writing `playing` back and re-rendering.
+  const atEnd = currentMs >= totalMs;
+  const isPlaying = playing && !atEnd;
+
   // Define the custom theme (if selected) before Monaco's first render.
   const handleBeforeMount: BeforeMount = (monaco) => {
     if (editorTheme === CUSTOM_THEME_ID) defineCustomEditorTheme(monaco, customColor);
@@ -89,7 +95,7 @@ export function ReplayPlayer({
 
   // Drive the playhead while playing.
   useEffect(() => {
-    if (!playing) return;
+    if (!isPlaying) return;
     let raf = 0;
     let last = performance.now();
     const loop = (now: number) => {
@@ -100,15 +106,16 @@ export function ReplayPlayer({
     };
     raf = requestAnimationFrame(loop);
     return () => cancelAnimationFrame(raf);
-  }, [playing, speed, totalMs]);
-
-  // Stop at the end.
-  useEffect(() => {
-    if (playing && currentMs >= totalMs) setPlaying(false);
-  }, [playing, currentMs, totalMs]);
+  }, [isPlaying, speed, totalMs]);
 
   function togglePlay() {
-    if (currentMs >= totalMs) setCurrentMs(0); // restart if at the end
+    // At the end the button reads "Replay", so it restarts rather than toggling: the
+    // user's intent is still `playing`, only the playhead needs resetting.
+    if (atEnd) {
+      setCurrentMs(0);
+      setPlaying(true);
+      return;
+    }
     setPlaying((p) => !p);
   }
 
@@ -148,7 +155,7 @@ export function ReplayPlayer({
           onClick={togglePlay}
           className="rounded bg-emerald-600 px-3 py-1 text-sm font-medium text-white hover:bg-emerald-500"
         >
-          {playing ? 'Pause' : currentMs >= totalMs ? 'Replay' : 'Play'}
+          {isPlaying ? 'Pause' : atEnd ? 'Replay' : 'Play'}
         </button>
 
         <input

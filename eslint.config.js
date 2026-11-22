@@ -36,21 +36,11 @@ export default tseslint.config(
       // match but do not use; tsconfig's noUnusedParameters agrees via the same prefix.
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
 
-      /*
-       * Downgraded from error to warning, deliberately.
-       *
-       * This is a React-Compiler-era rule new in eslint-plugin-react-hooks v7, and it
-       * fires on five pre-existing, tested sites that all reset state when a dependency
-       * changes (useSolvedIds, ProgressPage, ReplayPlayer, SessionPage x2). The rule is
-       * not wrong - each one does cause a cascading render - but every fix is an effect
-       * rewrite, not a lint fix, and this project does not run the compiler. Left visible
-       * on every `npm run lint` as a tracked backlog rather than silenced with disables.
-       *
-       * Because that backlog exists, CI runs plain `eslint .` without `--max-warnings=0`:
-       * errors block, warnings are printed. Tighten this to 'error' once the five sites
-       * are reworked, and add --max-warnings=0 at the same time.
-       */
-      'react-hooks/set-state-in-effect': 'warn',
+      // react-hooks/set-state-in-effect stays at its recommended 'error' severity. It
+      // was temporarily downgraded to a warning while five pre-existing sites still
+      // tripped it; those were reworked to derive their state instead (useSolvedIds,
+      // ProgressPage, ReplayPlayer, SessionPage x2), so nothing needs the escape hatch.
+      // The `lint` script runs --max-warnings=0 to keep it that way.
     },
   },
 

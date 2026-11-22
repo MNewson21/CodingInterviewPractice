@@ -146,17 +146,17 @@ Put them in a `.env.local` at the project root, noting the leading dot.
 
 ### Scripts
 
-| Command              | What it runs                                  |
-|----------------------|-----------------------------------------------|
-| `npm run dev`        | Vite dev server                               |
-| `npm run build`      | Typecheck, then a production build            |
-| `npm run preview`    | Serve the built output                        |
-| `npm run typecheck`  | `tsc --noEmit` on its own                     |
-| `npm run lint`       | ESLint over `src/`, `scripts/` and the config |
-| `npm run lint:fix`   | The same, applying the auto-fixable ones      |
-| `npm test`           | Full Vitest run                               |
-| `npm run test:watch` | Vitest in watch mode                          |
-| `npm run coverage`   | Vitest with a V8 coverage report              |
+| Command              | What it runs                                                      |
+|----------------------|-------------------------------------------------------------------|
+| `npm run dev`        | Vite dev server                                                   |
+| `npm run build`      | Typecheck, then a production build                                |
+| `npm run preview`    | Serve the built output                                            |
+| `npm run typecheck`  | `tsc --noEmit` on its own                                         |
+| `npm run lint`       | ESLint over `src/`, `scripts/` and the config (warnings fail too) |
+| `npm run lint:fix`   | The same, applying the auto-fixable ones                          |
+| `npm test`           | Full Vitest run                                                   |
+| `npm run test:watch` | Vitest in watch mode                                              |
+| `npm run coverage`   | Vitest with a V8 coverage report                                  |
 
 Worth knowing: `npm test` does not typecheck, so run `npm run typecheck` separately before
 you trust a green suite.
@@ -169,11 +169,20 @@ browser/ESM app under `src/`, the CommonJS generators under `scripts/`, and the 
 tooling config. `supabase/functions/` is excluded on purpose - it is Deno, and `deno.yml`
 lints it instead.
 
-`npm run lint` currently reports five warnings from `react-hooks/set-state-in-effect`, a
-React-Compiler-era rule. They are real (each site resets state in an effect and so causes
-one extra render) but fixing them means rewriting effects rather than editing lint
-annotations, so they are left visible as a backlog instead of being silenced. CI treats
-errors as failures and prints warnings.
+`npm run lint` runs with `--max-warnings=0`, so a warning fails it exactly like an error
+does and CI stays clean rather than accumulating a backlog nobody reads. Every rule is at
+its recommended severity; the one deliberate adjustment is `no-unused-vars`, which ignores
+`_`-prefixed names to match the convention tsconfig already enforces.
+
+Of the rules, `react-hooks/set-state-in-effect` is the one that shaped the code most. It
+fires on an effect whose body writes React state synchronously, because that costs an
+extra render. Five sites tripped it and were reworked to derive the value instead of
+resetting it in an effect: `useSolvedIds` and `ProgressPage` tag their fetched data with
+the user id it belongs to and fall back to the empty state when it does not match,
+`ReplayPlayer` derives "the playhead is at the end" rather than writing `playing` back,
+and `SessionPage` keys its save message to the problem being worked on and triggers
+auto-save from the run-finished callback (`RunPanel`'s `onResults`) instead of an effect
+watching the results.
 
 
 ## Types of Problems
