@@ -61,26 +61,41 @@ function DifficultyRow({ row }: { row: DifficultyProgress }) {
 export function ProgressPage() {
   usePageTitle('Progress');
   const { user, loading: authLoading } = useAuth();
-  const [sessions, setSessions] = useState<SessionSummary[] | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  // Tagged with the user the fetch was made for. Signing out (or switching accounts)
+  // then drops back to the loading state by derivation, rather than by an effect
+  // resetting it - which costs an extra render and, on a switch, would leave the
+  // previous user's sessions (or their error) on screen.
+  const [loaded, setLoaded] = useState<{
+    userId: string;
+    sessions: SessionSummary[] | null;
+    error: string | null;
+  } | null>(null);
 
   useEffect(() => {
-    if (!user) {
-      setSessions(null);
-      return;
-    }
+    if (!user) return;
+    const userId = user.id;
     let cancelled = false;
     listSessionSummaries()
       .then((s) => {
-        if (!cancelled) setSessions(s);
+        if (!cancelled) setLoaded({ userId, sessions: s, error: null });
       })
       .catch((err) => {
-        if (!cancelled) setError(err instanceof Error ? err.message : String(err));
+        if (!cancelled) {
+          setLoaded({
+            userId,
+            sessions: null,
+            error: err instanceof Error ? err.message : String(err),
+          });
+        }
       });
     return () => {
       cancelled = true;
     };
   }, [user]);
+
+  const current = user && loaded?.userId === user.id ? loaded : null;
+  const sessions = current?.sessions ?? null;
+  const error = current?.error ?? null;
 
   const stats = useMemo(
     () => (sessions ? computeProgressStats(sessions, problems) : null),

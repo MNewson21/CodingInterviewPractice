@@ -46,7 +46,6 @@ export function SessionPage() {
   const elapsedMs = useTimerStore((s) => s.elapsedMs);
   const resetTimer = useTimerStore((s) => s.reset);
   const setElapsedMs = useTimerStore((s) => s.setElapsedMs);
-  const results = useExecutionStore((s) => s.results);
   const resetExecution = useExecutionStore((s) => s.reset);
   const saving = useSessionStore((s) => s.saving);
   const setSaving = useSessionStore((s) => s.setSaving);
@@ -56,12 +55,15 @@ export function SessionPage() {
   const resumeRecording = useKeystrokeStore((s) => s.resumeRecording);
   const resetAi = useAiStore((s) => s.reset);
 
-  const [saveMsg, setSaveMsg] = useState<string | null>(null);
-
-  // Guards auto-save: holds the exact results array we last auto-saved on, so an
-  // all-pass run saves once (re-running and passing again is a new array, so it
-  // re-saves to update the row).
-  const autoSavedResults = useRef<TestResult[] | null>(null);
+  // The save status line belongs to one workspace, so it is tagged with the problem and
+  // resume target it was written for. Switching problems then clears it by derivation
+  // rather than by the init effect below calling setSaveMsg(null), which would cost an
+  // extra render on every switch.
+  const workspaceKey = `${problem?.id ?? ''}:${resumeId ?? ''}`;
+  const [saveMsgState, setSaveMsgState] = useState<{ key: string; text: string } | null>(null);
+  const saveMsg = saveMsgState?.key === workspaceKey ? saveMsgState.text : null;
+  const setSaveMsg = (text: string | null) =>
+    setSaveMsgState(text === null ? null : { key: workspaceKey, text });
 
   // Resizable split layout. Active on desktop only; mobile keeps the stacked layout.
   const splitRef = useRef<HTMLDivElement>(null);
@@ -154,8 +156,6 @@ export function SessionPage() {
     resetExecution();
     resetAi();
     setCurrentSessionId(null);
-    setSaveMsg(null);
-    autoSavedResults.current = null;
     startRecording();
     // language switches are handled in LanguageSelect, so only depend on the problem id.
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -170,6 +170,10 @@ export function SessionPage() {
     setSaving(true);
     setSaveMsg(null);
 
+    // Read from the store, not this render's closure: auto-save fires from the run
+    // handler in the same tick the results were set, so the closure is one render stale.
+    // Same reason the keystroke log below is read with getState().
+    const results = useExecutionStore.getState().results;
     const allPassed =
       !!results && results.length > 0 && results.every((r) => r.verdict === 'pass');
     const base = {
@@ -226,19 +230,16 @@ export function SessionPage() {
     }
   }
 
-  // Auto-save when a signed-in user passes every test, so "solved" is recorded
-  // without them having to remember to click Save. Guarded by `autoSavedResults`
-  // so it fires once per all-pass run, not on every render.
-  useEffect(() => {
-    if (!user || !problem || saving) return;
-    if (!results || results.length === 0) return;
-    if (autoSavedResults.current === results) return;
-    if (!results.every((r) => r.verdict === 'pass')) return;
-    autoSavedResults.current = results;
+  // Auto-save when a signed-in user passes every test, so "solved" is recorded without
+  // them having to remember to click Save. Hung off the run finishing (see RunPanel's
+  // onResults) rather than an effect watching the results: the run is the event, so this
+  // fires exactly once per all-pass run with no guard against re-running on re-render.
+  function handleRunResults(runResults: TestResult[]) {
+    if (!user || saving) return;
+    if (runResults.length === 0) return;
+    if (!runResults.every((r) => r.verdict === 'pass')) return;
     void handleSave(true);
-    // handleSave reads fresh state via closure each render; deps intentionally narrow.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [results, user, problem, saving]);
+  }
 
   if (!problem) {
     return (
@@ -347,7 +348,7 @@ export function SessionPage() {
           />
 
           <div style={isDesktop ? { height: runHeight } : undefined} className="h-72 shrink-0">
-            <RunPanel problem={problem} />
+            <RunPanel problem={problem} onResults={handleRunResults} />
           </div>
         </section>
       </div>

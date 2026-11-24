@@ -1,6 +1,6 @@
 import { useEditorStore } from '../../stores/useEditorStore';
 import { useExecutionStore } from '../../stores/useExecutionStore';
-import { runTests, type Verdict } from './testRunner';
+import { runTests, type TestResult, type Verdict } from './testRunner';
 import { PistonError } from './pistonClient';
 import type { Problem } from '../../types/problem';
 
@@ -50,7 +50,18 @@ function formatInput(input: string, params?: Problem['params']): string {
     .join(', ');
 }
 
-export function RunPanel({ problem }: { problem: Problem }) {
+export function RunPanel({
+  problem,
+  onResults,
+}: {
+  problem: Problem;
+  /**
+   * Called with the verdicts the moment a run finishes successfully (not on a run that
+   * threw). The session page hangs auto-save off this, so the save is driven by the run
+   * event rather than by an effect watching the results in the store.
+   */
+  onResults?: (results: TestResult[]) => void;
+}) {
   const code = useEditorStore((s) => s.code);
   const language = useEditorStore((s) => s.language);
   const running = useExecutionStore((s) => s.running);
@@ -76,6 +87,7 @@ export function RunPanel({ problem }: { problem: Problem }) {
         judge: problem.judge,
       });
       setResults(res);
+      onResults?.(res);
     } catch (err) {
       setError(describeRunError(err));
     } finally {
